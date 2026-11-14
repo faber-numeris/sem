@@ -1,0 +1,59 @@
+info:
+  name: Delete a Favorite
+  type: http
+  seq: 6
+
+http:
+  method: DELETE
+  url: "{{_endpoint}}/services/data/v{{version}}/ui-api/favorites/:FAVORITE_ID"
+  params:
+    - name: FAVORITE_ID
+      value: ""
+      type: path
+      description: The ID of a favorite
+  body:
+    type: json
+    data: ""
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Delete a Favorite
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/ui-api/favorites/:FAVORITE_ID"
+      method: DELETE
+      params:
+        - name: FAVORITE_ID
+          value: 0MV4H0000004qIeWAI
+          type: path
+          description: The ID of a favorite
+      body:
+        type: json
+        data: ""
+    response:
+      status: 204
+      statusText: No Content
+      headers:
+        - name: Date
+          value: Fri, 06 Oct 2023 10:09:14 GMT
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: Content-Security-Policy
+          value: upgrade-insecure-requests
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+      body:
+        type: text
+        data: ""
+
+docs: Get a favorite.

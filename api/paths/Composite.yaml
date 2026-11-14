@@ -1,0 +1,751 @@
+/services/data/v{version}/composite/graph:
+  post:
+    tags:
+      - Composite
+    summary: Composite Graph
+    description: >-
+      Composite graphs provide an enhanced way to perform composite requests, which execute a series of REST API requests in a single call.
+
+      Regular composite requests allow you to execute a series of REST API requests in a single call. And you can use the output of one request as the input to a subsequent request.
+
+
+      Composite graphs extend this by allowing you to assemble a more complicated and complete series of related objects and records.
+
+
+      Composite graphs also enable you to ensure that the steps in a given set of operations are either all completed or all not completed. This avoids requiring you to check for a mix of successful and unsuccessful results.
+
+
+      Regular composite requests have a limit of 25 subrequests. Composite graphs increase this limit to 500. This gives a single API call much greater power.
+
+
+      https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/resources_composite_graph_introduction.htm
+    requestBody:
+      content:
+        '*/*':
+          schema:
+            type: string
+            example: >-
+              "{\n    \"graphs\": [\n        {\n            \"graphId\": \"graph1\",\n            \"compositeRequest\": [\n                {\n                    \"method\": \"POST\",\n                    \"url\": \"/services/data/v{{version}}/sobjects/Account/\",\n                    \"referenceId\": \"newAccount\",\n                    \"body\": {\n                        \"Name\": \"ACME Inc.\",\n                        \"Custom__c\": \"Hello world\"\n                    }\n                },\n                {\n                    \"method\": \"GET\",\n                    \"url\": \"/services/data/v{{version}}/sobjects/Account/@{newAccount.id}\",\n                    \"referenceId\": \"newAccountInfo\"\n                }\n            ]\n        }\n    ]\n}"
+    parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: OK
+        headers:
+          cache-control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          content-type:
+            schema:
+              type: string
+              example: application/json;charset=UTF-8
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              graphs:
+                - graphId: graph1
+                  graphResponse:
+                    compositeResponse:
+                      - body:
+                          id: 0014H00002x6HUhQAM
+                          success: true
+                          errors: []
+                        httpHeaders:
+                          Location: >-
+                            /services/data/v50.0/sobjects/Account/0014H00002x6HUhQAM
+                        httpStatusCode: 201
+                        referenceId: newAccount
+                      - body:
+                          id: 0034H00002JsInQQAV
+                          success: true
+                          errors: []
+                        httpHeaders:
+                          Location: >-
+                            /services/data/v50.0/sobjects/Contact/0034H00002JsInQQAV
+                        httpStatusCode: 201
+                        referenceId: newContact
+                  isSuccessful: true
+/services/data/v{version}/composite/batch:
+  post:
+    tags:
+      - Composite
+    summary: Composite Batch
+    description: >-
+      Executes up to 25 subrequests in a single request. The response bodies and HTTP statuses of the subrequests in the batch are returned in a single response body. Each subrequest counts against rate limits.
+
+      The requests in a batch are called subrequests. All subrequests are executed in the context of the same user. Subrequests are independent, and you can’t pass information between them. Subrequests execute serially in their order in the request body. When a subrequest executes successfully, it commits its data. Commits are reflected in the output of later subrequests. If a subrequest fails, commits made by previous subrequests are not rolled back. If a batch request doesn’t complete within 10 minutes, the batch times out and the remaining subrequests aren’t executed.
+
+
+      https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/resources_composite_batch.htm
+    requestBody:
+      content:
+        '*/*':
+          schema:
+            type: string
+            example: >-
+              "{\n    \"haltOnError\": true,\n    \"batchRequests\": [\n        {\n            \"method\": \"GET\",\n            \"url\": \"v{{version}}/query/?q=SELECT+Id,+Name+FROM+Account LIMIT 2\"\n        },\n        {\n            \"method\": \"GET\",\n            \"url\": \"v{{version}}/query/?q=SELECT+Id,+Name+FROM+Opportunity LIMIT 2\"\n        }\n    ]\n}"
+    parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: OK
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Mon, 20 Nov 2023 15:19:46 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-XSS-Protection:
+            schema:
+              type: string
+              example: 1; mode=block
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Sforce-Limit-Info:
+            schema:
+              type: string
+              example: api-usage=34/15000
+          Content-Type:
+            schema:
+              type: string
+              example: text/plain
+          Vary:
+            schema:
+              type: string
+              example: Accept-Encoding
+          Content-Encoding:
+            schema:
+              type: string
+              example: gzip
+          Transfer-Encoding:
+            schema:
+              type: string
+              example: chunked
+        content:
+          text/plain:
+            schema:
+              type: string
+            example: |-
+              {
+                  "hasErrors": false,
+                  "results": [
+                      {
+                          "statusCode": 200,
+                          "result": {
+                              "totalSize": 2,
+                              "done": true,
+                              "records": [
+                                  {
+                                      "attributes": {
+                                          "type": "Account",
+                                          "url": "/services/data/v58.0/sobjects/Account/001..."
+                                      },
+                                      "Id": "001...",
+                                      "Name": "Sample Account"
+                                  },
+                                  ...
+                              ]
+                          }
+                      },
+                      {
+                          "statusCode": 200,
+                          "result": {
+                              "totalSize": 2,
+                              "done": true,
+                              "records": [
+                                  {
+                                      "attributes": {
+                                          "type": "Opportunity",
+                                          "url": "/services/data/v58.0/sobjects/Opportunity/006..."
+                                      },
+                                      "Id": "006...",
+                                      "Name": "Edge Emergency Generator"
+                                  },
+                                  ...
+                              ]
+                          }
+                      }
+                  ]
+              }
+/services/data/v{version}/composite/tree/{SOBJECT_API_NAME}:
+  post:
+    tags:
+      - Composite
+    summary: SObject Tree
+    description: >-
+      Creates one or more sObject trees with root records of the specified type. An sObject tree is a collection of nested, parent-child records with a single root record.
+
+      In the request data, you supply the record hierarchies, required and optional field values, each record’s type, and a reference ID for each record. Upon success, the response contains the IDs of the created records. If an error occurs while creating a record, the entire request fails. In this case, the response contains only the reference ID of the record that caused the error and the error information.
+
+
+      The request can contain the following:
+
+      Up to a total of 200 records across all trees
+
+      Up to five records of different types
+
+      SObject trees up to five levels deep
+
+      Because an sObject tree can contain a single record, you can use this resource to create up to 200 unrelated records of the same type.
+
+
+      When the request is processed and records are created, triggers, processes, and workflow rules fire separately for each of the following groups of records.
+
+      Root records across all sObject trees in the request
+
+      All second-level records of the same type—for example, second-level Contacts across all sObject trees in the request
+
+      All third-level records of the same type
+
+      All fourth-level records of the same type
+
+      All fifth-level records of the same type
+
+
+      https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/resources_composite_sobject_tree.htm
+    requestBody:
+      content:
+        '*/*':
+          schema:
+            type: string
+            example: >-
+              "{\n\"records\" :[{\n    \"attributes\" : {\"type\" : \"Account\", \"referenceId\" : \"ref1\"},\n    \"name\" : \"SampleAccount1\",\n    \"phone\" : \"1234567890\",\n    \"website\" : \"www.salesforce.com\",\n    \"numberOfEmployees\" : \"100\",\n    \"industry\" : \"Banking\",\n    \"Contacts\" : {\n      \"records\" : [{\n         \"attributes\" : {\"type\" : \"Contact\", \"referenceId\" : \"ref2\"},\n         \"lastname\" : \"Smith\",\n         \"Title\" : \"President\",\n         \"email\" : \"sample@salesforce.com\"\n         },{\n         \"attributes\" : {\"type\" : \"Contact\", \"referenceId\" : \"ref3\"},\n         \"lastname\" : \"Evans\",\n         \"title\" : \"Vice President\",\n         \"email\" : \"sample@salesforce.com\"\n         }]\n      }\n    },{\n    \"attributes\" : {\"type\" : \"Account\", \"referenceId\" : \"ref4\"},\n    \"name\" : \"SampleAccount2\",\n    \"phone\" : \"1234567890\",\n    \"website\" : \"www.salesforce.com\",\n    \"numberOfEmployees\" : \"52000\",\n    \"industry\" : \"Banking\",\n    \"childAccounts\" : {\n      \"records\" : [{\n        \"attributes\" : {\"type\" : \"Account\", \"referenceId\" : \"ref5\"},\n        \"name\" : \"SampleChildAccount1\",\n        \"phone\" : \"1234567890\",\n        \"website\" : \"www.salesforce.com\",\n        \"numberOfEmployees\" : \"100\",\n        \"industry\" : \"Banking\"\n        }]\n      },\n    \"Contacts\" : {\n      \"records\" : [{\n        \"attributes\" : {\"type\" : \"Contact\", \"referenceId\" : \"ref6\"},\n        \"lastname\" : \"Jones\",\n        \"title\" : \"President\",\n        \"email\" : \"sample@salesforce.com\"\n        }]\n      }\n  }]\n}"
+    parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: SOBJECT_API_NAME
+        in: path
+        schema:
+          type: string
+        required: true
+        example: Account
+    responses:
+      '201':
+        description: Created
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Mon, 20 Nov 2023 15:23:41 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-XSS-Protection:
+            schema:
+              type: string
+              example: 1; mode=block
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Sforce-Limit-Info:
+            schema:
+              type: string
+              example: api-usage=41/15000
+          Content-Type:
+            schema:
+              type: string
+              example: application/json;charset=UTF-8
+          Vary:
+            schema:
+              type: string
+              example: Accept-Encoding
+          Content-Encoding:
+            schema:
+              type: string
+              example: gzip
+          Transfer-Encoding:
+            schema:
+              type: string
+              example: chunked
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              hasErrors: false
+              results:
+                - referenceId: ref1
+                  id: 001...
+                - referenceId: ref4
+                  id: 001...
+                - referenceId: ref2
+                  id: 003..
+                - referenceId: ref3
+                  id: 003...
+                - referenceId: ref5
+                  id: 001...
+                - referenceId: ref6
+                  id: 003...
+/services/data/v{version}/composite/sobjects:
+  post:
+    tags:
+      - Composite
+    summary: SObject Collections Create
+    description: >-
+      Executes actions on multiple records in one request. Use SObject Collections to reduce the number of round-trips between the client and server. This resource is available in API version 42.0 and later.
+
+
+      https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/resources_composite_sobjects_collections.htm
+    requestBody:
+      content:
+        '*/*':
+          schema:
+            type: string
+            example: >-
+              "{\n   \"allOrNone\" : false,\n   \"records\" : [{\n      \"attributes\" : {\"type\" : \"Account\"},\n      \"Name\" : \"example.com\",\n      \"BillingCity\" : \"San Francisco\"\n   }, {\n      \"attributes\" : {\"type\" : \"Contact\"},\n      \"LastName\" : \"Johnson\",\n      \"FirstName\" : \"Erica\"\n   }]\n}"
+    parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: OK
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Mon, 20 Nov 2023 15:25:46 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-XSS-Protection:
+            schema:
+              type: string
+              example: 1; mode=block
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Sforce-Limit-Info:
+            schema:
+              type: string
+              example: api-usage=44/15000
+          Content-Type:
+            schema:
+              type: string
+              example: application/json;charset=UTF-8
+          Vary:
+            schema:
+              type: string
+              example: Accept-Encoding
+          Content-Encoding:
+            schema:
+              type: string
+              example: gzip
+          Transfer-Encoding:
+            schema:
+              type: string
+              example: chunked
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              - id: 001...
+                success: true
+                errors: []
+              - id: 003...
+                success: true
+                errors: []
+  patch:
+    tags:
+      - Composite
+    summary: SObject Collections Update
+    description: >-
+      Executes actions on multiple records in one request. Use SObject Collections to reduce the number of round-trips between the client and server. This resource is available in API version 42.0 and later.
+
+
+      https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/resources_composite_sobjects_collections.htm
+    requestBody:
+      content:
+        '*/*':
+          schema:
+            type: string
+            example: >-
+              "{\n   \"allOrNone\" : false,\n   \"records\" : [{\n      \"attributes\" : {\"type\" : \"Account\"},\n      \"id\" : \"<account-id>\",\n      \"NumberOfEmployees\" : 27000\n   }]\n}"
+    parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: OK
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Mon, 20 Nov 2023 15:28:31 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-XSS-Protection:
+            schema:
+              type: string
+              example: 1; mode=block
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Sforce-Limit-Info:
+            schema:
+              type: string
+              example: api-usage=46/15000
+          Content-Type:
+            schema:
+              type: string
+              example: application/json;charset=UTF-8
+          Transfer-Encoding:
+            schema:
+              type: string
+              example: chunked
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              - id: 001...
+                success: true
+                errors: []
+  delete:
+    tags:
+      - Composite
+    summary: SObject Collections Delete
+    description: >-
+      Executes actions on multiple records in one request. Use SObject Collections to reduce the number of round-trips between the client and server. This resource is available in API version 42.0 and later.
+
+
+      https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/resources_composite_sobjects_collections.htm
+    parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: ids
+        in: query
+        schema:
+          type: string
+        example: 0012o00003OBzVSAA1
+      - name: allOrNone
+        in: query
+        schema:
+          type: boolean
+        example: 'true'
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: OK
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Mon, 20 Nov 2023 15:31:21 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-XSS-Protection:
+            schema:
+              type: string
+              example: 1; mode=block
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Sforce-Limit-Info:
+            schema:
+              type: string
+              example: api-usage=49/15000
+          Content-Type:
+            schema:
+              type: string
+              example: application/json;charset=UTF-8
+          Transfer-Encoding:
+            schema:
+              type: string
+              example: chunked
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              - id: 001...
+                success: true
+                errors: []
+/services/data/v{version}/composite/sobjects/{SOBJECT_API_NAME}:
+  get:
+    tags:
+      - Composite
+    summary: SObject Collections Retrieve
+    description: >-
+      Executes actions on multiple records in one request. Use SObject Collections to reduce the number of round-trips between the client and server. This resource is available in API version 42.0 and later.
+
+
+      https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/resources_composite_sobjects_collections.htm
+    parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: ids
+        in: query
+        schema:
+          type: string
+      - name: fields
+        in: query
+        schema:
+          type: string
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: SOBJECT_API_NAME
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: OK
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Mon, 20 Nov 2023 15:27:03 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-XSS-Protection:
+            schema:
+              type: string
+              example: 1; mode=block
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Sforce-Limit-Info:
+            schema:
+              type: string
+              example: api-usage=44/15000
+          Content-Type:
+            schema:
+              type: string
+              example: application/json;charset=UTF-8
+          Vary:
+            schema:
+              type: string
+              example: Accept-Encoding
+          Content-Encoding:
+            schema:
+              type: string
+              example: gzip
+          Transfer-Encoding:
+            schema:
+              type: string
+              example: chunked
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              - attributes:
+                  type: Account
+                  url: /services/data/v58.0/sobjects/Account/001...
+                Name: Sample Account
+                Id: 001...
+/services/data/v{version}/composite/sobjects/{SOBJECT_API_NAME}/{FIELD_NAME}:
+  patch:
+    tags:
+      - Composite
+    summary: SObject Collections Upsert
+    description: >-
+      Use a PATCH request with sObject Collections to either create or update (upsert) up to 200 records based on an external ID field. This method returns a list of UpsertResult objects. You can choose whether to roll back the entire request when an error occurs. This request is available in API version 46 and later.
+
+
+      [https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/resources_composite_sobjects_collections_upsert.htm](https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/resources_composite_sobjects_collections_upsert.htm)
+    requestBody:
+      content:
+        '*/*':
+          schema:
+            type: string
+            example: >-
+              "{\n    \"allOrNone\" : false,\n    \"records\" : [{\n        \"attributes\" : {\"type\" : \"Account\"},\n        \"Name\" : \"Test Upsert\",\n        \"Id\" : \"0012o00003OBzVSAA1\"\n    }]\n}\n\n\n"
+    parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: SOBJECT_API_NAME
+        in: path
+        schema:
+          type: string
+        required: true
+        example: Account
+      - name: FIELD_NAME
+        in: path
+        schema:
+          type: string
+        required: true
+        example: Id
+    responses:
+      '200':
+        description: OK
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Mon, 20 Nov 2023 15:29:54 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-XSS-Protection:
+            schema:
+              type: string
+              example: 1; mode=block
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Sforce-Limit-Info:
+            schema:
+              type: string
+              example: api-usage=48/15000
+          Content-Type:
+            schema:
+              type: string
+              example: application/json;charset=UTF-8
+          Transfer-Encoding:
+            schema:
+              type: string
+              example: chunked
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              - id: 001...
+                success: true
+                errors: []
+                created: false

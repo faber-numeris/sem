@@ -1,0 +1,98 @@
+info:
+  name: SObject Collections Retrieve
+  type: http
+  seq: 6
+
+http:
+  method: GET
+  url: "{{_endpoint}}/services/data/v{{version}}/composite/sobjects/:SOBJECT_API_NAME?ids=&fields="
+  headers:
+    - name: Content-Type
+      value: application/json
+  params:
+    - name: ids
+      value: ""
+      type: query
+    - name: fields
+      value: ""
+      type: query
+    - name: SOBJECT_API_NAME
+      value: ""
+      type: path
+  body:
+    type: json
+    data: ""
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Successful SObject Collections Retrieve
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/composite/sobjects/:SOBJECT_API_NAME?ids=0012o00003OBzVSAA1&fields=Name"
+      method: GET
+      headers:
+        - name: Content-Type
+          value: application/json
+      params:
+        - name: ids
+          value: 0012o00003OBzVSAA1
+          type: query
+        - name: fields
+          value: Name
+          type: query
+        - name: SOBJECT_API_NAME
+          value: Account
+          type: path
+      body:
+        type: json
+        data: ""
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: Date
+          value: Mon, 20 Nov 2023 15:27:03 GMT
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-XSS-Protection
+          value: 1; mode=block
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: Sforce-Limit-Info
+          value: api-usage=44/15000
+        - name: Content-Type
+          value: application/json;charset=UTF-8
+        - name: Vary
+          value: Accept-Encoding
+        - name: Content-Encoding
+          value: gzip
+        - name: Transfer-Encoding
+          value: chunked
+      body:
+        type: json
+        data: |-
+          [
+              {
+                  "attributes": {
+                      "type": "Account",
+                      "url": "/services/data/v58.0/sobjects/Account/001..."
+                  },
+                  "Name": "Sample Account",
+                  "Id": "001..."
+              }
+          ]
+
+docs: |-
+  Executes actions on multiple records in one request. Use SObject Collections to reduce the number of round-trips between the client and server. This resource is available in API version 42.0 and later.
+
+  https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/resources_composite_sobjects_collections.htm

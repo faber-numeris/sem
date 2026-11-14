@@ -1,0 +1,23 @@
+info:
+  name: Get event relay feedback
+  type: http
+  seq: 2
+
+http:
+  method: GET
+  url: "{{_endpoint}}/services/data/v{{version}}/sobjects/EventRelayFeedback/:EVENT_RELAY_FEEDBACK_ID"
+  params:
+    - name: EVENT_RELAY_FEEDBACK_ID
+      value: 7k4RM000000008AYAQ
+      type: path
+  body:
+    type: json
+    data: ""
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true

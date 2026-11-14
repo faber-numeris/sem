@@ -1,0 +1,20 @@
+info:
+  name: 17 Delete Record Custom Object
+  type: http
+  seq: 17
+
+http:
+  method: DELETE
+  url: "{{_endpoint}}/services/data/v{{version}}/sobjects/Custom_Object__c/{{customObjId}}"
+
+runtime:
+  scripts:
+    - type: tests
+      code: |-
+        test("Deletes Custom_Object__c record and returns 204", function() {
+          expect(res.getStatus()).to.equal(204);
+        });
+
+settings:
+  encodeUrl: true
+  timeout: 0

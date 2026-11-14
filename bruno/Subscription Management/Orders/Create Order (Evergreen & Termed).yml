@@ -1,0 +1,94 @@
+info:
+  name: Create Order (Evergreen & Termed)
+  type: http
+  seq: 3
+
+http:
+  method: POST
+  url: "{{_endpoint}}/services/data/v{{version}}/composite"
+  body:
+    type: json
+    data: |-
+      {
+          "allOrNone": true,
+          "compositeRequest": [
+              {
+                  "method": "POST",
+                  "url": "/services/data/v{{version}}/sobjects/Order",
+                  "referenceId": "refOrder",
+                  "body": {
+                      "AccountId": "{{defaultAccount}}",
+                      "EffectiveDate": "2022-01-01",
+                      "Pricebook2Id": "{{standardPricebook}}",
+                      "BillToContactId": "{{defaultBillToContact}}",
+                      "Status": "Draft"
+                  }
+              },
+              {
+                  "method": "POST",
+                  "url": "/services/data/v{{version}}/sobjects/AppUsageAssignment",
+                  "referenceId": "refAppTag",
+                  "body": {
+                      "AppUsageType": "SubscriptionManagement",
+                      "RecordId": "@{refOrder.id}"
+                  }
+              },
+              {
+                  "method": "POST",
+                  "url": "/services/data/v{{version}}/sobjects/OrderAction",
+                  "referenceId": "refOrderAction",
+                  "body": {
+                      "OrderId": "@{refOrder.id}",
+                      "Type": "New Sale"
+                  }
+              },
+              {
+                  "method": "POST",
+                  "url": "/services/data/v{{version}}/sobjects/OrderItem",
+                  "referenceId": "Item_1_Evergreen",
+                  "body": {
+                      "OrderId": "@{refOrder.id}",
+                      "OrderActionId": "@{refOrderAction.id}",
+                      "PricebookEntryId": "{{VirtualRouterEvergrnPBE}}",
+                      "Quantity": 2.0,
+                      "UnitPrice": 25.0,
+                      "NetUnitPrice": 25.0,
+                      "TotalLineAmount": 50.0,
+                      "PeriodBoundary": "Anniversary",
+                      "BillingFrequency2": "Monthly",                
+                      "ServiceDate": "2022-02-01",
+                      "TaxTreatmentId": "{{defaultTaxTreatment}}"
+                  }
+              },
+              {
+                  "method": "POST",
+                  "url": "/services/data/v{{version}}/sobjects/OrderItem",
+                  "referenceId": "Item_2_termed",
+                  "body": {
+                      "OrderId": "@{refOrder.id}",
+                      "OrderActionId": "@{refOrderAction.id}",
+                      "PricebookEntryId": "{{VirtualRouterTermedPBE}}",
+                      "Quantity": 10.0,
+                      "UnitPrice": 50.0,
+                      "NetUnitPrice": 50.0,
+                      "TotalLineAmount": 500.0,
+                      "PeriodBoundary": "Anniversary",
+                      "BillingFrequency2": "Monthly",
+                      "PricingTermCount": 12.0,                
+                      "ServiceDate": "2022-02-01",
+                      "EndDate": "2023-01-01",
+                      "TaxTreatmentId": "{{defaultTaxTreatment}}"
+                  }
+              }        
+          ]
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+docs: Creates a Subscription Management order with two order items. One order item is sold on a monthly termed subscription, and the other order item is sold as an evergreen subscription.

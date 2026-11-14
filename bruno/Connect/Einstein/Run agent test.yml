@@ -1,0 +1,79 @@
+info:
+  name: Run agent test
+  type: http
+  seq: 2
+
+http:
+  method: POST
+  url: "{{_endpoint}}/services/data/v{{version}}/einstein/ai-evaluations/runs"
+  body:
+    type: json
+    data: |-
+      {
+          "aiEvaluationDefinitionName": "<YOUR_TEST_API_NAME>"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Run agent test
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/einstein/ai-evaluations/runs"
+      method: POST
+      body:
+        type: json
+        data: |-
+          {
+              "aiEvaluationDefinitionName": "Employee_agent_tests"
+          }
+    response:
+      status: 201
+      statusText: Created
+      headers:
+        - name: Date
+          value: Wed, 10 Sep 2025 13:46:14 GMT
+        - name: Content-Type
+          value: application/json
+        - name: Transfer-Encoding
+          value: chunked
+        - name: Connection
+          value: keep-alive
+        - name: Vary
+          value: Accept-Encoding
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: Content-Encoding
+          value: gzip
+        - name: Sforce-Limit-Info
+          value: api-usage=183/5000000
+        - name: Set-Cookie
+          value: CookieConsentPolicy=0:1; path=/; expires=Thu, 10-Sep-2026 13:46:14 GMT; Max-Age=31536000; secure
+        - name: Set-Cookie
+          value: LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Thu, 10-Sep-2026 13:46:14 GMT; Max-Age=31536000; secure
+        - name: Set-Cookie
+          value: BrowserId=hIZ7eo5MEfCnxfmijQif_g; domain=.salesforce.com; path=/; expires=Thu, 10-Sep-2026 13:46:14 GMT; Max-Age=31536000; secure; SameSite=None
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: Server
+          value: sfdcedge
+        - name: X-SFDC-Request-Id
+          value: 543c8913aa732b136328d39c8546b5ac
+        - name: X-Request-Id
+          value: 543c8913aa732b136328d39c8546b5ac
+      body:
+        type: json
+        data: |-
+          {
+              "runId": "4KBAU0000002oK54AI",
+              "status": "NEW"
+          }
+
+docs: Generates a response based on the specified prompt template and input parameters ([documentation](https://developer.salesforce.com/docs/atlas.en-us.chatterapi.meta/chatterapi/connect_resources_prompt_template.htm)).

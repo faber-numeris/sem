@@ -1,0 +1,94 @@
+info:
+  name: Create/Clone Sandbox
+  type: http
+  seq: 2
+
+http:
+  method: POST
+  url: "{{_endpoint}}/services/data/v{{version}}/tooling/sobjects/SandboxInfo"
+  headers:
+    - name: Content-Type
+      value: application/json
+  body:
+    type: json
+    data: |-
+      {
+          "SandboxName": "devSandbox",
+          "LicenseType": "DEVELOPER",
+          "TemplateId": null,
+          "HistoryDays": 0,
+          "CopyChatter": false,
+          "AutoActivate": false,
+          "ApexClassId": null,
+          "Description": "My new fresh sandbox",
+          "SourceId": null
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Create Sandbox
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/tooling/sobjects/SandboxInfo"
+      method: POST
+      headers:
+        - name: Content-Type
+          value: application/json
+      body:
+        type: json
+        data: |-
+          {
+              "SandboxName": "devSandbox",
+              "LicenseType": "DEVELOPER",
+              "TemplateId": null,
+              "HistoryDays": 0,
+              "CopyChatter": false,
+              "AutoActivate": false,
+              "ApexClassId": null,
+              "Description": "My new fresh sandbox",
+              "SourceId": null
+          }
+    response:
+      status: 201
+      statusText: Created
+      headers:
+        - name: Date
+          value: Mon, 11 Dec 2023 10:44:57 GMT
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: Sforce-Limit-Info
+          value: api-usage=312/15000
+        - name: Location
+          value: /services/data/v59.0/tooling/sobjects/SandboxInfo/0GQ4H000000CxSzWAK
+        - name: Content-Type
+          value: application/json;charset=UTF-8
+        - name: Vary
+          value: Accept-Encoding
+        - name: Content-Encoding
+          value: gzip
+        - name: Transfer-Encoding
+          value: chunked
+      body:
+        type: json
+        data: |-
+          {
+              "id": "0GQ4H000000CxSzWAK",
+              "success": true,
+              "errors": [],
+              "warnings": [],
+              "infos": []
+          }
+
+docs: Creates or clones a sandbox. If you wish to clone, fill the SourceId body field with the org Id of the source sandbox.

@@ -1,0 +1,23 @@
+info:
+  name: Delete managed event subscription
+  type: http
+  seq: 6
+
+http:
+  method: DELETE
+  url: "{{_endpoint}}/services/data/v{{version}}/tooling/sobjects/ManagedEventSubscription/:managedEventSubscriptionId"
+  params:
+    - name: managedEventSubscriptionId
+      value: ""
+      type: path
+  body:
+    type: json
+    data: ""
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true

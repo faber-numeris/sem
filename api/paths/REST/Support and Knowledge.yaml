@@ -1,0 +1,165 @@
+/services/data/v{version}/support/embeddedservice/configuration/{EMBEDDED_SERVICE_CONFIG_DEVELOPERNAME}:
+  get:
+    tags:
+      - REST > Support and Knowledge
+    summary: Embedded Service Configuration Describe
+    description: >-
+      Retrieves the values for your Embedded Service deployment configuration, including the branding colors, font, and site URL.
+
+
+      You must be logged in to the account that owns the EmbeddedServiceConfigDeveloperName you are querying.
+    parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: EMBEDDED_SERVICE_CONFIG_DEVELOPERNAME
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: Successful response
+        content:
+          application/json: {}
+/services/data/v{version}/support/dataCategoryGroups:
+  get:
+    tags:
+      - REST > Support and Knowledge
+    summary: Data Category Groups
+    description: >-
+      Returns the list of list views for the specified sObject, including the ID and other basic information about each list view. You can also get basic information for a specific list view by ID.
+    parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: sObjectName
+        in: query
+        schema:
+          type: string
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: Successful response
+        content:
+          application/json: {}
+/services/data/v{version}/support/dataCategoryGroups/{GROUP}/dataCategories/{CATEGORY}:
+  get:
+    tags:
+      - REST > Support and Knowledge
+    summary: Data Category Detail
+    description: Get data category details and the child categories by a given category.
+    parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: GROUP
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: CATEGORY
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: Successful response
+        content:
+          application/json: {}
+/services/data/v{version}/support/knowledgeArticles:
+  get:
+    tags:
+      - REST > Support and Knowledge
+    summary: Articles List
+    description: >-
+      Get a page of online articles for the given language and category through either search or query.
+    parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: Successful response
+        content:
+          application/json: {}
+/services/data/v{version}/support/knowledgeArticles/{ARTICLE_ID}:
+  get:
+    tags:
+      - REST > Support and Knowledge
+    summary: Articles Details
+    description: Get all online article fields, accessible to the user.
+    parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: ARTICLE_ID
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: Successful response
+        content:
+          application/json: {}
+/services/data/v{version}/knowledgeManagement/settings:
+  get:
+    tags:
+      - REST > Support and Knowledge
+    summary: Retrieve Knowledge Language Settings
+    description: >-
+      Returns the existing Knowledge language settings, including the default knowledge language and a list of supported Knowledge language information.
+
+      https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/resources_knowledge_retrieve_language.htm
+    parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: Successful response
+        content:
+          application/json: {}

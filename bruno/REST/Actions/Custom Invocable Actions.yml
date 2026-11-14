@@ -1,0 +1,23 @@
+info:
+  name: Custom Invocable Actions
+  type: http
+  seq: 3
+
+http:
+  method: GET
+  url: "{{_endpoint}}/services/data/v{{version}}/actions/custom"
+  headers:
+    - name: Content-Type
+      value: application/json
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+docs: |-
+  Returns the list of all custom actions. You can also get basic information for each type of action.
+  This resource is available in REST API version 32.0 and later.

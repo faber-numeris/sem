@@ -1,0 +1,11 @@
+info:
+  name: Feed Elements
+  type: folder
+  seq: 2
+
+request:
+  auth: inherit
+
+docs:
+  content: Post and delete feed elements.
+  type: text/markdown

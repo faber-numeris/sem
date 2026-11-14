@@ -1,0 +1,94 @@
+info:
+  name: List Sandboxes
+  type: http
+  seq: 1
+
+http:
+  method: GET
+  url: "{{_endpoint}}/services/data/v{{version}}/tooling/query/?q=SELECT Id, SandboxName, LicenseType, AutoActivate FROM SandboxInfo"
+  headers:
+    - name: Content-Type
+      value: application/json
+      disabled: true
+  params:
+    - name: q
+      value: SELECT Id, SandboxName, LicenseType, AutoActivate FROM SandboxInfo
+      type: query
+      description: SOQL Query
+  body:
+    type: text
+    data: ""
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: List Sandboxes
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/tooling/query/?q=SELECT Id, SandboxName, LicenseType, AutoActivate FROM SandboxInfo"
+      method: GET
+      headers:
+        - name: Content-Type
+          value: application/json
+          disabled: true
+      params:
+        - name: q
+          value: SELECT Id, SandboxName, LicenseType, AutoActivate FROM SandboxInfo
+          type: query
+          description: SOQL Query
+      body:
+        type: text
+        data: ""
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: Date
+          value: Mon, 11 Dec 2023 10:45:22 GMT
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: Sforce-Limit-Info
+          value: api-usage=312/15000
+        - name: Content-Type
+          value: application/json;charset=UTF-8
+        - name: Vary
+          value: Accept-Encoding
+        - name: Content-Encoding
+          value: gzip
+        - name: Transfer-Encoding
+          value: chunked
+      body:
+        type: json
+        data: |-
+          {
+              "size": 1,
+              "totalSize": 1,
+              "done": true,
+              "queryLocator": null,
+              "entityTypeName": "SandboxInfo",
+              "records": [
+                  {
+                      "attributes": {
+                          "type": "SandboxInfo",
+                          "url": "/services/data/v59.0/tooling/sobjects/SandboxInfo/0GQ4H000000CxSzWAK"
+                      },
+                      "Id": "0GQ4H000000CxSzWAK",
+                      "SandboxName": "devSandbox",
+                      "LicenseType": "DEVELOPER",
+                      "AutoActivate": false
+                  }
+              ]
+          }
+
+docs: Lists all sandboxes.

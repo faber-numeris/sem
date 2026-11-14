@@ -1,0 +1,30 @@
+info:
+  name: Get Job Query Result
+  type: http
+  seq: 2
+
+http:
+  method: GET
+  url: "{{_endpoint}}/services/data/v{{version}}/jobs/query/{{_jobId}}/results"
+  headers:
+    - name: Content-Type
+      value: application/json
+    - name: Accept
+      value: test/csv
+  params:
+    - name: locator
+      value: ""
+      type: query
+      disabled: true
+    - name: maxRecords
+      value: ""
+      type: query
+      disabled: true
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true

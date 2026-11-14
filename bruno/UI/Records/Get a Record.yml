@@ -1,0 +1,189 @@
+info:
+  name: Get a Record
+  type: http
+  seq: 8
+
+http:
+  method: GET
+  url: "{{_endpoint}}/services/data/v{{version}}/ui-api/records/:RECORD_ID"
+  params:
+    - name: childRelationships
+      value: ""
+      type: query
+      description: |-
+        A collection of child relationship names. The records with those child relationship names are included in the response. Specify names in the format ObjectApiName.ChildRelationshipName or ObjectApiName.ChildRelationshipName.FieldApiName. For example, to specify the Contacts relationship on an Account, use Account.Contacts. You can get child relationships one level deep.
+        To get a relationship name, look in the Object Info response body.
+      disabled: true
+    - name: fields
+      value: ""
+      type: query
+      description: |-
+        Specifies the fields to return. If this property is specified, the response is a union of fields and optionalFields.
+        If the context user doesn’t have access to a field, an error is returned.
+
+        If you’re not sure whether the context user has access to a field and you don’t want the request to fail if they don’t, use the optionalFields parameter.
+
+        Specify names in the format ObjectApiName.FieldName. You can get any field that has a named relationship to this record. There is no limit to the number of fields you can specify.
+      disabled: true
+    - name: layoutTypes
+      value: ""
+      type: query
+      description: |-
+        Specifies the fields to return. If this property is specified, the response is a union of layoutTypes, modes, and optionalFields.
+        A collection containing any of these values:
+        Compact—Use this value to get a layout that contains a record’s key fields.
+        Full—(Default) Use this value to get a full layout.
+      disabled: true
+    - name: modes
+      value: ""
+      type: query
+      description: |-
+        The access mode for the record. This value determines which fields to get from a layout. Layouts have different fields for create, edit, and view modes. For example, formula fields are rendered in view mode, but not in create mode because they’re calculated at run time, like formulas in a spreadsheet. A collection containing any of these values:
+        Create—Use this mode if you intend to build UI that lets a user create a record. This mode is used by the /ui-api/record-defaults/create/<SOBJECT_API_NAME> resource.
+        Edit—Use this mode if you intend to build UI that lets a user edit a record. This mode is used by the /ui-api/record-defaults/clone/<RECORD_ID> resource.
+        View—(Default) Use this mode if you intend to build UI that displays a record.
+      disabled: true
+    - name: optionalFields
+      value: ""
+      type: query
+      description: |-
+        A collection of optional field names. If a field is accessible to the context user, it’s included in the response. If a field isn’t accessible to the context user, it isn’t included in the response, but it doesn’t cause an error.
+        Specify names in the format ObjectApiName.FieldName. You can get any field that has a named relationship to this record. There is no limit to the number of fields you can specify.
+      disabled: true
+    - name: pageSize
+      value: ""
+      type: query
+      description: The maximum number of child records to return on a page. The default value is 5.
+      disabled: true
+    - name: updateMru
+      value: ""
+      type: query
+      description: To add to the most recently used (MRU) list view, set to true. The default value is false.
+      disabled: true
+    - name: RECORD_ID
+      value: ""
+      type: path
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Get a Record
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/ui-api/records/:RECORD_ID?fields=Account.Name,Account.Rating"
+      method: GET
+      params:
+        - name: childRelationships
+          value: ""
+          type: query
+          description: |-
+            A collection of child relationship names. The records with those child relationship names are included in the response. Specify names in the format ObjectApiName.ChildRelationshipName or ObjectApiName.ChildRelationshipName.FieldApiName. For example, to specify the Contacts relationship on an Account, use Account.Contacts. You can get child relationships one level deep.
+            To get a relationship name, look in the Object Info response body.
+          disabled: true
+        - name: fields
+          value: Account.Name,Account.Rating
+          type: query
+          description: |-
+            Specifies the fields to return. If this property is specified, the response is a union of fields and optionalFields.
+            If the context user doesn’t have access to a field, an error is returned.
+
+            If you’re not sure whether the context user has access to a field and you don’t want the request to fail if they don’t, use the optionalFields parameter.
+
+            Specify names in the format ObjectApiName.FieldName. You can get any field that has a named relationship to this record. There is no limit to the number of fields you can specify.
+        - name: layoutTypes
+          value: ""
+          type: query
+          description: |-
+            Specifies the fields to return. If this property is specified, the response is a union of layoutTypes, modes, and optionalFields.
+            A collection containing any of these values:
+            Compact—Use this value to get a layout that contains a record’s key fields.
+            Full—(Default) Use this value to get a full layout.
+          disabled: true
+        - name: modes
+          value: ""
+          type: query
+          description: |-
+            The access mode for the record. This value determines which fields to get from a layout. Layouts have different fields for create, edit, and view modes. For example, formula fields are rendered in view mode, but not in create mode because they’re calculated at run time, like formulas in a spreadsheet. A collection containing any of these values:
+            Create—Use this mode if you intend to build UI that lets a user create a record. This mode is used by the /ui-api/record-defaults/create/<SOBJECT_API_NAME> resource.
+            Edit—Use this mode if you intend to build UI that lets a user edit a record. This mode is used by the /ui-api/record-defaults/clone/<RECORD_ID> resource.
+            View—(Default) Use this mode if you intend to build UI that displays a record.
+          disabled: true
+        - name: optionalFields
+          value: ""
+          type: query
+          description: |-
+            A collection of optional field names. If a field is accessible to the context user, it’s included in the response. If a field isn’t accessible to the context user, it isn’t included in the response, but it doesn’t cause an error.
+            Specify names in the format ObjectApiName.FieldName. You can get any field that has a named relationship to this record. There is no limit to the number of fields you can specify.
+          disabled: true
+        - name: pageSize
+          value: ""
+          type: query
+          description: The maximum number of child records to return on a page. The default value is 5.
+          disabled: true
+        - name: updateMru
+          value: ""
+          type: query
+          description: To add to the most recently used (MRU) list view, set to true. The default value is false.
+          disabled: true
+        - name: RECORD_ID
+          value: 001B000000UnQ2wIAF
+          type: path
+          description: Record ID
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: Date
+          value: Wed, 27 Sep 2023 15:58:57 GMT
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-XSS-Protection
+          value: 1; mode=block
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: ETag
+          value: '"8897eb60da3dea171b0d755821bf2c36--gzip"'
+        - name: Content-Type
+          value: application/json;charset=UTF-8
+        - name: Vary
+          value: Accept-Encoding
+        - name: Content-Encoding
+          value: gzip
+        - name: Transfer-Encoding
+          value: chunked
+      body:
+        type: json
+        data: |-
+          {
+              "apiName": "Account",
+              "childRelationships": {},
+              "eTag": "8897eb60da3dea171b0d755821bf2c36",
+              "fields": {
+                  "Name": {
+                      "displayValue": null,
+                      "value": "Burlington Textiles Corp of America"
+                  },
+                  "Rating": {
+                      "displayValue": "Warm",
+                      "value": "Warm"
+                  }
+              },
+              "id": "001B000000UnQ2wIAF",
+              "lastModifiedById": "005B0000003TOI6IAO",
+              "lastModifiedDate": "2017-08-18T14:46:22.000Z",
+              "recordTypeId": "012000000000000AAA",
+              "recordTypeInfo": null,
+              "systemModstamp": "2017-08-18T14:46:22.000Z",
+              "weakEtag": 1503067582000
+          }
+
+docs: Get a record’s data.

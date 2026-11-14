@@ -1,0 +1,82 @@
+info:
+  name: Get test status
+  type: http
+  seq: 3
+
+http:
+  method: GET
+  url: "{{_endpoint}}/services/data/v{{version}}/einstein/ai-evaluations/runs/:runId"
+  params:
+    - name: runId
+      value: ""
+      type: path
+      description: Evaluation ID
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Get test status
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/einstein/ai-evaluations/runs/:runId"
+      method: GET
+      params:
+        - name: runId
+          value: 4KBAU0000002oK54AI
+          type: path
+          description: Evaluation ID
+      body:
+        type: json
+        data: ""
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: Date
+          value: Wed, 10 Sep 2025 13:46:26 GMT
+        - name: Content-Type
+          value: application/json
+        - name: Transfer-Encoding
+          value: chunked
+        - name: Connection
+          value: keep-alive
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: Set-Cookie
+          value: CookieConsentPolicy=0:1; path=/; expires=Thu, 10-Sep-2026 13:46:26 GMT; Max-Age=31536000; secure
+        - name: Set-Cookie
+          value: LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Thu, 10-Sep-2026 13:46:26 GMT; Max-Age=31536000; secure
+        - name: Set-Cookie
+          value: BrowserId=i6chMI5MEfCjGPkElbnd3Q; domain=.salesforce.com; path=/; expires=Thu, 10-Sep-2026 13:46:26 GMT; Max-Age=31536000; secure; SameSite=None
+        - name: Content-Encoding
+          value: gzip
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-Robots-Tag
+          value: none
+        - name: Sforce-Limit-Info
+          value: api-usage=183/5000000
+        - name: Vary
+          value: Accept-Encoding
+        - name: Server
+          value: sfdcedge
+        - name: X-SFDC-Request-Id
+          value: 9c6b1b17f16e5e4b538e836eb8def249
+        - name: X-Request-Id
+          value: 9c6b1b17f16e5e4b538e836eb8def249
+        - name: X-SFDC-Edge-Cache
+          value: MISS
+      body:
+        type: json
+        data: |-
+          {
+              "startTime": "2025-09-10T13:46:14.000Z",
+              "status": "IN_PROGRESS"
+          }
+
+docs: Generates a response based on the specified prompt template and input parameters ([documentation](https://developer.salesforce.com/docs/atlas.en-us.chatterapi.meta/chatterapi/connect_resources_prompt_template.htm)).

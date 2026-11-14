@@ -1,0 +1,384 @@
+info:
+  name: Invoke
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: "{{_endpoint}}/services/data/v{{version}}/connect/business-rules/decision-table/lookup/:decisionTableId"
+  params:
+    - name: decisionTableId
+      value: 0lDHo0000008Po3
+      type: path
+      description: Decision Table Id
+  body:
+    type: json
+    data: |-
+      {
+          "datasetLinkName": "transactionMapping",
+          "conditions": [
+              {
+                  "conditionsList": [
+                      {
+                          "fieldName": "Product__c",
+                          "value": "Nike",
+                          "operator": "Matches" //Operator is optional
+                      },
+                      {
+                          "fieldName": "Price__c",
+                          "value": 1000,
+                          "operator": "GreaterThan"
+                      }
+                  ]
+              },
+              {
+                  "conditionsList": [
+                      {
+                          "fieldName": "Product__c",
+                          "value": "Adidas",
+                          "operator": "Matches" //Operator is optional
+                      },
+                      {
+                          "fieldName": "Price__c",
+                          "value": 1500,
+                          "operator": "GreaterThan"
+                      }
+                  ]
+              }
+          ]
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Status404-NotFound
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/connect/business-rules/decision-table/lookup/:decisionTableId"
+      method: POST
+      params:
+        - name: decisionTableId
+          value: 0lDHo0000008Pnt
+          type: path
+          description: Decision Table Id
+      body:
+        type: json
+        data: |-
+          {
+              "datasetLinkName": "transactionMapping",
+              "conditions": [
+                  {
+                      "conditionsList": [
+                          {
+                              "fieldName": "Product__c",
+                              "value": "Nike",
+                              "operator": "Matches" //Operator is optional
+                          },
+                          {
+                              "fieldName": "Price__c",
+                              "value": 1000,
+                              "operator": "GreaterThan"
+                          }
+                      ]
+                  },
+                  {
+                      "conditionsList": [
+                          {
+                              "fieldName": "Product__c",
+                              "value": "Adidas",
+                              "operator": "Matches" //Operator is optional
+                          },
+                          {
+                              "fieldName": "Price__c",
+                              "value": 1500,
+                              "operator": "GreaterThan"
+                          }
+                      ]
+                  }
+              ]
+          }
+    response:
+      status: 404
+      statusText: Not Found
+      headers:
+        - name: Date
+          value: Tue, 19 Sep 2023 14:11:45 GMT
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-XSS-Protection
+          value: 1; mode=block
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: Content-Type
+          value: application/json;charset=UTF-8
+        - name: Transfer-Encoding
+          value: chunked
+      body:
+        type: json
+        data: |-
+          [
+              {
+                  "errorCode": "NOT_FOUND",
+                  "message": "The requested resource does not exist"
+              }
+          ]
+  - name: Status400-InvalidOperation
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/connect/business-rules/decision-table/lookup/:decisionTableId"
+      method: POST
+      params:
+        - name: decisionTableId
+          value: 0lDHo0000008Po3
+          type: path
+          description: Decision Table Id
+      body:
+        type: json
+        data: |-
+          {
+              "datasetLinkName": "transactionMapping",
+              "conditions": [
+                  {
+                      "conditionsList": [
+                          {
+                              "fieldName": "Product__c",
+                              "value": "Nike",
+                              "operator": "Matches" //Operator is optional
+                          },
+                          {
+                              "fieldName": "Price__c",
+                              "value": 1000,
+                              "operator": "GreaterThan"
+                          }
+                      ]
+                  },
+                  {
+                      "conditionsList": [
+                          {
+                              "fieldName": "Product__c",
+                              "value": "Adidas",
+                              "operator": "Matches" //Operator is optional
+                          },
+                          {
+                              "fieldName": "Price__c",
+                              "value": 1500,
+                              "operator": "GreaterThan"
+                          }
+                      ]
+                  }
+              ]
+          }
+    response:
+      status: 400
+      statusText: Bad Request
+      headers:
+        - name: Date
+          value: Tue, 19 Sep 2023 14:16:11 GMT
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-XSS-Protection
+          value: 1; mode=block
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: Content-Type
+          value: application/json;charset=UTF-8
+        - name: Transfer-Encoding
+          value: chunked
+      body:
+        type: json
+        data: |-
+          [
+              {
+                  "errorCode": "INVALID_OPERATION",
+                  "message": "Can't execute decision table which is not in Active state."
+              }
+          ]
+  - name: Status201-Error
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/connect/business-rules/decision-table/lookup/:decisionTableId"
+      method: POST
+      params:
+        - name: decisionTableId
+          value: 0lDHo0000008Po3
+          type: path
+          description: Decision Table Id
+      body:
+        type: json
+        data: |-
+          {
+              "datasetLinkName": "transactionMapping",
+              "conditions": [
+                  {
+                      "conditionsList": [
+                          {
+                              "fieldName": "Product__c",
+                              "value": "Nike",
+                              "operator": "Matches" //Operator is optional
+                          },
+                          {
+                              "fieldName": "Price__c",
+                              "value": 1000,
+                              "operator": "GreaterThan"
+                          }
+                      ]
+                  },
+                  {
+                      "conditionsList": [
+                          {
+                              "fieldName": "Product__c",
+                              "value": "Adidas",
+                              "operator": "Matches" //Operator is optional
+                          },
+                          {
+                              "fieldName": "Price__c",
+                              "value": 1500,
+                              "operator": "GreaterThan"
+                          }
+                      ]
+                  }
+              ]
+          }
+    response:
+      status: 201
+      statusText: Created
+      headers:
+        - name: Date
+          value: Tue, 19 Sep 2023 14:17:24 GMT
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-XSS-Protection
+          value: 1; mode=block
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: Content-Type
+          value: application/json;charset=UTF-8
+        - name: Vary
+          value: Accept-Encoding
+        - name: Content-Encoding
+          value: gzip
+        - name: Transfer-Encoding
+          value: chunked
+      body:
+        type: json
+        data: |-
+          {
+              "outputs": [
+                  {
+                      "errorCode": 400,
+                      "errorMessage": "Specify valid name for Data set Link",
+                      "outcomeList": [],
+                      "outcomeType": null,
+                      "successStatus": false
+                  },
+                  {
+                      "errorCode": 400,
+                      "errorMessage": "Specify valid name for Data set Link",
+                      "outcomeList": [],
+                      "outcomeType": null,
+                      "successStatus": false
+                  }
+              ]
+          }
+
+docs: |-
+  # Invoke Decision Tables
+
+  Invoke a decision table by passing multiple input conditions within the same request.Resource
+
+  ```
+  /connect/business-rules/decision-table/lookup/${decisionTableId}
+
+   ```
+
+  Resource example
+
+  ```
+  https://yourInstance.salesforce.com/services/data/v59.0/connect
+  /business-rules/decision-table/lookup/${0lDD2000000004NMAQ}
+
+   ```
+
+  Available version
+
+  58.0
+
+  Requires Chatter
+
+  No
+
+  HTTP methods
+
+  POST
+
+  Request body for POST
+
+  JSON example
+
+  ```
+  {
+     "datasetLinkName" : "transactionMapping",
+     “conditions” :[
+        {
+          “conditionsList”: [
+            {
+                "fieldName": "Product__c",
+                "value": "Nike",
+                "operator": "Matches" //Operator is optional
+            },
+            {
+                "fieldName": "Price__c",
+                "value": 1000,
+                "operator": "GreaterThan"
+            }
+          ]
+        },
+        {
+          “conditionsList”: [
+            {
+                "fieldName": "Product__c",
+                "value": "Adidas",
+                "operator": "Matches" //Operator is optional
+            },
+            {
+                "fieldName": "Price__c",
+                "value": 1500,
+                "operator": "GreaterThan"
+            }
+          ]
+
+   ```
+
+  Properties
+
+  | Name | Type | Description | Required or Optional | Available Version |
+  | --- | --- | --- | --- | --- |
+  | conditions | [Decision Table Condition List](https://developer.salesforce.com/docs/atlas.en-us.industries_reference.meta/industries_reference/connect_requests_decision_table_condition_list_input.htm) | The list of decision table conditions on which the decision table executes and provides outcomes. | Required | 58.0 |
+  | datasetLinkName | String | The API name of the dataset link provided as an input for the decision table execution. | Optional | 58.0 |
+
+  Response body for POST
+
+  [Decision Table Bulk Outcome](https://developer.salesforce.com/docs/atlas.en-us.industries_reference.meta/industries_reference/connect_responses_decision_table_bulk_outcome.htm)
+
+  # Decision Table Bulk Outcome
+
+  Output representation of the decision table bulk look-up.
+
+  | Property Name | Type | Description | Filter Group and Version | Available Version |
+  | --- | --- | --- | --- | --- |
+  | outputs | [Decision Table Outcome](https://developer.salesforce.com/docs/atlas.en-us.industries_reference.meta/industries_reference/connect_responses_decision_table_outcome.htm) | List of the output of the Decision Table bulk lookup. | Small, 58.0 | 58.0 |

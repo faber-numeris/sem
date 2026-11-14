@@ -1,0 +1,63 @@
+info:
+  name: Bulk Retrieve Batch Result
+  type: http
+  seq: 7
+
+http:
+  method: GET
+  url: "{{_endpoint}}/services/async/{{version}}/job/{{_jobId}}/batch/{{_batchId}}/result"
+  headers:
+    - name: X-SFDC-Session
+      value: "{{_accessToken}}"
+    - name: Accept-Encoding
+      value: gzip
+    - name: Content-Encoding
+      value: gzip
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Successful Bulk Retrieve Batch Result
+    request:
+      url: "{{_endpoint}}/services/async/{{version}}/job/{{_jobId}}/batch/{{_batchId}}/result"
+      method: GET
+      headers:
+        - name: X-SFDC-Session
+          value: "{{_accessToken}}"
+        - name: Accept-Encoding
+          value: gzip
+        - name: Content-Encoding
+          value: gzip
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: Date
+          value: Thu, 16 Nov 2023 16:20:11 GMT
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-XSS-Protection
+          value: 1; mode=block
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: Content-Type
+          value: text/csv
+        - name: Content-Encoding
+          value: gzip
+        - name: Transfer-Encoding
+          value: chunked
+      body:
+        type: text
+        data: |
+          "Id","Success","Created","Error"
+          "001...","true","true",""

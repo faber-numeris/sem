@@ -1,0 +1,102 @@
+info:
+  name: Group Invites
+  type: http
+  seq: 4
+
+http:
+  method: POST
+  url: "{{_endpoint}}/services/data/v{{version}}/chatter/groups/group/:GROUP_ID/invite"
+  headers:
+    - name: Content-Type
+      value: application/json
+  params:
+    - name: GROUP_ID
+      value: ""
+      type: path
+  body:
+    type: json
+    data: |-
+      {
+         "invitees" : {
+            "emails": [
+               "testemail1@sfdcpostman.com",
+               "testemail2@sfdcpostman.com"
+            ]
+         },
+         "message" : "Join this group to participate in the discussion about your favorite feature."
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Successful Group Invites
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/chatter/groups/group/:GROUP_ID/invite"
+      method: POST
+      headers:
+        - name: Content-Type
+          value: application/json
+      params:
+        - name: GROUP_ID
+          value: 0F9...
+          type: path
+      body:
+        type: json
+        data: |-
+          {
+             "invitees" : {
+                "emails": [
+                   "testemail1@sfdcpostman.com",
+                   "testemail2@sfdcpostman.com"
+                ]
+             },
+             "message" : "Join this group to participate in the discussion about your favorite feature."
+          }
+    response:
+      status: 201
+      statusText: Created
+      headers:
+        - name: Date
+          value: Wed, 22 Nov 2023 11:49:28 GMT
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-XSS-Protection
+          value: 1; mode=block
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: Content-Type
+          value: application/json;charset=UTF-8
+        - name: Vary
+          value: Accept-Encoding
+        - name: Content-Encoding
+          value: gzip
+        - name: Transfer-Encoding
+          value: chunked
+      body:
+        type: json
+        data: |-
+          {
+              "invitations": [
+                  {
+                      "email": "testemail1@sfdcpostman.com",
+                      "status": "Invited",
+                      "userId": ""
+                  },
+                  ...
+              ]
+          }
+
+docs: |-
+  Invite internal and external users to join a group.
+
+  https://developer.salesforce.com/docs/atlas.en-us.chatterapi.meta/chatterapi/connect_resources_groups_invites.htm#connect_resources_groups_invites

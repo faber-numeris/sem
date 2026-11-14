@@ -1,0 +1,142 @@
+info:
+  name: Get Record Edit Page Actions
+  type: http
+  seq: 3
+
+http:
+  method: GET
+  url: "{{_endpoint}}/services/data/v{{version}}/ui-api/actions/record/:RECORD_ID/record-edit"
+  params:
+    - name: RECORD_ID
+      value: ""
+      type: path
+      description: Record ID
+  body:
+    type: text
+    data: ""
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Get Record Edit Page Actions
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/ui-api/actions/record/:RECORD_ID/record-edit"
+      method: GET
+      params:
+        - name: RECORD_ID
+          value: 0014H00002LbR7QQAV
+          type: path
+          description: Record ID
+      body:
+        type: text
+        data: ""
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: Date
+          value: Fri, 06 Oct 2023 10:17:45 GMT
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: ETag
+          value: '"550367168889732c414e90f1a22d15af--gzip"'
+        - name: Content-Type
+          value: application/json;charset=UTF-8
+        - name: Vary
+          value: Accept-Encoding
+        - name: Content-Encoding
+          value: gzip
+        - name: Transfer-Encoding
+          value: chunked
+      body:
+        type: json
+        data: |-
+          {
+              "actions": {
+                  "0014H00002LbR7QQAV": {
+                      "actions": [
+                          {
+                              "actionListContext": "RecordEdit",
+                              "actionTarget": null,
+                              "actionTargetType": "Invoke",
+                              "apiName": "SaveEdit",
+                              "externalId": "00D58000000arpq:0014H00002LbR7QQAV::RecordEdit:Desktop:StandardButton:SaveEdit",
+                              "iconUrl": "https://pozil-dev-ed.my.salesforce.com/img/icon/t4v35/action/new_custom19_120.png",
+                              "id": "0JV4H0000350887WAA",
+                              "isMassAction": "false",
+                              "label": "Save",
+                              "lwcComponent": null,
+                              "primaryColor": null,
+                              "relatedListRecordId": null,
+                              "relatedSourceObject": null,
+                              "section": "Page",
+                              "sourceObject": "0014H00002LbR7QQAV",
+                              "subtype": "LightningWebComponent_Action",
+                              "targetObject": "Account",
+                              "targetUrl": null,
+                              "type": "StandardButton"
+                          },
+                          {
+                              "actionListContext": "RecordEdit",
+                              "actionTarget": null,
+                              "actionTargetType": "Invoke",
+                              "apiName": "SaveAndNew",
+                              "externalId": "00D58000000arpq:0014H00002LbR7QQAV::RecordEdit:Desktop:StandardButton:SaveAndNew",
+                              "iconUrl": "https://pozil-dev-ed.my.salesforce.com/img/icon/t4v35/action/new_custom19_120.png",
+                              "id": "0JV4H0000350888WAA",
+                              "isMassAction": "false",
+                              "label": "Save &amp; New",
+                              "lwcComponent": null,
+                              "primaryColor": null,
+                              "relatedListRecordId": null,
+                              "relatedSourceObject": null,
+                              "section": "Page",
+                              "sourceObject": "0014H00002LbR7QQAV",
+                              "subtype": "LightningWebComponent_Action",
+                              "targetObject": "Account",
+                              "targetUrl": null,
+                              "type": "StandardButton"
+                          },
+                          {
+                              "actionListContext": "RecordEdit",
+                              "actionTarget": null,
+                              "actionTargetType": "Invoke",
+                              "apiName": "CancelEdit",
+                              "externalId": "00D58000000arpq:0014H00002LbR7QQAV::RecordEdit:Desktop:StandardButton:CancelEdit",
+                              "iconUrl": "https://pozil-dev-ed.my.salesforce.com/img/icon/t4v35/action/new_custom19_120.png",
+                              "id": "0JV4H0000350889WAA",
+                              "isMassAction": "false",
+                              "label": "Cancel",
+                              "lwcComponent": null,
+                              "primaryColor": null,
+                              "relatedListRecordId": null,
+                              "relatedSourceObject": null,
+                              "section": "Page",
+                              "sourceObject": "0014H00002LbR7QQAV",
+                              "subtype": "LightningWebComponent_Action",
+                              "targetObject": "Account",
+                              "targetUrl": null,
+                              "type": "StandardButton"
+                          }
+                      ],
+                      "links": [],
+                      "url": "/services/data/v58.0/ui-api/actions/record/0014H00002LbR7QQAV/record-edit"
+                  }
+              },
+              "eTag": "550367168889732c414e90f1a22d15af",
+              "url": "/services/data/v58.0/ui-api/actions/record/0014H00002LbR7QQAV/record-edit"
+          }
+
+docs: Get the actions on record detail pages.

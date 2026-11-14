@@ -1,0 +1,132 @@
+info:
+  name: Credit Points to Members
+  type: http
+  seq: 2
+
+http:
+  method: POST
+  url: "{{_endpoint}}/services/data/v{{version}}/connect/loyalty/programs/:loyaltyProgramName/program-processes/:processName"
+  params:
+    - name: loyaltyProgramName
+      value: ""
+      type: path
+    - name: processName
+      value: ""
+      type: path
+  body:
+    type: json
+    data: |-
+      {
+         "processParameters":[
+            {
+               "TransactionJournal":{
+                  "ActivityDate":"2023-08-27T00:00:00Z",
+                  "ExternalTransactionNumber":"1",
+                  "InvoiceDate":"2023-08-23",
+                  "JournalTypeName":"Accrual",
+                  "MembershipNumber":"Member123",
+                  "TransactionAmount":"45.0",
+                  "CurrencyIsoCode":"EUR",
+                  "Status":"Processed"
+               },
+               "PointsToCredit":100.0
+            }
+         ]
+      }
+  auth: inherit
+
+runtime:
+  scripts:
+    - type: before-request
+      code: |-
+        //bru.setVar('loyaltyProgramName','xyz');
+        bru.setVar('processName','CreditPointsToMembers');
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Credit Points to Members
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/connect/loyalty/programs/:loyaltyProgramName/program-processes/:processName"
+      method: POST
+      headers:
+        - name: Authorization
+          value: Bearer {{accessToken}}
+      params:
+        - name: loyaltyProgramName
+          value: NTO Insider
+          type: path
+        - name: processName
+          value: creditPoints
+          type: path
+      body:
+        type: json
+        data: |-
+          {
+             "processParameters":[
+                {
+                   "TransactionJournal":{
+                      "ActivityDate":"2023-08-27T00:00:00Z",
+                      "ExternalTransactionNumber":"1",
+                      "InvoiceDate":"2023-08-23",
+                      "JournalTypeName":"Accrual",
+                      "MembershipNumber":"Member123",
+                      "TransactionAmount":"45.0",
+                      "CurrencyIsoCode":"EUR",
+                      "Status":"Processed"
+                   },
+                   "PointsToCredit":100.0
+                }
+             ]
+          }
+    response:
+      status: 201
+      statusText: Created
+      headers:
+        - name: Date
+          value: Mon, 27 May 2024 20:09:08 GMT
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: Content-Type
+          value: application/json;charset=UTF-8
+        - name: Vary
+          value: Accept-Encoding
+        - name: Content-Encoding
+          value: gzip
+        - name: Transfer-Encoding
+          value: chunked
+      body:
+        type: json
+        data: |-
+          {
+              "message": null,
+              "outputParameters": {
+                  "outputParameters": {
+                      "results": [
+                          {
+                              "PointsCredited": 100
+                          }
+                      ]
+                  }
+              },
+              "simulationDetails": {},
+              "status": true
+          }
+
+docs: |-
+  Standard Documentation:
+
+  [https://developer.salesforce.com/docs/atlas.en-us.loyalty.meta/loyalty/connect_resources_credit_points_to_members.htm](https://developer.salesforce.com/docs/atlas.en-us.loyalty.meta/loyalty/connect_resources_credit_points_to_members.htm)
+
+  In the Pre-request. Script Tab, make changes in the variables value accordingly with the real Process Name to invoke.

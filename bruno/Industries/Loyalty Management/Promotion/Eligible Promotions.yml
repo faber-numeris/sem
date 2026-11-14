@@ -1,0 +1,150 @@
+info:
+  name: Eligible Promotions
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: "{{_endpoint}}/services/data/v{{version}}/global-promotions-management/eligible-promotions"
+  params:
+    - name: journalTypeId
+      value: ""
+      type: query
+      disabled: true
+  body:
+    type: json
+    data: |-
+      {
+         "cart":{
+            "cartDetails":[
+               {
+                  "activityStartDate":"2023-06-14T12:45:19Z",
+                  "contactId":"003xx000004WjzAAAS",
+                  "transactionAmount":499,
+                  "currencyISOCode":"INR",
+                  "cartLineDetails":[
+                     {
+                        "cartLineProductId":"01txx0000006iTsAAI",
+                        "cartLineItemQuantity":3,
+                        "cartLineItemAmount":499,
+                        "cartLineProductCatalogId":"0ZSSB0000002d8X4AQ"
+                     }
+                  ]
+               }
+            ]
+         }
+      }
+  auth: inherit
+
+runtime:
+  scripts:
+    - type: before-request
+      code: |-
+        //bru.setVar('loyaltyProgramName','xyz');
+        bru.setVar('processName','TierProcessing');
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: example of the details of a customer’s cart whose eligible promotions are to be fetched
+    request:
+      url: https://itab2c--devloyalty.sandbox.my.salesforce.com/services/data/v60.0/connect/loyalty/programs/Volare/program-processes/processName
+      method: POST
+      headers:
+        - name: Authorization
+          value: Bearer {{accessToken}}
+      params:
+        - name: journalTypeId
+          value: ""
+          type: query
+          disabled: true
+      body:
+        type: json
+        data: |-
+          {
+             "cart":{
+                "cartDetails":[
+                   {
+                      "activityStartDate":"2023-06-14T12:45:19Z",
+                      "contactId":"003xx000004WjzAAAS",
+                      "transactionAmount":499,
+                      "currencyISOCode":"INR",
+                      "cartLineDetails":[
+                         {
+                            "cartLineProductId":"01txx0000006iTsAAI",
+                            "cartLineItemQuantity":3,
+                            "cartLineItemAmount":499,
+                            "cartLineProductCatalogId":"0ZSSB0000002d8X4AQ"
+                         }
+                      ]
+                   }
+                ]
+             }
+          }
+    response:
+      body:
+        type: text
+        data: ""
+  - name: "example of the details of a loyalty program member’s cart whose eligible loyalty program promotions are to be fetched:"
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/connect/loyalty/programs/:loyaltyProgramName/program-processes/:processName"
+      method: POST
+      headers:
+        - name: Authorization
+          value: Bearer {{accessToken}}
+      params:
+        - name: journalTypeId
+          value: ""
+          type: query
+          disabled: true
+        - name: loyaltyProgramName
+          value: ""
+          type: path
+        - name: processName
+          value: ""
+          type: path
+      body:
+        type: json
+        data: |-
+          {
+             "cart":{
+                "cartDetails":[
+                   {
+                      "activityStartDate":"2023-06-14T12:45:19Z",
+                      "currencyISOCode":"INR",
+                      "transactionAmount":499,
+                      "membershipNumber":"Member-005",
+                      "cartLineDetails":[
+                         {
+                            "cartLineProductId":"01txx0000006iTsAAI",
+                            "cartLineItemQuantity":2,
+                            "cartLineItemAmount":99,
+                            "cartLineProductCatalogId":"0ZSSB0000002d8X4AQ"
+                         },
+                         {
+                            "cartLineProduct":"Coke",
+                            "cartLineItemQuantity":10,
+                            "cartLineItemAmount":400,
+                            "cartLineProductCatalog":"Beverages"
+                         }
+                      ]
+                   }
+                ]
+             }
+          }
+    response:
+      body:
+        type: text
+        data: ""
+
+docs: |-
+  [Eligible Promotions](https://developer.salesforce.com/docs/atlas.en-us.loyalty.meta/loyalty/connect_resources_eligible_promotions.htm)
+
+  NOTE:
+
+  In the Pre-request. Script Tab, make changes in the variables value accordingly with the real Process Name to invoke.

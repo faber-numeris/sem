@@ -1,0 +1,21 @@
+info:
+  name: OAuth Tokens Revoke
+  type: http
+  seq: 5
+
+http:
+  method: DELETE
+  url: "{{url}}{{site}}/services/data/v{{version}}/apps/oauth/usage/{{_appId}}/tokens"
+  headers:
+    - name: Authorization
+      value: Bearer <token>
+      description: Replace <token> with your access token
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+docs: Revokes all tokens available for the external client app. See [Refresh Token by App ID](https://developer.salesforce.com/docs/atlas.en-us.246.0.chatterapi.meta/chatterapi/connect_resources_usage_app_id_tokens.htm).

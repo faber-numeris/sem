@@ -1,0 +1,28 @@
+info:
+  name: Save Quote API
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: "{{_endpoint}}/services/apexrest/SBQQ/ServiceRouter"
+  headers:
+    - name: Content-Type
+      value: application/json
+  body:
+    type: json
+    data: ""
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+docs: |-
+  The Save Quote API saves a CPQ quote.
+  Available in: Salesforce CPQ Summer ’16 and later
+
+  https://developer.salesforce.com/docs/atlas.en-us.cpq_dev_api.meta/cpq_dev_api/cpq_quote_api_save_final.htm

@@ -1,0 +1,299 @@
+/services/data/v{version}/connect/business-rules/decision-table/lookup/{decisionTableId}:
+  post:
+    tags:
+      - Connect > Industries > Business Rules Engine > decision-table > lookup
+    summary: Invoke
+    description: >-
+      # Invoke Decision Tables
+
+
+      Invoke a decision table by passing multiple input conditions within the same request.Resource
+
+
+      ```
+
+      /connect/business-rules/decision-table/lookup/${decisionTableId}
+
+
+       ```
+
+      Resource example
+
+
+      ```
+
+      https://yourInstance.salesforce.com/services/data/v59.0/connect
+
+      /business-rules/decision-table/lookup/${0lDD2000000004NMAQ}
+
+
+       ```
+
+      Available version
+
+
+      58.0
+
+
+      Requires Chatter
+
+
+      No
+
+
+      HTTP methods
+
+
+      POST
+
+
+      Request body for POST
+
+
+      JSON example
+
+
+      ```
+
+      {
+
+         "datasetLinkName" : "transactionMapping",
+         “conditions” :[
+            {
+              “conditionsList”: [
+                {
+                    "fieldName": "Product__c",
+                    "value": "Nike",
+                    "operator": "Matches" //Operator is optional
+                },
+                {
+                    "fieldName": "Price__c",
+                    "value": 1000,
+                    "operator": "GreaterThan"
+                }
+              ]
+            },
+            {
+              “conditionsList”: [
+                {
+                    "fieldName": "Product__c",
+                    "value": "Adidas",
+                    "operator": "Matches" //Operator is optional
+                },
+                {
+                    "fieldName": "Price__c",
+                    "value": 1500,
+                    "operator": "GreaterThan"
+                }
+              ]
+
+       ```
+
+      Properties
+
+
+      | Name | Type | Description | Required or Optional | Available Version |
+
+      | --- | --- | --- | --- | --- |
+
+      | conditions | [Decision Table Condition List](https://developer.salesforce.com/docs/atlas.en-us.industries_reference.meta/industries_reference/connect_requests_decision_table_condition_list_input.htm) | The list of decision table conditions on which the decision table executes and provides outcomes. | Required | 58.0 |
+
+      | datasetLinkName | String | The API name of the dataset link provided as an input for the decision table execution. | Optional | 58.0 |
+
+
+      Response body for POST
+
+
+      [Decision Table Bulk Outcome](https://developer.salesforce.com/docs/atlas.en-us.industries_reference.meta/industries_reference/connect_responses_decision_table_bulk_outcome.htm)
+
+
+      # Decision Table Bulk Outcome
+
+
+      Output representation of the decision table bulk look-up.
+
+
+      | Property Name | Type | Description | Filter Group and Version | Available Version |
+
+      | --- | --- | --- | --- | --- |
+
+      | outputs | [Decision Table Outcome](https://developer.salesforce.com/docs/atlas.en-us.industries_reference.meta/industries_reference/connect_responses_decision_table_outcome.htm) | List of the output of the Decision Table bulk lookup. | Small, 58.0 | 58.0 |
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            example:
+              datasetLinkName: transactionMapping
+              conditions:
+                - conditionsList:
+                    - fieldName: Product__c
+                      value: Nike
+                      operator: Matches
+                    - fieldName: Price__c
+                      value: 1000
+                      operator: GreaterThan
+                - conditionsList:
+                    - fieldName: Product__c
+                      value: Adidas
+                      operator: Matches
+                    - fieldName: Price__c
+                      value: 1500
+                      operator: GreaterThan
+    parameters:
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: decisionTableId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: Decision Table Id
+        example: 0lDHo0000008Po3
+    responses:
+      '201':
+        description: Created
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Tue, 19 Sep 2023 14:17:24 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-XSS-Protection:
+            schema:
+              type: string
+              example: 1; mode=block
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Content-Type:
+            schema:
+              type: string
+              example: application/json;charset=UTF-8
+          Vary:
+            schema:
+              type: string
+              example: Accept-Encoding
+          Content-Encoding:
+            schema:
+              type: string
+              example: gzip
+          Transfer-Encoding:
+            schema:
+              type: string
+              example: chunked
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              outputs:
+                - errorCode: 400
+                  errorMessage: Specify valid name for Data set Link
+                  outcomeList: []
+                  outcomeType: null
+                  successStatus: false
+                - errorCode: 400
+                  errorMessage: Specify valid name for Data set Link
+                  outcomeList: []
+                  outcomeType: null
+                  successStatus: false
+      '400':
+        description: Bad Request
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Tue, 19 Sep 2023 14:16:11 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-XSS-Protection:
+            schema:
+              type: string
+              example: 1; mode=block
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Content-Type:
+            schema:
+              type: string
+              example: application/json;charset=UTF-8
+          Transfer-Encoding:
+            schema:
+              type: string
+              example: chunked
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              - errorCode: INVALID_OPERATION
+                message: Can't execute decision table which is not in Active state.
+      '404':
+        description: Not Found
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Tue, 19 Sep 2023 14:11:45 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-XSS-Protection:
+            schema:
+              type: string
+              example: 1; mode=block
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Content-Type:
+            schema:
+              type: string
+              example: application/json;charset=UTF-8
+          Transfer-Encoding:
+            schema:
+              type: string
+              example: chunked
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              - errorCode: NOT_FOUND
+                message: The requested resource does not exist

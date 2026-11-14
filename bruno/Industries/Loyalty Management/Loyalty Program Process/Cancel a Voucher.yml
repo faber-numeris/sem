@@ -1,0 +1,48 @@
+info:
+  name: Cancel a Voucher
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: "{{_endpoint}}/services/data/v{{version}}/connect/loyalty/programs/:loyaltyProgramName/program-processes/:processName"
+  params:
+    - name: loyaltyProgramName
+      value: NTO Insider
+      type: path
+    - name: processName
+      value: ""
+      type: path
+  body:
+    type: json
+    data: |-
+      {
+         "processParameters":[
+            {
+               "MemberId":"0lMxx00000000BJEAY",
+               "VoucherId":"0kdxx000000000B245"
+            }
+         ]
+      }
+  auth: inherit
+
+runtime:
+  scripts:
+    - type: before-request
+      code: |-
+        //bru.setVar('loyaltyProgramName','xyz');
+        bru.setVar('processName','CancelVoucher');
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+docs: |-
+  Standard Documentation:
+
+  [https://developer.salesforce.com/docs/atlas.en-us.loyalty.meta/loyalty/connect_resources_cancel_voucher.htm](https://developer.salesforce.com/docs/atlas.en-us.loyalty.meta/loyalty/connect_resources_cancel_voucher.htm)
+
+  In the Pre-request. Script Tab, make changes in the variables value accordingly with the real Process Name to invoke.

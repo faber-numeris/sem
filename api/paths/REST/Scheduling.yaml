@@ -1,0 +1,92 @@
+/services/data/v{version}/scheduling:
+  get:
+    tags:
+      - REST > Scheduling
+    summary: Scheduling
+    description: >-
+      Return frequency metrics about the standard pages within which users switched from Lightning Experience to Salesforce Classic.
+
+
+      https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/resources_lightning_exitbypagemetrics.htm
+    parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: Successful response
+        content:
+          application/json: {}
+/services/data/v{version}/scheduling/getAppointmentSlots:
+  post:
+    tags:
+      - REST > Scheduling
+    summary: Get Appointment Slots
+    description: >-
+      Returns a list of available appointment time slots for a resource based on given work type group and territories.
+
+
+      https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/requests_ls_getappointmentslots.htm
+    requestBody:
+      content:
+        '*/*':
+          schema:
+            type: string
+            example: >-
+              "{\n\t\"startTime\": \"string\",\n\t\"endTime\": \"string\",\n\t\"workTypeGroupId\": \"string\",\n\t\"workType\": \"Work Type\",\n\t\"accountId\": \"string\",\n\t\"territoryIds\": \"string[]\",\n\t\"requiredResourceIds\": \"string[]\",\n\t\"schedulingPolicyId\": \"string\",\n\t\"allowConcurrentScheduling\": \"boolean\",\n}"
+    parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: Successful response
+        content:
+          application/json: {}
+/services/data/v{version}/scheduling/getAppointmentCandidates:
+  post:
+    tags:
+      - REST > Scheduling
+    summary: Get Appointment Candidates
+    description: >-
+      Returns a list of available service resources (appointment candidates) based on work type group and service territories.
+
+
+      https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/requests_ls_getappointmentcandidates.htm
+    requestBody:
+      content:
+        '*/*':
+          schema:
+            type: string
+            example: >-
+              "{\n\t\"startTime\": \"string\",\n\t\"endTime\": \"string\",\n\t\"workTypeGroupId\": \"string\",\n\t\"workType\": \"Work Type\",\n\t\"accountId\": \"string\",\n\t\"territoryIds\": \"string[]\",\n\t\"requiredResourceIds\": \"string[]\",\n\t\"schedulingPolicyId\": \"string\",\n\t\"allowConcurrentScheduling\": \"boolean\",\n}"
+    parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: Successful response
+        content:
+          application/json: {}

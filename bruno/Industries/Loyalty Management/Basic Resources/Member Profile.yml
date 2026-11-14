@@ -1,0 +1,168 @@
+info:
+  name: Member Profile
+  type: http
+  seq: 4
+
+http:
+  method: GET
+  url: "{{_endpoint}}/services/data/v{{version}}/loyalty-programs/:loyaltyProgramName/members?memberId=&membershipNumber=&programCurrencyName="
+  params:
+    - name: memberId
+      value: ""
+      type: query
+      description: The ID of the loyalty program member.
+    - name: membershipNumber
+      value: ""
+      type: query
+      description: The membership number of the loyalty program member.
+    - name: programCurrencyName
+      value: ""
+      type: query
+      description: |-
+        The name of the loyalty program currency associated with the member.
+        Use this parameter to get the details of the member’s points-related information for a specific currency.
+    - name: loyaltyProgramName
+      value: ""
+      type: path
+  body:
+    type: json
+    data: ""
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Member Profile
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/loyalty-programs/:loyaltyProgramName/members?memberId=0lMJ8000000CaRMMA0&membershipNumber=Member1&programCurrencyName=NTO Qualifying Points"
+      method: GET
+      headers:
+        - name: Authorization
+          value: Bearer {{accessToken}}
+      params:
+        - name: memberId
+          value: 0lMJ8000000CaRMMA0
+          type: query
+          description: The ID of the loyalty program member.
+        - name: membershipNumber
+          value: Member1
+          type: query
+          description: The membership number of the loyalty program member.
+        - name: programCurrencyName
+          value: NTO Qualifying Points
+          type: query
+          description: |-
+            The name of the loyalty program currency associated with the member.
+            Use this parameter to get the details of the member’s points-related information for a specific currency.
+        - name: loyaltyProgramName
+          value: NTO Insider
+          type: path
+      body:
+        type: json
+        data: ""
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: Date
+          value: Wed, 22 May 2024 16:16:23 GMT
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: Content-Type
+          value: application/json;charset=UTF-8
+        - name: Vary
+          value: Accept-Encoding
+        - name: Content-Encoding
+          value: gzip
+        - name: Transfer-Encoding
+          value: chunked
+      body:
+        type: json
+        data: |-
+          {
+              "additionalLoyaltyProgramMemberFields": {},
+              "associatedAccount": null,
+              "associatedContact": {
+                  "contactId": "003J8000002Yu0ZIAS",
+                  "email": "ab@email.com",
+                  "firstName": "Name1",
+                  "lastName": "Name2"
+              },
+              "canReceivePartnerPromotions": true,
+              "canReceivePromotions": true,
+              "enrollmentChannel": "Email",
+              "enrollmentDate": "2021-01-01",
+              "groupCreatedByMember": null,
+              "groupName": null,
+              "lastActivityDate": null,
+              "loyaltyProgramMemberId": "0lMJ8000000CaRMMA0",
+              "loyaltyProgramName": "NTO Insider",
+              "memberCurrencies": [
+                  {
+                      "additionalLoyaltyMemberCurrencyFields": {
+                          "Level_Before_Reset__c": null
+                      },
+                      "escrowPointsBalance": 0,
+                      "expirablePoints": 0,
+                      "lastAccrualProcessedDate": null,
+                      "lastEscrowProcessedDate": null,
+                      "lastExpirationProcessRunDate": null,
+                      "lastPointsAggregationDate": null,
+                      "lastPointsResetDate": null,
+                      "loyaltyMemberCurrencyName": "NTO Qualifying Points",
+                      "loyaltyProgramCurrencyId": "0lcJ8000000CaR7IAK",
+                      "loyaltyProgramCurrencyName": null,
+                      "memberCurrencyId": "0lzJ8000000CaRMIA0",
+                      "nextQualifyingPointsResetDate": "2024-12-31",
+                      "pointsBalance": 0,
+                      "qualifyingPointsBalanceBeforeReset": 0,
+                      "totalEscrowPointsAccrued": 0,
+                      "totalEscrowRolloverPoints": 0,
+                      "totalPointsAccrued": 0,
+                      "totalPointsExpired": 0,
+                      "totalPointsRedeemed": 0
+                  }
+              ],
+              "memberStatus": "Active",
+              "memberTiers": [
+                  {
+                      "additionalLoyaltyMemberTierFields": {},
+                      "areTierBenefitsAssigned": false,
+                      "loyaltyMemberTierId": "0lyJ8000000CaRMIA0",
+                      "loyaltyMemberTierName": "Bronze",
+                      "tierChangeReason": null,
+                      "tierChangeReasonType": null,
+                      "tierEffectiveDate": "2021-01-01",
+                      "tierExpirationDate": null,
+                      "tierGroupId": "0ltJ8000000CaR8IAK",
+                      "tierGroupName": null,
+                      "tierId": "0lgJ80000008OI5IAM",
+                      "tierSequenceNumber": 10
+                  }
+              ],
+              "memberType": "Individual",
+              "membershipEndDate": "2022-01-01",
+              "membershipLastRenewalDate": null,
+              "membershipNumber": "Member1",
+              "referredBy": null,
+              "relatedCorporateMembershipNumber": null,
+              "transactionJournalStatementFrequency": "Monthly",
+              "transactionJournalStatementLastGeneratedDate": null,
+              "transactionJournalStatementMethod": "Mail"
+          }
+
+docs: |-
+  Standard Documentation:
+
+  [https://developer.salesforce.com/docs/atlas.en-us.loyalty.meta/loyalty/connect_resources_member_profile.htm](https://developer.salesforce.com/docs/atlas.en-us.loyalty.meta/loyalty/connect_resources_member_profile.htm)

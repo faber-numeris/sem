@@ -1,0 +1,7 @@
+info:
+  name: Lightning Metrics
+  type: folder
+  seq: 4
+
+request:
+  auth: inherit

@@ -1,0 +1,56 @@
+info:
+  name: Feed Element - Delete
+  type: http
+  seq: 4
+
+http:
+  method: DELETE
+  url: "{{_endpoint}}/services/data/v{{version}}/chatter/feed-elements/:FEED_ELEMENT_ID"
+  params:
+    - name: FEED_ELEMENT_ID
+      value: ""
+      type: path
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Successful Feed Element - Delete
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/chatter/feed-elements/:FEED_ELEMENT_ID"
+      method: DELETE
+      params:
+        - name: FEED_ELEMENT_ID
+          value: ""
+          type: path
+    response:
+      status: 204
+      statusText: No Content
+      headers:
+        - name: Date
+          value: Wed, 22 Nov 2023 11:13:51 GMT
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-XSS-Protection
+          value: 1; mode=block
+        - name: Content-Security-Policy
+          value: upgrade-insecure-requests
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+      body:
+        type: text
+        data: ""
+
+docs: |-
+  Access, edit, or delete a feed element. Feed items are the only type of feed element that can be edited.
+
+  https://developer.salesforce.com/docs/atlas.en-us.chatterapi.meta/chatterapi/connect_resources_feed_element_specific.htm

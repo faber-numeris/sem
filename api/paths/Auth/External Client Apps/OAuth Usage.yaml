@@ -1,0 +1,267 @@
+/services/data/v{version}/apps/oauth/usage:
+  get:
+    tags:
+      - Auth > External Client Apps > OAuth Usage
+    summary: OAuth Usage
+    description: "Lists all the external client apps for the current org. See [OAuth Usage](https://developer.salesforce.com/docs/atlas.en-us.246.0.chatterapi.meta/chatterapi/connect_resources_usage.htm)."
+    security:
+      - noauthAuth: []
+    parameters:
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+        description: Replace <token> with your access token
+        example: Bearer <token>
+      - name: page
+        in: query
+        schema:
+          type: integer
+        description: >-
+          Number of the page you want returned. Starts at 0. If you don’t specify a value or if you specify 0, the first page is returned.
+        example: '0'
+      - name: pageSize
+        in: query
+        schema:
+          type: integer
+        description: "Number of usage entries per page. Defaults to 100.\t"
+        example: '100'
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: OK
+        content:
+          text/plain:
+            schema:
+              type: string
+            example: |-
+              {
+                "apps": [
+                  {
+                    "accessTokenFormat": "<accessTokenFormat>",
+                    "availableActions": "disable, enable",
+                    "description": "<description>",
+                    "developerName": "<developerName>",
+                    "identifier": "<identifier>",
+                    "isFromPackage": bool,
+                    "usageDetailsUrl": "/services/data/<version>/apps/oauth/usage/<identifier>/users"
+                  }
+                ],
+                "currentPageUrl": "/services/data/<version>/apps/oauth/usage?page=0&pageSize=100",
+                "nextPageUrl": "/services/data/<version>/apps/oauth/usage?page=1&pageSize=100"
+              }
+/services/data/v{version}/apps/oauth/usage/{_appId}/users:
+  get:
+    tags:
+      - Auth > External Client Apps > OAuth Usage
+    summary: OAuth App Users
+    description: "Lists all users for the external client app indicated by the app ID. See [OAuth Users by App ID](https://developer.salesforce.com/docs/atlas.en-us.246.0.chatterapi.meta/chatterapi/connect_resources_usage_app_id_users.htm)."
+    security:
+      - noauthAuth: []
+    parameters:
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+        description: Replace <token> with your access token
+        example: Bearer <token>
+      - name: page
+        in: query
+        schema:
+          type: integer
+        description: Page number for the usage information. Defaults to 0.
+        example: '0'
+      - name: pageSize
+        in: query
+        schema:
+          type: integer
+        description: Number of usage entries per page. Defaults to 100.
+        example: '100'
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: _appId
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: OK
+        content:
+          text/plain:
+            schema:
+              type: string
+            example: |-
+              {
+                "currentPageUrl": "/services/data/<version>/apps/oauth/usage/<identifier>/users?page=0&pageSize=100",
+                "nextPageUrl": "/services/data/<version>/apps/oauth/usage/<identifier>/users?page=1&pageSize=100",
+                "users": [
+                  {
+                    "accessTokenFormat": "<accessTokenFormat>",
+                    "appDeveloperName": "<appDeveloperName>",
+                    "appIdentifier": "<identifier>",
+                    "initialConnectionAt": "<timestamp>",
+                    "lastUsedAt": "<timestamp>",
+                    "revocationUrl": "/services/data/<version>/apps/oauth/usage/<identifier>/<userIdentifier>/tokens",
+                    "useCount": integer,
+                    "userIdentifier": "<userIdentifier>",
+                    "username": "<username>"
+                  }
+                ]
+              }
+/services/data/v{version}/apps/oauth/usage/{_appId}/{_userId}/tokens:
+  get:
+    tags:
+      - Auth > External Client Apps > OAuth Usage
+    summary: OAuth App Users Tokens
+    description: "Lists all tokens for a user of the external client app. See [Refresh Token by User and App](https://developer.salesforce.com/docs/atlas.en-us.246.0.chatterapi.meta/chatterapi/connect_resources_usage_app_id_user_id_tokens.htm)."
+    security:
+      - noauthAuth: []
+    parameters:
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+        description: Replace <token> with your access token
+        example: Bearer <token>
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: _appId
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: _userId
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: OK
+        content:
+          text/plain:
+            schema:
+              type: string
+            example: |-
+              {
+                "currentPageUrl": "/services/data/<version>/apps/oauth/usage/<identifier>/<userIdentifier>/tokens",
+                "tokens": [
+                  {
+                    "accessTokenFormat": "<accessTokenFormat>",
+                    "appDeveloperName": "<appDeveloperName>",
+                    "appIdentifier": "<identifier>",
+                    "initialConnectionAt": "<timestamp>",
+                    "lastUsedAt": "<timestamp>",
+                    "revocationUrl": "/services/data/<version>/apps/oauth/usage/tokens/<tokenIdentifier>",
+                    "useCount": integer,
+                    "userIdentifier": "<userIdentifier>",
+                    "username": "<username>"
+                  }
+                ]
+              }
+  delete:
+    tags:
+      - Auth > External Client Apps > OAuth Usage
+    summary: OAuth User Tokens Revoke
+    description: "Revokes all tokens for a user of the external client app. See [Refresh Token by User and App](https://developer.salesforce.com/docs/atlas.en-us.246.0.chatterapi.meta/chatterapi/connect_resources_usage_app_id_user_id_tokens.htm)."
+    security:
+      - noauthAuth: []
+    parameters:
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+        description: Replace <token> with your access token
+        example: Bearer <token>
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: _appId
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: _userId
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: Successful response
+        content:
+          application/json: {}
+/services/data/v{version}/apps/oauth/usage/{_appId}/tokens:
+  delete:
+    tags:
+      - Auth > External Client Apps > OAuth Usage
+    summary: OAuth Tokens Revoke
+    description: "Revokes all tokens available for the external client app. See [Refresh Token by App ID](https://developer.salesforce.com/docs/atlas.en-us.246.0.chatterapi.meta/chatterapi/connect_resources_usage_app_id_tokens.htm)."
+    security:
+      - noauthAuth: []
+    parameters:
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+        description: Replace <token> with your access token
+        example: Bearer <token>
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: _appId
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: Successful response
+        content:
+          application/json: {}
+/services/data/v{version}/apps/oauth/usage/tokens/{_tokenId}:
+  delete:
+    tags:
+      - Auth > External Client Apps > OAuth Usage
+    summary: OAuth Token Revoke
+    description: >-
+      Revokes one token. See [OAuth Refresh Token](https://developer.salesforce.com/docs/atlas.en-us.246.0.chatterapi.meta/chatterapi/connect_resources_usage_tokens_token_id.htm).
+    security:
+      - noauthAuth: []
+    parameters:
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+        description: Replace <token> with your access token
+        example: Bearer <token>
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: _tokenId
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: Successful response
+        content:
+          application/json: {}

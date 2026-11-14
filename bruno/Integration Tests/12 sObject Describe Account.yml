@@ -1,0 +1,22 @@
+info:
+  name: 12 sObject Describe Account
+  type: http
+  seq: 12
+
+http:
+  method: GET
+  url: "{{_endpoint}}/services/data/v{{version}}/sobjects/Account/describe"
+
+runtime:
+  scripts:
+    - type: tests
+      code: |-
+        test("Returns Account describe metadata", function() {
+          expect(res.getStatus()).to.equal(200);
+          expect(res.getBody().name).to.equal("Account");
+          expect(res.getBody().fields).to.be.an("array");
+        });
+
+settings:
+  encodeUrl: true
+  timeout: 0

@@ -1,0 +1,71 @@
+info:
+  name: Create Order (One-Time)
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: "{{_endpoint}}/services/data/v{{version}}/composite"
+  body:
+    type: json
+    data: |-
+      {
+          "allOrNone": true,
+          "compositeRequest": [
+              {
+                  "method": "POST",
+                  "url": "/services/data/v{{version}}/sobjects/Order",
+                  "referenceId": "refOrder",
+                  "body": {
+                      "AccountId": "{{defaultAccount}}",
+                      "EffectiveDate": "2022-01-01",
+                      "Pricebook2Id": "{{standardPricebook}}",
+                      "BillToContactId": "{{defaultBillToContact}}",
+                      "Status": "Draft"
+                  }
+              },
+              {
+                  "method": "POST",
+                  "url": "/services/data/v{{version}}/sobjects/AppUsageAssignment",
+                  "referenceId": "refAppTag",
+                  "body": {
+                      "AppUsageType": "SubscriptionManagement",
+                      "RecordId": "@{refOrder.id}"
+                  }
+              },
+              {
+                  "method": "POST",
+                  "url": "/services/data/v{{version}}/sobjects/OrderAction",
+                  "referenceId": "refOrderAction",
+                  "body": {
+                      "OrderId": "@{refOrder.id}",
+                      "Type": "New Sale"
+                  }
+              },
+              {
+                  "method": "POST",
+                  "url": "/services/data/v{{version}}/sobjects/OrderItem",
+                  "referenceId": "refOrderItem",
+                  "body": {
+                      "OrderId": "@{refOrder.id}",
+                      "OrderActionId": "@{refOrderAction.id}",
+                      "PricebookEntryId": "{{ClassTrainingOneTimePBE}}",
+                      "Quantity": 2.0,
+                      "UnitPrice": 25.0,
+                      "NetUnitPrice": 25.0,
+                      "TotalLineAmount": 50.0,
+                      "TaxTreatmentId": "{{defaultTaxTreatment}}"
+                  }
+              }
+          ]
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+docs: "Creates a Subscription Management order with a single order item (label: Order Product). The order item has a one-time product selling model."

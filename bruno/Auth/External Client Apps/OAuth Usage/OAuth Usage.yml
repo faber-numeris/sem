@@ -1,0 +1,68 @@
+info:
+  name: OAuth Usage
+  type: http
+  seq: 1
+
+http:
+  method: GET
+  url: "{{url}}{{site}}/services/data/v{{version}}/apps/oauth/usage?page=0&pageSize=100"
+  headers:
+    - name: Authorization
+      value: Bearer <token>
+      description: Replace <token> with your access token
+  params:
+    - name: page
+      value: "0"
+      type: query
+      description: Number of the page you want returned. Starts at 0. If you don’t specify a value or if you specify 0, the first page is returned.
+    - name: pageSize
+      value: "100"
+      type: query
+      description: "Number of usage entries per page. Defaults to 100.\t"
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Successful OAuth Usage
+    request:
+      url: https://login.salesforce.com/services/data/v59.0/apps/oauth/usage/?page=0&pageSize=100
+      method: GET
+      headers:
+        - name: Authorization
+          value: Bearer <token>
+          description: Replace <token> with your access token
+      params:
+        - name: page
+          value: "0"
+          type: query
+          description: Number of the page you want returned. Starts at 0. If you don’t specify a value or if you specify 0, the first page is returned.
+        - name: pageSize
+          value: "100"
+          type: query
+          description: "Number of usage entries per page. Defaults to 100.\t"
+    response:
+      body:
+        type: text
+        data: |-
+          {
+            "apps": [
+              {
+                "accessTokenFormat": "<accessTokenFormat>",
+                "availableActions": "disable, enable",
+                "description": "<description>",
+                "developerName": "<developerName>",
+                "identifier": "<identifier>",
+                "isFromPackage": bool,
+                "usageDetailsUrl": "/services/data/<version>/apps/oauth/usage/<identifier>/users"
+              }
+            ],
+            "currentPageUrl": "/services/data/<version>/apps/oauth/usage?page=0&pageSize=100",
+            "nextPageUrl": "/services/data/<version>/apps/oauth/usage?page=1&pageSize=100"
+          }
+
+docs: Lists all the external client apps for the current org. See [OAuth Usage](https://developer.salesforce.com/docs/atlas.en-us.246.0.chatterapi.meta/chatterapi/connect_resources_usage.htm).

@@ -1,0 +1,117 @@
+info:
+  name: Bulk Create Batch
+  type: http
+  seq: 4
+
+http:
+  method: POST
+  url: "{{_endpoint}}/services/async/{{version}}/job/{{_jobId}}/batch"
+  headers:
+    - name: X-SFDC-Session
+      value: "{{_accessToken}}"
+    - name: Content-Type
+      value: text/csv
+    - name: Content-Type
+      value: zip/csv
+      disabled: true
+    - name: charset
+      value: UTF-8
+    - name: Accept-Encoding
+      value: gzip
+      disabled: true
+    - name: Content-Encoding
+      value: gzip
+      disabled: true
+  body:
+    type: file
+    data:
+      - filePath: ""
+        contentType: application/octet-stream
+        selected: true
+  auth: inherit
+
+runtime:
+  scripts:
+    - type: after-response
+      code: |-
+        const context = bru.getEnvName() ? { set: (k, v) => bru.setEnvVar(k, v), get: (k) => bru.getEnvVar(k) } : { set: (k, v) => bru.setVar(k, v), get: (k) => bru.getVar(k) };
+
+        var xmlTree = xml2Json(JSON.stringify(res.getBody()));
+        console.log(xmlTree);
+        context.set("_batchId", xmlTree['batchInfo']['id']);
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Successful Bulk Create Batch
+    request:
+      url: "{{_endpoint}}/services/async/{{version}}/job/{{_jobId}}/batch"
+      method: POST
+      headers:
+        - name: X-SFDC-Session
+          value: "{{_accessToken}}"
+        - name: Content-Type
+          value: text/csv
+        - name: Content-Type
+          value: zip/csv
+          disabled: true
+        - name: charset
+          value: UTF-8
+        - name: Accept-Encoding
+          value: gzip
+          disabled: true
+        - name: Content-Encoding
+          value: gzip
+          disabled: true
+      body:
+        type: file
+        data:
+          - filePath: /Users/username/Downloads/account.csv
+            contentType: text/csv
+            selected: true
+    response:
+      status: 201
+      statusText: Created
+      headers:
+        - name: Date
+          value: Thu, 16 Nov 2023 16:16:10 GMT
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-XSS-Protection
+          value: 1; mode=block
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: Location
+          value: /services/async/58.0/job/7502o00000kjNCsAAM/batch/7512o00001DSJWnAAP
+        - name: Content-Type
+          value: application/xml
+        - name: Content-Encoding
+          value: gzip
+        - name: Transfer-Encoding
+          value: chunked
+      body:
+        type: xml
+        data: |-
+          <?xml version="1.0" encoding="UTF-8"?>
+          <batchInfo
+             xmlns="http://www.force.com/2009/06/asyncapi/dataload">
+              <id>751...</id>
+              <jobId>750...</jobId>
+              <state>Queued</state>
+              <createdDate>datetime</createdDate>
+              <systemModstamp>datetime</systemModstamp>
+              <numberRecordsProcessed>0</numberRecordsProcessed>
+              <numberRecordsFailed>0</numberRecordsFailed>
+              <totalProcessingTime>0</totalProcessingTime>
+              <apiActiveProcessingTime>0</apiActiveProcessingTime>
+              <apexProcessingTime>0</apexProcessingTime>
+          </batchInfo>

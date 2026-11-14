@@ -1,0 +1,73 @@
+info:
+  name: Refresh Sandbox
+  type: http
+  seq: 5
+
+http:
+  method: PATCH
+  url: "{{_endpoint}}/services/data/v{{version}}/tooling/sobjects/SandboxInfo/:SANDBOX_INFO_ID"
+  headers:
+    - name: Content-Type
+      value: application/json
+  params:
+    - name: SANDBOX_INFO_ID
+      value: ""
+      type: path
+  body:
+    type: json
+    data: |-
+      {
+          "LicenseType": "DEVELOPER",
+          "AutoActivate": true
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Refresh Sandbox
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/tooling/sobjects/SandboxInfo/:SANDBOX_INFO_ID"
+      method: PATCH
+      headers:
+        - name: Content-Type
+          value: application/json
+      params:
+        - name: SANDBOX_INFO_ID
+          value: 0GQ4H000000CxSzWAK
+          type: path
+      body:
+        type: json
+        data: |-
+          {
+              "LicenseType": "DEVELOPER",
+              "AutoActivate": true
+          }
+    response:
+      status: 204
+      statusText: No Content
+      headers:
+        - name: Date
+          value: Wed, 13 Dec 2023 12:33:55 GMT
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: Content-Security-Policy
+          value: upgrade-insecure-requests
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: Sforce-Limit-Info
+          value: api-usage=2/15000
+      body:
+        type: text
+        data: ""
+
+docs: Refreshes a sandbox.

@@ -1,0 +1,915 @@
+/services/data/v{version}/chatter/groups:
+  get:
+    tags:
+      - Connect > Chatter > Groups
+    summary: List of Groups
+    description: >-
+      A list of all the groups in the organization. Get information about groups or create a group.
+
+
+      https://developer.salesforce.com/docs/atlas.en-us.chatterapi.meta/chatterapi/connect_resources_groups_ListOfGroups.htm
+    parameters:
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: OK
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Wed, 22 Nov 2023 11:25:52 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-XSS-Protection:
+            schema:
+              type: string
+              example: 1; mode=block
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Content-Type:
+            schema:
+              type: string
+              example: application/json;charset=UTF-8
+          Vary:
+            schema:
+              type: string
+              example: Accept-Encoding
+          Content-Encoding:
+            schema:
+              type: string
+              example: gzip
+          Transfer-Encoding:
+            schema:
+              type: string
+              example: chunked
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              currentPageUrl: /services/data/v58.0/chatter/groups
+              groups:
+                - additionalLabel: null
+                  announcement: null
+                  bannerPhoto:
+                    bannerPhotoUrl: https://<my_domain>/profilephoto/0F9/B
+                    bannerPhotoVersionId: null
+                    url: /services/data/v58.0/chatter/groups/0F9.../banner-photo
+                  canHaveChatterGuests: false
+                  community: null
+                  description: Test group
+                  emailToChatterAddress: 0F9...@post.2o-i6mbeaq.eu25.chatter.salesforce.com
+                  fileCount: 0
+                  id: 0F9...
+                  information:
+                    text: null
+                    title: null
+                  isArchived: false
+                  isAutoArchiveDisabled: false
+                  isBroadcast: false
+                  lastFeedElementPostDate: '2023-11-22T11:25:37.000Z'
+                  memberCount: 1
+                  motif:
+                    color: 1B96FF
+                    largeIconUrl: /img/icon/groups64.png
+                    mediumIconUrl: /img/icon/groups32.png
+                    smallIconUrl: /img/icon/groups16.png
+                    svgIconUrl: null
+                  myRole: GroupOwner
+                  mySubscription:
+                    id: 0FB...
+                    url: /services/data/v58.0/chatter/group-memberships/0FB...
+                  name: Test
+                  owner:
+                    additionalLabel: null
+                    communityNickname: User1696423780773910041
+                    companyName: Salesforce
+                    displayName: Firstname
+                    firstName: Firstname
+                    id: 005...
+                    isActive: true
+                    isInThisCommunity: true
+                    lastName: Name
+                    motif:
+                      color: 1B96FF
+                      largeIconUrl: /img/icon/profile64.png
+                      mediumIconUrl: /img/icon/profile32.png
+                      smallIconUrl: /img/icon/profile16.png
+                      svgIconUrl: null
+                    mySubscription: null
+                    name: Firstname
+                    outOfOffice:
+                      message: ''
+                    photo:
+                      fullEmailPhotoUrl: >-
+                        https://<my_domain>/ncsphoto/1wsMlOd3tVC7boygqBO8wMT9KzA0D6tqzpbs-Uw0IogXzXAXaYKJnuWCNQmXymRq?fromEmail=1
+                      largePhotoUrl: https://<my_domain>/profilephoto/7292o000000oAgZ/F
+                      mediumPhotoUrl: https://<my_domain>/profilephoto/7292o000000oAgZ/M
+                      photoVersionId: 729...
+                      smallPhotoUrl: https://<my_domain>/profilephoto/7292o000000oAgZ/T
+                      standardEmailPhotoUrl: >-
+                        https://<my_domain>/ncsphoto/1wsMlOd3tVC7boygqBO8wMT9KzA0D6tqzpbs-Uw0Ioi-dtynkoFWsl46as__TDFU?fromEmail=1
+                      url: >-
+                        /services/data/v58.0/connect/user-profiles/005.../photo
+                    reputation: null
+                    title: null
+                    type: User
+                    url: /services/data/v58.0/chatter/users/005...
+                    userType: Internal
+                  pendingRequests: null
+                  photo:
+                    fullEmailPhotoUrl: >-
+                      https://<my_domain>/img/userprofile/default_group_profile_200_v2.png?fromEmail=1
+                    largePhotoUrl: https://<my_domain>/profilephoto/0F9/F
+                    mediumPhotoUrl: https://<my_domain>/profilephoto/0F9/M
+                    photoVersionId: null
+                    smallPhotoUrl: https://<my_domain>/profilephoto/0F9/T
+                    standardEmailPhotoUrl: >-
+                      https://<my_domain>/img/userprofile/default_group_profile_45_v2.png?fromEmail=1
+                    url: /services/data/v58.0/chatter/groups/0F9.../photo
+                  type: CollaborationGroup
+                  url: /services/data/v58.0/chatter/groups/0F9...
+                  visibility: PublicAccess
+              nextPageUrl: null
+              previousPageUrl: null
+  post:
+    tags:
+      - Connect > Chatter > Groups
+    summary: List of Groups - POST
+    description: >-
+      A list of all the groups in the organization. Get information about groups or create a group.
+
+
+      https://developer.salesforce.com/docs/atlas.en-us.chatterapi.meta/chatterapi/connect_resources_groups_ListOfGroups.htm
+    requestBody:
+      content: {}
+    parameters:
+      - name: name
+        in: query
+        schema:
+          type: string
+        example: New Chatter Group  (Private Access)
+      - name: visibility
+        in: query
+        schema:
+          type: string
+        description: >-
+          PrivateAccess—Only members of the group can see posts to this group.
+
+          PublicAccess—All users within the community can see posts to this group.
+
+          Unlisted—Reserved for future use.
+        example: PrivateAccess
+      - name: description
+        in: query
+        schema:
+          type: string
+        example: Created via API
+      - name: information
+        in: query
+        schema:
+          type: string
+        description: >-
+          If the group is private, the “Information” section is visible only to members.
+        example: Private Information
+      - name: isArchived
+        in: query
+        schema:
+          type: boolean
+        example: 'false'
+      - name: isAutoArchiveDisabled
+        in: query
+        schema:
+          type: boolean
+        description: >-
+          true if automatic archiving is turned off for the group, false otherwise. Defaults to false. If true, if there are no posts or comments for 90 days the group is archived.
+        example: 'false'
+      - name: isBroadcast
+        in: query
+        schema:
+          type: boolean
+        description: >-
+          true if only group owners and managers can create posts in the group, false otherwise.
+        example: 'false'
+      - name: canHaveChatterGuests
+        in: query
+        schema:
+          type: boolean
+        description: >-
+          true if this group allows Chatter customers, false otherwise. After this property is set to true, it cannot be set to false.
+        example: 'true'
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '201':
+        description: Created
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Wed, 22 Nov 2023 11:29:04 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-XSS-Protection:
+            schema:
+              type: string
+              example: 1; mode=block
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Content-Type:
+            schema:
+              type: string
+              example: application/json;charset=UTF-8
+          Vary:
+            schema:
+              type: string
+              example: Accept-Encoding
+          Content-Encoding:
+            schema:
+              type: string
+              example: gzip
+          Transfer-Encoding:
+            schema:
+              type: string
+              example: chunked
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              additionalLabel: Private With Customers
+              announcement: null
+              bannerPhoto:
+                bannerPhotoUrl: https://<my_domain>/profilephoto/0F9/B
+                bannerPhotoVersionId: null
+                url: /services/data/v58.0/chatter/groups/0F9.../banner-photo
+              canHaveChatterGuests: true
+              community: null
+              description: Created via API
+              emailToChatterAddress: 0F9...@post.2o-i6mbeaq.eu25.chatter.salesforce.com
+              fileCount: 0
+              id: 0F9...
+              information:
+                text: null
+                title: null
+              isArchived: false
+              isAutoArchiveDisabled: false
+              isBroadcast: false
+              lastFeedElementPostDate: '2023-11-22T11:29:05.000Z'
+              memberCount: 1
+              motif:
+                color: 1B96FF
+                largeIconUrl: /img/icon/groups64.png
+                mediumIconUrl: /img/icon/groups32.png
+                smallIconUrl: /img/icon/groups16.png
+                svgIconUrl: null
+              myRole: GroupOwner
+              mySubscription:
+                id: 0FB...
+                url: /services/data/v58.0/chatter/group-memberships/0FB...
+              name: New Chatter Group  (Private Access)
+              owner:
+                additionalLabel: null
+                communityNickname: User1696423780773910041
+                companyName: Salesforce
+                displayName: Name
+                firstName: Firstname
+                id: 005...
+                isActive: true
+                isInThisCommunity: true
+                lastName: Name
+                motif:
+                  color: 1B96FF
+                  largeIconUrl: /img/icon/profile64.png
+                  mediumIconUrl: /img/icon/profile32.png
+                  smallIconUrl: /img/icon/profile16.png
+                  svgIconUrl: null
+                mySubscription: null
+                name: Name
+                outOfOffice:
+                  message: ''
+                photo:
+                  fullEmailPhotoUrl: >-
+                    https://<my_domain>/ncsphoto/1wsMlOd3tVC7boygqBO8wMT9KzA0D6tqzpbs-Uw0IogXzXAXaYKJnuWCNQmXymRq?fromEmail=1
+                  largePhotoUrl: https://<my_domain>/profilephoto/729.../F
+                  mediumPhotoUrl: https://<my_domain>/profilephoto/729.../M
+                  photoVersionId: 729...
+                  smallPhotoUrl: https://<my_domain>/profilephoto/729.../T
+                  standardEmailPhotoUrl: >-
+                    https://<my_domain>/ncsphoto/1wsMlOd3tVC7boygqBO8wMT9KzA0D6tqzpbs-Uw0Ioi-dtynkoFWsl46as__TDFU?fromEmail=1
+                  url: /services/data/v58.0/connect/user-profiles/005.../photo
+                reputation: null
+                title: null
+                type: User
+                url: /services/data/v58.0/chatter/users/005...
+                userType: Internal
+              pendingRequests: 0
+              photo:
+                fullEmailPhotoUrl: >-
+                  https://<my_domain>/img/userprofile/default_group_profile_200_v2.png?fromEmail=1
+                largePhotoUrl: https://<my_domain>/profilephoto/0F9/F
+                mediumPhotoUrl: https://<my_domain>/profilephoto/0F9/M
+                photoVersionId: null
+                smallPhotoUrl: https://<my_domain>/profilephoto/0F9/T
+                standardEmailPhotoUrl: >-
+                  https://<my_domain>/img/userprofile/default_group_profile_45_v2.png?fromEmail=1
+                url: /services/data/v58.0/chatter/groups/0F9.../photo
+              type: CollaborationGroup
+              url: /services/data/v58.0/chatter/groups/0F9...
+              visibility: PrivateAccess
+/services/data/v{version}/chatter/groups/{GROUP_ID}/members/requests:
+  get:
+    tags:
+      - Connect > Chatter > Groups
+    summary: Group Members—Private
+    description: >-
+      Request membership in a private group or get the status of requests to a join a private group.
+
+
+      https://developer.salesforce.com/docs/atlas.en-us.chatterapi.meta/chatterapi/connect_resources_groups_GroupMembersRequests.htm
+    parameters:
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: GROUP_ID
+        in: path
+        schema:
+          type: string
+        required: true
+        example: 0F9...
+    responses:
+      '200':
+        description: OK
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Wed, 22 Nov 2023 11:47:04 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-XSS-Protection:
+            schema:
+              type: string
+              example: 1; mode=block
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Content-Type:
+            schema:
+              type: string
+              example: application/json;charset=UTF-8
+          Vary:
+            schema:
+              type: string
+              example: Accept-Encoding
+          Content-Encoding:
+            schema:
+              type: string
+              example: gzip
+          Transfer-Encoding:
+            schema:
+              type: string
+              example: chunked
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              requests:
+                - createdDate: '2023-11-22T11:46:32.000Z'
+                  id: 0I5...
+                  lastUpdateDate: '2023-11-22T11:46:32.000Z'
+                  requestedGroup:
+                    id: 0F9...
+                    url: /services/data/v58.0/chatter/groups/0F9...
+                  responseMessage: null
+                  status: Pending
+                  url: >-
+                    /services/data/v58.0/chatter/group-membership-requests/0I5...
+                  user:
+                    additionalLabel: null
+                    communityNickname: User1700653511864742682
+                    companyName: null
+                    displayName: User Sample
+                    firstName: User
+                    id: 005...
+                    isActive: true
+                    isInThisCommunity: true
+                    lastName: Sample
+                    motif:
+                      color: 1B96FF
+                      largeIconUrl: /img/icon/profile64.png
+                      mediumIconUrl: /img/icon/profile32.png
+                      smallIconUrl: /img/icon/profile16.png
+                      svgIconUrl: null
+                    mySubscription: null
+                    name: User Sample
+                    outOfOffice:
+                      message: ''
+                    photo:
+                      fullEmailPhotoUrl: >-
+                        https://<my_domain>/img/userprofile/default_profile_200_v2.png?fromEmail=1
+                      largePhotoUrl: https://<my_domain>/profilephoto/005/F
+                      mediumPhotoUrl: https://<my_domain>/profilephoto/005/M
+                      photoVersionId: null
+                      smallPhotoUrl: https://<my_domain>/profilephoto/005/T
+                      standardEmailPhotoUrl: >-
+                        https://<my_domain>/img/userprofile/default_profile_45_v2.png?fromEmail=1
+                      url: >-
+                        /services/data/v58.0/connect/user-profiles/005.../photo
+                    reputation: null
+                    title: null
+                    type: User
+                    url: /services/data/v58.0/chatter/users/005...
+                    userType: Internal
+              total: null
+  post:
+    tags:
+      - Connect > Chatter > Groups
+    summary: Group Members—Private - POST
+    description: >-
+      Request membership in a private group or get the status of requests to a join a private group.
+
+
+      https://developer.salesforce.com/docs/atlas.en-us.chatterapi.meta/chatterapi/connect_resources_groups_GroupMembersRequests.htm
+    requestBody:
+      content: {}
+    parameters:
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: GROUP_ID
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '201':
+        description: Created
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Wed, 22 Nov 2023 11:52:41 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-XSS-Protection:
+            schema:
+              type: string
+              example: 1; mode=block
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Content-Type:
+            schema:
+              type: string
+              example: application/json;charset=UTF-8
+          Vary:
+            schema:
+              type: string
+              example: Accept-Encoding
+          Content-Encoding:
+            schema:
+              type: string
+              example: gzip
+          Transfer-Encoding:
+            schema:
+              type: string
+              example: chunked
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              createdDate: '2023-11-22T11:52:41.000Z'
+              id: 0I5...
+              lastUpdateDate: '2023-11-22T11:52:41.000Z'
+              requestedGroup:
+                id: 0F9...
+                url: /services/data/v58.0/chatter/groups/0F9...
+              responseMessage: null
+              status: Pending
+              url: /services/data/v58.0/chatter/group-membership-requests/0I5...
+              user:
+                additionalLabel: null
+                communityNickname: User1700653511864742682
+                companyName: null
+                displayName: User Sample
+                firstName: User
+                id: 005...
+                isActive: true
+                isInThisCommunity: true
+                lastName: Sample
+                motif:
+                  color: 1B96FF
+                  largeIconUrl: /img/icon/profile64.png
+                  mediumIconUrl: /img/icon/profile32.png
+                  smallIconUrl: /img/icon/profile16.png
+                  svgIconUrl: null
+                mySubscription: null
+                name: User Sample
+                outOfOffice:
+                  message: ''
+                photo:
+                  fullEmailPhotoUrl: >-
+                    https://<my_domain>/img/userprofile/default_profile_200_v2.png?fromEmail=1
+                  largePhotoUrl: https://<my_domain>/profilephoto/005/F
+                  mediumPhotoUrl: https://<my_domain>/profilephoto/005/M
+                  photoVersionId: null
+                  smallPhotoUrl: https://<my_domain>/profilephoto/005/T
+                  standardEmailPhotoUrl: >-
+                    https://<my_domain>/img/userprofile/default_profile_45_v2.png?fromEmail=1
+                  url: /services/data/v58.0/connect/user-profiles/005.../photo
+                reputation: null
+                title: null
+                type: User
+                url: /services/data/v58.0/chatter/users/005...
+                userType: Internal
+/services/data/v{version}/chatter/groups/group/{GROUP_ID}/invite:
+  post:
+    tags:
+      - Connect > Chatter > Groups
+    summary: Group Invites
+    description: >-
+      Invite internal and external users to join a group.
+
+
+      https://developer.salesforce.com/docs/atlas.en-us.chatterapi.meta/chatterapi/connect_resources_groups_invites.htm#connect_resources_groups_invites
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            example:
+              invitees:
+                emails:
+                  - testemail1@sfdcpostman.com
+                  - testemail2@sfdcpostman.com
+              message: >-
+                Join this group to participate in the discussion about your favorite feature.
+    parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: GROUP_ID
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '201':
+        description: Created
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Wed, 22 Nov 2023 11:49:28 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-XSS-Protection:
+            schema:
+              type: string
+              example: 1; mode=block
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Content-Type:
+            schema:
+              type: string
+              example: text/plain
+          Vary:
+            schema:
+              type: string
+              example: Accept-Encoding
+          Content-Encoding:
+            schema:
+              type: string
+              example: gzip
+          Transfer-Encoding:
+            schema:
+              type: string
+              example: chunked
+        content:
+          text/plain:
+            schema:
+              type: string
+            example: |-
+              {
+                  "invitations": [
+                      {
+                          "email": "testemail1@sfdcpostman.com",
+                          "status": "Invited",
+                          "userId": ""
+                      },
+                      ...
+                  ]
+              }
+/services/data/v{version}/chatter/groups/{GROUP_ID}/members:
+  post:
+    tags:
+      - Connect > Chatter > Groups
+    summary: Group Members
+    description: >-
+      Members of a specified group. Get the members and add a member to a group. To add a member, the context user must be the group owner or moderator.
+
+
+      https://developer.salesforce.com/docs/atlas.en-us.chatterapi.meta/chatterapi/connect_resources_groups_GroupMembers.htm
+    requestBody:
+      content: {}
+    parameters:
+      - name: userId
+        in: query
+        schema:
+          type: string
+        example: <USER1_ID>
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: GROUP_ID
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '201':
+        description: Created
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Wed, 22 Nov 2023 11:31:07 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-XSS-Protection:
+            schema:
+              type: string
+              example: 1; mode=block
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Content-Type:
+            schema:
+              type: string
+              example: application/json;charset=UTF-8
+          Vary:
+            schema:
+              type: string
+              example: Accept-Encoding
+          Content-Encoding:
+            schema:
+              type: string
+              example: gzip
+          Transfer-Encoding:
+            schema:
+              type: string
+              example: chunked
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              id: 0FB...
+              lastFeedAccessDate: null
+              role: StandardMember
+              url: /services/data/v58.0/chatter/group-memberships/0FB...
+              user:
+                additionalLabel: null
+                communityNickname: integration1.4407085834085586E12
+                companyName: Salesforce
+                displayName: Integration User
+                firstName: Integration
+                id: 005...
+                isActive: true
+                isInThisCommunity: true
+                lastName: User
+                motif:
+                  color: 1B96FF
+                  largeIconUrl: /img/icon/profile64.png
+                  mediumIconUrl: /img/icon/profile32.png
+                  smallIconUrl: /img/icon/profile16.png
+                  svgIconUrl: null
+                mySubscription: null
+                name: Integration User
+                outOfOffice:
+                  message: ''
+                photo:
+                  fullEmailPhotoUrl: >-
+                    https://<my_domain>/img/userprofile/default_profile_200_v2.png?fromEmail=1
+                  largePhotoUrl: https://<my_domain>/profilephoto/005/F
+                  mediumPhotoUrl: https://<my_domain>/profilephoto/005/M
+                  photoVersionId: null
+                  smallPhotoUrl: https://<my_domain>/profilephoto/005/T
+                  standardEmailPhotoUrl: >-
+                    https://<my_domain>/img/userprofile/default_profile_45_v2.png?fromEmail=1
+                  url: /services/data/v58.0/connect/user-profiles/005.../photo
+                reputation: null
+                title: null
+                type: User
+                url: /services/data/v58.0/chatter/users/005...
+                userType: Internal
+/services/data/v{version}/chatter/group-membership-requests/{CHATTER_GROUP_REQUEST_ID}:
+  patch:
+    tags:
+      - Connect > Chatter > Groups
+    summary: Group Membership Requests—Private
+    description: >-
+      Update the status of a request by a user to join a private group or get information about a request to join a private group.
+
+
+      https://developer.salesforce.com/docs/atlas.en-us.chatterapi.meta/chatterapi/connect_resources_group_membership_requests.htm?search_text=group-membership-requests
+    requestBody:
+      content: {}
+    parameters:
+      - name: status
+        in: query
+        schema:
+          type: string
+        example: Accepted
+      - name: responseMessage
+        in: query
+        schema:
+          type: string
+        example: Welcome to the group!
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: CHATTER_GROUP_REQUEST_ID
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: OK
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Wed, 22 Nov 2023 11:50:19 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-XSS-Protection:
+            schema:
+              type: string
+              example: 1; mode=block
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Content-Type:
+            schema:
+              type: string
+              example: application/json;charset=UTF-8
+          Transfer-Encoding:
+            schema:
+              type: string
+              example: chunked
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              createdDate: '2023-11-22T11:46:32.000Z'
+              id: 0I5...
+              lastUpdateDate: '2023-11-22T11:50:19.000Z'
+              requestedGroup:
+                id: 0F9...
+                url: /services/data/v58.0/chatter/groups/0F9...
+              responseMessage: null
+              status: Accepted
+              url: /services/data/v58.0/chatter/group-membership-requests/0I5...
+              user:
+                additionalLabel: null
+                communityNickname: User1700653511864742682
+                companyName: null
+                displayName: User Sample
+                firstName: User
+                id: 005...
+                isActive: true
+                isInThisCommunity: true
+                lastName: Sample
+                motif:
+                  color: 1B96FF
+                  largeIconUrl: /img/icon/profile64.png
+                  mediumIconUrl: /img/icon/profile32.png
+                  smallIconUrl: /img/icon/profile16.png
+                  svgIconUrl: null
+                mySubscription: null
+                name: User Sample
+                outOfOffice:
+                  message: ''
+                photo:
+                  fullEmailPhotoUrl: >-
+                    https://<my_domain>/img/userprofile/default_profile_200_v2.png?fromEmail=1
+                  largePhotoUrl: https://<my_domain>/profilephoto/005/F
+                  mediumPhotoUrl: https://<my_domain>/profilephoto/005/M
+                  photoVersionId: null
+                  smallPhotoUrl: https://<my_domain>/profilephoto/005/T
+                  standardEmailPhotoUrl: >-
+                    https://<my_domain>/img/userprofile/default_profile_45_v2.png?fromEmail=1
+                  url: /services/data/v58.0/connect/user-profiles/005.../photo
+                reputation: null
+                title: null
+                type: User
+                url: /services/data/v58.0/chatter/users/005...
+                userType: Internal

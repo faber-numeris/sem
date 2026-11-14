@@ -1,0 +1,491 @@
+info:
+  name: Get Personalized Navigation Items
+  type: http
+  seq: 5
+
+http:
+  method: GET
+  url: "{{_endpoint}}/services/data/v{{version}}/ui-api/apps/:APP_ID/user-nav-items"
+  params:
+    - name: formFactor
+      value: Large
+      type: query
+      description: The form factor for each app that the user has access to (`Large`, `Medium` or `Small`)
+      disabled: true
+    - name: APP_ID
+      value: ""
+      type: path
+      description: Application ID
+  body:
+    type: json
+    data: ""
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Result with personalized nav
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/ui-api/apps/:APP_ID/user-nav-items"
+      method: GET
+      params:
+        - name: formFactor
+          value: Large
+          type: query
+          description: The form factor for each app that the user has access to (`Large`, `Medium` or `Small`)
+          disabled: true
+        - name: APP_ID
+          value: 06m58000000fBK2AAM
+          type: path
+          description: Application ID
+      body:
+        type: json
+        data: ""
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: Date
+          value: Fri, 06 Oct 2023 09:42:05 GMT
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: ETag
+          value: '"0d35dc3820e3022bcf9145fc3ec5be69--gzip"'
+        - name: Content-Type
+          value: application/json;charset=UTF-8
+        - name: Vary
+          value: Accept-Encoding
+        - name: Content-Encoding
+          value: gzip
+        - name: Transfer-Encoding
+          value: chunked
+      body:
+        type: json
+        data: |-
+          {
+              "currentPageUrl": "/services/data/v58.0/ui-api/apps/06m58000000fBK2AAM/user-nav-items?formFactor=large",
+              "eTag": "0d35dc3820e3022bcf9145fc3ec5be69",
+              "navItems": [
+                  {
+                      "availableInClassic": true,
+                      "availableInLightning": true,
+                      "color": "FF538A",
+                      "content": "https://pozil-dev-ed.my.salesforce.com/lightning/page/home",
+                      "custom": false,
+                      "developerName": "standard-home",
+                      "iconUrl": "https://pozil-dev-ed.my.salesforce.com/img/icon/t4v35/standard/home_120.png",
+                      "id": "0Qk4H0000009kokSAA",
+                      "itemType": "Standard",
+                      "label": "Home",
+                      "objectApiName": "Home",
+                      "objectLabel": null,
+                      "objectLabelPlural": null,
+                      "pageReference": {
+                          "attributes": {
+                              "pageName": "home"
+                          },
+                          "state": {},
+                          "type": "standard__namedPage"
+                      },
+                      "standardType": "Home"
+                  },
+                  {
+                      "availableInClassic": true,
+                      "availableInLightning": true,
+                      "color": "FF5D2D",
+                      "content": "https://pozil-dev-ed.my.salesforce.com/006/o",
+                      "custom": false,
+                      "developerName": "standard-Opportunity",
+                      "iconUrl": "https://pozil-dev-ed.my.salesforce.com/img/icon/t4v35/standard/opportunity_120.png",
+                      "id": "0Qk4H0000009kolSAA",
+                      "itemType": "Entity",
+                      "label": "Opportunities",
+                      "objectApiName": "Opportunity",
+                      "objectLabel": "Opportunity",
+                      "objectLabelPlural": "Opportunities",
+                      "pageReference": {
+                          "attributes": {
+                              "objectApiName": "Opportunity",
+                              "actionName": "home"
+                          },
+                          "state": {},
+                          "type": "standard__objectPage"
+                      },
+                      "standardType": null
+                  },
+                  {
+                      "availableInClassic": true,
+                      "availableInLightning": true,
+                      "color": "FF5D2D",
+                      "content": "https://pozil-dev-ed.my.salesforce.com/00Q/o",
+                      "custom": false,
+                      "developerName": "standard-Lead",
+                      "iconUrl": "https://pozil-dev-ed.my.salesforce.com/img/icon/t4v35/standard/lead_120.png",
+                      "id": "0Qk4H0000009komSAA",
+                      "itemType": "Entity",
+                      "label": "Leads",
+                      "objectApiName": "Lead",
+                      "objectLabel": "Lead",
+                      "objectLabelPlural": "Leads",
+                      "pageReference": {
+                          "attributes": {
+                              "objectApiName": "Lead",
+                              "actionName": "home"
+                          },
+                          "state": {},
+                          "type": "standard__objectPage"
+                      },
+                      "standardType": null
+                  },
+                  {
+                      "availableInClassic": false,
+                      "availableInLightning": true,
+                      "color": "3BA755",
+                      "content": "https://pozil-dev-ed.my.salesforce.com/00T/o",
+                      "custom": false,
+                      "developerName": "standard-Task",
+                      "iconUrl": "https://pozil-dev-ed.my.salesforce.com/img/icon/t4v35/standard/task_120.png",
+                      "id": "0Qk4H0000009konSAA",
+                      "itemType": "Standard",
+                      "label": "Tasks",
+                      "objectApiName": "Task",
+                      "objectLabel": "Task",
+                      "objectLabelPlural": "Tasks",
+                      "pageReference": {
+                          "attributes": {
+                              "objectApiName": "Task",
+                              "actionName": "home"
+                          },
+                          "state": {},
+                          "type": "standard__objectPage"
+                      },
+                      "standardType": "Tasks"
+                  },
+                  {
+                      "availableInClassic": true,
+                      "availableInLightning": true,
+                      "color": "939393",
+                      "content": "https://pozil-dev-ed.my.salesforce.com/_ui/core/chatter/files/FileTabPage",
+                      "custom": false,
+                      "developerName": "standard-File",
+                      "iconUrl": "https://pozil-dev-ed.my.salesforce.com/img/icon/t4v35/standard/file_120.png",
+                      "id": "0Qk4H0000009kooSAA",
+                      "itemType": "Entity",
+                      "label": "Files",
+                      "objectApiName": "ContentDocument",
+                      "objectLabel": null,
+                      "objectLabelPlural": null,
+                      "pageReference": {
+                          "attributes": {
+                              "objectApiName": "ContentDocument",
+                              "actionName": "home"
+                          },
+                          "state": {},
+                          "type": "standard__objectPage"
+                      },
+                      "standardType": null
+                  },
+                  {
+                      "availableInClassic": true,
+                      "availableInLightning": true,
+                      "color": "5867E8",
+                      "content": "https://pozil-dev-ed.my.salesforce.com/001/o",
+                      "custom": false,
+                      "developerName": "standard-Account",
+                      "iconUrl": "https://pozil-dev-ed.my.salesforce.com/img/icon/t4v35/standard/account_120.png",
+                      "id": "0Qk4H0000009kopSAA",
+                      "itemType": "Entity",
+                      "label": "Accounts",
+                      "objectApiName": "Account",
+                      "objectLabel": "Account",
+                      "objectLabelPlural": "Accounts",
+                      "pageReference": {
+                          "attributes": {
+                              "objectApiName": "Account",
+                              "actionName": "home"
+                          },
+                          "state": {},
+                          "type": "standard__objectPage"
+                      },
+                      "standardType": null
+                  },
+                  {
+                      "availableInClassic": true,
+                      "availableInLightning": true,
+                      "color": "5867E8",
+                      "content": "https://pozil-dev-ed.my.salesforce.com/003/o",
+                      "custom": false,
+                      "developerName": "standard-Contact",
+                      "iconUrl": "https://pozil-dev-ed.my.salesforce.com/img/icon/t4v35/standard/contact_120.png",
+                      "id": "0Qk4H0000009koqSAA",
+                      "itemType": "Entity",
+                      "label": "Contacts",
+                      "objectApiName": "Contact",
+                      "objectLabel": "Contact",
+                      "objectLabelPlural": "Contacts",
+                      "pageReference": {
+                          "attributes": {
+                              "objectApiName": "Contact",
+                              "actionName": "home"
+                          },
+                          "state": {},
+                          "type": "standard__objectPage"
+                      },
+                      "standardType": null
+                  },
+                  {
+                      "availableInClassic": true,
+                      "availableInLightning": true,
+                      "color": "FF538A",
+                      "content": "https://pozil-dev-ed.my.salesforce.com/01Z/o",
+                      "custom": false,
+                      "developerName": "standard-Dashboard",
+                      "iconUrl": "https://pozil-dev-ed.my.salesforce.com/img/icon/t4v35/standard/dashboard_120.png",
+                      "id": "0Qk4H0000009korSAA",
+                      "itemType": "Standard",
+                      "label": "Dashboards",
+                      "objectApiName": "Dashboard",
+                      "objectLabel": "Dashboard",
+                      "objectLabelPlural": "Dashboards",
+                      "pageReference": {
+                          "attributes": {
+                              "objectApiName": "Dashboard",
+                              "actionName": "home"
+                          },
+                          "state": {},
+                          "type": "standard__objectPage"
+                      },
+                      "standardType": "Dashboards"
+                  },
+                  {
+                      "availableInClassic": true,
+                      "availableInLightning": true,
+                      "color": "06A59A",
+                      "content": "https://pozil-dev-ed.my.salesforce.com/00O/o",
+                      "custom": false,
+                      "developerName": "standard-report",
+                      "iconUrl": "https://pozil-dev-ed.my.salesforce.com/img/icon/t4v35/standard/report_120.png",
+                      "id": "0Qk4H0000009kosSAA",
+                      "itemType": "Standard",
+                      "label": "Reports",
+                      "objectApiName": "Report",
+                      "objectLabel": "Report",
+                      "objectLabelPlural": "Reports",
+                      "pageReference": {
+                          "attributes": {
+                              "objectApiName": "Report",
+                              "actionName": "home"
+                          },
+                          "state": {},
+                          "type": "standard__objectPage"
+                      },
+                      "standardType": "Reports"
+                  },
+                  {
+                      "availableInClassic": false,
+                      "availableInLightning": true,
+                      "color": "1B96FF",
+                      "content": null,
+                      "custom": false,
+                      "developerName": "standard-Feed",
+                      "iconUrl": "https://pozil-dev-ed.my.salesforce.com/img/icon/t4v35/standard/feed_120.png",
+                      "id": "0Qk4H0000009kotSAA",
+                      "itemType": "Standard",
+                      "label": "Chatter",
+                      "objectApiName": "Feed",
+                      "objectLabel": null,
+                      "objectLabelPlural": null,
+                      "pageReference": {
+                          "attributes": {
+                              "pageName": "chatter"
+                          },
+                          "state": {},
+                          "type": "standard__namedPage"
+                      },
+                      "standardType": "Feed"
+                  },
+                  {
+                      "availableInClassic": true,
+                      "availableInLightning": true,
+                      "color": "1B96FF",
+                      "content": "https://pozil-dev-ed.my.salesforce.com/_ui/core/chatter/groups/GroupListPage",
+                      "custom": false,
+                      "developerName": "standard-CollaborationGroup",
+                      "iconUrl": "https://pozil-dev-ed.my.salesforce.com/img/icon/t4v35/standard/groups_120.png",
+                      "id": "0Qk4H0000009kouSAA",
+                      "itemType": "Standard",
+                      "label": "Groups",
+                      "objectApiName": "CollaborationGroup",
+                      "objectLabel": "Group",
+                      "objectLabelPlural": "Groups",
+                      "pageReference": {
+                          "attributes": {
+                              "objectApiName": "CollaborationGroup",
+                              "actionName": "home"
+                          },
+                          "state": {},
+                          "type": "standard__objectPage"
+                      },
+                      "standardType": "Groups"
+                  },
+                  {
+                      "availableInClassic": true,
+                      "availableInLightning": true,
+                      "color": "1B96FF",
+                      "content": "https://pozil-dev-ed.my.salesforce.com/_ui/core/chatter/people/PeopleListPage",
+                      "custom": false,
+                      "developerName": "standard-OtherUserProfile",
+                      "iconUrl": "https://pozil-dev-ed.my.salesforce.com/img/icon/t4v35/standard/user_120.png",
+                      "id": "0Qk4H0000009kovSAA",
+                      "itemType": "Standard",
+                      "label": "People",
+                      "objectApiName": "User",
+                      "objectLabel": "User",
+                      "objectLabelPlural": "People",
+                      "pageReference": {
+                          "attributes": {
+                              "objectApiName": "User",
+                              "actionName": "home"
+                          },
+                          "state": {},
+                          "type": "standard__objectPage"
+                      },
+                      "standardType": "People"
+                  },
+                  {
+                      "availableInClassic": true,
+                      "availableInLightning": true,
+                      "color": "FF5D2D",
+                      "content": "https://pozil-dev-ed.my.salesforce.com/500/o",
+                      "custom": false,
+                      "developerName": "standard-Case",
+                      "iconUrl": "https://pozil-dev-ed.my.salesforce.com/img/icon/t4v35/standard/case_120.png",
+                      "id": "0Qk4H0000009kowSAA",
+                      "itemType": "Entity",
+                      "label": "Cases",
+                      "objectApiName": "Case",
+                      "objectLabel": "Case",
+                      "objectLabelPlural": "Cases",
+                      "pageReference": {
+                          "attributes": {
+                              "objectApiName": "Case",
+                              "actionName": "home"
+                          },
+                          "state": {},
+                          "type": "standard__objectPage"
+                      },
+                      "standardType": null
+                  },
+                  {
+                      "availableInClassic": false,
+                      "availableInLightning": true,
+                      "color": "FF538A",
+                      "content": "https://pozil-dev-ed.my.salesforce.com/00U/o",
+                      "custom": false,
+                      "developerName": "standard-Event",
+                      "iconUrl": "https://pozil-dev-ed.my.salesforce.com/img/icon/t4v35/standard/event_120.png",
+                      "id": "0Qk4H0000009koxSAA",
+                      "itemType": "Standard",
+                      "label": "Calendar",
+                      "objectApiName": "Event",
+                      "objectLabel": "Event",
+                      "objectLabelPlural": "Events",
+                      "pageReference": {
+                          "attributes": {
+                              "objectApiName": "Event",
+                              "actionName": "home"
+                          },
+                          "state": {},
+                          "type": "standard__objectPage"
+                      },
+                      "standardType": "Events"
+                  },
+                  {
+                      "availableInClassic": true,
+                      "availableInLightning": true,
+                      "color": "3BA755",
+                      "content": "https://pozil-dev-ed.my.salesforce.com/_ui/sales/forecasting/ui/ForecastingTabPage",
+                      "custom": false,
+                      "developerName": "standard-Forecasting3",
+                      "iconUrl": "https://pozil-dev-ed.my.salesforce.com/img/icon/t4v35/standard/forecasts_120.png",
+                      "id": "0Qk4H0000009koySAA",
+                      "itemType": "Standard",
+                      "label": "Forecasts",
+                      "objectApiName": "Forecasting3",
+                      "objectLabel": null,
+                      "objectLabelPlural": null,
+                      "pageReference": {
+                          "attributes": {
+                              "pageName": "forecasting"
+                          },
+                          "state": {},
+                          "type": "standard__namedPage"
+                      },
+                      "standardType": "Forecasting3"
+                  }
+              ],
+              "nextPageUrl": null
+          }
+  - name: Result with default nav
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/ui-api/apps/:APP_ID/user-nav-items"
+      method: GET
+      params:
+        - name: formFactor
+          value: Large
+          type: query
+          description: The form factor for each app that the user has access to (`Large`, `Medium` or `Small`)
+          disabled: true
+        - name: APP_ID
+          value: 06m58000000fBK2AAM
+          type: path
+          description: Application ID
+      body:
+        type: json
+        data: ""
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: Date
+          value: Fri, 06 Oct 2023 09:42:53 GMT
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: ETag
+          value: '"88abcfe07e0b66040d6498a1624a45b7--gzip"'
+        - name: Content-Type
+          value: application/json;charset=UTF-8
+        - name: Vary
+          value: Accept-Encoding
+        - name: Content-Encoding
+          value: gzip
+        - name: Transfer-Encoding
+          value: chunked
+      body:
+        type: json
+        data: |-
+          {
+              "currentPageUrl": "/services/data/v58.0/ui-api/apps/06m58000000fBK2AAM/user-nav-items?formFactor=large",
+              "eTag": "88abcfe07e0b66040d6498a1624a45b7",
+              "navItems": [],
+              "nextPageUrl": null
+          }
+
+docs: Get a user’s personalized navigation items (tabs).

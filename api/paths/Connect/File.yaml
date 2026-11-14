@@ -1,0 +1,603 @@
+/services/data/v{version}/connect/files/users/me:
+  post:
+    tags:
+      - Connect > File
+    summary: Users Files, General
+    description: >-
+      Upload a file, including references to external files, to the Files home or get information about files a user owns. These files don’t include files shared with a user, files a user follows, or general organization files.
+
+      When you upload a file to the Files home, it is private and available only to the file owner.
+
+
+      To upload a file, send it in a multipart/form-data request. You can include the description and title of the file in the multipart/form-data request as a JSON or XML request body. You can also send the information as request parameters. For information about how to create the multipart/form-data message, see Uploading Binary Files.
+
+      https://developer.salesforce.com/docs/atlas.en-us.chatterapi.meta/chatterapi/connect_resources_users_files_general.htm
+    requestBody:
+      content:
+        multipart/form-data:
+          schema:
+            type: object
+            properties:
+              fileData:
+                type: string
+                format: binary
+    parameters:
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '201':
+        description: Created
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Mon, 20 Nov 2023 16:28:22 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-XSS-Protection:
+            schema:
+              type: string
+              example: 1; mode=block
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Content-Type:
+            schema:
+              type: string
+              example: application/json;charset=UTF-8
+          Vary:
+            schema:
+              type: string
+              example: Accept-Encoding
+          Content-Encoding:
+            schema:
+              type: string
+              example: gzip
+          Transfer-Encoding:
+            schema:
+              type: string
+              example: chunked
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              checksum: 71a50dbba44c78128b221b7df7bb51f1
+              contentHubRepository: null
+              contentModifiedDate: '2023-11-20T16:28:22.000Z'
+              contentSize: 95
+              contentUrl: null
+              contentVersionId: 068xx0000004C92AAE
+              createdDate: '2023-11-20T16:28:22.000Z'
+              description: null
+              downloadUrl: >-
+                /services/data/v58.0/connect/files/069.../content?versionNumber=1
+              externalDocumentUrl: null
+              externalFilePermissionInformation: null
+              fileAsset: null
+              fileExtension: png
+              fileType: Png
+              flashRenditionStatus: Na
+              id: 069...
+              isFileAsset: false
+              isInMyFileSync: false
+              isMajorVersion: true
+              mimeType: image/png
+              moderationFlags: null
+              modifiedDate: '2023-11-20T16:28:22.000Z'
+              motif:
+                color: '939393'
+                largeIconUrl: /img/content/content64.png
+                mediumIconUrl: /img/content/content32.png
+                smallIconUrl: /img/icon/files16.png
+                svgIconUrl: null
+              mySubscription: null
+              name: 1x1.png
+              origin: Chatter
+              owner:
+                additionalLabel: null
+                communityNickname: User1696423780773910041
+                companyName: Salesforce
+                displayName: Name
+                firstName: Firstname
+                id: 005...
+                isActive: true
+                isInThisCommunity: true
+                lastName: Name
+                motif:
+                  color: 1B96FF
+                  largeIconUrl: /img/icon/profile64.png
+                  mediumIconUrl: /img/icon/profile32.png
+                  smallIconUrl: /img/icon/profile16.png
+                  svgIconUrl: null
+                mySubscription: null
+                name: Name
+                outOfOffice:
+                  message: ''
+                photo:
+                  fullEmailPhotoUrl: >-
+                    https://<my_domain>/ncsphoto/1wsMlOd3tVC7boygqBO8wMT9KzA0D6tqzpbs-Uw0IogXzXAXaYKJnuWCNQmXymRq?fromEmail=1
+                  largePhotoUrl: https://<my_domain>/profilephoto/729.../F
+                  mediumPhotoUrl: https://<my_domain>/profilephoto/729.../M
+                  photoVersionId: 729...
+                  smallPhotoUrl: https://<my_domain>/profilephoto/729.../T
+                  standardEmailPhotoUrl: >-
+                    https://<my_domain>/ncsphoto/1wsMlOd3tVC7boygqBO8wMT9KzA0D6tqzpbs-Uw0Ioi-dtynkoFWsl46as__TDFU?fromEmail=1
+                  url: /services/data/v58.0/connect/user-profiles/005.../photo
+                reputation: null
+                title: null
+                type: User
+                url: /services/data/v58.0/chatter/users/005...
+                userType: Internal
+              pageCount: 0
+              parentFolder: null
+              pdfRenditionStatus: Na
+              publishStatus: PrivateAccess
+              renditionUrl: >-
+                /services/data/v58.0/connect/files/069.../rendition?type=THUMB120BY90
+              renditionUrl240By180: >-
+                /services/data/v58.0/connect/files/069.../rendition?type=THUMB240BY180
+              renditionUrl720By480: >-
+                /services/data/v58.0/connect/files/069.../rendition?type=THUMB720BY480
+              repositoryFileId: null
+              repositoryFileUrl: null
+              sharingOption: Allowed
+              sharingPrivacy: None
+              sharingRole: Owner
+              systemModstamp: '2023-11-20T16:28:23.000Z'
+              textPreview: null
+              thumb120By90RenditionStatus: NotScheduled
+              thumb240By180RenditionStatus: NotScheduled
+              thumb720By480RenditionStatus: NotScheduled
+              title: 1x1.png
+              topics:
+                currentPageUrl: null
+                nextPageUrl: null
+                topics: []
+              type: File
+              url: /services/data/v58.0/connect/files/069...?versionNumber=1
+              versionNumber: '1'
+/services/data/v{version}/connect/files/{FILE_ID}:
+  get:
+    tags:
+      - Connect > File
+    summary: File Information
+    description: >-
+      Get information about a specified file, including references to external files. Upload a new version of an existing file, including references to external files. Rename a file, move a file to a different folder, and delete a file.
+
+      To upload a new version of an existing file, make a POST request. Upload the new version as a binary part in a multipart/form-data request. See Uploading Binary Files. To upload a new file to the Files home, use /connect/files/users/me.Get information about a specified file, including references to external files.
+
+      https://developer.salesforce.com/docs/atlas.en-us.chatterapi.meta/chatterapi/connect_resources_files_information.htm
+    parameters:
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: FILE_ID
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: OK
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Mon, 20 Nov 2023 16:33:38 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-XSS-Protection:
+            schema:
+              type: string
+              example: 1; mode=block
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Content-Type:
+            schema:
+              type: string
+              example: application/json;charset=UTF-8
+          Vary:
+            schema:
+              type: string
+              example: Accept-Encoding
+          Content-Encoding:
+            schema:
+              type: string
+              example: gzip
+          Transfer-Encoding:
+            schema:
+              type: string
+              example: chunked
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              checksum: 71a50dbba44c78128b221b7df7bb51f1
+              contentHubRepository: null
+              contentModifiedDate: '2023-11-20T16:28:22.000Z'
+              contentSize: 95
+              contentUrl: null
+              createdDate: '2023-11-20T16:28:22.000Z'
+              description: null
+              downloadUrl: >-
+                /services/data/v58.0/connect/files/069.../content?versionNumber=1
+              externalDocumentUrl: null
+              externalFilePermissionInformation: null
+              fileAsset: null
+              fileExtension: png
+              fileType: Png
+              flashRenditionStatus: Na
+              id: 069...
+              isFileAsset: false
+              isInMyFileSync: false
+              isMajorVersion: true
+              mimeType: image/png
+              moderationFlags: null
+              modifiedDate: '2023-11-20T16:28:22.000Z'
+              motif:
+                color: '939393'
+                largeIconUrl: /img/content/content64.png
+                mediumIconUrl: /img/content/content32.png
+                smallIconUrl: /img/icon/files16.png
+                svgIconUrl: null
+              mySubscription: null
+              name: 1x1.png
+              origin: Chatter
+              owner:
+                additionalLabel: null
+                communityNickname: User1696423780773910041
+                companyName: Salesforce
+                displayName: Name
+                firstName: firstName
+                id: 005...
+                isActive: true
+                isInThisCommunity: true
+                lastName: Name
+                motif:
+                  color: 1B96FF
+                  largeIconUrl: /img/icon/profile64.png
+                  mediumIconUrl: /img/icon/profile32.png
+                  smallIconUrl: /img/icon/profile16.png
+                  svgIconUrl: null
+                mySubscription: null
+                name: Name
+                outOfOffice:
+                  message: ''
+                photo:
+                  fullEmailPhotoUrl: >-
+                    https://<my_domain>/ncsphoto/1wsMlOd3tVC7boygqBO8wMT9KzA0D6tqzpbs-Uw0IogXzXAXaYKJnuWCNQmXymRq?fromEmail=1
+                  largePhotoUrl: https://<my_domain>/profilephoto/729.../F
+                  mediumPhotoUrl: https://<my_domain>/profilephoto/729.../M
+                  photoVersionId: 729...
+                  smallPhotoUrl: https://<my_domain>/profilephoto/729.../T
+                  standardEmailPhotoUrl: >-
+                    https://<my_domain>/ncsphoto/1wsMlOd3tVC7boygqBO8wMT9KzA0D6tqzpbs-Uw0Ioi-dtynkoFWsl46as__TDFU?fromEmail=1
+                  url: /services/data/v58.0/connect/user-profiles/005.../photo
+                reputation: null
+                title: null
+                type: User
+                url: /services/data/v58.0/chatter/users/005...
+                userType: Internal
+              pageCount: 0
+              parentFolder: null
+              pdfRenditionStatus: Na
+              publishStatus: PrivateAccess
+              renditionUrl: >-
+                /services/data/v58.0/connect/files/069.../rendition?type=THUMB120BY90
+              renditionUrl240By180: >-
+                /services/data/v58.0/connect/files/069.../rendition?type=THUMB240BY180
+              renditionUrl720By480: >-
+                /services/data/v58.0/connect/files/069.../rendition?type=THUMB720BY480
+              repositoryFileId: null
+              repositoryFileUrl: null
+              sharingOption: Allowed
+              sharingPrivacy: None
+              sharingRole: Owner
+              systemModstamp: '2023-11-20T16:28:23.000Z'
+              textPreview: null
+              thumb120By90RenditionStatus: NotScheduled
+              thumb240By180RenditionStatus: NotScheduled
+              thumb720By480RenditionStatus: NotScheduled
+              title: 1x1.png
+              topics:
+                currentPageUrl: null
+                nextPageUrl: null
+                topics: []
+              type: File
+              url: /services/data/v58.0/connect/files/069...?versionNumber=1
+              versionNumber: '1'
+  delete:
+    tags:
+      - Connect > File
+    summary: File Information - Delete
+    description: >-
+      Get information about a specified file, including references to external files. Upload a new version of an existing file, including references to external files. Rename a file, move a file to a different folder, and delete a file.
+
+      To upload a new version of an existing file, make a POST request. Upload the new version as a binary part in a multipart/form-data request. See Uploading Binary Files. To upload a new file to the Files home, use /connect/files/users/me.Get information about a specified file, including references to external files.
+
+      https://developer.salesforce.com/docs/atlas.en-us.chatterapi.meta/chatterapi/connect_resources_files_information.htm
+    parameters:
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: FILE_ID
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '204':
+        description: No Content
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Mon, 20 Nov 2023 16:39:05 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-XSS-Protection:
+            schema:
+              type: string
+              example: 1; mode=block
+          Content-Security-Policy:
+            schema:
+              type: string
+              example: upgrade-insecure-requests
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+        content:
+          text/plain:
+            schema:
+              type: string
+            example: null
+/services/data/v{version}/connect/files/{FILE_ID}/content:
+  get:
+    tags:
+      - Connect > File
+    summary: File Content
+    description: >-
+      Returns the binary content of the file, including references to external files. The content is streamed as the body of the response.
+
+      https://developer.salesforce.com/docs/atlas.en-us.chatterapi.meta/chatterapi/connect_resources_files_content.htm
+    parameters:
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: FILE_ID
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: Successful response
+        content:
+          application/json: {}
+/services/data/v{version}/connect/files/{FILE_ID}/file-shares:
+  get:
+    tags:
+      - Connect > File
+    summary: File Shares
+    description: >-
+      Returns information about the objects with which the specified file has been shared. Objects can be users, groups, or records.
+
+
+      https://developer.salesforce.com/docs/atlas.en-us.chatterapi.meta/chatterapi/connect_resources_files_shares.htm
+    parameters:
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: FILE_ID
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: OK
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Mon, 20 Nov 2023 16:37:07 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-XSS-Protection:
+            schema:
+              type: string
+              example: 1; mode=block
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Content-Type:
+            schema:
+              type: string
+              example: application/json;charset=UTF-8
+          Vary:
+            schema:
+              type: string
+              example: Accept-Encoding
+          Content-Encoding:
+            schema:
+              type: string
+              example: gzip
+          Transfer-Encoding:
+            schema:
+              type: string
+              example: chunked
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              currentPageUrl: /services/data/v58.0/connect/files/069.../file-shares
+              linkShare: null
+              nextPageUrl: null
+              previousPageUrl: null
+              shares:
+                - entity:
+                    additionalLabel: null
+                    communityNickname: User1696423780773910041
+                    companyName: Salesforce
+                    displayName: Name
+                    firstName: firstName
+                    id: 005...
+                    isActive: true
+                    isInThisCommunity: true
+                    lastName: Name
+                    motif:
+                      color: 1B96FF
+                      largeIconUrl: /img/icon/profile64.png
+                      mediumIconUrl: /img/icon/profile32.png
+                      smallIconUrl: /img/icon/profile16.png
+                      svgIconUrl: null
+                    mySubscription: null
+                    name: Name
+                    outOfOffice:
+                      message: ''
+                    photo:
+                      fullEmailPhotoUrl: >-
+                        https://<my_domain>/ncsphoto/1wsMlOd3tVC7boygqBO8wMT9KzA0D6tqzpbs-Uw0IogXzXAXaYKJnuWCNQmXymRq?fromEmail=1
+                      largePhotoUrl: https://<my_domain>/profilephoto/7292o000000oAgZ/F
+                      mediumPhotoUrl: https://<my_domain>/profilephoto/7292o000000oAgZ/M
+                      photoVersionId: 729...
+                      smallPhotoUrl: https://<my_domain>/profilephoto/7292o000000oAgZ/T
+                      standardEmailPhotoUrl: >-
+                        https://<my_domain>/ncsphoto/1wsMlOd3tVC7boygqBO8wMT9KzA0D6tqzpbs-Uw0Ioi-dtynkoFWsl46as__TDFU?fromEmail=1
+                      url: >-
+                        /services/data/v58.0/connect/user-profiles/005.../photo
+                    reputation: null
+                    title: null
+                    type: User
+                    url: /services/data/v58.0/chatter/users/005...
+                    userType: Internal
+                  sharingType: I
+/services/data/v{version}/connect/files/{FILE_ID}/file-shares/link:
+  put:
+    tags:
+      - Connect > File
+    summary: Files Shares Link
+    description: >-
+      A description of a file shared as a link. Create, access, and delete a file’s share link.
+
+
+      https://developer.salesforce.com/docs/atlas.en-us.chatterapi.meta/chatterapi/connect_resources_files_shares_link.htm
+    requestBody:
+      content: {}
+    parameters:
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: FILE_ID
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: OK
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Mon, 20 Nov 2023 16:38:31 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-XSS-Protection:
+            schema:
+              type: string
+              example: 1; mode=block
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Content-Type:
+            schema:
+              type: string
+              example: application/json;charset=UTF-8
+          Transfer-Encoding:
+            schema:
+              type: string
+              example: chunked
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              expirationDate: null
+              fileViewUrl: >-
+                https://<my_domain>/sfc/p/2o000000i6mB/a/2o00000022S3/y2zsu9pHtEVIa49w6ElaXdjXz_GxBSzRVwe645_Z.dw
+              isPasswordRequired: false
+              password: null
+              sharingType: V

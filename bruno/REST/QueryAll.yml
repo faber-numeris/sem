@@ -1,0 +1,171 @@
+info:
+  name: QueryAll
+  type: http
+  seq: 19
+
+http:
+  method: GET
+  url: "{{_endpoint}}/services/data/v{{version}}/queryAll/?q=SELECT+name+from+Account"
+  headers:
+    - name: Content-Type
+      value: application/json
+  params:
+    - name: q
+      value: SELECT+name+from+Account
+      type: query
+    - name: explain
+      value: ""
+      type: query
+      description: A SOQL query to get performance feedback on. Use explain instead of q to get a response that details how Salesforce will process your query. You can use this feedback to further optimize your queries. You can also use a report or list view ID in place of the query string to get feedback on how Salesforce will process your report or list view.
+      disabled: true
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: QueryAll
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/queryAll/?q=SELECT+name+from+Account"
+      method: GET
+      headers:
+        - name: Content-Type
+          value: application/json
+      params:
+        - name: q
+          value: SELECT+name+from+Account
+          type: query
+        - name: explain
+          value: ""
+          type: query
+          description: A SOQL query to get performance feedback on. Use explain instead of q to get a response that details how Salesforce will process your query. You can use this feedback to further optimize your queries. You can also use a report or list view ID in place of the query string to get feedback on how Salesforce will process your report or list view.
+          disabled: true
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: Date
+          value: Wed, 27 Sep 2023 15:27:21 GMT
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-XSS-Protection
+          value: 1; mode=block
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: Sforce-Limit-Info
+          value: api-usage=2/15000
+        - name: Content-Type
+          value: application/json;charset=UTF-8
+        - name: Vary
+          value: Accept-Encoding
+        - name: Content-Encoding
+          value: gzip
+        - name: Transfer-Encoding
+          value: chunked
+      body:
+        type: json
+        data: |-
+          {
+              "totalSize": 12,
+              "done": true,
+              "records": [
+                  {
+                      "attributes": {
+                          "type": "Account",
+                          "url": "/services/data/v58.0/sobjects/Account/001B000000UnQ2vIAF"
+                      },
+                      "Name": "Edge Communications"
+                  },
+                  {
+                      "attributes": {
+                          "type": "Account",
+                          "url": "/services/data/v58.0/sobjects/Account/001B000000UnQ2wIAF"
+                      },
+                      "Name": "Burlington Textiles Corp of America"
+                  },
+                  {
+                      "attributes": {
+                          "type": "Account",
+                          "url": "/services/data/v58.0/sobjects/Account/001B000000UnQ2xIAF"
+                      },
+                      "Name": "Pyramid Construction Inc."
+                  },
+                  {
+                      "attributes": {
+                          "type": "Account",
+                          "url": "/services/data/v58.0/sobjects/Account/001B000000UnQ2yIAF"
+                      },
+                      "Name": "Dickenson plc"
+                  },
+                  {
+                      "attributes": {
+                          "type": "Account",
+                          "url": "/services/data/v58.0/sobjects/Account/001B000000UnQ2zIAF"
+                      },
+                      "Name": "Grand Hotels & Resorts Ltd"
+                  },
+                  {
+                      "attributes": {
+                          "type": "Account",
+                          "url": "/services/data/v58.0/sobjects/Account/001B000000UnQ30IAF"
+                      },
+                      "Name": "United Oil & Gas Corp."
+                  },
+                  {
+                      "attributes": {
+                          "type": "Account",
+                          "url": "/services/data/v58.0/sobjects/Account/001B000000UnQ31IAF"
+                      },
+                      "Name": "Express Logistics and Transport"
+                  },
+                  {
+                      "attributes": {
+                          "type": "Account",
+                          "url": "/services/data/v58.0/sobjects/Account/001B000000UnQ32IAF"
+                      },
+                      "Name": "University of Arizona"
+                  },
+                  {
+                      "attributes": {
+                          "type": "Account",
+                          "url": "/services/data/v58.0/sobjects/Account/001B000000UnQ33IAF"
+                      },
+                      "Name": "United Oil & Gas, UK"
+                  },
+                  {
+                      "attributes": {
+                          "type": "Account",
+                          "url": "/services/data/v58.0/sobjects/Account/001B000000UnQ34IAF"
+                      },
+                      "Name": "United Oil & Gas, Singapore"
+                  },
+                  {
+                      "attributes": {
+                          "type": "Account",
+                          "url": "/services/data/v58.0/sobjects/Account/001B000000UnQ35IAF"
+                      },
+                      "Name": "GenePoint"
+                  },
+                  {
+                      "attributes": {
+                          "type": "Account",
+                          "url": "/services/data/v58.0/sobjects/Account/001B000000UnQ36IAF"
+                      },
+                      "Name": "sForce"
+                  }
+              ]
+          }
+
+docs: |-
+  Executes the specified SOQL query. Unlike the Query resource, QueryAll will return records that have been deleted because of a merge or delete. QueryAll will also return information about archived Task and Event records. QueryAll is available in API version 29.0 and later.
+
+  If the query results are too large, the response contains the first batch of results and a query identifier in the nextRecordsUrl field of the response. The identifier can be used in an additional request to retrieve the next batch. Note that even though nextRecordsUrl has query in the URL, it will still provide remaining results from the initial QueryAll request. The remaining results will include deleted records that matched the initial query.
+  https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/resources_queryall.htm

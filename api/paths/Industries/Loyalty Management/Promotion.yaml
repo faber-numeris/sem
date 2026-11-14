@@ -1,0 +1,158 @@
+/services/data/v{version}/global-promotions-management/eligible-promotions:
+  post:
+    tags:
+      - Industries > Loyalty Management > Promotion
+    summary: Eligible Promotions
+    description: >-
+      [Eligible Promotions](https://developer.salesforce.com/docs/atlas.en-us.loyalty.meta/loyalty/connect_resources_eligible_promotions.htm)
+
+
+      NOTE:
+
+
+      In the Pre-request. Script Tab, make changes in the variables value accordingly with the real Process Name to invoke.
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            example:
+              cart:
+                cartDetails:
+                  - activityStartDate: '2023-06-14T12:45:19Z'
+                    contactId: 003xx000004WjzAAAS
+                    transactionAmount: 499
+                    currencyISOCode: INR
+                    cartLineDetails:
+                      - cartLineProductId: 01txx0000006iTsAAI
+                        cartLineItemQuantity: 3
+                        cartLineItemAmount: 499
+                        cartLineProductCatalogId: 0ZSSB0000002d8X4AQ
+    parameters:
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: OK
+        content:
+          text/plain:
+            schema:
+              type: string
+            examples:
+              example-0:
+                summary: >-
+                  example of the details of a customer’s cart whose eligible promotions are to be fetched
+                value: null
+              example-1:
+                summary: >-
+                  example of the details of a loyalty program member’s cart whose eligible loyalty program promotions are to be fetched:
+                value: null
+/services/data/v{version}/global-promotions-management/promotions:
+  post:
+    tags:
+      - Industries > Loyalty Management > Promotion
+    summary: Promotions Creation
+    description: >-
+      [Promotions Creation](https://developer.salesforce.com/docs/atlas.en-us.loyalty.meta/loyalty/connect_resources_unified_promotions.htm)
+
+
+      NOTE:
+
+
+      In the Pre-request. Script Tab, make changes in the variables value accordingly with the real Process Name to invoke.
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            example:
+              name: Free Beverage
+              startDateTime: '2023-06-30T00:00:00.000Z'
+              displayName: Free Beverage
+              priorityNumber: 1
+              description: Buy 2 Get 1 free
+              endDateTime: '2023-12-30T00:00:00.000Z'
+              objective: To increase sales
+              loyaltyProgram:
+                name: Program-001
+              additionalFieldValues:
+                attributes:
+                  promotionLocation__c: HYD
+              promotionLimits:
+                perLineItemLimit: 10
+                vouchersLimit: 100
+                vouchersPerCustomerLimit: 5
+                perCartLimit: 5
+                usePerCustomerLimit: 5
+                liabilityLimit: 10000
+                loyaltyProgramCurrency:
+                  id: 0lcSB00000001TxYAI
+                pointsPerCustomerLimit: 5
+              promotionEligibility:
+                eligibleProductCategories:
+                  - id: 0ZGSB0000002td74AA
+                eligibleProducts:
+                  - name: Coke
+                eligibleChannels:
+                  - channelType: Offline
+                    store:
+                      name: test Store
+                    retailLocationGroup:
+                      name: test
+                eligibleCustomerEvents:
+                  event: MemberBirthday
+                  eventPeriodUnit: Date
+                eligibleEnrollmentPeriod:
+                  isEnrollmentRequired: true
+                  enrollmentStartDate: '2023-06-30T00:00:00.000Z'
+                  enrollmentEndDate: '2023-12-30T00:00:00.000Z'
+                eligibleLoyaltyTiers:
+                  - tierGroup:
+                      name: Group-001
+                      id: 0ltSB00000000T3YAI
+                    tier:
+                      name: Silver
+                      id: 0lgSB00000000srYAA
+    parameters:
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: Successful response
+        content:
+          application/json: {}
+/services/data/v{version}/global-promotions-management/promotions/{promotionId}:
+  get:
+    tags:
+      - Industries > Loyalty Management > Promotion
+    summary: Promotion Details
+    description: >-
+      [Promotions Creation](https://developer.salesforce.com/docs/atlas.en-us.loyalty.meta/loyalty/connect_resources_unified_promotions.htm)
+
+
+      NOTE:
+
+
+      In the Pre-request. Script Tab, make changes in the variables value accordingly with the real Process Name to invoke.
+    parameters:
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: promotionId
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: Successful response
+        content:
+          application/json: {}

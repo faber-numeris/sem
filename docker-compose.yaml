@@ -1,0 +1,66 @@
+services:
+  postgres_db:
+    image: postgres:14
+    container_name: sem_postgres_container
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    ports:
+      - "${PG_PORT:-5432}:5432"
+    environment:
+      POSTGRES_USER: ${PG_USER:-postgres}
+      POSTGRES_PASSWORD: ${PG_PASSWORD:-postgres}
+      POSTGRES_DB: ${PG_DB:-postgres}
+    volumes:
+      - sem_postgres_data:/var/lib/postgresql/data
+
+  migration:
+    image: juhokoskela/goose:latest
+    container_name: sem_migration_container
+    restart: "no"
+    entrypoint:
+      [
+        "goose",
+        "-table",
+        "salesforce_migrations",
+        "-dir",
+        "/migrations",
+        "postgres",
+        "postgres://postgres:postgres@postgres_db:5432/postgres?sslmode=disable",
+        "up",
+      ]
+    volumes:
+      - ./internal/adapters/outbound/postgres/migrations:/migrations
+    depends_on:
+      postgres_db:
+        condition: service_healthy
+
+  sem:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: sem_api_container
+    restart: unless-stopped
+    ports:
+      - "${PORT:-8080}:8080"
+    environment:
+      PORT: 8080
+      INSTANCE_URL: "http://localhost:8080"
+      DB_HOST: postgres_db
+      DB_PORT: 5432
+      DB_USER: ${PG_USER:-postgres}
+      DB_PASSWORD: ${PG_PASSWORD:-postgres}
+      DB_NAME: ${PG_DB:-postgres}
+      DB_SSLMODE: disable
+    depends_on:
+      postgres_db:
+        condition: service_healthy
+      migration:
+        condition: service_completed_successfully
+
+volumes:
+  sem_postgres_data:

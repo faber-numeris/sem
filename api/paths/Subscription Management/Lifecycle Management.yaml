@@ -1,0 +1,112 @@
+/services/data/v{version}/actions/standard/createOrUpdateAssetFromOrder:
+  post:
+    tags:
+      - Subscription Management > Lifecycle Management
+    summary: CreateAssetFromOrder
+    requestBody:
+      content:
+        '*/*':
+          schema:
+            type: string
+            example: >-
+              "{\n    \"inputs\": [\n        {\n            \"orderId\": \"{{currentOrder}}\"\n        }\n    ]\n}"
+    parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: Successful response
+        content:
+          application/json: {}
+/services/data/v{version}/asset-management/assets/collection/actions/initiate-cancellation:
+  post:
+    tags:
+      - Subscription Management > Lifecycle Management
+    summary: Initiate Cancellation
+    requestBody:
+      content:
+        '*/*':
+          schema:
+            type: string
+            example: >-
+              "{\n  \"assetIds\": {\n    \"assetIdArray\": [\n      \"{{assetID}}\"\n    ]\n  },\n  \"cancellationDate\": \"2023-08-21T00:00:00\",\n  \"cancellationOutputType\": \"order\"\n}"
+    parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: Successful response
+        content:
+          application/json: {}
+/services/data/v{version}/asset-management/assets/collection/actions/initiate-renewal:
+  post:
+    tags:
+      - Subscription Management > Lifecycle Management
+    summary: Initiate Renewal
+    requestBody:
+      content:
+        '*/*':
+          schema:
+            type: string
+            example: >-
+              "{\n  \"assetIds\": {\n    \"assetIdArray\": [\n      \"{{assetID}}\"\n    ]\n  }\n}"
+    parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: Successful response
+        content:
+          application/json: {}
+/services/data/v{version}/asset-management/assets/collection/actions/initiate-amend-quantity:
+  post:
+    tags:
+      - Subscription Management > Lifecycle Management
+    summary: Initiate Amend Quantity
+    requestBody:
+      content:
+        '*/*':
+          schema:
+            type: string
+            example: >-
+              "{\n  \"assetIds\": {\n    \"assetIdArray\": [\n      \"{{assetID}}\"\n    ]\n  },\n  \"startDate\": \"2023-08-18T00:00:00\",\n  \"quantityChange\": 5,\n  \"amendmentOutputType\": \"order\"\n}"
+    parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: Successful response
+        content:
+          application/json: {}

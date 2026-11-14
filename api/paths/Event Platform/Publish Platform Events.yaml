@@ -1,0 +1,128 @@
+/services/data/v{version}/sobjects/{EventApiName}:
+  post:
+    tags:
+      - Event Platform > Publish Platform Events
+    summary: Publish single event
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            example:
+              Annual_Mileage__c: 12000
+              Current_Vehicle__c: Fast car
+              Model_Year__c: 2019
+    parameters:
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: EventApiName
+        in: path
+        schema:
+          type: string
+        required: true
+        example: Carbon_Comparison__e
+    responses:
+      '201':
+        description: Created
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Mon, 03 Jul 2023 13:18:20 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Sforce-Limit-Info:
+            schema:
+              type: string
+              example: api-usage=16/15000
+          Location:
+            schema:
+              type: string
+              example: /services/data/v58.0/sobjects/Sample__e/e00xx0000000001AAA
+          Content-Type:
+            schema:
+              type: string
+              example: application/json;charset=UTF-8
+          Vary:
+            schema:
+              type: string
+              example: Accept-Encoding
+          Content-Encoding:
+            schema:
+              type: string
+              example: gzip
+          Transfer-Encoding:
+            schema:
+              type: string
+              example: chunked
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              id: e00xx0000000001AAA
+              success: true
+              errors:
+                - statusCode: OPERATION_ENQUEUED
+                  message: 234995b6-53b6-4887-93fc-ecd0fac8b36c
+                  fields: []
+/services/Soap/u/{version}:
+  post:
+    tags:
+      - Event Platform > Publish Platform Events
+    summary: Publish multiple events with SOAP call
+    requestBody:
+      content:
+        '*/*':
+          schema:
+            type: string
+            example: >-
+              "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns1=\"urn:sobject.partner.soap.sforce.com\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:ns2=\"urn:partner.soap.sforce.com\">\n    <SOAP-ENV:Header>\n        <ns2:SessionHeader>\n            <ns2:sessionId>{{_accessToken}}</ns2:sessionId>\n        </ns2:SessionHeader>\n    </SOAP-ENV:Header>\n    <SOAP-ENV:Body>\n        <ns2:create>\n            <ns2:sObjects>\n                <ns1:type>Carbon_Comparison__e</ns1:type>\n                <Annual_Mileage__c>12000</Annual_Mileage__c>\n                <Current_Vehicle__c>Fast car 1</Current_Vehicle__c>\n                <Model_Year__c>2019</Model_Year__c>\n            </ns2:sObjects>\n            <ns2:sObjects>\n                <ns1:type>Carbon_Comparison__e</ns1:type>\n                <Annual_Mileage__c>12000</Annual_Mileage__c>\n                <Current_Vehicle__c>Fast car 2</Current_Vehicle__c>\n                <Model_Year__c>2019</Model_Year__c>\n            </ns2:sObjects>\n        </ns2:create>\n    </SOAP-ENV:Body>\n</SOAP-ENV:Envelope>"
+    parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: text/xml
+      - name: charset
+        in: header
+        schema:
+          type: string
+        example: UTF-8
+      - name: SOAPAction
+        in: header
+        schema:
+          type: string
+        example: create
+      - name: Accept
+        in: header
+        schema:
+          type: string
+        example: text/xml
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: Successful response
+        content:
+          application/json: {}

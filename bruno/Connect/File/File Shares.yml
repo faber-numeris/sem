@@ -1,0 +1,110 @@
+info:
+  name: File Shares
+  type: http
+  seq: 5
+
+http:
+  method: GET
+  url: "{{_endpoint}}/services/data/v{{version}}/connect/files/:FILE_ID/file-shares"
+  params:
+    - name: FILE_ID
+      value: ""
+      type: path
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Successful File Shares
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/connect/files/:FILE_ID/file-shares"
+      method: GET
+      params:
+        - name: FILE_ID
+          value: 0692o00000woaRkAAI
+          type: path
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: Date
+          value: Mon, 20 Nov 2023 16:37:07 GMT
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-XSS-Protection
+          value: 1; mode=block
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: Content-Type
+          value: application/json;charset=UTF-8
+        - name: Vary
+          value: Accept-Encoding
+        - name: Content-Encoding
+          value: gzip
+        - name: Transfer-Encoding
+          value: chunked
+      body:
+        type: json
+        data: |-
+          {
+              "currentPageUrl": "/services/data/v58.0/connect/files/069.../file-shares",
+              "linkShare": null,
+              "nextPageUrl": null,
+              "previousPageUrl": null,
+              "shares": [
+                  {
+                      "entity": {
+                          "additionalLabel": null,
+                          "communityNickname": "User1696423780773910041",
+                          "companyName": "Salesforce",
+                          "displayName": "Name",
+                          "firstName": "firstName",
+                          "id": "005...",
+                          "isActive": true,
+                          "isInThisCommunity": true,
+                          "lastName": "Name",
+                          "motif": {
+                              "color": "1B96FF",
+                              "largeIconUrl": "/img/icon/profile64.png",
+                              "mediumIconUrl": "/img/icon/profile32.png",
+                              "smallIconUrl": "/img/icon/profile16.png",
+                              "svgIconUrl": null
+                          },
+                          "mySubscription": null,
+                          "name": "Name",
+                          "outOfOffice": {
+                              "message": ""
+                          },
+                          "photo": {
+                              "fullEmailPhotoUrl": "https://<my_domain>/ncsphoto/1wsMlOd3tVC7boygqBO8wMT9KzA0D6tqzpbs-Uw0IogXzXAXaYKJnuWCNQmXymRq?fromEmail=1",
+                              "largePhotoUrl": "https://<my_domain>/profilephoto/7292o000000oAgZ/F",
+                              "mediumPhotoUrl": "https://<my_domain>/profilephoto/7292o000000oAgZ/M",
+                              "photoVersionId": "729...",
+                              "smallPhotoUrl": "https://<my_domain>/profilephoto/7292o000000oAgZ/T",
+                              "standardEmailPhotoUrl": "https://<my_domain>/ncsphoto/1wsMlOd3tVC7boygqBO8wMT9KzA0D6tqzpbs-Uw0Ioi-dtynkoFWsl46as__TDFU?fromEmail=1",
+                              "url": "/services/data/v58.0/connect/user-profiles/005.../photo"
+                          },
+                          "reputation": null,
+                          "title": null,
+                          "type": "User",
+                          "url": "/services/data/v58.0/chatter/users/005...",
+                          "userType": "Internal"
+                      },
+                      "sharingType": "I"
+                  }
+              ]
+          }
+
+docs: |-
+  Returns information about the objects with which the specified file has been shared. Objects can be users, groups, or records.
+
+  https://developer.salesforce.com/docs/atlas.en-us.chatterapi.meta/chatterapi/connect_resources_files_shares.htm

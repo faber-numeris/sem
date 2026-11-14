@@ -1,0 +1,192 @@
+info:
+  name: runDecisionMatrix
+  type: http
+  seq: 2
+
+http:
+  method: POST
+  url: "{{_endpoint}}/services/data/v{{version}}/actions/custom/runDecisionMatrix/:UniqueName"
+  headers:
+    - name: Content-Type
+      value: application/json
+  params:
+    - name: UniqueName
+      value: myDecisionMatrix
+      type: path
+      description: The value of UniqueName is the unique identifier of the record, which is sourced from the name of a decision matrix.
+  body:
+    type: json
+    data: |
+      {
+         "inputs":[
+            {
+               "myColumnInput":"One"
+            }
+         ]
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: runDecisionMatrix
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/actions/custom/runDecisionMatrix/:UniqueName"
+      method: POST
+      headers:
+        - name: Content-Type
+          value: application/json
+      params:
+        - name: UniqueName
+          value: myDecisionMatrix
+          type: path
+          description: The value of UniqueName is the unique identifier of the record, which is sourced from the name of a decision matrix.
+      body:
+        type: json
+        data: |
+          {
+             "inputs":[
+                {
+                   "myColumnInput":"One"
+                }
+             ]
+          }
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: Date
+          value: Thu, 07 Sep 2023 13:00:30 GMT
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-XSS-Protection
+          value: 1; mode=block
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: Sforce-Limit-Info
+          value: api-usage=15/15000
+        - name: Content-Type
+          value: application/json;charset=UTF-8
+        - name: Vary
+          value: Accept-Encoding
+        - name: Content-Encoding
+          value: gzip
+        - name: Transfer-Encoding
+          value: chunked
+      body:
+        type: json
+        data: |-
+          [
+              {
+                  "actionName": "myDecisionMatrix",
+                  "errors": null,
+                  "isSuccess": true,
+                  "outputValues": {
+                      "myColumnOutput": "1"
+                  },
+                  "version": 1
+              }
+          ]
+
+docs: |-
+  # Decision Matrix Actions
+
+  Invoke a decision matrix in a flow with the Decision Matrix Actions. A decision matrix is a user-defined table where you can look up an output based on the inputs you provide.
+
+  For example, you can look up a candidate’s eligibility to avail medical insurance in a decision matrix based on the candidate’s age and gender.
+
+  These actions are available in API version 55.0 and later.
+
+  ## Supported REST HTTP Methods
+
+  URI/services/data/v55.0/actions/custom/runDecisionMatrix/{UniqueName}
+
+  Note
+
+  The value of UniqueName is the unique identifier of the record, which is sourced from the name of a decision matrix.
+
+  FormatsJSONHTTP MethodsPOSTAuthenticationAuthorization: Bearer token
+
+  ## Inputs
+
+  Vary depending on the selected decision matrix.
+
+  ## Outputs
+
+  Vary depending on the inputs of the selected decision matrix.
+
+  ## Usage
+
+  Sample Request
+
+  Here’s an example POST request that has the inputs, such as, age and state:
+
+  ```
+  {
+     "inputs":[
+        {
+           "age":"25",
+           "state":"NY"
+        },
+        {
+           "age":"25",
+           "state":"CA"
+        },
+        {
+           "age":"",
+           "state":"WA"
+        }
+     ]
+  }
+
+   ```
+
+  Sample Response
+
+  Here’s an example response that has the premium and tax values based on the inputs provided in the example request.
+
+  ```
+  [
+     {
+        "actionName":"premiumTaxLookup",
+        "errors":null,
+        "isSuccess":true,
+        "outputValues":{
+           "premium":2400.0,
+           "tax":200.0
+        }
+     },
+     {
+        "actionName":"premiumTaxLookup",
+        "errors":null,
+        "isSuccess":true,
+        "outputValues":{
+           "premium":2400.0,
+           "tax":200.0
+        }
+     },
+     {
+        "actionName":"premiumTaxLookup",
+        "errors":[
+           {
+              "statusCode":"REQUIRED_FIELD_MISSING",
+              "message":"Missing required input parameter: age",
+              "fields":[
+              ]
+           }
+        ],
+        "isSuccess":false,
+        "outputValues":null
+     }
+  ]
+
+   ```

@@ -1,0 +1,84 @@
+info:
+  name: Bulk Retrieve Batch Result Data
+  type: http
+  seq: 8
+
+http:
+  method: GET
+  url: "{{_endpoint}}/services/async/{{version}}/job/{{_jobId}}/batch/{{_batchId}}/result/:batchResultId"
+  headers:
+    - name: X-SFDC-Session
+      value: "{{_accessToken}}"
+    - name: Accept-Encoding
+      value: gzip
+    - name: Content-Encoding
+      value: gzip
+  params:
+    - name: batchResultId
+      value: ""
+      type: path
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Successful Bulk Retrieve Batch Result Data
+    request:
+      url: "{{_endpoint}}/services/async/{{version}}/job/{{_jobId}}/batch/{{_batchId}}/result/:batchResultId"
+      method: GET
+      headers:
+        - name: X-SFDC-Session
+          value: "{{_accessToken}}"
+        - name: Accept-Encoding
+          value: gzip
+        - name: Content-Encoding
+          value: gzip
+      params:
+        - name: batchResultId
+          value: 7522o00000PATNY
+          type: path
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: Date
+          value: Thu, 16 Nov 2023 16:36:36 GMT
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-XSS-Protection
+          value: 1; mode=block
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: Content-Type
+          value: text/csv; charset=UTF-8
+        - name: Content-Encoding
+          value: gzip
+        - name: Transfer-Encoding
+          value: chunked
+      body:
+        type: text
+        data: |
+          "Id","Name"
+          "001...","GenePoint"
+          "001...","United Oil & Gas, UK"
+          "001...","United Oil & Gas, Singapore"
+          "001...","Edge Communications"
+          "001...","Burlington Textiles Corp of America"
+          "001...","Pyramid Construction Inc."
+          "001...","Dickenson plc"
+          "001...","Grand Hotels & Resorts Ltd"
+          "001...","Express Logistics and Transport"
+          "001...","University of Arizona"
+          "001...","United Oil & Gas Corp."
+          "001...","sForce"
+          "001...","Exemple de comptes pour les autorisations"
+          "001...","Tom Jones"

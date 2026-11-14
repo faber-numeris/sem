@@ -1,0 +1,64 @@
+info:
+  name: AppMenu
+  type: http
+  seq: 15
+
+http:
+  method: GET
+  url: "{{_endpoint}}/services/data/v{{version}}/appMenu/"
+  headers:
+    - name: Content-Type
+      value: application/json
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: AppMenu
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/appMenu/"
+      method: GET
+      headers:
+        - name: Content-Type
+          value: application/json
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: Date
+          value: Tue, 26 Sep 2023 13:30:07 GMT
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-XSS-Protection
+          value: 1; mode=block
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: Sforce-Limit-Info
+          value: api-usage=4/15000
+        - name: Content-Type
+          value: application/json;charset=UTF-8
+        - name: Vary
+          value: Accept-Encoding
+        - name: Content-Encoding
+          value: gzip
+        - name: Transfer-Encoding
+          value: chunked
+      body:
+        type: json
+        data: |-
+          {
+              "AppSwitcher": "/services/data/v58.0/appMenu/AppSwitcher",
+              "Salesforce1": "/services/data/v58.0/appMenu/Salesforce1",
+              "NetworkTabs": "/services/data/v58.0/appMenu/NetworkTabs"
+          }
+
+docs: Returns a list of items in either the Salesforce app drop-down menu or the Salesforce for Android, iOS, and mobile web navigation menu.

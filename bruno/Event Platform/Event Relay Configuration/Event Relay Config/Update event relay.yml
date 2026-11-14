@@ -1,0 +1,37 @@
+info:
+  name: Update event relay
+  type: http
+  seq: 7
+
+http:
+  method: PATCH
+  url: "{{_endpoint}}/services/data/v{{version}}/tooling/sobjects/EventRelayConfig/:EVENT_RELAY_CONFIG_ID"
+  headers:
+    - name: Content-Type
+      value: application/json
+    - name: SOAPAction
+      value: '""'
+    - name: Authorization
+      value: Bearer {{_accessToken}}
+  params:
+    - name: EVENT_RELAY_CONFIG_ID
+      value: 7k2RM000000008ZYAQ
+      type: path
+  body:
+    type: json
+    data: |-
+      {
+          "FullName": "MyEventRelay",
+          "Metadata": {
+              "label": "My Event Relay",
+              "relayOption": "{\"ReplayRecovery\":\"LATEST\"}"
+          }
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true

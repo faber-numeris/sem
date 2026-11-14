@@ -1,0 +1,490 @@
+/services/data/v{version}/connect/user-profiles/me/photo:
+  post:
+    tags:
+      - Connect > Chatter > User
+    summary: User Photo
+    description: >-
+      Get, post, and crop a user photo.
+
+      To use an image from the Files page as a user photo, pass the file ID in the fileId property of the request body or in the fileId request parameter. Images uploaded on the User page don’t have a file ID and can’t be used as the fileId.
+
+
+      To upload a binary file as the user photo, you must send it in a multipart/form-data message. For information about how to create the multipart/form-data message, see Uploading Binary Files.
+
+
+      To display user profile photos in a feed, cache the user photos. Then use the photoVersionId property of the Photo response body to determine when you need to update a photo. This technique helps you avoid running over limits and may improve mobile client performance.
+    requestBody:
+      content:
+        multipart/form-data:
+          schema:
+            type: object
+            properties:
+              json:
+                type: string
+                example: '{"cropY":"0","cropX":"0","cropSize":"200"}'
+              fileUpload:
+                type: string
+                format: binary
+    parameters:
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '201':
+        description: Created
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Mon, 20 Nov 2023 16:15:44 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-XSS-Protection:
+            schema:
+              type: string
+              example: 1; mode=block
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Content-Type:
+            schema:
+              type: string
+              example: application/json;charset=UTF-8
+          Vary:
+            schema:
+              type: string
+              example: Accept-Encoding
+          Content-Encoding:
+            schema:
+              type: string
+              example: gzip
+          Transfer-Encoding:
+            schema:
+              type: string
+              example: chunked
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              fullEmailPhotoUrl: >-
+                https://<my_domain>/img/userprofile/default_profile_200_v2.png?fromEmail=1
+              largePhotoUrl: https://<my_domain>/profilephoto/729.../F
+              mediumPhotoUrl: https://<my_domain>/profilephoto/729.../M
+              photoVersionId: 729...
+              smallPhotoUrl: https://<my_domain>/profilephoto/729.../T
+              standardEmailPhotoUrl: >-
+                https://<my_domain>/img/userprofile/default_profile_45_v2.png?fromEmail=1
+              url: /services/data/v58.0/connect/user-profiles/005.../photo
+/services/data/v{version}/chatter/users/me/messages:
+  post:
+    tags:
+      - Connect > Chatter > User
+    summary: User Messages, General
+    description: >-
+      Returns all the messages for all the private conversations for the context user. Also used to search across all messages and post a message.
+
+      To return all private conversations for the context user, see User Conversations, General.
+
+
+      https://developer.salesforce.com/docs/atlas.en-us.chatterapi.meta/chatterapi/connect_resources_users_messages_general.htm
+    requestBody:
+      content: {}
+    parameters:
+      - name: text
+        in: query
+        schema:
+          type: string
+        example: This is a private message
+      - name: recipients
+        in: query
+        schema:
+          type: string
+        description: Comma-separated list of User IDs
+        example: <USER1_ID>,<USER2_ID>
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '201':
+        description: Created
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Mon, 20 Nov 2023 16:22:22 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-XSS-Protection:
+            schema:
+              type: string
+              example: 1; mode=block
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Content-Type:
+            schema:
+              type: string
+              example: application/json;charset=UTF-8
+          Vary:
+            schema:
+              type: string
+              example: Accept-Encoding
+          Content-Encoding:
+            schema:
+              type: string
+              example: gzip
+          Transfer-Encoding:
+            schema:
+              type: string
+              example: chunked
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              body:
+                isRichText: null
+                messageSegments: []
+                text: This is a private message
+              conversationId: 03M...
+              conversationUrl: /services/data/v58.0/chatter/users/me/conversations/03M...
+              id: 03J...
+              recipients:
+                - additionalLabel: null
+                  communityNickname: automatedprocess
+                  companyName: Salesforce
+                  displayName: Automated Process
+                  firstName: Automated
+                  id: 005...
+                  isActive: true
+                  isInThisCommunity: true
+                  lastName: Process
+                  motif:
+                    color: 1B96FF
+                    largeIconUrl: /img/icon/profile64.png
+                    mediumIconUrl: /img/icon/profile32.png
+                    smallIconUrl: /img/icon/profile16.png
+                    svgIconUrl: null
+                  mySubscription: null
+                  name: Automated Process
+                  outOfOffice:
+                    message: ''
+                  photo:
+                    fullEmailPhotoUrl: >-
+                      https://<my_domain>/img/userprofile/default_profile_200_v2.png?fromEmail=1
+                    largePhotoUrl: https://<my_domain>/profilephoto/005/F
+                    mediumPhotoUrl: https://<my_domain>/profilephoto/005/M
+                    photoVersionId: null
+                    smallPhotoUrl: https://<my_domain>/profilephoto/005/T
+                    standardEmailPhotoUrl: >-
+                      https://<my_domain>/img/userprofile/default_profile_45_v2.png?fromEmail=1
+                    url: /services/data/v58.0/connect/user-profiles/005.../photo
+                  reputation: null
+                  title: null
+                  type: User
+                  url: /services/data/v58.0/chatter/users/005...
+                  userType: System
+                - additionalLabel: null
+                  communityNickname: User1696423780773910041
+                  companyName: Salesforce
+                  displayName: Name
+                  firstName: FirstName
+                  id: 005...
+                  isActive: true
+                  isInThisCommunity: true
+                  lastName: Name
+                  motif:
+                    color: 1B96FF
+                    largeIconUrl: /img/icon/profile64.png
+                    mediumIconUrl: /img/icon/profile32.png
+                    smallIconUrl: /img/icon/profile16.png
+                    svgIconUrl: null
+                  mySubscription: null
+                  name: Name
+                  outOfOffice:
+                    message: ''
+                  photo:
+                    fullEmailPhotoUrl: >-
+                      https://<my_domain>/ncsphoto/1wsMlOd3tVC7boygqBO8wMT9KzA0D6tqzpbs-Uw0IogXzXAXaYKJnuWCNQmXymRq?fromEmail=1
+                    largePhotoUrl: https://<my_domain>/profilephoto/729.../F
+                    mediumPhotoUrl: https://<my_domain>/profilephoto/729.../M
+                    photoVersionId: 729...
+                    smallPhotoUrl: https://<my_domain>/profilephoto/729.../T
+                    standardEmailPhotoUrl: >-
+                      https://<my_domain>/ncsphoto/1wsMlOd3tVC7boygqBO8wMT9KzA0D6tqzpbs-Uw0Ioi-dtynkoFWsl46as__TDFU?fromEmail=1
+                    url: /services/data/v58.0/connect/user-profiles/005.../photo
+                  reputation: null
+                  title: null
+                  type: User
+                  url: /services/data/v58.0/chatter/users/005...
+                  userType: Internal
+              sender:
+                additionalLabel: null
+                communityNickname: User1696423780773910041
+                companyName: Salesforce
+                displayName: Name
+                firstName: Firstname
+                id: 005...
+                isActive: true
+                isInThisCommunity: true
+                lastName: Name
+                motif:
+                  color: 1B96FF
+                  largeIconUrl: /img/icon/profile64.png
+                  mediumIconUrl: /img/icon/profile32.png
+                  smallIconUrl: /img/icon/profile16.png
+                  svgIconUrl: null
+                mySubscription: null
+                name: Name
+                outOfOffice:
+                  message: ''
+                photo:
+                  fullEmailPhotoUrl: >-
+                    https://<my_domain>/ncsphoto/1wsMlOd3tVC7boygqBO8wMT9KzA0D6tqzpbs-Uw0IogXzXAXaYKJnuWCNQmXymRq?fromEmail=1
+                  largePhotoUrl: https://<my_domain>/profilephoto/729.../F
+                  mediumPhotoUrl: https://<my_domain>/profilephoto/729.../M
+                  photoVersionId: 729...
+                  smallPhotoUrl: https://<my_domain>/profilephoto/729.../T
+                  standardEmailPhotoUrl: >-
+                    https://<my_domain>/ncsphoto/1wsMlOd3tVC7boygqBO8wMT9KzA0D6tqzpbs-Uw0Ioi-dtynkoFWsl46as__TDFU?fromEmail=1
+                  url: /services/data/v58.0/connect/user-profiles/005.../photo
+                reputation: null
+                title: null
+                type: User
+                url: /services/data/v58.0/chatter/users/005...
+                userType: Internal
+              sendingCommunity: null
+              sentDate: <datetime>
+              url: /services/data/v58.0/chatter/users/me/messages/03J...
+/services/data/v{version}/chatter/users/{USER_ID}/following:
+  get:
+    tags:
+      - Connect > Chatter > User
+    summary: Following
+    description: >-
+      Returns a list of people, groups, records, topics, and files that the specified user is following. Also used to follow records.
+
+
+      https://developer.salesforce.com/docs/atlas.en-us.chatterapi.meta/chatterapi/connect_resources_users_FollowingUsers.htm?search_text=following
+    parameters:
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: USER_ID
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: OK
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Mon, 20 Nov 2023 16:25:01 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-XSS-Protection:
+            schema:
+              type: string
+              example: 1; mode=block
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Content-Type:
+            schema:
+              type: string
+              example: application/json;charset=UTF-8
+          Vary:
+            schema:
+              type: string
+              example: Accept-Encoding
+          Content-Encoding:
+            schema:
+              type: string
+              example: gzip
+          Transfer-Encoding:
+            schema:
+              type: string
+              example: chunked
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              currentPageUrl: >-
+                /services/data/v58.0/chatter/users/0052o00000DKQasAAH/following
+              following: []
+              nextPageUrl: null
+              previousPageUrl: null
+              total: 0
+  post:
+    tags:
+      - Connect > Chatter > User
+    summary: Following - POST
+    description: >-
+      Returns a list of people, groups, records, topics, and files that the specified user is following. Also used to follow records.
+
+
+      https://developer.salesforce.com/docs/atlas.en-us.chatterapi.meta/chatterapi/connect_resources_users_FollowingUsers.htm?search_text=following
+    requestBody:
+      content: {}
+    parameters:
+      - name: subjectId
+        in: query
+        schema:
+          type: string
+        example: <RECORD_ID>
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: USER_ID
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '201':
+        description: Created
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Mon, 20 Nov 2023 16:27:09 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-XSS-Protection:
+            schema:
+              type: string
+              example: 1; mode=block
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Content-Type:
+            schema:
+              type: string
+              example: application/json;charset=UTF-8
+          Vary:
+            schema:
+              type: string
+              example: Accept-Encoding
+          Content-Encoding:
+            schema:
+              type: string
+              example: gzip
+          Transfer-Encoding:
+            schema:
+              type: string
+              example: chunked
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              community: null
+              id: 0E8...
+              subject:
+                entityLabel:
+                  label: Account
+                  labelPlural: Accounts
+                id: 001...
+                motif:
+                  color: '5867E8'
+                  largeIconUrl: /img/icon/accounts64.png
+                  mediumIconUrl: /img/icon/accounts32.png
+                  smallIconUrl: /img/icon/accounts16.png
+                  svgIconUrl: null
+                mySubscription: null
+                name: Exemple de comptes pour les autorisations
+                type: Account
+                url: /services/data/v58.0/chatter/records/001...
+              subscriber:
+                additionalLabel: null
+                communityNickname: integration1.4407085834085586E12
+                companyName: Salesforce
+                displayName: Integration User
+                firstName: Integration
+                id: 005...
+                isActive: true
+                isInThisCommunity: true
+                lastName: User
+                motif:
+                  color: 1B96FF
+                  largeIconUrl: /img/icon/profile64.png
+                  mediumIconUrl: /img/icon/profile32.png
+                  smallIconUrl: /img/icon/profile16.png
+                  svgIconUrl: null
+                mySubscription: null
+                name: Integration User
+                outOfOffice:
+                  message: ''
+                photo:
+                  fullEmailPhotoUrl: >-
+                    https://<my_domain>/img/userprofile/default_profile_200_v2.png?fromEmail=1
+                  largePhotoUrl: https://<my_domain>/profilephoto/005/F
+                  mediumPhotoUrl: https://<my_domain>/profilephoto/005/M
+                  photoVersionId: null
+                  smallPhotoUrl: https://<my_domain>/profilephoto/005/T
+                  standardEmailPhotoUrl: >-
+                    https://<my_domain>/img/userprofile/default_profile_45_v2.png?fromEmail=1
+                  url: /services/data/v58.0/connect/user-profiles/005.../photo
+                reputation: null
+                title: null
+                type: User
+                url: /services/data/v58.0/chatter/users/005...
+                userType: Internal
+              url: /services/data/v58.0/chatter/subscriptions/0E8...

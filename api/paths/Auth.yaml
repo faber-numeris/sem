@@ -1,0 +1,827 @@
+/services/oauth2/token:
+  post:
+    tags:
+      - Auth
+    summary: Refresh Token
+    requestBody:
+      content:
+        application/x-www-form-urlencoded:
+          schema:
+            type: object
+            properties:
+              grant_type:
+                type: string
+                example: refresh_token
+              client_id:
+                type: string
+                example: '{{clientId}}'
+              client_secret:
+                type: string
+                example: '{{clientSecret}}'
+              refresh_token:
+                type: string
+                example: '{{_refreshToken}}'
+    security:
+      - noauthAuth: []
+    parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/x-www-form-urlencoded
+    responses:
+      '200':
+        description: OK
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Thu, 16 Nov 2023 15:34:45 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-XSS-Protection:
+            schema:
+              type: string
+              example: 1; mode=block
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Expires:
+            schema:
+              type: string
+              example: Thu, 01 Jan 1970 00:00:00 GMT
+          Content-Type:
+            schema:
+              type: string
+              example: application/json;charset=UTF-8
+          Vary:
+            schema:
+              type: string
+              example: Accept-Encoding
+          Content-Encoding:
+            schema:
+              type: string
+              example: gzip
+          Transfer-Encoding:
+            schema:
+              type: string
+              example: chunked
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              access_token: <access_token>
+              signature: <signature>
+              scope: <scope list>
+              id_token: <id_token
+              instance_url: https://<my_domain>
+              id: https://login.salesforce.com/id/00D.../005...
+              token_type: Bearer
+              issued_at: <timestamp>
+/services/oauth2/revoke:
+  post:
+    tags:
+      - Auth
+    summary: Revoke Token
+    requestBody:
+      content:
+        application/x-www-form-urlencoded:
+          schema:
+            type: object
+            properties:
+              token:
+                type: string
+                description: >-
+                  If an access token is included, Salesforce invalidates it and revokes the token. If a refresh token is included, Salesforce revokes it and any associated access tokens.
+                example: '{{_accessToken}}'
+    security:
+      - noauthAuth: []
+    parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/x-www-form-urlencoded
+    responses:
+      '200':
+        description: OK
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Thu, 16 Nov 2023 15:53:04 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-XSS-Protection:
+            schema:
+              type: string
+              example: 1; mode=block
+          Content-Security-Policy:
+            schema:
+              type: string
+              example: upgrade-insecure-requests
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Set-Cookie:
+            schema:
+              type: string
+              example: >-
+                unifiedsearchgt=; path=/; expires=Thu, 01-Jan-1970 00:00:00 GMT; Max-Age=0; secure
+          Vary:
+            schema:
+              type: string
+              example: Accept-Encoding
+          Content-Encoding:
+            schema:
+              type: string
+              example: gzip
+          Transfer-Encoding:
+            schema:
+              type: string
+              example: chunked
+        content:
+          text/plain:
+            schema:
+              type: string
+            example: null
+/.well-known/openid-configuration:
+  get:
+    tags:
+      - Auth
+    summary: OpenID Connect Discovery Endpoint
+    security:
+      - noauthAuth: []
+    responses:
+      '200':
+        description: OK
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Thu, 16 Nov 2023 15:53:35 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-XSS-Protection:
+            schema:
+              type: string
+              example: 1; mode=block
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Content-Type:
+            schema:
+              type: string
+              example: application/json;charset=UTF-8
+          Access-Control-Allow-Credentials:
+            schema:
+              type: boolean
+              example: 'false'
+          Access-Control-Allow-Origin:
+            schema:
+              type: string
+              example: '*'
+          Vary:
+            schema:
+              type: string
+              example: Accept-Encoding
+          Content-Encoding:
+            schema:
+              type: string
+              example: gzip
+          Transfer-Encoding:
+            schema:
+              type: string
+              example: chunked
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              end_session_endpoint: https://<my_domain>/services/auth/idp/oidc/logout
+              frontchannel_logout_supported: true
+              frontchannel_logout_session_supported: false
+              issuer: https://<my_domain>
+              authorization_endpoint: https://<my_domain>/services/oauth2/authorize
+              token_endpoint: https://<my_domain>/services/oauth2/token
+              revocation_endpoint: https://<my_domain>/services/oauth2/revoke
+              userinfo_endpoint: https://<my_domain>/services/oauth2/userinfo
+              jwks_uri: https://<my_domain>/id/keys
+              registration_endpoint: https://<my_domain>/services/oauth2/register
+              introspection_endpoint: https://<my_domain>/services/oauth2/introspect
+              scopes_supported:
+                - cdp_ingest_api
+                - custom_permissions
+                - cdp_segment_api
+                - content
+                - cdp_api
+                - chatbot_api
+                - cdp_identityresolution_api
+                - interaction_api
+                - wave_api
+                - web
+                - cdp_calculated_insight_api
+                - einstein_gpt_api
+                - offline_access
+                - id
+                - api
+                - eclair_api
+                - email
+                - pardot_api
+                - lightning
+                - visualforce
+                - cdp_query_api
+                - sfap_api
+                - address
+                - openid
+                - profile
+                - cdp_profile_api
+                - refresh_token
+                - phone
+                - user_registration_api
+                - pwdless_login_api
+                - chatter_api
+                - full
+                - forgot_password
+              response_types_supported:
+                - code
+                - token
+                - token id_token
+              subject_types_supported:
+                - public
+              id_token_signing_alg_values_supported:
+                - RS256
+              display_values_supported:
+                - page
+                - popup
+                - touch
+              token_endpoint_auth_methods_supported:
+                - client_secret_post
+                - client_secret_basic
+                - private_key_jwt
+              claims_supported:
+                - active
+                - address
+                - email
+                - email_verified
+                - family_name
+                - given_name
+                - is_app_installed
+                - language
+                - locale
+                - name
+                - nickname
+                - organization_id
+                - phone_number
+                - phone_number_verified
+                - photos
+                - picture
+                - preferred_username
+                - profile
+                - sub
+                - updated_at
+                - urls
+                - user_id
+                - user_type
+                - zoneinfo
+/.well-known/auth-configuration:
+  get:
+    tags:
+      - Auth
+    summary: Authentication Configuration Endpoint
+    security:
+      - noauthAuth: []
+    responses:
+      '200':
+        description: OK
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Thu, 16 Nov 2023 15:54:15 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-XSS-Protection:
+            schema:
+              type: string
+              example: 1; mode=block
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Content-Type:
+            schema:
+              type: string
+              example: application/json;charset=UTF-8
+          Access-Control-Allow-Credentials:
+            schema:
+              type: boolean
+              example: 'false'
+          Access-Control-Allow-Methods:
+            schema:
+              type: string
+              example: GET, POST, OPTIONS
+          Access-Control-Allow-Origin:
+            schema:
+              type: string
+              example: '*'
+          Vary:
+            schema:
+              type: string
+              example: Accept-Encoding
+          Content-Encoding:
+            schema:
+              type: string
+              example: gzip
+          Transfer-Encoding:
+            schema:
+              type: string
+              example: chunked
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              OrgId: 00D2o000000i6mB
+              Url: https://<my_domain>
+              MobileSDK:
+                UseiOSNativeBrowserForAuthentication: false
+                UseAndroidNativeBrowserForAuthentication: false
+                shareBrowserSessionIOS: false
+                shareBrowserSessionAndroid: false
+              LoginPage: null
+              SamlProviders: []
+              AuthProviders: []
+              CertificateLogin: null
+              LoginPageType: standard
+              LoginPageTypeConfigs: {}
+/services/oauth2/introspect:
+  post:
+    tags:
+      - Auth
+    summary: OpenID Connect Token Introspection Endpoint
+    requestBody:
+      content:
+        application/x-www-form-urlencoded:
+          schema:
+            type: object
+            properties:
+              token:
+                type: string
+                example: '{{_accessToken}}'
+              token_type_hint:
+                type: string
+                example: access_token
+              client_id:
+                type: string
+                example: '{{clientId}}'
+              client_secret:
+                type: string
+                example: '{{clientSecret}}'
+    security:
+      - noauthAuth: []
+    parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/x-www-form-urlencoded
+      - name: Accept
+        in: header
+        schema:
+          type: string
+        example: application/json
+    responses:
+      '200':
+        description: OK
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Thu, 16 Nov 2023 15:54:42 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-XSS-Protection:
+            schema:
+              type: string
+              example: 1; mode=block
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Content-Type:
+            schema:
+              type: string
+              example: text/plain
+          Vary:
+            schema:
+              type: string
+              example: Accept-Encoding
+          Content-Encoding:
+            schema:
+              type: string
+              example: gzip
+          Transfer-Encoding:
+            schema:
+              type: string
+              example: chunked
+        content:
+          text/plain:
+            schema:
+              type: string
+            example: |-
+              {
+                  "active": true,
+                  "scope": "<scope_list>",
+                  "client_id": "<client_id>",
+                  "username": "<username>",
+                  "sub": "https://login.salesforce.com/id/00D.../005...",
+                  "token_type": "access_token",
+                  "exp": <timestamp>,
+                  "iat": <timestamp>,
+                  "nbf": <timestamp>
+              }
+/services/oauth2/register:
+  post:
+    tags:
+      - Auth
+    summary: OpenID Connect Dynamic Client Registration Endpoint
+    requestBody:
+      content:
+        '*/*':
+          schema:
+            type: string
+            example: >-
+              "{\n    \"redirect_uris\": [\n        \"http://localhost\"\n    ],\n    \"response_types\": [\n        \"code\",\n        \"token\",\n        \"id_token\"\n    ],\n    \"grant_types\": [\n        \"authorization_code\",\n        \"implicit\",\n        \"refresh_token\"\n    ],\n    \"application_type\": \"web\",\n    \"contacts\": [\n        \"abc@sf.com\",\n        \"ve7jtb@example.org\"\n    ],\n    \"client_name\": \"Example Olivier\"\n}"
+    security:
+      - noauthAuth: []
+    parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: Accept
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+        example: Bearer {{init_access_token}}
+    responses:
+      '201':
+        description: Created
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Thu, 16 Nov 2023 16:04:08 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-XSS-Protection:
+            schema:
+              type: string
+              example: 1; mode=block
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Expires:
+            schema:
+              type: string
+              example: Thu, 01 Jan 1970 00:00:00 GMT
+          Content-Type:
+            schema:
+              type: string
+              example: text/plain
+          Vary:
+            schema:
+              type: string
+              example: Accept-Encoding
+          Content-Encoding:
+            schema:
+              type: string
+              example: gzip
+          Transfer-Encoding:
+            schema:
+              type: string
+              example: chunked
+        content:
+          text/plain:
+            schema:
+              type: string
+            example: |-
+              {
+                  "client_id": "<client_id>",
+                  "client_secret": "<client_secret>",
+                  "registration_access_token": "<token>",
+                  "registration_client_uri": "https://login.salesforce.com/services/oauth2/register/<client_id>",
+                  "client_id_issued_at": <timestamp>,
+                  "client_secret_expires_at": 0,
+                  "token_endpoint_auth_method": "client_secret_post",
+                  "redirect_uris": [
+                      "http://localhost"
+                  ],
+                  "response_types": [
+                      "code",
+                      "token",
+                      "id_token"
+                  ],
+                  "grant_types": [
+                      "authorization_code",
+                      "hybrid_auth_code",
+                      "implicit",
+                      "refresh_token"
+                  ],
+                  "contacts": [
+                      "abc@sf.com"
+                  ],
+                  "client_name": "Sample Customer",
+                  "scopes": [
+                      "openid",
+                      "refresh_token",
+                      "id",
+                      "api"
+                  ]
+              }
+/id/keys:
+  get:
+    tags:
+      - Auth
+    summary: Salesforce Keys
+    responses:
+      '200':
+        description: OK
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Thu, 16 Nov 2023 15:55:30 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-XSS-Protection:
+            schema:
+              type: string
+              example: 1; mode=block
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Content-Type:
+            schema:
+              type: string
+              example: application/json;charset=UTF-8
+          Access-Control-Allow-Credentials:
+            schema:
+              type: boolean
+              example: 'false'
+          Access-Control-Allow-Origin:
+            schema:
+              type: string
+              example: '*'
+          Expires:
+            schema:
+              type: string
+              example: Thu, 01 Jan 1970 00:00:00 GMT
+          Vary:
+            schema:
+              type: string
+              example: Accept-Encoding
+          Content-Encoding:
+            schema:
+              type: string
+              example: gzip
+          Transfer-Encoding:
+            schema:
+              type: string
+              example: chunked
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              keys:
+                - kty: RSA
+                  'n': <token>
+                  e: AQAB
+                  alg: RS256
+                  use: sig
+                  kid: '248'
+                - kty: RSA
+                  'n': <token>
+                  e: AQAB
+                  alg: RS256
+                  use: sig
+                  kid: '244'
+                - kty: RSA
+                  'n': <token>
+                  e: AQAB
+                  alg: RS256
+                  use: sig
+                  kid: '246'
+                - kty: RSA
+                  'n': <token>
+                  e: AQAB
+                  alg: RS256
+                  use: sig
+                  kid: asset
+/id/{_orgId}/{_userId}:
+  get:
+    tags:
+      - Auth
+    summary: ID Token
+    parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: _orgId
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: _userId
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: OK
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Thu, 16 Nov 2023 15:56:09 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-XSS-Protection:
+            schema:
+              type: string
+              example: 1; mode=block
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Content-Type:
+            schema:
+              type: string
+              example: application/json;charset=UTF-8
+          Vary:
+            schema:
+              type: string
+              example: Accept-Encoding
+          Content-Encoding:
+            schema:
+              type: string
+              example: gzip
+          Transfer-Encoding:
+            schema:
+              type: string
+              example: chunked
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              id: https://login.salesforce.com/id/00D.../005...
+              asserted_user: true
+              user_id: 005...
+              organization_id: 00D...
+              username: <username>
+              nick_name: <nickname>
+              display_name: <display_name>
+              email: <email>
+              email_verified: true
+              first_name: <firstname>
+              last_name: <lastname>
+              timezone: Europe/Paris
+              photos:
+                picture: https://<my_domain>/profilephoto/005/F
+                thumbnail: https://<my_domain>/profilephoto/005/T
+              addr_street: null
+              addr_city: null
+              addr_state: null
+              addr_country: FR
+              addr_zip: null
+              mobile_phone: null
+              mobile_phone_verified: false
+              is_lightning_login_user: false
+              status:
+                created_date: null
+                body: null
+              urls:
+                enterprise: https://<my_domain>/services/Soap/c/{version}/00D...
+                metadata: https://<my_domain>/services/Soap/m/{version}/00D...
+                partner: https://<my_domain>/services/Soap/u/{version}/00D...
+                rest: https://<my_domain>/services/data/v{version}/
+                sobjects: https://<my_domain>/services/data/v{version}/sobjects/
+                search: https://<my_domain>/services/data/v{version}/search/
+                query: https://<my_domain>/services/data/v{version}/query/
+                recent: https://<my_domain>/services/data/v{version}/recent/
+                tooling_soap: https://<my_domain>/services/Soap/T/{version}/00D...
+                tooling_rest: https://<my_domain>/services/data/v{version}/tooling/
+                profile: https://<my_domain>/0052o00000DOJ1PAAX
+                feeds: https://<my_domain>/services/data/v{version}/chatter/feeds
+                groups: https://<my_domain>/services/data/v{version}/chatter/groups
+                users: https://<my_domain>/services/data/v{version}/chatter/users
+                feed_items: >-
+                  https://<my_domain>/services/data/v{version}/chatter/feed-items
+                feed_elements: >-
+                  https://<my_domain>/services/data/v{version}/chatter/feed-elements
+                custom_domain: https://<my_domain>
+              active: true
+              user_type: STANDARD
+              language: en_US
+              locale: fr_FR_EURO
+              utcOffset: 3600000
+              last_modified_date: <date_time>
+              is_app_installed: true

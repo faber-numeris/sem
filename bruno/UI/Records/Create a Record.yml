@@ -1,0 +1,326 @@
+info:
+  name: Create a Record
+  type: http
+  seq: 10
+
+http:
+  method: POST
+  url: "{{_endpoint}}/services/data/v{{version}}/ui-api/records"
+  headers:
+    - name: Content-Type
+      value: application/json
+  body:
+    type: json
+    data: |-
+      {
+          "allowSaveOnDuplicate": false,
+          "apiName": "Object",
+          "fields": {
+              "FieldAPIName": "FieldValue"
+          }
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Create a Record
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/ui-api/records"
+      method: POST
+      headers:
+        - name: Content-Type
+          value: application/json
+      body:
+        type: json
+        data: |-
+          {
+              "allowSaveOnDuplicate": false,
+              "apiName": "Account",
+              "fields": {
+                  "Name": "My New Account"
+              }
+          }
+    response:
+      status: 201
+      statusText: Created
+      headers:
+        - name: Date
+          value: Wed, 27 Sep 2023 16:01:13 GMT
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-XSS-Protection
+          value: 1; mode=block
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: ETag
+          value: '"057ae0953591faed613c5e19a086f7a8--gzip"'
+        - name: Content-Type
+          value: application/json;charset=UTF-8
+        - name: Vary
+          value: Accept-Encoding
+        - name: Content-Encoding
+          value: gzip
+        - name: Transfer-Encoding
+          value: chunked
+      body:
+        type: json
+        data: |-
+          {
+              "apiName": "Account",
+              "childRelationships": {},
+              "eTag": "057ae0953591faed613c5e19a086f7a8",
+              "fields": {
+                  "AccountNumber": {
+                      "displayValue": null,
+                      "value": null
+                  },
+                  "Active__c": {
+                      "displayValue": null,
+                      "value": null
+                  },
+                  "AnnualRevenue": {
+                      "displayValue": null,
+                      "value": null
+                  },
+                  "BillingCity": {
+                      "displayValue": null,
+                      "value": null
+                  },
+                  "BillingCountry": {
+                      "displayValue": null,
+                      "value": null
+                  },
+                  "BillingPostalCode": {
+                      "displayValue": null,
+                      "value": null
+                  },
+                  "BillingState": {
+                      "displayValue": null,
+                      "value": null
+                  },
+                  "BillingStreet": {
+                      "displayValue": null,
+                      "value": null
+                  },
+                  "CreatedBy": {
+                      "displayValue": "Philippe Ozil",
+                      "value": {
+                          "apiName": "User",
+                          "childRelationships": {},
+                          "eTag": "cc07f7ef1b08ddbd75074c69512dd388",
+                          "fields": {
+                              "Id": {
+                                  "displayValue": null,
+                                  "value": "005B0000003TOI6IAO"
+                              },
+                              "Name": {
+                                  "displayValue": null,
+                                  "value": "Philippe Ozil"
+                              }
+                          },
+                          "id": "005B0000003TOI6IAO",
+                          "lastModifiedById": "005B0000003TOI6IAO",
+                          "lastModifiedDate": "2023-02-02T10:32:12.000Z",
+                          "recordTypeId": null,
+                          "recordTypeInfo": null,
+                          "systemModstamp": "2023-09-27T15:47:51.000Z",
+                          "weakEtag": 1695829671000
+                      }
+                  },
+                  "CreatedById": {
+                      "displayValue": null,
+                      "value": "005B0000003TOI6IAO"
+                  },
+                  "CreatedDate": {
+                      "displayValue": "27/09/2023 18:01",
+                      "value": "2023-09-27T16:01:14.000Z"
+                  },
+                  "CustomerPriority__c": {
+                      "displayValue": null,
+                      "value": null
+                  },
+                  "Description": {
+                      "displayValue": null,
+                      "value": null
+                  },
+                  "Fax": {
+                      "displayValue": null,
+                      "value": null
+                  },
+                  "Industry": {
+                      "displayValue": null,
+                      "value": null
+                  },
+                  "LastModifiedBy": {
+                      "displayValue": "Philippe Ozil",
+                      "value": {
+                          "apiName": "User",
+                          "childRelationships": {},
+                          "eTag": "cc07f7ef1b08ddbd75074c69512dd388",
+                          "fields": {
+                              "Id": {
+                                  "displayValue": null,
+                                  "value": "005B0000003TOI6IAO"
+                              },
+                              "Name": {
+                                  "displayValue": null,
+                                  "value": "Philippe Ozil"
+                              }
+                          },
+                          "id": "005B0000003TOI6IAO",
+                          "lastModifiedById": "005B0000003TOI6IAO",
+                          "lastModifiedDate": "2023-02-02T10:32:12.000Z",
+                          "recordTypeId": null,
+                          "recordTypeInfo": null,
+                          "systemModstamp": "2023-09-27T15:47:51.000Z",
+                          "weakEtag": 1695829671000
+                      }
+                  },
+                  "LastModifiedById": {
+                      "displayValue": null,
+                      "value": "005B0000003TOI6IAO"
+                  },
+                  "LastModifiedDate": {
+                      "displayValue": "27/09/2023 18:01",
+                      "value": "2023-09-27T16:01:14.000Z"
+                  },
+                  "Name": {
+                      "displayValue": null,
+                      "value": "My New Account"
+                  },
+                  "NumberOfEmployees": {
+                      "displayValue": null,
+                      "value": null
+                  },
+                  "NumberofLocations__c": {
+                      "displayValue": null,
+                      "value": null
+                  },
+                  "Owner": {
+                      "displayValue": "Philippe Ozil",
+                      "value": {
+                          "apiName": "User",
+                          "childRelationships": {},
+                          "eTag": "cc07f7ef1b08ddbd75074c69512dd388",
+                          "fields": {
+                              "Id": {
+                                  "displayValue": null,
+                                  "value": "005B0000003TOI6IAO"
+                              },
+                              "Name": {
+                                  "displayValue": null,
+                                  "value": "Philippe Ozil"
+                              }
+                          },
+                          "id": "005B0000003TOI6IAO",
+                          "lastModifiedById": "005B0000003TOI6IAO",
+                          "lastModifiedDate": "2023-02-02T10:32:12.000Z",
+                          "recordTypeId": null,
+                          "recordTypeInfo": null,
+                          "systemModstamp": "2023-09-27T15:47:51.000Z",
+                          "weakEtag": 1695829671000
+                      }
+                  },
+                  "OwnerId": {
+                      "displayValue": null,
+                      "value": "005B0000003TOI6IAO"
+                  },
+                  "Ownership": {
+                      "displayValue": null,
+                      "value": null
+                  },
+                  "Parent": {
+                      "displayValue": null,
+                      "value": null
+                  },
+                  "ParentId": {
+                      "displayValue": null,
+                      "value": null
+                  },
+                  "Phone": {
+                      "displayValue": null,
+                      "value": null
+                  },
+                  "Rating": {
+                      "displayValue": null,
+                      "value": null
+                  },
+                  "SLAExpirationDate__c": {
+                      "displayValue": null,
+                      "value": null
+                  },
+                  "SLASerialNumber__c": {
+                      "displayValue": null,
+                      "value": null
+                  },
+                  "SLA__c": {
+                      "displayValue": null,
+                      "value": null
+                  },
+                  "ShippingCity": {
+                      "displayValue": null,
+                      "value": null
+                  },
+                  "ShippingCountry": {
+                      "displayValue": null,
+                      "value": null
+                  },
+                  "ShippingPostalCode": {
+                      "displayValue": null,
+                      "value": null
+                  },
+                  "ShippingState": {
+                      "displayValue": null,
+                      "value": null
+                  },
+                  "ShippingStreet": {
+                      "displayValue": null,
+                      "value": null
+                  },
+                  "Sic": {
+                      "displayValue": null,
+                      "value": null
+                  },
+                  "Site": {
+                      "displayValue": null,
+                      "value": null
+                  },
+                  "TickerSymbol": {
+                      "displayValue": null,
+                      "value": null
+                  },
+                  "Type": {
+                      "displayValue": null,
+                      "value": null
+                  },
+                  "UpsellOpportunity__c": {
+                      "displayValue": null,
+                      "value": null
+                  },
+                  "Website": {
+                      "displayValue": null,
+                      "value": null
+                  }
+              },
+              "id": "0011Q00002Z2P5jQAF",
+              "lastModifiedById": "005B0000003TOI6IAO",
+              "lastModifiedDate": "2023-09-27T16:01:14.000Z",
+              "recordTypeId": "012000000000000AAA",
+              "recordTypeInfo": null,
+              "systemModstamp": "2023-09-27T16:01:14.000Z",
+              "weakEtag": 1695830474000
+          }
+
+docs: |-
+  Create a record. First, make a request to the Clone Record Default or Create Record Default resources to get the default metadata and data for the record.
+  As of API version 43.0, if you pass read-only fields in a request body, the response is an Error with Output.

@@ -1,0 +1,77 @@
+info:
+  name: Abort a Job Query
+  type: http
+  seq: 2
+
+http:
+  method: PATCH
+  url: "{{_endpoint}}/services/data/v{{version}}/jobs/query/{{_jobId}}"
+  headers:
+    - name: Content-Type
+      value: application/json
+  body:
+    type: json
+    data: |-
+      {
+      	"state":"Aborted"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Abort a Job Query
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/jobs/query/{{_jobId}}"
+      method: PATCH
+      headers:
+        - name: Content-Type
+          value: application/json
+      body:
+        type: json
+        data: |-
+          {
+          	"state":"Aborted"
+          }
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: Date
+          value: Mon, 20 Nov 2023 15:10:26 GMT
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-XSS-Protection
+          value: 1; mode=block
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: Sforce-Limit-Info
+          value: api-usage=29/15000
+        - name: Content-Type
+          value: application/json;charset=UTF-8
+        - name: Transfer-Encoding
+          value: chunked
+      body:
+        type: json
+        data: |-
+          {
+              "id": "750...",
+              "operation": "query",
+              "object": "Account",
+              "createdById": "005...",
+              "createdDate": "<datetime>",
+              "systemModstamp": "<datetime>",
+              "state": "Aborted",
+              "concurrencyMode": "Parallel",
+              "contentType": "CSV",
+              "apiVersion": 58
+          }

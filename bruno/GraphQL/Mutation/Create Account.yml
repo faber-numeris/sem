@@ -1,0 +1,37 @@
+info:
+  name: Create Account
+  type: graphql
+  seq: 1
+
+graphql:
+  method: POST
+  url: "{{_endpoint}}/services/data/v{{version}}/graphql"
+  headers:
+    - name: X-Chatter-Entity-Encoding
+      value: "false"
+  body:
+    query: |-
+      mutation AccountExample{
+        uiapi {
+          AccountCreate(input: {
+            Account: {
+              Name: "Trailblazer Express"
+            }
+          }) {
+            Record {
+              Id
+              Name {
+                value
+              }
+            }
+          }
+        }
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true

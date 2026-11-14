@@ -1,0 +1,14 @@
+info:
+  name: Query Org [Postman Runner]
+  type: folder
+  seq: 1
+
+request:
+  auth: inherit
+
+docs:
+  content: |-
+    Use this Postman runner to query your Trailhead Playground org for object IDs, then populate those IDs in the Subscription Management environment variables. Then, make successful requests against a Subscription Management org.
+
+    For detailed instructions, see the documentation for the Subscription Management folder.
+  type: text/markdown

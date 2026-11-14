@@ -1,0 +1,425 @@
+/services/data/v{version}/smartdatadiscovery/predict:
+  post:
+    tags:
+      - Einstein Prediction Service
+    summary: Predict
+    description: Get available prediction definitions.
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            example:
+              predictionDefinition: <PREDICTION_DEFINITION_ID>
+              type: RawData
+              columnNames:
+                - Quantity
+                - Category
+                - Sub_Category
+                - Sales
+                - Profit_per_Order
+              rows:
+                - - '2'
+                  - Furniture
+                  - Chairs
+                  - '300'
+                  - '10'
+    parameters:
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '201':
+        description: Created
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Thu, 04 Mar 2021 13:53:39 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=31536002; includeSubDomains
+          Expect-CT:
+            schema:
+              type: string
+              example: >-
+                max-age=86400, report-uri="https://a.forcesslreports.com/Expect-CT-report/00D5Y000001crJvm"
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-XSS-Protection:
+            schema:
+              type: string
+              example: 1; mode=block
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Content-Type:
+            schema:
+              type: string
+              example: application/json;charset=UTF-8
+          Vary:
+            schema:
+              type: string
+              example: Accept-Encoding
+          Content-Encoding:
+            schema:
+              type: string
+              example: gzip
+          Transfer-Encoding:
+            schema:
+              type: string
+              example: chunked
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              predictionDefinition: 1OR5Y0000010ws8
+              predictions:
+                - model:
+                    id: 1Ot5Y0000010wzNSAQ
+                  prediction:
+                    middleValues: []
+                    total: 88.52494255547592
+                  prescriptions: []
+                  status: Success
+              settings:
+                maxMiddleValues: 0
+                maxPrescriptions: 0
+                prescriptionImpactPercentage: 0
+/services/data/v{version}/smartdatadiscovery/predictionDefinitions:
+  get:
+    tags:
+      - Einstein Prediction Service
+    summary: Prediction definitions
+    description: Get available prediction definitions.
+    parameters:
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: OK
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Thu, 04 Mar 2021 13:45:15 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=31536002; includeSubDomains
+          Expect-CT:
+            schema:
+              type: string
+              example: >-
+                max-age=86400, report-uri="https://a.forcesslreports.com/Expect-CT-report/00D5Y000001crJvm"
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-XSS-Protection:
+            schema:
+              type: string
+              example: 1; mode=block
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Content-Type:
+            schema:
+              type: string
+              example: application/json;charset=UTF-8
+          Vary:
+            schema:
+              type: string
+              example: Accept-Encoding
+          Content-Encoding:
+            schema:
+              type: string
+              example: gzip
+          Transfer-Encoding:
+            schema:
+              type: string
+              example: chunked
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              nextPageUrl: null
+              predictionDefinitions:
+                - countOfActiveModels: 1
+                  countOfModels: 1
+                  createdBy:
+                    id: 0055Y00000DWwAIQA1
+                    name: Philippe Ozil
+                    profilePhotoUrl: >-
+                      https://crm-analytics-deorg-dev-ed--c.documentforce.com/profilephoto/005/T
+                  createdDate: '2021-03-04T13:37:02.000Z'
+                  id: 1OR5Y0000010ws8WAA
+                  label: Sales_per_Customer
+                  lastModifiedBy:
+                    id: 0055Y00000DWwAIQA1
+                    name: Philippe Ozil
+                    profilePhotoUrl: >-
+                      https://crm-analytics-deorg-dev-ed--c.documentforce.com/profilephoto/005/T
+                  lastModifiedDate: '2021-03-04T13:37:02.000Z'
+                  modelsUrl: >-
+                    /services/data/v51.0/smartdatadiscovery/predictiondefinitions/1OR5Y0000010ws8WAA/models
+                  name: Sales_per_Customer
+                  outcome:
+                    goal: Maximize
+                    label: Sales per Customer
+                    name: Sales_per_Customer
+                  predictionType: Regression
+                  status: Enabled
+                  url: >-
+                    /services/data/v51.0/smartdatadiscovery/predictiondefinitions/1OR5Y0000010ws8WAA
+              totalSize: 1
+              url: >-
+                /services/data/v51.0/smartdatadiscovery/predictiondefinitions?pageSize=25
+/services/data/v{version}/smartdatadiscovery/predictionDefinitions/{PREDICTION_DEFINITION_ID}:
+  get:
+    tags:
+      - Einstein Prediction Service
+    summary: Prediction definition metadata
+    description: Get available prediction definitions.
+    parameters:
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: PREDICTION_DEFINITION_ID
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: OK
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Thu, 04 Mar 2021 13:45:58 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=31536002; includeSubDomains
+          Expect-CT:
+            schema:
+              type: string
+              example: >-
+                max-age=86400, report-uri="https://a.forcesslreports.com/Expect-CT-report/00D5Y000001crJvm"
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-XSS-Protection:
+            schema:
+              type: string
+              example: 1; mode=block
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Content-Type:
+            schema:
+              type: string
+              example: application/json;charset=UTF-8
+          Vary:
+            schema:
+              type: string
+              example: Accept-Encoding
+          Content-Encoding:
+            schema:
+              type: string
+              example: gzip
+          Transfer-Encoding:
+            schema:
+              type: string
+              example: chunked
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              countOfActiveModels: 1
+              countOfModels: 1
+              createdBy:
+                id: 0055Y00000DWwAIQA1
+                name: Philippe Ozil
+                profilePhotoUrl: >-
+                  https://crm-analytics-deorg-dev-ed--c.documentforce.com/profilephoto/005/T
+              createdDate: '2021-03-04T13:37:02.000Z'
+              id: 1OR5Y0000010ws8WAA
+              label: Sales_per_Customer
+              lastModifiedBy:
+                id: 0055Y00000DWwAIQA1
+                name: Philippe Ozil
+                profilePhotoUrl: >-
+                  https://crm-analytics-deorg-dev-ed--c.documentforce.com/profilephoto/005/T
+              lastModifiedDate: '2021-03-04T13:37:02.000Z'
+              modelsUrl: >-
+                /services/data/v51.0/smartdatadiscovery/predictiondefinitions/1OR5Y0000010ws8WAA/models
+              name: Sales_per_Customer
+              outcome:
+                goal: Maximize
+                label: Sales per Customer
+                name: Sales_per_Customer
+              predictionType: Regression
+              status: Enabled
+              url: >-
+                /services/data/v51.0/smartdatadiscovery/predictiondefinitions/1OR5Y0000010ws8WAA
+/services/data/v{version}/smartdatadiscovery/predictionDefinitions/{PREDICTION_DEFINITION_ID}/models:
+  get:
+    tags:
+      - Einstein Prediction Service
+    summary: Prediction models
+    description: Get available prediction definitions.
+    parameters:
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: PREDICTION_DEFINITION_ID
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: OK
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Thu, 04 Mar 2021 13:48:31 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=31536002; includeSubDomains
+          Expect-CT:
+            schema:
+              type: string
+              example: >-
+                max-age=86400, report-uri="https://a.forcesslreports.com/Expect-CT-report/00D5Y000001crJvm"
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-XSS-Protection:
+            schema:
+              type: string
+              example: 1; mode=block
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Content-Type:
+            schema:
+              type: string
+              example: application/json;charset=UTF-8
+          Vary:
+            schema:
+              type: string
+              example: Accept-Encoding
+          Content-Encoding:
+            schema:
+              type: string
+              example: gzip
+          Transfer-Encoding:
+            schema:
+              type: string
+              example: chunked
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              models:
+                - createdBy:
+                    id: 0055Y00000DWwAIQA1
+                    name: Philippe Ozil
+                    profilePhotoUrl: >-
+                      https://crm-analytics-deorg-dev-ed--c.documentforce.com/profilephoto/005/T
+                  createdDate: '2021-03-04T13:37:03.000Z'
+                  fieldMappingList:
+                    - modelField:
+                        label: Category
+                        name: Category
+                        type: Text
+                    - modelField:
+                        label: Sales
+                        name: Sales
+                        type: Number
+                    - modelField:
+                        label: Profit per Order
+                        name: Profit_per_Order
+                        type: Number
+                    - modelField:
+                        label: Sub-Category
+                        name: Sub_Category
+                        type: Text
+                    - modelField:
+                        label: Quantity
+                        name: Quantity
+                        type: Number
+                  filters: []
+                  historyUrl: >-
+                    /services/data/v51.0/smartdatadiscovery/predictiondefinitions/1OR5Y0000010ws8WAA/models/1Ot5Y0000010wzNSAQ/histories
+                  id: 1Ot5Y0000010wzNSAQ
+                  isRefreshEnabled: false
+                  label: superstore-orders
+                  lastModifiedBy:
+                    id: 0055Y00000DWwAIQA1
+                    name: Philippe Ozil
+                    profilePhotoUrl: >-
+                      https://crm-analytics-deorg-dev-ed--c.documentforce.com/profilephoto/005/T
+                  lastModifiedDate: '2021-03-04T13:37:03.000Z'
+                  model:
+                    id: 1OT5Y0000010zlzWAA
+                  modelType: Regression
+                  name: superstore_orders
+                  predictionDefinitionUrl: >-
+                    /services/data/v51.0/smartdatadiscovery/predictiondefinitions/1OR5Y0000010ws8WAA
+                  prescribableFields:
+                    - customDefinitions: []
+                      field:
+                        label: Quantity
+                        name: Quantity
+                        type: Number
+                  sortOrder: 0
+                  status: Enabled
+                  url: >-
+                    /services/data/v51.0/smartdatadiscovery/predictiondefinitions/1OR5Y0000010ws8WAA/models/1Ot5Y0000010wzNSAQ
+              totalSize: 1
+              url: >-
+                /services/data/v51.0/smartdatadiscovery/predictiondefinitions/1OR5Y0000010ws8WAA/models

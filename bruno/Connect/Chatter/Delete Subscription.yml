@@ -1,0 +1,57 @@
+info:
+  name: Delete Subscription
+  type: http
+  seq: 6
+
+http:
+  method: DELETE
+  url: "{{_endpoint}}/services/data/v{{version}}/chatter/subscriptions/:SUBSCRIPTION_ID"
+  params:
+    - name: SUBSCRIPTION_ID
+      value: 0E8...
+      type: path
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Delete Subscription
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/chatter/subscriptions/:SUBSCRIPTION_ID"
+      method: DELETE
+      params:
+        - name: SUBSCRIPTION_ID
+          value: 0E8...
+          type: path
+    response:
+      status: 204
+      statusText: No Content
+      headers:
+        - name: Date
+          value: Wed, 22 Nov 2023 11:34:47 GMT
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-XSS-Protection
+          value: 1; mode=block
+        - name: Content-Security-Policy
+          value: upgrade-insecure-requests
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+      body:
+        type: text
+        data: ""
+
+docs: |-
+  Information about the specified subscription. Also used to delete a subscription, for example, to unfollow a record or a topic.
+  A subscription ID is returned as part of the response body for follower and following resources, for example, /records/recordId/followers. In addition, subscriptions IDs are also returned in many summary response bodies, such as group summary or user summary.
+
+  https://developer.salesforce.com/docs/atlas.en-us.chatterapi.meta/chatterapi/connect_resources_subscriptions.htm

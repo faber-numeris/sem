@@ -1,0 +1,25 @@
+info:
+  name: Integration Procedure Invocation Using POST
+  type: http
+  seq: 2
+
+http:
+  method: POST
+  url: "{{_endpoint}}/services/apexrest/:NAMESPACE/v1/integrationprocedure/:TYPE_SUBTYPE/"
+  params:
+    - name: NAMESPACE
+      value: ""
+      type: path
+      description: The namespace is `omnistudio`, `vlocity_ins`, `vlocity_cmt`, or `vlocity_ps`
+    - name: TYPE_SUBTYPE
+      value: ""
+      type: path
+      description: Type and SubType of the Integration Procedure separated by an underscore.
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true

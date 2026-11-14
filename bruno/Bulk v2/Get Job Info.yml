@@ -1,0 +1,80 @@
+info:
+  name: Get Job Info
+  type: http
+  seq: 6
+
+http:
+  method: GET
+  url: "{{_endpoint}}/services/data/v{{version}}/jobs/ingest/{{_jobId}}"
+  headers:
+    - name: Content-Type
+      value: application/json
+      disabled: true
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Successful Get Job Info
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/jobs/ingest/{{_jobId}}"
+      method: GET
+      headers:
+        - name: Content-Type
+          value: application/json
+          disabled: true
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: Date
+          value: Mon, 20 Nov 2023 15:03:34 GMT
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-XSS-Protection
+          value: 1; mode=block
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: Sforce-Limit-Info
+          value: api-usage=8/15000
+        - name: Content-Type
+          value: application/json;charset=UTF-8
+        - name: Vary
+          value: Accept-Encoding
+        - name: Content-Encoding
+          value: gzip
+        - name: Transfer-Encoding
+          value: chunked
+      body:
+        type: json
+        data: |-
+          {
+              "id": "750...",
+              "operation": "insert",
+              "object": "Asset",
+              "createdById": "005...",
+              "createdDate": "<datetime>",
+              "systemModstamp": "<datetime>",
+              "state": "JobComplete",
+              "concurrencyMode": "Parallel",
+              "contentType": "CSV",
+              "apiVersion": 58,
+              "jobType": "V2Ingest",
+              "lineEnding": "LF",
+              "columnDelimiter": "COMMA",
+              "numberRecordsProcessed": 1,
+              "numberRecordsFailed": 1,
+              "retries": 0,
+              "totalProcessingTime": 100,
+              "apiActiveProcessingTime": 43,
+              "apexProcessingTime": 0
+          }

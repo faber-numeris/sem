@@ -1,0 +1,41 @@
+info:
+  name: SOAP undelete
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: "{{url}}{{site}}/services/Soap/c/{{version}}"
+  headers:
+    - name: Content-Type
+      value: text/xml; charset=UTF-8
+    - name: Accept
+      value: text/xml
+    - name: SOAPAction
+      value: undelete
+  body:
+    type: xml
+    data: |-
+      <?xml version="1.0" encoding="utf-8"?>
+      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:enterprise.soap.sforce.com">
+        <soapenv:Header>
+           <urn:SessionHeader>
+              <urn:sessionId>{{_accessToken}}</urn:sessionId>
+           </urn:SessionHeader>
+        </soapenv:Header>
+        <soapenv:Body>
+           <urn:undelete>
+              <urn:ids></urn:ids>
+           </urn:undelete>
+        </soapenv:Body>
+      </soapenv:Envelope>
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+docs: Undeletes records from the Recycle Bin.

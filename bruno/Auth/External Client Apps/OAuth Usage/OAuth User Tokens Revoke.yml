@@ -1,0 +1,21 @@
+info:
+  name: OAuth User Tokens Revoke
+  type: http
+  seq: 4
+
+http:
+  method: DELETE
+  url: "{{url}}{{site}}/services/data/v{{version}}/apps/oauth/usage/{{_appId}}/{{_userId}}/tokens"
+  headers:
+    - name: Authorization
+      value: Bearer <token>
+      description: Replace <token> with your access token
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+docs: Revokes all tokens for a user of the external client app. See [Refresh Token by User and App](https://developer.salesforce.com/docs/atlas.en-us.246.0.chatterapi.meta/chatterapi/connect_resources_usage_app_id_user_id_tokens.htm).

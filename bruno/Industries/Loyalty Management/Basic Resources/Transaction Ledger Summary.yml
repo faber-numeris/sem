@@ -1,0 +1,166 @@
+info:
+  name: Transaction Ledger Summary
+  type: http
+  seq: 7
+
+http:
+  method: GET
+  url: "{{_endpoint}}/services/data/v{{version}}/loyalty/programs/:loyaltyProgramName/members/:membershipNumber/transaction-ledger-summary"
+  params:
+    - name: journalSubTypeName
+      value: ""
+      type: query
+      description: Returns the transaction journals filtered by the specified journal subtype.
+      disabled: true
+    - name: additionalTransactionJournalAttributes
+      value: ""
+      type: query
+      description: Returns the list of transaction journal fields.
+      disabled: true
+    - name: journalTypeName
+      value: ""
+      type: query
+      description: Returns the transaction journals filtered by the specified journal type.
+      disabled: true
+    - name: pageNumber
+      value: ""
+      type: query
+      description: |
+        Returns the transaction journals for the specified page number.
+      disabled: true
+    - name: periodEndDate
+      value: ""
+      type: query
+      description: Returns the transaction journals filtered by the specified end date.
+      disabled: true
+    - name: periodStartDate
+      value: ""
+      type: query
+      description: Returns the transaction journals filtered by the specified start date.
+      disabled: true
+    - name: loyaltyProgramName
+      value: ""
+      type: path
+    - name: membershipNumber
+      value: ""
+      type: path
+  body:
+    type: json
+    data: ""
+  auth: inherit
+
+runtime:
+  scripts:
+    - type: before-request
+      code: |-
+        /*
+        bru.setVar('journalSubTypeName','journalSubTypeName');
+        bru.setVar('additionalTransactionJournalAttributes','additionalTransactionJournalAttributes');
+        bru.setVar('journalTypeName','journalTypeName');
+        bru.setVar('pageNumber','pageNumber');
+        bru.setVar('periodEndDate','periodEndDate');
+        bru.setVar('periodStartDate','periodStartDate');
+        */
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Transaction Ledger Summary
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/loyalty/programs/:loyaltyProgramName/members/:membershipNumber/transaction-ledger-summary"
+      method: GET
+      headers:
+        - name: Authorization
+          value: Bearer {{accessToken}}
+      params:
+        - name: journalSubTypeName
+          value: ""
+          type: query
+          description: Returns the transaction journals filtered by the specified journal subtype.
+          disabled: true
+        - name: additionalTransactionJournalAttributes
+          value: ""
+          type: query
+          description: Returns the list of transaction journal fields.
+          disabled: true
+        - name: journalTypeName
+          value: ""
+          type: query
+          description: Returns the transaction journals filtered by the specified journal type.
+          disabled: true
+        - name: pageNumber
+          value: ""
+          type: query
+          description: |
+            Returns the transaction journals for the specified page number.
+          disabled: true
+        - name: periodEndDate
+          value: ""
+          type: query
+          description: Returns the transaction journals filtered by the specified end date.
+          disabled: true
+        - name: periodStartDate
+          value: ""
+          type: query
+          description: Returns the transaction journals filtered by the specified start date.
+          disabled: true
+        - name: loyaltyProgramName
+          value: NTO Insider
+          type: path
+        - name: membershipNumber
+          value: Member123
+          type: path
+      body:
+        type: json
+        data: ""
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: Date
+          value: Mon, 27 May 2024 19:37:52 GMT
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: Content-Type
+          value: application/json;charset=UTF-8
+        - name: Vary
+          value: Accept-Encoding
+        - name: Content-Encoding
+          value: gzip
+        - name: Transfer-Encoding
+          value: chunked
+      body:
+        type: json
+        data: |-
+          {
+              "message": null,
+              "status": true,
+              "transactionJournalCount": 1,
+              "transactionJournals": [
+                  {
+                      "activityDate": "2021-01-01T04:05:05.000Z",
+                      "additionalTransactionJournalAttributes": [],
+                      "journalSubTypeName": "Member Enrollment",
+                      "journalTypeName": "Accrual",
+                      "pointsChange": [],
+                      "transactionJournalId": "0lVJ8000000GmaEMAS",
+                      "transactionJournalNumber": "00000008"
+                  }
+              ]
+          }
+
+docs: |-
+  Standard Documentation:
+
+  [https://developer.salesforce.com/docs/atlas.en-us.loyalty.meta/loyalty/connect_resources_transaction_ledger.htm](https://developer.salesforce.com/docs/atlas.en-us.loyalty.meta/loyalty/connect_resources_transaction_ledger.htm)

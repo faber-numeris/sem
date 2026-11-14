@@ -1,0 +1,169 @@
+info:
+  name: Retrieve expression set version dependencies
+  type: http
+  seq: 1
+
+http:
+  method: GET
+  url: "{{_endpoint}}/services/data/v{{version}}/connect/business-rules/expression-set/version/:expressionSetVersionId/dependencies"
+  params:
+    - name: expressionSetVersionId
+      value: 9QMHo000000LBnbOAG
+      type: path
+      description: "Expression Set Version Id: For Example 9QLHo000000LBjEOAW"
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Status500-UnexpectedError
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/connect/business-rules/expression-set/version/:expressionSetVersionId/dependencies"
+      method: GET
+      params:
+        - name: expressionSetVersionId
+          value: 9QMHo000000LBjOOAW
+          type: path
+    response:
+      status: 500
+      statusText: Server Error
+      headers:
+        - name: Date
+          value: Wed, 06 Sep 2023 14:26:46 GMT
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-XSS-Protection
+          value: 1; mode=block
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: Content-Type
+          value: application/json;charset=UTF-8
+        - name: Transfer-Encoding
+          value: chunked
+      body:
+        type: json
+        data: |-
+          [
+              {
+                  "errorCode": "INTERNAL_ERROR",
+                  "message": "Unexpected Error"
+              }
+          ]
+  - name: Status400-BadRequest
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/connect/business-rules/expression-set/version/:expressionSetVersionId/dependencies"
+      method: GET
+      params:
+        - name: expressionSetVersionId
+          value: 9QLHo000000LBjJOAW
+          type: path
+    response:
+      status: 400
+      statusText: Bad Request
+      headers:
+        - name: Date
+          value: Wed, 06 Sep 2023 14:28:18 GMT
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-XSS-Protection
+          value: 1; mode=block
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: Content-Type
+          value: application/json;charset=UTF-8
+        - name: Transfer-Encoding
+          value: chunked
+      body:
+        type: json
+        data: |-
+          [
+              {
+                  "errorCode": "INVALID_ID_FIELD",
+                  "message": "Invalid identifier: 9QLHo000000LBjJOAW"
+              }
+          ]
+  - name: Status404-RecordNotFound
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/connect/business-rules/expression-set/version/:expressionSetVersionId/dependencies"
+      method: GET
+      params:
+        - name: expressionSetVersionId
+          value: ""
+          type: path
+    response:
+      status: 404
+      statusText: Not Found
+      headers:
+        - name: Date
+          value: Wed, 06 Sep 2023 14:29:34 GMT
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-XSS-Protection
+          value: 1; mode=block
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: Content-Type
+          value: application/json;charset=UTF-8
+        - name: Transfer-Encoding
+          value: chunked
+      body:
+        type: json
+        data: |-
+          [
+              {
+                  "errorCode": "NOT_FOUND",
+                  "message": "The requested resource does not exist"
+              }
+          ]
+
+docs: |-
+  [https://developer.salesforce.com/docs/atlas.en-us.industries_reference.meta/industries_reference/connect_resources_expression_set_dependencies.htm](https://developer.salesforce.com/docs/atlas.en-us.industries_reference.meta/industries_reference/connect_resources_expression_set_dependencies.htm)
+
+  # Expression Set Version Dependencies (GET)
+
+  Retrieve expression set version dependencies.Resource
+
+  ```
+  /connect/business-rules/expression-set/version/${expressionSetVersionId}/dependencies
+
+   ```
+
+  Resource Example
+
+  ```
+  https://yourInstance.salesforce.com/services/data/v58.0/connect/business-rules/expression-set/version/9QARN000000016v4AA/dependencies
+
+   ```
+
+  Available version
+
+  58.0
+
+  Requires Chatter
+
+  No
+
+  HTTP methods
+
+  GET
+
+  Response body for GET
+
+  [Expression Set Version Dependency](https://developer.salesforce.com/docs/atlas.en-us.industries_reference.meta/industries_reference/connect_responses_expression_set_version_dependency_output.htm)

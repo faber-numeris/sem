@@ -1,0 +1,95 @@
+info:
+  name: Create job
+  type: http
+  seq: 2
+
+http:
+  method: POST
+  url: "{{_endpoint}}/services/data/v{{version}}/jobs/ingest"
+  headers:
+    - name: Content-Type
+      value: application/json
+  body:
+    type: json
+    data: |-
+      {
+          "object": "Asset",
+          "operation": "update"
+      }
+  auth: inherit
+
+runtime:
+  scripts:
+    - type: after-response
+      code: |-
+        const context = bru.getEnvName() ? { set: (k, v) => bru.setEnvVar(k, v), get: (k) => bru.getEnvVar(k) } : { set: (k, v) => bru.setVar(k, v), get: (k) => bru.getVar(k) };
+
+        const response = JSON.parse(JSON.stringify(res.getBody()))
+        context.set("_jobId", response.id);
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Successful Create job
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/jobs/ingest"
+      method: POST
+      headers:
+        - name: Content-Type
+          value: application/json
+      body:
+        type: json
+        data: |-
+          {
+              "object": "Account",
+              "operation": "insert"
+          }
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: Date
+          value: Mon, 20 Nov 2023 14:58:56 GMT
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-XSS-Protection
+          value: 1; mode=block
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: Sforce-Limit-Info
+          value: api-usage=1/15000
+        - name: Content-Type
+          value: application/json;charset=UTF-8
+        - name: Vary
+          value: Accept-Encoding
+        - name: Content-Encoding
+          value: gzip
+        - name: Transfer-Encoding
+          value: chunked
+      body:
+        type: json
+        data: |-
+          {
+              "id": "750...",
+              "operation": "insert",
+              "object": "Account",
+              "createdById": "005...",
+              "createdDate": "<datetime>",
+              "systemModstamp": "<datetime>",
+              "state": "Open",
+              "concurrencyMode": "Parallel",
+              "contentType": "CSV",
+              "apiVersion": 58,
+              "contentUrl": "services/data/v58.0/jobs/ingest/750.../batches",
+              "lineEnding": "LF",
+              "columnDelimiter": "COMMA"
+          }

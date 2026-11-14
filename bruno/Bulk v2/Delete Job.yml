@@ -1,0 +1,59 @@
+info:
+  name: Delete Job
+  type: http
+  seq: 5
+
+http:
+  method: DELETE
+  url: "{{_endpoint}}/services/data/v{{version}}/jobs/ingest/{{_jobId}}"
+  headers:
+    - name: Content-Type
+      value: application/json
+      disabled: true
+  body:
+    type: text
+    data: ""
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Successful Delete Job
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/jobs/ingest/{{_jobId}}"
+      method: DELETE
+      headers:
+        - name: Content-Type
+          value: application/json
+          disabled: true
+      body:
+        type: text
+        data: ""
+    response:
+      status: 204
+      statusText: No Content
+      headers:
+        - name: Date
+          value: Mon, 20 Nov 2023 15:01:36 GMT
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-XSS-Protection
+          value: 1; mode=block
+        - name: Content-Security-Policy
+          value: upgrade-insecure-requests
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: Sforce-Limit-Info
+          value: api-usage=4/15000
+      body:
+        type: text
+        data: ""

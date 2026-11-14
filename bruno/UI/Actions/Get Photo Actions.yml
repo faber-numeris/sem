@@ -1,0 +1,141 @@
+info:
+  name: Get Photo Actions
+  type: http
+  seq: 12
+
+http:
+  method: GET
+  url: "{{_endpoint}}/services/data/v{{version}}/ui-api/actions/photo/:RECORD_IDS"
+  params:
+    - name: RECORD_IDS
+      value: ""
+      type: path
+  body:
+    type: text
+    data: ""
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Get Photo Actions
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/ui-api/actions/photo/:RECORD_IDS"
+      method: GET
+      params:
+        - name: RECORD_IDS
+          value: 0F94H000000UF2xSAG
+          type: path
+          description: A single record ID, or a comma-delimited list of record IDs.
+      body:
+        type: text
+        data: ""
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: Date
+          value: Fri, 06 Oct 2023 11:50:11 GMT
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: ETag
+          value: '"802f98780c61a3109be0a574d2915772--gzip"'
+        - name: Content-Type
+          value: application/json;charset=UTF-8
+        - name: Vary
+          value: Accept-Encoding
+        - name: Content-Encoding
+          value: gzip
+        - name: Transfer-Encoding
+          value: chunked
+      body:
+        type: json
+        data: |-
+          {
+              "actions": {
+                  "0F94H000000UF2xSAG": {
+                      "actions": [
+                          {
+                              "actionListContext": "Photo",
+                              "actionTarget": null,
+                              "actionTargetType": "Invoke",
+                              "apiName": "ViewPhotoAction",
+                              "externalId": "00D58000000arpq:0F94H000000UF2xSAG::Photo:Desktop:StandardButton:ViewPhotoAction",
+                              "iconUrl": "https://pozil-dev-ed.my.salesforce.com/img/icon/t4v35/action/email_120.png",
+                              "id": "0JV4H0000301820WAA",
+                              "isMassAction": "false",
+                              "label": "View Photo",
+                              "lwcComponent": null,
+                              "primaryColor": "939393",
+                              "relatedListRecordId": null,
+                              "relatedSourceObject": null,
+                              "section": "Page",
+                              "sourceObject": "0F94H000000UF2xSAG",
+                              "subtype": null,
+                              "targetObject": null,
+                              "targetUrl": null,
+                              "type": "StandardButton"
+                          },
+                          {
+                              "actionListContext": "Photo",
+                              "actionTarget": null,
+                              "actionTargetType": "Invoke",
+                              "apiName": "UpdatePhotoAction",
+                              "externalId": "00D58000000arpq:0F94H000000UF2xSAG::Photo:Desktop:StandardButton:UpdatePhotoAction",
+                              "iconUrl": "https://pozil-dev-ed.my.salesforce.com/img/icon/t4v35/action/email_120.png",
+                              "id": "0JV4H0000301821WAA",
+                              "isMassAction": "false",
+                              "label": "Update Photo",
+                              "lwcComponent": null,
+                              "primaryColor": "939393",
+                              "relatedListRecordId": null,
+                              "relatedSourceObject": null,
+                              "section": "Page",
+                              "sourceObject": "0F94H000000UF2xSAG",
+                              "subtype": null,
+                              "targetObject": null,
+                              "targetUrl": null,
+                              "type": "StandardButton"
+                          },
+                          {
+                              "actionListContext": "Photo",
+                              "actionTarget": null,
+                              "actionTargetType": "Invoke",
+                              "apiName": "DeletePhotoAction",
+                              "externalId": "00D58000000arpq:0F94H000000UF2xSAG::Photo:Desktop:StandardButton:DeletePhotoAction",
+                              "iconUrl": "https://pozil-dev-ed.my.salesforce.com/img/icon/t4v35/action/email_120.png",
+                              "id": "0JV4H0000301822WAA",
+                              "isMassAction": "false",
+                              "label": "Delete Photo",
+                              "lwcComponent": null,
+                              "primaryColor": "939393",
+                              "relatedListRecordId": null,
+                              "relatedSourceObject": null,
+                              "section": "Page",
+                              "sourceObject": "0F94H000000UF2xSAG",
+                              "subtype": null,
+                              "targetObject": null,
+                              "targetUrl": null,
+                              "type": "StandardButton"
+                          }
+                      ],
+                      "links": [],
+                      "url": "/services/data/v58.0/ui-api/actions/photo/0F94H000000UF2xSAG"
+                  }
+              },
+              "eTag": "802f98780c61a3109be0a574d2915772",
+              "url": "/services/data/v58.0/ui-api/actions/photo/0F94H000000UF2xSAG"
+          }
+
+docs: Get the photo actions for pages. Currently, only group and user pages support photo actions.

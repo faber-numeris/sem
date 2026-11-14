@@ -1,0 +1,7 @@
+info:
+  name: Integration Tests
+  type: folder
+  seq: 99
+
+request:
+  auth: inherit

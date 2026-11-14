@@ -1,0 +1,42 @@
+info:
+  name: 37 Composite Batch Request
+  type: http
+  seq: 37
+
+http:
+  method: POST
+  url: "{{_endpoint}}/services/data/v{{version}}/composite/batch"
+  headers:
+    - name: Content-Type
+      value: application/json
+  body:
+    type: json
+    data: |-
+      {
+        "batchRequests": [
+          {
+            "method": "GET",
+            "url": "v61.0/sobjects/Account/describe"
+          },
+          {
+            "method": "GET",
+            "url": "v61.0/query/?q=SELECT+Id+FROM+Lead+LIMIT+5"
+          }
+        ]
+      }
+
+runtime:
+  scripts:
+    - type: tests
+      code: |-
+        test("Executes Composite Batch independent requests", function() {
+          expect(res.getStatus()).to.equal(200);
+          expect(res.getBody().hasErrors).to.equal(false);
+          expect(res.getBody().results).to.have.lengthOf(2);
+          expect(res.getBody().results[0].statusCode).to.equal(200);
+          expect(res.getBody().results[1].statusCode).to.equal(200);
+        });
+
+settings:
+  encodeUrl: true
+  timeout: 0

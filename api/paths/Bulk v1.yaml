@@ -1,0 +1,686 @@
+/services/async/{version}/job:
+  post:
+    tags:
+      - Bulk v1
+    summary: Bulk Create Job
+    requestBody:
+      content:
+        '*/*':
+          schema:
+            type: string
+            example: >-
+              "{\n    \"operation\": \"insert\",\n    \"object\": \"Account\",\n    \"contentType\": \"CSV\"\n}"
+    parameters:
+      - name: X-SFDC-Session
+        in: header
+        schema:
+          type: string
+        example: '{{_accessToken}}'
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: charset
+        in: header
+        schema:
+          type: string
+        example: UTF-8
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '201':
+        description: Created
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Thu, 16 Nov 2023 16:07:11 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-XSS-Protection:
+            schema:
+              type: string
+              example: 1; mode=block
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Location:
+            schema:
+              type: string
+              example: /services/async/58.0/job/7502o00000kjNCsAAM
+          Content-Type:
+            schema:
+              type: string
+              example: application/json
+          Content-Encoding:
+            schema:
+              type: string
+              example: gzip
+          Transfer-Encoding:
+            schema:
+              type: string
+              example: chunked
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              apexProcessingTime: 0
+              apiActiveProcessingTime: 0
+              apiVersion: 58
+              assignmentRuleId: null
+              concurrencyMode: Parallel
+              contentType: CSV
+              createdById: 005...
+              createdDate: <date_time>
+              externalIdFieldName: null
+              fastPathEnabled: false
+              id: 750...
+              numberBatchesCompleted: 0
+              numberBatchesFailed: 0
+              numberBatchesInProgress: 0
+              numberBatchesQueued: 0
+              numberBatchesTotal: 0
+              numberRecordsFailed: 0
+              numberRecordsProcessed: 0
+              numberRetries: 0
+              object: <Object>
+              operation: insert
+              state: Open
+              systemModstamp: <date_time>
+              totalProcessingTime: 0
+/services/async/{version}/job/{_jobId}/spec:
+  post:
+    tags:
+      - Bulk v1
+    summary: Bulk Spec
+    requestBody:
+      content:
+        '*/*':
+          schema:
+            type: string
+            example: '"Salesforce Field,Csv Header,Value,Hint\nName,Full Name,,"'
+    parameters:
+      - name: X-SFDC-Session
+        in: header
+        schema:
+          type: string
+        example: '{{_accessToken}}'
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: text/csv
+      - name: charset
+        in: header
+        schema:
+          type: string
+        example: UTF-8
+      - name: Accept-Encoding
+        in: header
+        schema:
+          type: string
+        example: gzip
+      - name: Content-Encoding
+        in: header
+        schema:
+          type: string
+        example: gzip
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: _jobId
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '201':
+        description: Created
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Thu, 16 Nov 2023 16:12:34 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-XSS-Protection:
+            schema:
+              type: string
+              example: 1; mode=block
+          Content-Security-Policy:
+            schema:
+              type: string
+              example: upgrade-insecure-requests
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Location:
+            schema:
+              type: string
+              example: >-
+                /services/async/58.0/job/7502o00000kjNCsAAM/spec/0Aj2o000000PbakCAC
+          Vary:
+            schema:
+              type: string
+              example: Accept-Encoding
+          Content-Encoding:
+            schema:
+              type: string
+              example: gzip
+          Transfer-Encoding:
+            schema:
+              type: string
+              example: chunked
+        content:
+          text/plain:
+            schema:
+              type: string
+            example: null
+/services/async/{version}/job/{_jobId}/batch:
+  post:
+    tags:
+      - Bulk v1
+    summary: Bulk Create Batch
+    requestBody:
+      content:
+        text/plain: {}
+    parameters:
+      - name: X-SFDC-Session
+        in: header
+        schema:
+          type: string
+        example: '{{_accessToken}}'
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: text/csv
+      - name: charset
+        in: header
+        schema:
+          type: string
+        example: UTF-8
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: _jobId
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '201':
+        description: Created
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Thu, 16 Nov 2023 16:16:10 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-XSS-Protection:
+            schema:
+              type: string
+              example: 1; mode=block
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Location:
+            schema:
+              type: string
+              example: >-
+                /services/async/58.0/job/7502o00000kjNCsAAM/batch/7512o00001DSJWnAAP
+          Content-Type:
+            schema:
+              type: string
+              example: application/xml
+          Content-Encoding:
+            schema:
+              type: string
+              example: gzip
+          Transfer-Encoding:
+            schema:
+              type: string
+              example: chunked
+        content:
+          text/plain:
+            schema:
+              type: string
+            example: |-
+              <?xml version="1.0" encoding="UTF-8"?>
+              <batchInfo
+                 xmlns="http://www.force.com/2009/06/asyncapi/dataload">
+                  <id>751...</id>
+                  <jobId>750...</jobId>
+                  <state>Queued</state>
+                  <createdDate>datetime</createdDate>
+                  <systemModstamp>datetime</systemModstamp>
+                  <numberRecordsProcessed>0</numberRecordsProcessed>
+                  <numberRecordsFailed>0</numberRecordsFailed>
+                  <totalProcessingTime>0</totalProcessingTime>
+                  <apiActiveProcessingTime>0</apiActiveProcessingTime>
+                  <apexProcessingTime>0</apexProcessingTime>
+              </batchInfo>
+  get:
+    tags:
+      - Bulk v1
+    summary: Bulk Check Batch Status
+    parameters:
+      - name: X-SFDC-Session
+        in: header
+        schema:
+          type: string
+        example: '{{_accessToken}}'
+      - name: Accept-Encoding
+        in: header
+        schema:
+          type: string
+        example: gzip
+      - name: Content-Encoding
+        in: header
+        schema:
+          type: string
+        example: gzip
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: _jobId
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: OK
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Thu, 16 Nov 2023 16:19:29 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-XSS-Protection:
+            schema:
+              type: string
+              example: 1; mode=block
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Content-Type:
+            schema:
+              type: string
+              example: application/xml
+          Content-Encoding:
+            schema:
+              type: string
+              example: gzip
+          Transfer-Encoding:
+            schema:
+              type: string
+              example: chunked
+        content:
+          text/plain:
+            schema:
+              type: string
+            example: |-
+              <?xml version="1.0" encoding="UTF-8"?>
+              <batchInfoList
+                 xmlns="http://www.force.com/2009/06/asyncapi/dataload">
+                  <batchInfo>
+                      <id>751...</id>
+                      <jobId>750...</jobId>
+                      <state>Completed</state>
+                      <createdDate>datetime</createdDate>
+                      <systemModstamp>datetime</systemModstamp>
+                      <numberRecordsProcessed>1</numberRecordsProcessed>
+                      <numberRecordsFailed>0</numberRecordsFailed>
+                      <totalProcessingTime>403</totalProcessingTime>
+                      <apiActiveProcessingTime>225</apiActiveProcessingTime>
+                      <apexProcessingTime>64</apexProcessingTime>
+                  </batchInfo>
+              </batchInfoList>
+/services/async/{version}/job/{_jobId}:
+  post:
+    tags:
+      - Bulk v1
+    summary: Bulk Close Job
+    requestBody:
+      content:
+        '*/*':
+          schema:
+            type: string
+            example: '"{\n   \"state\" : \"Closed\"\n}"'
+    parameters:
+      - name: X-SFDC-Session
+        in: header
+        schema:
+          type: string
+        example: '{{_accessToken}}'
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: charset
+        in: header
+        schema:
+          type: string
+        example: UTF-8
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: _jobId
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: OK
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Thu, 16 Nov 2023 16:23:52 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-XSS-Protection:
+            schema:
+              type: string
+              example: 1; mode=block
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Content-Type:
+            schema:
+              type: string
+              example: application/json
+          Content-Encoding:
+            schema:
+              type: string
+              example: gzip
+          Transfer-Encoding:
+            schema:
+              type: string
+              example: chunked
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              apexProcessingTime: 64
+              apiActiveProcessingTime: 225
+              apiVersion: 58
+              assignmentRuleId: null
+              concurrencyMode: Parallel
+              contentType: CSV
+              createdById: 005...
+              createdDate: <date_time>
+              externalIdFieldName: null
+              fastPathEnabled: false
+              id: 750...
+              numberBatchesCompleted: 1
+              numberBatchesFailed: 0
+              numberBatchesInProgress: 0
+              numberBatchesQueued: 0
+              numberBatchesTotal: 1
+              numberRecordsFailed: 0
+              numberRecordsProcessed: 1
+              numberRetries: 0
+              object: <Object>
+              operation: insert
+              state: Closed
+              systemModstamp: <date_time>
+              totalProcessingTime: 403
+/services/async/{version}/job/{_jobId}/batch/{_batchId}/result:
+  get:
+    tags:
+      - Bulk v1
+    summary: Bulk Retrieve Batch Result
+    parameters:
+      - name: X-SFDC-Session
+        in: header
+        schema:
+          type: string
+        example: '{{_accessToken}}'
+      - name: Accept-Encoding
+        in: header
+        schema:
+          type: string
+        example: gzip
+      - name: Content-Encoding
+        in: header
+        schema:
+          type: string
+        example: gzip
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: _jobId
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: _batchId
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: OK
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Thu, 16 Nov 2023 16:20:11 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-XSS-Protection:
+            schema:
+              type: string
+              example: 1; mode=block
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Content-Type:
+            schema:
+              type: string
+              example: text/csv
+          Content-Encoding:
+            schema:
+              type: string
+              example: gzip
+          Transfer-Encoding:
+            schema:
+              type: string
+              example: chunked
+        content:
+          text/plain:
+            schema:
+              type: string
+            example: |
+              "Id","Success","Created","Error"
+              "001...","true","true",""
+/services/async/{version}/job/{_jobId}/batch/{_batchId}/result/{batchResultId}:
+  get:
+    tags:
+      - Bulk v1
+    summary: Bulk Retrieve Batch Result Data
+    parameters:
+      - name: X-SFDC-Session
+        in: header
+        schema:
+          type: string
+        example: '{{_accessToken}}'
+      - name: Accept-Encoding
+        in: header
+        schema:
+          type: string
+        example: gzip
+      - name: Content-Encoding
+        in: header
+        schema:
+          type: string
+        example: gzip
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: _jobId
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: _batchId
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: batchResultId
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: OK
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Thu, 16 Nov 2023 16:36:36 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-XSS-Protection:
+            schema:
+              type: string
+              example: 1; mode=block
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Content-Type:
+            schema:
+              type: string
+              example: text/csv; charset=UTF-8
+          Content-Encoding:
+            schema:
+              type: string
+              example: gzip
+          Transfer-Encoding:
+            schema:
+              type: string
+              example: chunked
+        content:
+          text/plain:
+            schema:
+              type: string
+            example: |
+              "Id","Name"
+              "001...","GenePoint"
+              "001...","United Oil & Gas, UK"
+              "001...","United Oil & Gas, Singapore"
+              "001...","Edge Communications"
+              "001...","Burlington Textiles Corp of America"
+              "001...","Pyramid Construction Inc."
+              "001...","Dickenson plc"
+              "001...","Grand Hotels & Resorts Ltd"
+              "001...","Express Logistics and Transport"
+              "001...","University of Arizona"
+              "001...","United Oil & Gas Corp."
+              "001...","sForce"
+              "001...","Exemple de comptes pour les autorisations"
+              "001...","Tom Jones"

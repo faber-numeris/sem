@@ -1,0 +1,31 @@
+info:
+  name: SObject ApprovalLayouts
+  type: http
+  seq: 14
+
+http:
+  method: GET
+  url: "{{_endpoint}}/services/data/v{{version}}/sobjects/:SOBJECT_API_NAME/describe/approvalLayouts/:APPROVAL_PROCESS_NAME"
+  headers:
+    - name: Content-Type
+      value: application/json
+  params:
+    - name: SOBJECT_API_NAME
+      value: ""
+      type: path
+    - name: APPROVAL_PROCESS_NAME
+      value: ""
+      type: path
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+docs: |-
+  Returns a list of approval layouts for a specified object. Specify a particular approval process name to limit the return value to one specific approval layout. This resource is available in REST API version 30.0 and later.
+
+  approvalProcessName parameter is optional

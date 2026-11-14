@@ -1,0 +1,13 @@
+info:
+  name: Managed Event Subscriptions
+  type: folder
+  seq: 5
+
+request:
+  auth: inherit
+
+docs:
+  content: |-
+    This folder contains requests for working with Managed Event Subscriptions (beta).  
+    To learn more, see [Managed Event Subscriptions (Beta)](https://developer.salesforce.com/docs/platform/pub-sub-api/guide/managed-sub.html) in the Pub/Sub API Developer Guide.
+  type: text/markdown

@@ -1,0 +1,205 @@
+info:
+  name: Tooling Run Tests Sync
+  type: http
+  seq: 6
+
+http:
+  method: POST
+  url: "{{_endpoint}}/services/data/v{{version}}/tooling/runTestsSynchronous"
+  headers:
+    - name: Content-Type
+      value: application/json
+  body:
+    type: json
+    data: |
+      [
+          {
+              "className": "YourClassName",
+              "testMethods": [
+                  "testMethod1",
+                  "testMethod2",
+                  "testMethod3"
+              ]
+          },
+          {
+              "maxFailedTests": "2"
+          }
+      ]
+
+      or
+
+      {
+          "tests": [
+              {
+                  "className": "YourClassName",
+                  "testMethods": [
+                      "testMethod1",
+                      "testMethod2",
+                      "testMethod3"
+                  ]
+              }
+          ],
+          "maxFailedTests": "integer value",
+          "testLevel": "TestLevel enum value",
+          "skipCodeCoverage": "boolean value"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Tooling Run Tests Sync
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/tooling/runTestsSynchronous"
+      method: POST
+      headers:
+        - name: Content-Type
+          value: application/json
+      body:
+        type: json
+        data: |-
+          {
+              "tests": [
+                  {
+                      "className": "PrepareSandboxTest",
+                      "testMethods": [
+                          "runApexClass_should_work"
+                      ]
+                  }
+              ],
+              "maxFailedTests": "1"
+          }
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: Date
+          value: Mon, 11 Dec 2023 09:59:37 GMT
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: Sforce-Limit-Info
+          value: api-usage=246/15000
+        - name: Content-Type
+          value: application/json;charset=UTF-8
+        - name: Vary
+          value: Accept-Encoding
+        - name: Content-Encoding
+          value: gzip
+        - name: Transfer-Encoding
+          value: chunked
+      body:
+        type: json
+        data: |-
+          {
+              "apexLogId": "07L4H00000SpGroUAF",
+              "codeCoverage": [
+                  {
+                      "id": "01q4H000000WjD8QAK",
+                      "locationsNotCovered": [
+                          {},
+                          {}
+                      ],
+                      "name": "StateTrigger",
+                      "namespace": null,
+                      "numLocations": 2,
+                      "numLocationsNotCovered": 2,
+                      "type": "Trigger"
+                  },
+                  {
+                      "id": "01q58000000RLTyAAO",
+                      "locationsNotCovered": [
+                          {},
+                          {},
+                          {}
+                      ],
+                      "name": "RestrictContactByName",
+                      "namespace": null,
+                      "numLocations": 3,
+                      "numLocationsNotCovered": 3,
+                      "type": "Trigger"
+                  },
+                  {
+                      "id": "01q58000000RLBhAAO",
+                      "locationsNotCovered": [
+                          {},
+                          {},
+                          {},
+                          {},
+                          {},
+                          {}
+                      ],
+                      "name": "ClosedOpportunityTrigger",
+                      "namespace": null,
+                      "numLocations": 6,
+                      "numLocationsNotCovered": 6,
+                      "type": "Trigger"
+                  },
+                  {
+                      "id": "01p4H000009PEFIQA4",
+                      "locationsNotCovered": [
+                          {},
+                          {}
+                      ],
+                      "name": "PrepareSandbox",
+                      "namespace": null,
+                      "numLocations": 22,
+                      "numLocationsNotCovered": 2,
+                      "type": "Class"
+                  }
+              ],
+              "codeCoverageWarnings": [
+                  {
+                      "id": "01q4H000000WjD8QAK",
+                      "message": "Test coverage of selected Apex Trigger is 0%, at least 1% test coverage is required",
+                      "name": "StateTrigger",
+                      "namespace": null
+                  },
+                  {
+                      "id": "01q58000000RLTyAAO",
+                      "message": "Test coverage of selected Apex Trigger is 0%, at least 1% test coverage is required",
+                      "name": "RestrictContactByName",
+                      "namespace": null
+                  },
+                  {
+                      "id": "01q58000000RLBhAAO",
+                      "message": "Test coverage of selected Apex Trigger is 0%, at least 1% test coverage is required",
+                      "name": "ClosedOpportunityTrigger",
+                      "namespace": null
+                  },
+                  {
+                      "id": "01q4H000000WjD8QAK",
+                      "message": "Average test coverage across all Apex Classes and Triggers is 60%, at least 75% test coverage is required.",
+                      "name": null,
+                      "namespace": ""
+                  }
+              ],
+              "failures": [],
+              "flowCoverage": [],
+              "flowCoverageWarnings": [],
+              "numFailures": 0,
+              "numTestsRun": 1,
+              "successes": [
+                  {
+                      "id": "01p4H00000A0zYxQAJ",
+                      "methodName": "runApexClass_should_work",
+                      "name": "PrepareSandboxTest",
+                      "namespace": null,
+                      "seeAllData": false,
+                      "time": 1088
+                  }
+              ],
+              "totalTime": 1261
+          }
+
+docs: Runs one or more methods within one or more Apex classes, using the asynchronous test execution mechanism. In the request body, you can specify test class names and IDs, suite names and IDs, the maximum number of failed tests to allow, and the test level, as comma-separated lists or as an array. You can also indicate whether to opt out of collecting code coverage information during the test run (available in API version 43.0 and later).

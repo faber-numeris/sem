@@ -1,0 +1,30 @@
+info:
+  name: 18 Execute SOQL Query with Pagination
+  type: http
+  seq: 18
+
+http:
+  method: GET
+  url: "{{_endpoint}}/services/data/v{{version}}/query/?q=SELECT+Id,Name+FROM+Account+LIMIT+10"
+  headers:
+    - name: Sforce-Query-Options
+      value: batchSize=1
+
+runtime:
+  scripts:
+    - type: after-response
+      code: |-
+        bru.setVar("nextRecordsUrl", res.getBody().nextRecordsUrl);
+    - type: tests
+      code: |-
+        test("Executes SOQL query and returns pagination cursor", function() {
+          expect(res.getStatus()).to.equal(200);
+          expect(res.getBody().totalSize).to.be.above(1);
+          expect(res.getBody().done).to.equal(false);
+          expect(res.getBody().nextRecordsUrl).to.be.a("string");
+          expect(res.getBody().records).to.have.lengthOf(1);
+        });
+
+settings:
+  encodeUrl: false
+  timeout: 0

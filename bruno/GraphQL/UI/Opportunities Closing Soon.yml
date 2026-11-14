@@ -1,0 +1,56 @@
+info:
+  name: Opportunities Closing Soon
+  type: graphql
+  seq: 8
+
+graphql:
+  method: POST
+  url: "{{_endpoint}}/services/data/v{{version}}/graphql"
+  headers:
+    - name: X-Chatter-Entity-Encoding
+      value: "false"
+  body:
+    query: |-
+      query opportunitiesClosingSoon($month: Long) {
+        uiapi {
+          query {
+            Opportunity(
+              where: {
+                StageName: { eq: "Negotiation/Review" }
+                CloseDate: { CALENDAR_MONTH: { value: { eq: $month } } }
+              }
+            ) {
+              edges {
+                node {
+                  Id
+                  Name {
+                    value
+                  }
+                  StageName {
+                    value
+                  }
+                  CloseDate {
+                    value
+                    displayValue
+                  }
+                  Description {
+                    value
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    variables: |-
+      {
+          "month": 10
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true

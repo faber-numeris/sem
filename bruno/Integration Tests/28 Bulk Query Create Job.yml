@@ -1,0 +1,35 @@
+info:
+  name: 28 Bulk Query Create Job
+  type: http
+  seq: 28
+
+http:
+  method: POST
+  url: "{{_endpoint}}/services/data/v{{version}}/jobs/query/"
+  headers:
+    - name: Content-Type
+      value: application/json
+  body:
+    type: json
+    data: |-
+      {
+        "operation": "query",
+        "query": "SELECT Id, Name FROM Contact"
+      }
+
+runtime:
+  scripts:
+    - type: after-response
+      code: |-
+        bru.setVar("queryJobId", res.getBody().id);
+    - type: tests
+      code: |-
+        test("Creates Bulk 2.0 query job", function() {
+          expect(res.getStatus()).to.equal(200);
+          expect(res.getBody().id).to.be.a("string");
+          expect(res.getBody().state).to.equal("JobComplete");
+        });
+
+settings:
+  encodeUrl: true
+  timeout: 0

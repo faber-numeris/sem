@@ -1,0 +1,57 @@
+info:
+  name: Delete event channel
+  type: http
+  seq: 5
+
+http:
+  method: DELETE
+  url: "{{_endpoint}}/services/data/v{{version}}/tooling/sobjects/PlatformEventChannel/:PLATFORM_EVENT_CHANNEL_ID"
+  params:
+    - name: PLATFORM_EVENT_CHANNEL_ID
+      value: ""
+      type: path
+  body:
+    type: json
+    data: ""
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Delete event channel
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/tooling/sobjects/PlatformEventChannel/:PLATFORM_EVENT_CHANNEL_ID"
+      method: DELETE
+      params:
+        - name: PLATFORM_EVENT_CHANNEL_ID
+          value: 0YL4H0000004C98WAE
+          type: path
+      body:
+        type: json
+        data: ""
+    response:
+      status: 204
+      statusText: No Content
+      headers:
+        - name: Date
+          value: Wed, 06 Dec 2023 16:56:00 GMT
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: Content-Security-Policy
+          value: upgrade-insecure-requests
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: Sforce-Limit-Info
+          value: api-usage=303/15000
+      body:
+        type: text
+        data: ""

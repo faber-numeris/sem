@@ -1,0 +1,20 @@
+info:
+  name: 38 Cleanup Created Account
+  type: http
+  seq: 38
+
+http:
+  method: DELETE
+  url: "{{_endpoint}}/services/data/v{{version}}/sobjects/Account/{{accountId}}"
+
+runtime:
+  scripts:
+    - type: tests
+      code: |-
+        test("Deletes created Account and returns 204", function() {
+          expect(res.getStatus()).to.equal(204);
+        });
+
+settings:
+  encodeUrl: true
+  timeout: 0

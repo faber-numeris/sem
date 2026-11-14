@@ -1,0 +1,26 @@
+info:
+  name: Compact Layouts
+  type: http
+  seq: 26
+
+http:
+  method: GET
+  url: "{{_endpoint}}/services/data/v{{version}}/compactLayouts?q=Account,Contact"
+  headers:
+    - name: Content-Type
+      value: application/json
+  params:
+    - name: q
+      value: Account,Contact
+      type: query
+      description: object list
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+docs: Returns a list of compact layouts for multiple objects. This resource is available in REST API version 31.0 and later.

@@ -1,0 +1,490 @@
+info:
+  name: Update Commitment Payments
+  type: http
+  seq: 4
+
+http:
+  method: POST
+  url: "{{_endpoint}}/services/data/v{{version}}/connect/fundraising/commitments/payment-updates"
+  body:
+    type: json
+    data: |-
+      {
+        "updates": [
+          {
+            "giftCommitmentId": "<SFDC_GIFT_COMMITMENT_ID>",
+            "paymentInstrument": {
+              "type": "credit card",
+              "accountHolderName": "test donor 1",
+              "expiryMonth": "10",
+              "expiryYear": "2026",
+              "last4": "4585",
+              "cardBrand": "visa",
+              "bankName": "chase",
+              "digitalWalletProvider": "apple pay",
+              "bankAccountHolderType": "primary",
+              "bankAccountType": "checking",
+              "bankAccountNumber": "123456",
+              "bankCode": "HBUK",
+              "gatewayName": "stripe",
+              "processorName": "classy",
+              "processorPaymentReference": "string",
+              "gatewayReference": "string"
+            }
+          },
+          {
+            "giftCommitmentId": "<SFDC_GIFT_COMMITMENT_ID>",
+            "paymentInstrument": {
+              "type": "credit card",
+              "accountHolderName": "test donor 2",
+              "expiryMonth": "10",
+              "expiryYear": "2026",
+              "last4": "4585",
+              "cardBrand": "visa",
+              "bankName": "chase",
+              "digitalWalletProvider": "apple pay",
+              "bankAccountHolderType": "primary",
+              "bankAccountType": "checking",
+              "bankAccountNumber": "123456",
+              "bankCode": "HBUK",
+              "gatewayName": "stripe",
+              "processorName": "test processor",
+              "processorPaymentReference": "string",
+              "gatewayReference": "string"
+            }
+          }
+        ]
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Status201-UpdateCommitmentSuccess
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/connect/fundraising/commitments/payment-updates"
+      method: POST
+      body:
+        type: json
+        data: |-
+          {
+            "updates": [
+              {
+                "giftCommitmentId": "<SFDC_GIFT_COMMITMENT_ID>",
+                "paymentInstrument": {
+                  "type": "credit card",
+                  "accountHolderName": "test donor 1",
+                  "expiryMonth": "10",
+                  "expiryYear": "2026",
+                  "last4": "4585",
+                  "cardBrand": "visa",
+                  "bankName": "chase",
+                  "digitalWalletProvider": "apple pay",
+                  "bankAccountHolderType": "primary",
+                  "bankAccountType": "checking",
+                  "bankAccountNumber": "123456",
+                  "bankCode": "HBUK",
+                  "gatewayName": "stripe",
+                  "processorName": "classy",
+                  "processorPaymentReference": "string",
+                  "gatewayReference": "string"
+                }
+              },
+              {
+                "giftCommitmentId": "<SFDC_GIFT_COMMITMENT_ID>",
+                "paymentInstrument": {
+                  "type": "credit card",
+                  "accountHolderName": "test donor 2",
+                  "expiryMonth": "10",
+                  "expiryYear": "2026",
+                  "last4": "4585",
+                  "cardBrand": "visa",
+                  "bankName": "chase",
+                  "digitalWalletProvider": "apple pay",
+                  "bankAccountHolderType": "primary",
+                  "bankAccountType": "checking",
+                  "bankAccountNumber": "123456",
+                  "bankCode": "HBUK",
+                  "gatewayName": "stripe",
+                  "processorName": "test processor",
+                  "processorPaymentReference": "string",
+                  "gatewayReference": "string"
+                }
+              }
+            ]
+          }
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: Content-Type
+          value: application/json
+      body:
+        type: json
+        data: |-
+          {
+            "successes": 2,
+            "failures": 0,
+            "notProcessed": 0,
+            "details": [
+              {
+                "success": true,
+                "links": {
+                  "giftcommitment": {
+                    "href": "/services/data/vXX.X/sobjects/sObject/<SFDC_GIFT_COMMITMENT_ID>",
+                    "id": "<SFDC_GIFT_COMMITMENT_ID>"
+                  },
+                  "paymentinstrument": {
+                    "href": "/services/data/vXX.X/sobjects/sObject/<SFDC_PAYMENT_INSTRUMENT_ID>",
+                    "id": "<SFDC_PAYMENT_INSTRUMENT_ID>"
+                  }
+                }
+              },
+                  {
+                "success": true,
+                "links": {
+                  "giftcommitment": {
+                    "href": "/services/data/vXX.X/sobjects/sObject/<SFDC_GIFT_COMMITMENT_ID>",
+                    "id": "<SFDC_GIFT_COMMITMENT_ID>"
+                  },
+                  "paymentinstrument": {
+                    "href": "/services/data/vXX.X/sobjects/sObject/<SFDC_PAYMENT_INSTRUMENT_ID>",
+                    "id": "<SFDC_PAYMENT_INSTRUMENT_ID>"
+                  }
+                }
+              }
+            ]
+          }
+  - name: Status200-UpdateCommitmentRequestValidationFailure
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/connect/fundraising/commitments/payment-updates"
+      method: POST
+      body:
+        type: json
+        data: |-
+          {
+            "updates": [
+              {
+                "giftCommitmentId": "INVALID COMMITMENT ID",
+                "paymentInstrument": {
+                  "type": "credit card",
+                  "accountHolderName": "test donor 1",
+                  "expiryMonth": "10",
+                  "expiryYear": "2026",
+                  "last4": "4585",
+                  "cardBrand": "visa",
+                  "bankName": "chase",
+                  "digitalWalletProvider": "apple pay",
+                  "bankAccountHolderType": "primary",
+                  "bankAccountType": "checking",
+                  "bankAccountNumber": "123456",
+                  "bankCode": "HBUK",
+                  "gatewayName": "stripe",
+                  "processorName": "classy",
+                  "processorPaymentReference": "string",
+                  "gatewayReference": "string"
+                }
+              },
+              {
+                "giftCommitmentId": "<SFDC_GIFT_COMMITMENT_ID>",
+                "paymentInstrument": {
+                  "type": "credit card",
+                  "accountHolderName": "test donor 2",
+                  "expiryMonth": "10",
+                  "expiryYear": "2026",
+                  "last4": "4585",
+                  "cardBrand": "visa",
+                  "bankName": "chase",
+                  "digitalWalletProvider": "apple pay",
+                  "bankAccountHolderType": "primary",
+                  "bankAccountType": "checking",
+                  "bankAccountNumber": "123456",
+                  "bankCode": "HBUK",
+                  "gatewayName": "stripe",
+                  "processorName": "test processor",
+                  "processorPaymentReference": "string",
+                  "gatewayReference": "string"
+                }
+              }
+            ]
+          }
+    response:
+      status: 201
+      statusText: Created
+      headers:
+        - name: Content-Type
+          value: application/json
+      body:
+        type: json
+        data: |-
+          {
+            "successes": 1,
+            "failures": 1,
+            "notProcessed": 0,
+            "details": [
+              {
+                  "success": false,
+                  "errors": {
+                      "field": "id",
+                      "message": "<invalid id message>"
+                  }
+              },
+              {
+                "success": true,
+                "links": {
+                  "giftcommitment": {
+                    "href": "/services/data/vXX.X/sobjects/sObject/<SFDC_GIFT_COMMITMENT_ID>",
+                    "id": "<SFDC_GIFT_COMMITMENT_ID>"
+                  },
+                  "paymentinstrument": {
+                    "href": "/services/data/vXX.X/sobjects/sObject/<SFDC_PAYMENT_INSTRUMENT_ID>",
+                    "id": "<SFDC_PAYMENT_INSTRUMENT_ID>"
+                  }
+                }
+              }
+            ]
+          }
+  - name: Status200-UpdateCommitmentDatabaseFailure
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/connect/fundraising/commitments/payment-updates"
+      method: POST
+      body:
+        type: json
+        data: |-
+          {
+            "updates": [
+              {
+                "giftCommitmentId": "<SFDC_GIFT_COMMITMENT_ID>",
+                "paymentInstrument": {
+                  "type": "credit card",
+                  "accountHolderName": "test donor",
+                  "expiryMonth": "10",
+                  "expiryYear": "2026",
+                  "last4": "4585",
+                  "cardBrand": "visa",
+                  "bankName": "chase",
+                  "digitalWalletProvider": "apple pay",
+                  "bankAccountHolderType": "primary",
+                  "bankAccountType": "checking",
+                  "bankAccountNumber": "123456",
+                  "bankCode": "HBUK",
+                  "gatewayName": "stripe",
+                  "processorName": "classy",
+                  "processorPaymentReference": "string",
+                  "gatewayReference": "string"
+                }
+              },
+                  {
+                "giftCommitmentId": "<SFDC_GIFT_COMMITMENT_ID>",
+                "paymentInstrument": {
+                  "type": "credit card",
+                  "accountHolderName": "test donor",
+                  "expiryMonth": "10",
+                  "expiryYear": "2026",
+                  "last4": "4585",
+                  "cardBrand": "visa",
+                  "bankName": "chase",
+                  "digitalWalletProvider": "google pay",
+                  "bankAccountHolderType": "primary",
+                  "bankAccountType": "checking",
+                  "bankAccountNumber": "123456",
+                  "bankCode": "HBUK",
+                  "gatewayName": "stripe",
+                  "processorName": "test processor",
+                  "processorPaymentReference": "string",
+                  "gatewayReference": "string"
+                }
+              }
+            ]
+          }
+    response:
+      status: 201
+      statusText: Created
+      headers:
+        - name: Content-Type
+          value: application/json
+      body:
+        type: json
+        data: |-
+          // This is a scenario where there is a validation rule on the Payment Instrument object requiring that the digitalWalletProvider cannot be "Apple Pay". One database error occurs for the 10.50 cover amount, causing the other two to be rolled back with success of false and no record links.
+          {
+            "successes": 0,
+            "failures": 1,
+            "notProcessed": 1,
+            "details": [
+              {
+                  "success": false,
+                  "errors": {
+                      "message": "<validation_rule_error_message>"
+                  }
+              },
+              {
+                "success": false
+              }
+            ]
+          }
+  - name: Status201-UpdateCommitmentExternalIds
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/connect/fundraising/commitments/payment-updates"
+      method: POST
+      body:
+        type: json
+        data: |-
+          {
+            "updates": [
+              {
+                "giftCommitment": {
+                  "externalId": {
+                      "fieldName": "<EXTERNAL_ID_FIELD_NAME>",
+                      "fieldValue": "<EXTERNAL_ID_FIELD_VALUE>"
+                  }
+                },
+                "paymentInstrument": {
+                  "type": "credit card",
+                  "accountHolderName": "david chavez",
+                  "expiryMonth": "10",
+                  "expiryYear": "2026",
+                  "last4": "4585",
+                  "cardBrand": "visa",
+                  "bankName": "chase",
+                  "digitalWalletProvider": "apple pay",
+                  "bankAccountHolderType": "primary",
+                  "bankAccountType": "checking",
+                  "bankAccountNumber": "123456",
+                  "bankCode": "HBUK",
+                  "gatewayName": "stripe",
+                  "processorName": "classy",
+                  "processorPaymentReference": "string",
+                  "gatewayReference": "string"
+                }
+              },
+              {
+              "giftCommitment": {
+                  "externalId": {
+                      "fieldName": "<EXTERNAL_ID_FIELD_NAME>",
+                      "fieldValue": "<EXTERNAL_ID_FIELD_VALUE>"
+                  }
+                },
+                "paymentInstrument": {
+                  "type": "credit card",
+                  "accountHolderName": "luke smith",
+                  "expiryMonth": "10",
+                  "expiryYear": "2026",
+                  "last4": "4585",
+                  "cardBrand": "visa",
+                  "bankName": "chase",
+                  "digitalWalletProvider": "apple pay",
+                  "bankAccountHolderType": "primary",
+                  "bankAccountType": "checking",
+                  "bankAccountNumber": "123456",
+                  "bankCode": "HBUK",
+                  "gatewayName": "stripe",
+                  "processorName": "test processor",
+                  "processorPaymentReference": "string",
+                  "gatewayReference": "string"
+                }
+              }
+            ]
+          }
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: Content-Type
+          value: application/json
+      body:
+        type: json
+        data: |-
+          {
+            "successes": 2,
+            "failures": 0,
+            "notProcessed": 0,
+            "details": [
+              {
+                "success": true,
+                "links": {
+                  "giftcommitment": {
+                    "href": "/services/data/vXX.X/sobjects/sObject/<SFDC_GIFT_COMMITMENT_ID>",
+                    "id": "<SFDC_GIFT_COMMITMENT_ID>"
+                  },
+                  "paymentinstrument": {
+                    "href": "/services/data/vXX.X/sobjects/sObject/<SFDC_PAYMENT_INSTRUMENT_ID>",
+                    "id": "<SFDC_PAYMENT_INSTRUMENT_ID>"
+                  }
+                }
+              },
+                  {
+                "success": true,
+                "links": {
+                  "giftcommitment": {
+                    "href": "/services/data/vXX.X/sobjects/sObject/<SFDC_GIFT_COMMITMENT_ID>",
+                    "id": "<SFDC_GIFT_COMMITMENT_ID>"
+                  },
+                  "paymentinstrument": {
+                    "href": "/services/data/vXX.X/sobjects/sObject/<SFDC_PAYMENT_INSTRUMENT_ID>",
+                    "id": "<SFDC_PAYMENT_INSTRUMENT_ID>"
+                  }
+                }
+              }
+            ]
+          }
+  - name: Status400-BadRequestError
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/connect/fundraising/commitments/payment-updates"
+      method: POST
+      body:
+        type: json
+        data: |-
+          {
+            "updates": [
+              {
+                "giftCommitmentId": "<SFDC_GIFT_COMMITMENT_ID>",
+                "paymentInstrument": {
+                  "type": "credit card",
+                  "accountHolderName": "test donor",
+                  "expiryMonth": "10",
+                  "expiryYear": "2026",
+                  "last4": "4585",
+                  "cardBrand": "visa",
+                  "bankName": "chase",
+                  "digitalWalletProvider": "apple pay",
+                  "bankAccountHolderType": "primary",
+                  "bankAccountType": "checking",
+                  "bankAccountNumber": "123456",
+                  "bankCode": "HBUK",
+                  "gatewayName": "stripe",
+                  "processorName": "test processor",
+                  "processorPaymentReference": "string",
+                  "gatewayReference": "string"
+                }
+              }
+            ]
+          }
+    response:
+      status: 400
+      statusText: Bad Request
+      headers:
+        - name: Content-Type
+          value: application/json
+      body:
+        type: json
+        data: |2-
+              // Even if the JSON request is valid, this is an example of a 400 error code that will be returned if duplicate matching rules are not active. Any non 200 error code would have a similar response structure.
+              {
+                  "errorCode": "UNKNOWN_EXCEPTION",
+                  "message": "Provide active duplicate matching rules on Account and Person Account for donor matching. -- industries.fundraisingops.connect.impl.validator.ValidatorUtil.validateMatchingMethod(ValidatorUtil.java:103)"
+              }
+
+docs: |-
+  Update the future payment instrument metadata for active gift commitments.
+
+  ## Required Attributes:
+
+  - giftCommitmentId
+      
+  - paymentInstrument.type

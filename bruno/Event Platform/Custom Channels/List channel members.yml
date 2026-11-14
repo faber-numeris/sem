@@ -1,0 +1,116 @@
+info:
+  name: List channel members
+  type: http
+  seq: 7
+
+http:
+  method: GET
+  url: "{{_endpoint}}/services/data/v{{version}}/tooling/query/?q=SELECT Id, DeveloperName, EventChannel, FilterExpression, SelectedEntity FROM PlatformEventChannelMember"
+  params:
+    - name: q
+      value: SELECT Id, DeveloperName, EventChannel, FilterExpression, SelectedEntity FROM PlatformEventChannelMember
+      type: query
+  body:
+    type: json
+    data: ""
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: List channel members
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/tooling/query/?q=SELECT Id, DeveloperName, EventChannel, FilterExpression, SelectedEntity FROM PlatformEventChannelMember"
+      method: GET
+      params:
+        - name: q
+          value: SELECT Id, DeveloperName, EventChannel, FilterExpression, SelectedEntity FROM PlatformEventChannelMember
+          type: query
+      body:
+        type: json
+        data: ""
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: Date
+          value: Mon, 03 Jul 2023 13:16:35 GMT
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: Sforce-Limit-Info
+          value: api-usage=9/15000
+        - name: Content-Type
+          value: application/json;charset=UTF-8
+        - name: Vary
+          value: Accept-Encoding
+        - name: Content-Encoding
+          value: gzip
+        - name: Transfer-Encoding
+          value: chunked
+      body:
+        type: json
+        data: |-
+          {
+              "size": 4,
+              "totalSize": 4,
+              "done": true,
+              "queryLocator": null,
+              "entityTypeName": "PlatformEventChannelMember",
+              "records": [
+                  {
+                      "attributes": {
+                          "type": "PlatformEventChannelMember",
+                          "url": "/services/data/v58.0/tooling/sobjects/PlatformEventChannelMember/0v84H000000PAvIQAW"
+                      },
+                      "Id": "0v84H000000PAvIQAW",
+                      "DeveloperName": "ChangeEvents_ContactChangeEvent",
+                      "EventChannel": "ChangeEvents",
+                      "FilterExpression": null,
+                      "SelectedEntity": "ContactChangeEvent"
+                  },
+                  {
+                      "attributes": {
+                          "type": "PlatformEventChannelMember",
+                          "url": "/services/data/v58.0/tooling/sobjects/PlatformEventChannelMember/0v84H000000XZCjQAO"
+                      },
+                      "Id": "0v84H000000XZCjQAO",
+                      "DeveloperName": "ChangeEvents_AccountChangeEvent",
+                      "EventChannel": "ChangeEvents",
+                      "FilterExpression": null,
+                      "SelectedEntity": "AccountChangeEvent"
+                  },
+                  {
+                      "attributes": {
+                          "type": "PlatformEventChannelMember",
+                          "url": "/services/data/v58.0/tooling/sobjects/PlatformEventChannelMember/0v84H000000fxSfQAI"
+                      },
+                      "Id": "0v84H000000fxSfQAI",
+                      "DeveloperName": "HREvents_Employee_ChangeEvent",
+                      "EventChannel": "0YL4H0000004C93WAE",
+                      "FilterExpression": null,
+                      "SelectedEntity": "Meeting_Note__ChangeEvent"
+                  },
+                  {
+                      "attributes": {
+                          "type": "PlatformEventChannelMember",
+                          "url": "/services/data/v58.0/tooling/sobjects/PlatformEventChannelMember/0v84H000000fxSkQAI"
+                      },
+                      "Id": "0v84H000000fxSkQAI",
+                      "DeveloperName": "AdvocateEvents_Employee_ChangeEvent",
+                      "EventChannel": "0YL4H0000004C98WAE",
+                      "FilterExpression": null,
+                      "SelectedEntity": "Meeting_Note__ChangeEvent"
+                  }
+              ]
+          }

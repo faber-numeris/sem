@@ -1,0 +1,21 @@
+info:
+  name: 34 Custom Apex REST Endpoint
+  type: http
+  seq: 34
+
+http:
+  method: GET
+  url: "{{_endpoint}}/services/apexrest/v1/integrations/status"
+
+runtime:
+  scripts:
+    - type: tests
+      code: |-
+        test("Routes custom Apex REST request and returns status", function() {
+          expect(res.getStatus()).to.equal(200);
+          expect(["OK", "UP"]).to.include(res.getBody().status);
+        });
+
+settings:
+  encodeUrl: true
+  timeout: 0

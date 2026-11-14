@@ -1,0 +1,158 @@
+info:
+  name: File Information
+  type: http
+  seq: 2
+
+http:
+  method: GET
+  url: "{{_endpoint}}/services/data/v{{version}}/connect/files/:FILE_ID"
+  params:
+    - name: FILE_ID
+      value: ""
+      type: path
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: File Information
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/connect/files/:FILE_ID"
+      method: GET
+      params:
+        - name: FILE_ID
+          value: 0692o00000woaKjAAI
+          type: path
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: Date
+          value: Mon, 20 Nov 2023 16:33:38 GMT
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-XSS-Protection
+          value: 1; mode=block
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: Content-Type
+          value: application/json;charset=UTF-8
+        - name: Vary
+          value: Accept-Encoding
+        - name: Content-Encoding
+          value: gzip
+        - name: Transfer-Encoding
+          value: chunked
+      body:
+        type: json
+        data: |-
+          {
+              "checksum": "71a50dbba44c78128b221b7df7bb51f1",
+              "contentHubRepository": null,
+              "contentModifiedDate": "2023-11-20T16:28:22.000Z",
+              "contentSize": 95,
+              "contentUrl": null,
+              "createdDate": "2023-11-20T16:28:22.000Z",
+              "description": null,
+              "downloadUrl": "/services/data/v58.0/connect/files/069.../content?versionNumber=1",
+              "externalDocumentUrl": null,
+              "externalFilePermissionInformation": null,
+              "fileAsset": null,
+              "fileExtension": "png",
+              "fileType": "Png",
+              "flashRenditionStatus": "Na",
+              "id": "069...",
+              "isFileAsset": false,
+              "isInMyFileSync": false,
+              "isMajorVersion": true,
+              "mimeType": "image/png",
+              "moderationFlags": null,
+              "modifiedDate": "2023-11-20T16:28:22.000Z",
+              "motif": {
+                  "color": "939393",
+                  "largeIconUrl": "/img/content/content64.png",
+                  "mediumIconUrl": "/img/content/content32.png",
+                  "smallIconUrl": "/img/icon/files16.png",
+                  "svgIconUrl": null
+              },
+              "mySubscription": null,
+              "name": "1x1.png",
+              "origin": "Chatter",
+              "owner": {
+                  "additionalLabel": null,
+                  "communityNickname": "User1696423780773910041",
+                  "companyName": "Salesforce",
+                  "displayName": "Name",
+                  "firstName": "firstName",
+                  "id": "005...",
+                  "isActive": true,
+                  "isInThisCommunity": true,
+                  "lastName": "Name",
+                  "motif": {
+                      "color": "1B96FF",
+                      "largeIconUrl": "/img/icon/profile64.png",
+                      "mediumIconUrl": "/img/icon/profile32.png",
+                      "smallIconUrl": "/img/icon/profile16.png",
+                      "svgIconUrl": null
+                  },
+                  "mySubscription": null,
+                  "name": "Name",
+                  "outOfOffice": {
+                      "message": ""
+                  },
+                  "photo": {
+                      "fullEmailPhotoUrl": "https://<my_domain>/ncsphoto/1wsMlOd3tVC7boygqBO8wMT9KzA0D6tqzpbs-Uw0IogXzXAXaYKJnuWCNQmXymRq?fromEmail=1",
+                      "largePhotoUrl": "https://<my_domain>/profilephoto/729.../F",
+                      "mediumPhotoUrl": "https://<my_domain>/profilephoto/729.../M",
+                      "photoVersionId": "729...",
+                      "smallPhotoUrl": "https://<my_domain>/profilephoto/729.../T",
+                      "standardEmailPhotoUrl": "https://<my_domain>/ncsphoto/1wsMlOd3tVC7boygqBO8wMT9KzA0D6tqzpbs-Uw0Ioi-dtynkoFWsl46as__TDFU?fromEmail=1",
+                      "url": "/services/data/v58.0/connect/user-profiles/005.../photo"
+                  },
+                  "reputation": null,
+                  "title": null,
+                  "type": "User",
+                  "url": "/services/data/v58.0/chatter/users/005...",
+                  "userType": "Internal"
+              },
+              "pageCount": 0,
+              "parentFolder": null,
+              "pdfRenditionStatus": "Na",
+              "publishStatus": "PrivateAccess",
+              "renditionUrl": "/services/data/v58.0/connect/files/069.../rendition?type=THUMB120BY90",
+              "renditionUrl240By180": "/services/data/v58.0/connect/files/069.../rendition?type=THUMB240BY180",
+              "renditionUrl720By480": "/services/data/v58.0/connect/files/069.../rendition?type=THUMB720BY480",
+              "repositoryFileId": null,
+              "repositoryFileUrl": null,
+              "sharingOption": "Allowed",
+              "sharingPrivacy": "None",
+              "sharingRole": "Owner",
+              "systemModstamp": "2023-11-20T16:28:23.000Z",
+              "textPreview": null,
+              "thumb120By90RenditionStatus": "NotScheduled",
+              "thumb240By180RenditionStatus": "NotScheduled",
+              "thumb720By480RenditionStatus": "NotScheduled",
+              "title": "1x1.png",
+              "topics": {
+                  "currentPageUrl": null,
+                  "nextPageUrl": null,
+                  "topics": []
+              },
+              "type": "File",
+              "url": "/services/data/v58.0/connect/files/069...?versionNumber=1",
+              "versionNumber": "1"
+          }
+
+docs: |-
+  Get information about a specified file, including references to external files. Upload a new version of an existing file, including references to external files. Rename a file, move a file to a different folder, and delete a file.
+  To upload a new version of an existing file, make a POST request. Upload the new version as a binary part in a multipart/form-data request. See Uploading Binary Files. To upload a new file to the Files home, use /connect/files/users/me.Get information about a specified file, including references to external files.
+  https://developer.salesforce.com/docs/atlas.en-us.chatterapi.meta/chatterapi/connect_resources_files_information.htm

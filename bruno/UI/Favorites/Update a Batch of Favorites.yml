@@ -1,0 +1,84 @@
+info:
+  name: Update a Batch of Favorites
+  type: http
+  seq: 5
+
+http:
+  method: PUT
+  url: "{{_endpoint}}/services/data/v{{version}}/ui-api/favorites/batch"
+  body:
+    type: json
+    data: |-
+      {
+          "favorites": [
+              {
+                  "id": "0MVR00000004DhnOAE",
+                  "name": "Q4 Perf"
+              }
+          ]
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Update a Batch of Favorites
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/ui-api/favorites/batch"
+      method: PUT
+      body:
+        type: json
+        data: |-
+          {
+              "favorites": [
+                  {
+                      "id": "0MV4H0000004qIeWAI",
+                      "name": "RenamedAllAcountsListView"
+                  }
+              ]
+          }
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: Date
+          value: Fri, 06 Oct 2023 10:07:35 GMT
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: Content-Type
+          value: application/json;charset=UTF-8
+        - name: Transfer-Encoding
+          value: chunked
+      body:
+        type: json
+        data: |-
+          {
+              "favorites": [
+                  {
+                      "accessCount": 1,
+                      "iconColor": "5867E8",
+                      "iconUrl": "https://pozil-dev-ed.my.salesforce.com/img/icon/t4v35/standard/account_120.png",
+                      "id": "0MV4H0000004qIeWAI",
+                      "lastAccessDate": "2023-10-06T10:03:32.000Z",
+                      "name": "RenamedAllAcountsListView",
+                      "objectType": "Account",
+                      "sortOrder": 1,
+                      "subtitle": "Accounts",
+                      "target": "00B58000002ssinEAA",
+                      "targetType": "ListView"
+                  }
+              ]
+          }
+
+docs: Update all favorites at once. The sort order is updated to the given relative ordering. Any favorites missing from the request body are deleted.

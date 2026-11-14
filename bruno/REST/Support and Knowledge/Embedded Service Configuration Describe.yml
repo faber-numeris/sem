@@ -1,0 +1,28 @@
+info:
+  name: Embedded Service Configuration Describe
+  type: http
+  seq: 1
+
+http:
+  method: GET
+  url: "{{_endpoint}}/services/data/v{{version}}/support/embeddedservice/configuration/:EMBEDDED_SERVICE_CONFIG_DEVELOPERNAME"
+  headers:
+    - name: Content-Type
+      value: application/json
+  params:
+    - name: EMBEDDED_SERVICE_CONFIG_DEVELOPERNAME
+      value: ""
+      type: path
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+docs: |-
+  Retrieves the values for your Embedded Service deployment configuration, including the branding colors, font, and site URL.
+
+  You must be logged in to the account that owns the EmbeddedServiceConfigDeveloperName you are querying.

@@ -1,0 +1,95 @@
+info:
+  name: Record Count
+  type: http
+  seq: 20
+
+http:
+  method: GET
+  url: "{{_endpoint}}/services/data/v{{version}}/limits/recordCount?sObjects=Account,Contact,Lead"
+  headers:
+    - name: Content-Type
+      value: application/json
+  params:
+    - name: sObjects
+      value: Account,Contact,Lead
+      type: query
+      description: |-
+        A comma-delimited list of object names. If a listed object is not found in the org, it is ignored and not returned in the response.
+        This parameter is optional. If this parameter is not provided, the resource returns record counts for all objects in the org.
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Record Count
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/limits/recordCount?sObjects=Account,Contact,Lead"
+      method: GET
+      headers:
+        - name: Content-Type
+          value: application/json
+      params:
+        - name: sObjects
+          value: Account,Contact,Lead
+          type: query
+          description: |-
+            A comma-delimited list of object names. If a listed object is not found in the org, it is ignored and not returned in the response.
+            This parameter is optional. If this parameter is not provided, the resource returns record counts for all objects in the org.
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: Date
+          value: Wed, 27 Sep 2023 15:28:16 GMT
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-XSS-Protection
+          value: 1; mode=block
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: Sforce-Limit-Info
+          value: api-usage=3/15000
+        - name: Content-Type
+          value: application/json;charset=UTF-8
+        - name: Vary
+          value: Accept-Encoding
+        - name: Content-Encoding
+          value: gzip
+        - name: Transfer-Encoding
+          value: chunked
+      body:
+        type: json
+        data: |-
+          {
+              "sObjects": [
+                  {
+                      "count": 12,
+                      "name": "Account"
+                  },
+                  {
+                      "count": 20,
+                      "name": "Contact"
+                  },
+                  {
+                      "count": 22,
+                      "name": "Lead"
+                  }
+              ]
+          }
+
+docs: |-
+  Lists information about object record counts in your organization.
+  This resource is available in REST API version 40.0 and later for API users with the “View Setup and Configuration” permission. The returned record count is approximate, and does not include the following types of records:
+
+  Deleted records in the recycle bin.
+  Archived records.
+  https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/resources_record_count.htm

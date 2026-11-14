@@ -1,0 +1,11 @@
+info:
+  name: Feeds
+  type: folder
+  seq: 1
+
+request:
+  auth: inherit
+
+docs:
+  content: Feeds are made up of feed items. There are many feed types. Each feed type has an algorithm that determines which feed items it contains.
+  type: text/markdown

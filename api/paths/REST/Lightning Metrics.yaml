@@ -1,0 +1,130 @@
+/services/data/v{version}/sobjects/LightningToggleMetrics:
+  get:
+    tags:
+      - REST > Lightning Metrics
+    summary: Lightning Toggle Metrics
+    description: >-
+      Return details about users who switched between Salesforce Classic and Lightning Experience.
+
+
+      https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/resources_lightning_togglemetrics.htm
+    parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: Successful response
+        content:
+          application/json: {}
+/services/data/v{version}/sobjects/LightningUsageByBrowserMetrics:
+  get:
+    tags:
+      - REST > Lightning Metrics
+    summary: Lightning Usage by Browser
+    description: >-
+      Return Lightning Experience usage results grouped by browser instance.
+
+
+      https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/resources_lightning_usagebybrowsermetrics.htm
+    parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: Successful response
+        content:
+          application/json: {}
+/services/data/v{version}/sobjects/LightningUsageByAppTypeMetrics:
+  get:
+    tags:
+      - REST > Lightning Metrics
+    summary: Lightning Usage by App Type
+    description: >-
+      Return the total number of Lightning Experience and Salesforce Mobile users.
+
+
+      https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/resources_lightning_usagebyapptypemetrics.htm
+    parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: Successful response
+        content:
+          application/json: {}
+/services/data/v{version}/sobjects/LightningUsageByFlexiPageMetrics:
+  get:
+    tags:
+      - REST > Lightning Metrics
+    summary: Lightning Usage by FlexiPage
+    description: >-
+      Return details about the custom pages viewed most frequently in Lightning Experience.
+
+
+      https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/resources_lightning_usagebyflexipagemetrics.htm
+    parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: Successful response
+        content:
+          application/json: {}
+/services/data/v{version}/sobjects/LightningExitByPageMetrics:
+  get:
+    tags:
+      - REST > Lightning Metrics
+    summary: Lightning Exit by Page Metrics
+    description: >-
+      Return frequency metrics about the standard pages within which users switched from Lightning Experience to Salesforce Classic.
+
+
+      https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/resources_lightning_exitbypagemetrics.htm
+    parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: Successful response
+        content:
+          application/json: {}

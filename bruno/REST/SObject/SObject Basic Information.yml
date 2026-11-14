@@ -1,0 +1,25 @@
+info:
+  name: SObject Basic Information
+  type: http
+  seq: 3
+
+http:
+  method: GET
+  url: "{{_endpoint}}/services/data/v{{version}}/sobjects/:SOBJECT_API_NAME"
+  headers:
+    - name: Content-Type
+      value: application/json
+  params:
+    - name: SOBJECT_API_NAME
+      value: ""
+      type: path
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+docs: Describes the individual metadata for the specified object. Can also be used to create a new record for a given object. For example, this can be used to retrieve the metadata for the Account object using the GET method, or create a new Account object using the POST method.

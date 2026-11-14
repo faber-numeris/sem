@@ -1,0 +1,70 @@
+info:
+  name: OAuth App Users
+  type: http
+  seq: 2
+
+http:
+  method: GET
+  url: "{{url}}{{site}}/services/data/v{{version}}/apps/oauth/usage/{{_appId}}/users?page=0&pageSize=100"
+  headers:
+    - name: Authorization
+      value: Bearer <token>
+      description: Replace <token> with your access token
+  params:
+    - name: page
+      value: "0"
+      type: query
+      description: Page number for the usage information. Defaults to 0.
+    - name: pageSize
+      value: "100"
+      type: query
+      description: Number of usage entries per page. Defaults to 100.
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Successful OAuth App Users
+    request:
+      url: https://login.salesforce.com/services/data/v59.0/apps/oauth/usage//users?page=0&pageSize=100
+      method: GET
+      headers:
+        - name: Authorization
+          value: Bearer <token>
+          description: Replace <token> with your access token
+      params:
+        - name: page
+          value: "0"
+          type: query
+          description: Page number for the usage information. Defaults to 0.
+        - name: pageSize
+          value: "100"
+          type: query
+          description: Number of usage entries per page. Defaults to 100.
+    response:
+      body:
+        type: text
+        data: |-
+          {
+            "currentPageUrl": "/services/data/<version>/apps/oauth/usage/<identifier>/users?page=0&pageSize=100",
+            "nextPageUrl": "/services/data/<version>/apps/oauth/usage/<identifier>/users?page=1&pageSize=100",
+            "users": [
+              {
+                "accessTokenFormat": "<accessTokenFormat>",
+                "appDeveloperName": "<appDeveloperName>",
+                "appIdentifier": "<identifier>",
+                "initialConnectionAt": "<timestamp>",
+                "lastUsedAt": "<timestamp>",
+                "revocationUrl": "/services/data/<version>/apps/oauth/usage/<identifier>/<userIdentifier>/tokens",
+                "useCount": integer,
+                "userIdentifier": "<userIdentifier>",
+                "username": "<username>"
+              }
+            ]
+          }
+
+docs: Lists all users for the external client app indicated by the app ID. See [OAuth Users by App ID](https://developer.salesforce.com/docs/atlas.en-us.246.0.chatterapi.meta/chatterapi/connect_resources_usage_app_id_users.htm).

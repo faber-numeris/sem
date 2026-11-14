@@ -1,0 +1,32 @@
+info:
+  name: Data Category Detail
+  type: http
+  seq: 3
+
+http:
+  method: GET
+  url: "{{_endpoint}}/services/data/v{{version}}/support/dataCategoryGroups/:GROUP/dataCategories/:CATEGORY"
+  headers:
+    - name: Content-Type
+      value: application/json
+  params:
+    - name: sObjectName
+      value: ""
+      type: query
+      disabled: true
+    - name: GROUP
+      value: ""
+      type: path
+    - name: CATEGORY
+      value: ""
+      type: path
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+docs: Get data category details and the child categories by a given category.

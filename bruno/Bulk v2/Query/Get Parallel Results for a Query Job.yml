@@ -1,0 +1,59 @@
+info:
+  name: Get Parallel Results for a Query Job
+  type: http
+  seq: 6
+
+http:
+  method: GET
+  url: "{{_endpoint}}/services/data/v{{version}}/jobs/query/{{_jobId}}/resultPages"
+  headers:
+    - name: Content-Type
+      value: application/json
+    - name: Accept
+      value: application/json
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Get Parallel Results for a Query Job
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/jobs/query/{{_jobId}}/resultPages"
+      method: GET
+      headers:
+        - name: Content-Type
+          value: application/json
+        - name: Accept
+          value: application/json
+    response:
+      body:
+        type: text
+        data: |-
+          {
+              "resultPages": [
+                  {
+                      "resultLink": "/jobs/query/750R0000000zxr8IAA/results?locator=aBcDeFg4N"
+                  },
+                  {
+                      "resultLink": "/jobs/query/750R0000000zxr8IAA/results?locator=HiJkLmN4N"
+                  },
+                  {
+                      "resultLink": "/jobs/query/750R0000000zxr8IAA/results?locator=oPQrStU4N"
+                  },
+                  {
+                      "resultLink": "/jobs/query/750R0000000zxr8IAA/results?locator=vWxYzz4N"
+                  },
+                  {
+                      "resultLink": "/jobs/query/750R0000000zxr8IAA/results?locator=NiKmABC4N"
+                  }
+              ],
+              "nextRecordsUrl": "/jobs/query/750R0000000zxr8IAA/resultpages?locator=YcApWm4N",
+              "done": false
+          }
+
+docs: Retrieves a set of up to 5 job results pages for parallel download.

@@ -1,0 +1,107 @@
+/services/data/v{version}/composite:
+  post:
+    tags:
+      - Subscription Management > Orders
+    summary: Create Order (Evergreen & Termed)
+    description: >-
+      Creates a Subscription Management order with two order items. One order item is sold on a monthly termed subscription, and the other order item is sold as an evergreen subscription.
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            example:
+              allOrNone: true
+              compositeRequest:
+                - method: POST
+                  url: /services/data/v{{version}}/sobjects/Order
+                  referenceId: refOrder
+                  body:
+                    AccountId: '{{defaultAccount}}'
+                    EffectiveDate: '2022-01-01'
+                    Pricebook2Id: '{{standardPricebook}}'
+                    BillToContactId: '{{defaultBillToContact}}'
+                    Status: Draft
+                - method: POST
+                  url: /services/data/v{{version}}/sobjects/AppUsageAssignment
+                  referenceId: refAppTag
+                  body:
+                    AppUsageType: SubscriptionManagement
+                    RecordId: '@{refOrder.id}'
+                - method: POST
+                  url: /services/data/v{{version}}/sobjects/OrderAction
+                  referenceId: refOrderAction
+                  body:
+                    OrderId: '@{refOrder.id}'
+                    Type: New Sale
+                - method: POST
+                  url: /services/data/v{{version}}/sobjects/OrderItem
+                  referenceId: Item_1_Evergreen
+                  body:
+                    OrderId: '@{refOrder.id}'
+                    OrderActionId: '@{refOrderAction.id}'
+                    PricebookEntryId: '{{VirtualRouterEvergrnPBE}}'
+                    Quantity: 2
+                    UnitPrice: 25
+                    NetUnitPrice: 25
+                    TotalLineAmount: 50
+                    PeriodBoundary: Anniversary
+                    BillingFrequency2: Monthly
+                    ServiceDate: '2022-02-01'
+                    TaxTreatmentId: '{{defaultTaxTreatment}}'
+                - method: POST
+                  url: /services/data/v{{version}}/sobjects/OrderItem
+                  referenceId: Item_2_termed
+                  body:
+                    OrderId: '@{refOrder.id}'
+                    OrderActionId: '@{refOrderAction.id}'
+                    PricebookEntryId: '{{VirtualRouterTermedPBE}}'
+                    Quantity: 10
+                    UnitPrice: 50
+                    NetUnitPrice: 50
+                    TotalLineAmount: 500
+                    PeriodBoundary: Anniversary
+                    BillingFrequency2: Monthly
+                    PricingTermCount: 12
+                    ServiceDate: '2022-02-01'
+                    EndDate: '2023-01-01'
+                    TaxTreatmentId: '{{defaultTaxTreatment}}'
+    parameters:
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: Successful response
+        content:
+          application/json: {}
+/services/data/v{version}/actions/standard/createOrderFromQuote:
+  post:
+    tags:
+      - Subscription Management > Orders
+    summary: Create Order From Quote
+    requestBody:
+      content:
+        '*/*':
+          schema:
+            type: string
+            example: >-
+              "{\n    \"inputs\": [\n        {\n            \"quoteRecordId\": \"{{currentQuote}}\"\n        }\n    ]\n}"
+    parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: Successful response
+        content:
+          application/json: {}

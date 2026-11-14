@@ -1,0 +1,29 @@
+info:
+  name: Create Order From Quote
+  type: http
+  seq: 4
+
+http:
+  method: POST
+  url: "{{_endpoint}}/services/data/v{{version}}/actions/standard/createOrderFromQuote"
+  headers:
+    - name: Content-Type
+      value: application/json
+  body:
+    type: json
+    data: |-
+      {
+          "inputs": [
+              {
+                  "quoteRecordId": "{{currentQuote}}"
+              }
+          ]
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true

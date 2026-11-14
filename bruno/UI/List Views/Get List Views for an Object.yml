@@ -1,0 +1,158 @@
+info:
+  name: Get List Views for an Object
+  type: http
+  seq: 1
+
+http:
+  method: GET
+  url: "{{_endpoint}}/services/data/v{{version}}/ui-api/list-info/:SOBJECT_API_NAME"
+  params:
+    - name: pageSize
+      value: ""
+      type: query
+      description: The number of list records viewed at one time. The default value is 20. Value can be 1–2000.
+      disabled: true
+    - name: pageToken
+      value: ""
+      type: query
+      description: A token that represents the page offset. To indicate where the page starts, use this value with the pageSize parameter. The maximum offset is 2000 and the default is 0.
+      disabled: true
+    - name: q
+      value: ""
+      type: query
+      description: Search term to filter the results. Wildcards are supported.
+      disabled: true
+    - name: recentListsOnly
+      value: "true"
+      type: query
+      description: Show only recently viewed lists.
+      disabled: true
+    - name: SOBJECT_API_NAME
+      value: Account
+      type: path
+      description: API name of a UI API supported object.
+  body:
+    type: json
+    data: ""
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Get List Views for an Object
+    request:
+      url: /services/data/v{{version}}/ui-api/list-info/:SOBJECT_API_NAME
+      method: GET
+      params:
+        - name: pageSize
+          value: ""
+          type: query
+          description: The number of list records viewed at one time. The default value is 20. Value can be 1–2000.
+          disabled: true
+        - name: pageToken
+          value: ""
+          type: query
+          description: A token that represents the page offset. To indicate where the page starts, use this value with the pageSize parameter. The maximum offset is 2000 and the default is 0.
+          disabled: true
+        - name: q
+          value: ""
+          type: query
+          description: Search term to filter the results. Wildcards are supported.
+          disabled: true
+        - name: recentListsOnly
+          value: "true"
+          type: query
+          description: Show only recently viewed lists.
+          disabled: true
+        - name: SOBJECT_API_NAME
+          value: Account
+          type: path
+          description: API name of a UI API supported object.
+      body:
+        type: json
+        data: ""
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: Date
+          value: Fri, 06 Oct 2023 09:49:33 GMT
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: ETag
+          value: '"7a9cf6dc597cbc985bab8a26df2f1752--gzip"'
+        - name: Content-Type
+          value: application/json;charset=UTF-8
+        - name: Vary
+          value: Accept-Encoding
+        - name: Content-Encoding
+          value: gzip
+        - name: Transfer-Encoding
+          value: chunked
+      body:
+        type: json
+        data: |-
+          {
+              "count": 6,
+              "currentPageToken": "0",
+              "currentPageUrl": "/services/data/v62.0/ui-api/list-info/Account?pageSize=20&pageToken=0",
+              "lists": [
+                  {
+                      "apiName": "AllAccounts",
+                      "id": "00B58000002ssinEAA",
+                      "label": "All Accounts",
+                      "url": "/services/data/v62.0/ui-api/list-info/Account/AllAccounts"
+                  },
+                  {
+                      "apiName": "MyAccounts",
+                      "id": "00B58000002ssivEAA",
+                      "label": "My Accounts",
+                      "url": "/services/data/v62.0/ui-api/list-info/Account/MyAccounts"
+                  },
+                  {
+                      "apiName": "NewLastWeek",
+                      "id": "00B58000002ssiHEAQ",
+                      "label": "New Last Week",
+                      "url": "/services/data/v62.0/ui-api/list-info/Account/NewLastWeek"
+                  },
+                  {
+                      "apiName": "NewThisWeek",
+                      "id": "00B58000002ssi6EAA",
+                      "label": "New This Week",
+                      "url": "/services/data/v62.0/ui-api/list-info/Account/NewThisWeek"
+                  },
+                  {
+                      "apiName": "PlatinumandGoldSLACustomers",
+                      "id": "00B58000002ssiXEAQ",
+                      "label": "Platinum and Gold SLA Customers",
+                      "url": "/services/data/v62.0/ui-api/list-info/Account/PlatinumandGoldSLACustomers"
+                  },
+                  {
+                      "apiName": "RecentlyViewedAccounts",
+                      "id": "00B58000002ssimEAA",
+                      "label": "Recently Viewed Accounts",
+                      "url": "/services/data/v62.0/ui-api/list-info/Account/RecentlyViewedAccounts"
+                  }
+              ],
+              "nextPageToken": null,
+              "nextPageUrl": null,
+              "objectApiName": "Account",
+              "pageSize": 20,
+              "previousPageToken": null,
+              "previousPageUrl": null,
+              "queryString": null,
+              "recentListsOnly": false
+          }
+
+docs: Get list views associated with an object.

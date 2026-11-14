@@ -1,0 +1,670 @@
+/services/data/v{version}/jobs/ingest:
+  post:
+    tags:
+      - Bulk v2
+    summary: Create job
+    requestBody:
+      content:
+        '*/*':
+          schema:
+            type: string
+            example: >-
+              "{\n    \"object\": \"Asset\",\n    \"operation\": \"update\"\n}"
+    parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: OK
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Mon, 20 Nov 2023 14:58:56 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-XSS-Protection:
+            schema:
+              type: string
+              example: 1; mode=block
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Sforce-Limit-Info:
+            schema:
+              type: string
+              example: api-usage=1/15000
+          Content-Type:
+            schema:
+              type: string
+              example: application/json;charset=UTF-8
+          Vary:
+            schema:
+              type: string
+              example: Accept-Encoding
+          Content-Encoding:
+            schema:
+              type: string
+              example: gzip
+          Transfer-Encoding:
+            schema:
+              type: string
+              example: chunked
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              id: 750...
+              operation: insert
+              object: Account
+              createdById: 005...
+              createdDate: <datetime>
+              systemModstamp: <datetime>
+              state: Open
+              concurrencyMode: Parallel
+              contentType: CSV
+              apiVersion: 58
+              contentUrl: services/data/v58.0/jobs/ingest/750.../batches
+              lineEnding: LF
+              columnDelimiter: COMMA
+  get:
+    tags:
+      - Bulk v2
+    summary: Get All Jobs
+    parameters:
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: OK
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Mon, 20 Nov 2023 15:02:02 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-XSS-Protection:
+            schema:
+              type: string
+              example: 1; mode=block
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Sforce-Limit-Info:
+            schema:
+              type: string
+              example: api-usage=4/15000
+          Content-Type:
+            schema:
+              type: string
+              example: application/json;charset=UTF-8
+          Vary:
+            schema:
+              type: string
+              example: Accept-Encoding
+          Content-Encoding:
+            schema:
+              type: string
+              example: gzip
+          Transfer-Encoding:
+            schema:
+              type: string
+              example: chunked
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              done: true
+              nextRecordsUrl: null
+              records:
+                - id: 750...
+                  operation: insert
+                  object: Account
+                  createdById: 005...
+                  createdDate: <datetime>
+                  systemModstamp: <datetime>
+                  state: Open
+                  concurrencyMode: Parallel
+                  contentType: CSV
+                  apiVersion: 58
+                  jobType: Classic
+/services/data/v{version}/jobs/ingest/{_jobId}/batches:
+  put:
+    tags:
+      - Bulk v2
+    summary: Upload Job Data
+    requestBody:
+      content:
+        text/plain: {}
+    parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: text/csv
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: _jobId
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '201':
+        description: Created
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Mon, 20 Nov 2023 14:59:59 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-XSS-Protection:
+            schema:
+              type: string
+              example: 1; mode=block
+          Content-Security-Policy:
+            schema:
+              type: string
+              example: upgrade-insecure-requests
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Sforce-Limit-Info:
+            schema:
+              type: string
+              example: api-usage=2/15000
+          Transfer-Encoding:
+            schema:
+              type: string
+              example: chunked
+        content:
+          text/plain:
+            schema:
+              type: string
+            example: null
+/services/data/v{version}/jobs/ingest/{_jobId}:
+  patch:
+    tags:
+      - Bulk v2
+    summary: Close or Abort a Job
+    requestBody:
+      content:
+        '*/*':
+          schema:
+            type: string
+            example: '"{\n\t\"state\":\"UploadComplete\"\n}"'
+    parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: _jobId
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: OK
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Mon, 20 Nov 2023 15:00:44 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-XSS-Protection:
+            schema:
+              type: string
+              example: 1; mode=block
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Sforce-Limit-Info:
+            schema:
+              type: string
+              example: api-usage=2/15000
+          Content-Type:
+            schema:
+              type: string
+              example: application/json;charset=UTF-8
+          Transfer-Encoding:
+            schema:
+              type: string
+              example: chunked
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              id: 750...
+              operation: insert
+              object: Account
+              createdById: 005...
+              createdDate: <datetime>
+              systemModstamp: <datetime>
+              state: UploadComplete
+              concurrencyMode: Parallel
+              contentType: CSV
+              apiVersion: 58
+  delete:
+    tags:
+      - Bulk v2
+    summary: Delete Job
+    parameters:
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: _jobId
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '204':
+        description: No Content
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Mon, 20 Nov 2023 15:01:36 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-XSS-Protection:
+            schema:
+              type: string
+              example: 1; mode=block
+          Content-Security-Policy:
+            schema:
+              type: string
+              example: upgrade-insecure-requests
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Sforce-Limit-Info:
+            schema:
+              type: string
+              example: api-usage=4/15000
+        content:
+          text/plain:
+            schema:
+              type: string
+            example: null
+  get:
+    tags:
+      - Bulk v2
+    summary: Get Job Info
+    parameters:
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: _jobId
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: OK
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Mon, 20 Nov 2023 15:03:34 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-XSS-Protection:
+            schema:
+              type: string
+              example: 1; mode=block
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Sforce-Limit-Info:
+            schema:
+              type: string
+              example: api-usage=8/15000
+          Content-Type:
+            schema:
+              type: string
+              example: application/json;charset=UTF-8
+          Vary:
+            schema:
+              type: string
+              example: Accept-Encoding
+          Content-Encoding:
+            schema:
+              type: string
+              example: gzip
+          Transfer-Encoding:
+            schema:
+              type: string
+              example: chunked
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              id: 750...
+              operation: insert
+              object: Asset
+              createdById: 005...
+              createdDate: <datetime>
+              systemModstamp: <datetime>
+              state: JobComplete
+              concurrencyMode: Parallel
+              contentType: CSV
+              apiVersion: 58
+              jobType: V2Ingest
+              lineEnding: LF
+              columnDelimiter: COMMA
+              numberRecordsProcessed: 1
+              numberRecordsFailed: 1
+              retries: 0
+              totalProcessingTime: 100
+              apiActiveProcessingTime: 43
+              apexProcessingTime: 0
+/services/data/v{version}/jobs/ingest/{_jobId}/successfulResults:
+  get:
+    tags:
+      - Bulk v2
+    summary: Get Job Successful Record Results
+    parameters:
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: _jobId
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: OK
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Mon, 20 Nov 2023 15:04:15 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-XSS-Protection:
+            schema:
+              type: string
+              example: 1; mode=block
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Sforce-Limit-Info:
+            schema:
+              type: string
+              example: api-usage=12/15000
+          Content-Type:
+            schema:
+              type: string
+              example: text/csv
+          Vary:
+            schema:
+              type: string
+              example: Accept-Encoding
+          Content-Encoding:
+            schema:
+              type: string
+              example: gzip
+          Transfer-Encoding:
+            schema:
+              type: string
+              example: chunked
+        content:
+          text/plain:
+            schema:
+              type: string
+            example: |
+              "sf__Id","sf__Created",Name
+/services/data/v{version}/jobs/ingest/{_jobId}/failedResults:
+  get:
+    tags:
+      - Bulk v2
+    summary: Get Job Failed Record Results
+    parameters:
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: _jobId
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: OK
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Mon, 20 Nov 2023 15:04:29 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-XSS-Protection:
+            schema:
+              type: string
+              example: 1; mode=block
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Sforce-Limit-Info:
+            schema:
+              type: string
+              example: api-usage=12/15000
+          Content-Type:
+            schema:
+              type: string
+              example: text/csv
+          Vary:
+            schema:
+              type: string
+              example: Accept-Encoding
+          Content-Encoding:
+            schema:
+              type: string
+              example: gzip
+          Transfer-Encoding:
+            schema:
+              type: string
+              example: chunked
+        content:
+          text/plain:
+            schema:
+              type: string
+            example: |
+              "sf__Id","sf__Error",Name
+/services/data/v{version}/jobs/ingest/{_jobId}/unprocessedrecords:
+  get:
+    tags:
+      - Bulk v2
+    summary: Get Job Unprocessed Record Results
+    parameters:
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: _jobId
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: OK
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Mon, 20 Nov 2023 15:04:51 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-XSS-Protection:
+            schema:
+              type: string
+              example: 1; mode=block
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Sforce-Limit-Info:
+            schema:
+              type: string
+              example: api-usage=15/15000
+          Content-Type:
+            schema:
+              type: string
+              example: text/csv
+          Vary:
+            schema:
+              type: string
+              example: Accept-Encoding
+          Content-Encoding:
+            schema:
+              type: string
+              example: gzip
+          Transfer-Encoding:
+            schema:
+              type: string
+              example: chunked
+        content:
+          text/plain:
+            schema:
+              type: string
+            example: |
+              Name

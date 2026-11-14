@@ -1,0 +1,101 @@
+info:
+  name: Tooling Run Tests Async
+  type: http
+  seq: 5
+
+http:
+  method: POST
+  url: "{{_endpoint}}/services/data/v{{version}}/tooling/runTestsAsynchronous"
+  headers:
+    - name: Content-Type
+      value: application/json
+  body:
+    type: json
+    data: |
+      {
+          "classNames": "comma-separated list of class names",
+          "classids": "comma-separated list of class IDs",
+          "suiteNames": "comma-separated list of test suite names",
+          "suiteids": "comma-separated list of test suite IDs",
+          "maxFailedTests": "integer value",
+          "testLevel": "TestLevel enum value",
+          "skipCodeCoverage": "boolean value"
+      }
+
+      or 
+
+      {
+          "tests": [
+              {
+                  "className": "YourClassName",
+                  "testMethods": [
+                      "testMethod1",
+                      "testMethod2",
+                      "testMethod3"
+                  ]
+              }
+          ],
+          "maxFailedTests": "integer value",
+          "testLevel": "TestLevel enum value",
+          "skipCodeCoverage": "boolean value"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Tooling Run Tests Async
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/tooling/runTestsAsynchronous"
+      method: POST
+      headers:
+        - name: Content-Type
+          value: application/json
+      body:
+        type: json
+        data: |-
+          {
+              "tests": [
+                  {
+                      "className": "PrepareSandboxTest",
+                      "testMethods": [
+                          "runApexClass_should_work"
+                      ]
+                  }
+              ],
+              "maxFailedTests": "1"
+          }
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: Date
+          value: Mon, 11 Dec 2023 10:04:34 GMT
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: Sforce-Limit-Info
+          value: api-usage=250/15000
+        - name: Content-Type
+          value: application/json;charset=UTF-8
+        - name: Vary
+          value: Accept-Encoding
+        - name: Content-Encoding
+          value: gzip
+        - name: Transfer-Encoding
+          value: chunked
+      body:
+        type: json
+        data: '"7074H0000DCt2IZ"'
+
+docs: Runs one or more methods within one or more Apex classes, using the asynchronous test execution mechanism. In the request body, you can specify test class names and IDs, suite names and IDs, the maximum number of failed tests to allow, and the test level, as comma-separated lists or as an array. You can also indicate whether to opt out of collecting code coverage information during the test run (available in API version 43.0 and later).

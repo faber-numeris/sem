@@ -1,0 +1,8 @@
+# Base oapi-codegen configuration: regenerate with `just oapi-codegen`.
+# package/output name the root aggregator package; every paths file gets its own
+# package under the output directory (see tools/openapi-codegen-split).
+package: api
+output: api/api.gen.go
+generate:
+  chi-server: true
+  models: true

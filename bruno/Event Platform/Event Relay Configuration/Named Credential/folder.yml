@@ -1,0 +1,16 @@
+info:
+  name: Named Credential
+  type: folder
+  seq: 1
+
+request:
+  auth: inherit
+
+docs:
+  content: |-
+    This folder contains requests for creating and manipulating named credentials, which are used by event relays to store AWS account information.  
+
+    For the POST and PATCH requests, replace the AWS_REGION and AWS_ACCOUNT_ID placeholders with valid values.
+
+    For more information, see [Event Relay](https://desktop.postman.com/?desktopVersion=10.14.2&userId=1220894&teamId=0) in _Salesforce Help_.
+  type: text/markdown

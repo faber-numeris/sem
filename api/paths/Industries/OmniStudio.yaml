@@ -1,0 +1,51 @@
+/services/apexrest/{NAMESPACE}/v1/integrationprocedure/{TYPE_SUBTYPE}:
+  get:
+    tags:
+      - Industries > OmniStudio
+    summary: Integration Procedure Invocation Using GET
+    parameters:
+      - name: NAMESPACE
+        in: path
+        schema:
+          type: string
+        required: true
+        description: >-
+          The namespace: `omnistudio`, `vlocity_ins`, `vlocity_cmt`, or `vlocity_ps`
+      - name: TYPE_SUBTYPE
+        in: path
+        schema:
+          type: string
+        required: true
+        description: >-
+          Type and SubType of the Integration Procedure separated by an underscore.
+    responses:
+      '200':
+        description: Successful response
+        content:
+          application/json: {}
+  post:
+    tags:
+      - Industries > OmniStudio
+    summary: Integration Procedure Invocation Using POST
+    requestBody:
+      content: {}
+    parameters:
+      - name: NAMESPACE
+        in: path
+        schema:
+          type: string
+        required: true
+        description: >-
+          The namespace is `omnistudio`, `vlocity_ins`, `vlocity_cmt`, or `vlocity_ps`
+      - name: TYPE_SUBTYPE
+        in: path
+        schema:
+          type: string
+        required: true
+        description: >-
+          Type and SubType of the Integration Procedure separated by an underscore.
+    responses:
+      '200':
+        description: Successful response
+        content:
+          application/json: {}

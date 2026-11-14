@@ -1,0 +1,22 @@
+info:
+  name: 14 Retrieve Record Account
+  type: http
+  seq: 14
+
+http:
+  method: GET
+  url: "{{_endpoint}}/services/data/v{{version}}/sobjects/Account/{{accountId}}?fields=Id,Name,CreatedDate"
+
+runtime:
+  scripts:
+    - type: tests
+      code: |-
+        test("Retrieves Account record with requested fields", function() {
+          expect(res.getStatus()).to.equal(200);
+          expect(res.getBody().Id).to.equal(bru.getVar("accountId"));
+          expect(res.getBody().Name).to.equal("Bruno Integration Account");
+        });
+
+settings:
+  encodeUrl: true
+  timeout: 0

@@ -1,0 +1,92 @@
+/services/data/v{version}/ui-api/themes/active:
+  get:
+    tags:
+      - UI
+    summary: Get Active Theme
+    description: >-
+      Get a Salesforce org’s active theme. A theme uses colors, images, and banners to change the overall appearance of Salesforce. Administrators can define themes and switch themes to provide a different look. The User Interface API response matches the Admin’s selection.
+    parameters:
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: OK
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Fri, 06 Oct 2023 09:24:07 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Content-Type:
+            schema:
+              type: string
+              example: application/json;charset=UTF-8
+          Vary:
+            schema:
+              type: string
+              example: Accept-Encoding
+          Content-Encoding:
+            schema:
+              type: string
+              example: gzip
+          Transfer-Encoding:
+            schema:
+              type: string
+              example: chunked
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              brandColor: '#0176D3'
+              brandImage:
+                largeUrl: >-
+                  /_slds/images/themes/lightning_blue/lightning_blue_logo_3x.png
+                mediumUrl: >-
+                  /_slds/images/themes/lightning_blue/lightning_blue_logo_2x.png
+                smallUrl: >-
+                  /_slds/images/themes/lightning_blue/lightning_blue_logo_1x.png
+              defaultGroupBanner:
+                fullSizeUrl: /_slds/images/themes/lightning_blue/lightning_blue_group.png
+              defaultGroupImage:
+                largeUrl: >-
+                  /_slds/images/themes/lightning_blue/lightning_blue_group_icon_200.png
+                mediumUrl: >-
+                  /_slds/images/themes/lightning_blue/lightning_blue_group_icon_160.png
+                smallUrl: >-
+                  /_slds/images/themes/lightning_blue/lightning_blue_group_icon_96.png
+              defaultPageBanner:
+                fullSizeUrl: >-
+                  /_slds/images/themes/lightning_blue/lightning_blue_background.png
+              defaultUserBanner:
+                fullSizeUrl: >-
+                  /_slds/images/themes/lightning_blue/lightning_blue_profile.png
+              defaultUserImage:
+                largeUrl: >-
+                  /_slds/images/themes/lightning_blue/lightning_blue_profile_avatar_200.png
+                mediumUrl: >-
+                  /_slds/images/themes/lightning_blue/lightning_blue_profile_avatar_160.png
+                smallUrl: >-
+                  /_slds/images/themes/lightning_blue/lightning_blue_profile_avatar_96.png
+              density: ViewOne
+              headerColor: '#FFFFFF'
+              linkColor: '#0176D3'
+              pageColor: '#B0C4DF'

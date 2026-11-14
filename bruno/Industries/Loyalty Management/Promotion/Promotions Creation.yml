@@ -1,0 +1,111 @@
+info:
+  name: Promotions Creation
+  type: http
+  seq: 2
+
+http:
+  method: POST
+  url: "{{_endpoint}}/services/data/v{{version}}/global-promotions-management/promotions"
+  params:
+    - name: journalTypeId
+      value: ""
+      type: query
+      disabled: true
+  body:
+    type: json
+    data: |-
+      {
+         "name":"Free Beverage",
+         "startDateTime":"2023-06-30T00:00:00.000Z",
+         "displayName":"Free Beverage",
+         "priorityNumber":1,
+         "description":"Buy 2 Get 1 free",
+         "endDateTime":"2023-12-30T00:00:00.000Z",
+         "objective":"To increase sales",
+         "loyaltyProgram":{
+            "name":"Program-001"
+         },
+         "additionalFieldValues":{
+            "attributes":{
+               "promotionLocation__c":"HYD"
+            }
+         },
+         "promotionLimits":{
+            "perLineItemLimit":10,
+            "vouchersLimit":100,
+            "vouchersPerCustomerLimit":5,
+            "perCartLimit":5,
+            "usePerCustomerLimit":5,
+            "liabilityLimit":10000,
+            "loyaltyProgramCurrency":{
+               "id":"0lcSB00000001TxYAI"
+            },
+            "pointsPerCustomerLimit":5
+         },
+         "promotionEligibility":{
+            "eligibleProductCategories":[
+               {
+                  "id":"0ZGSB0000002td74AA"
+               }
+            ],
+            "eligibleProducts":[
+               {
+                  "name":"Coke"
+               }
+            ],
+            "eligibleChannels":[
+               {
+                  "channelType":"Offline",
+                  "store":{
+                     "name":"test Store"
+                  },
+                  "retailLocationGroup":{
+                     "name":"test"
+                  }
+               }
+            ],
+            "eligibleCustomerEvents":{
+               "event":"MemberBirthday",
+               "eventPeriodUnit":"Date"
+            },
+            "eligibleEnrollmentPeriod":{
+               "isEnrollmentRequired":true,
+               "enrollmentStartDate":"2023-06-30T00:00:00.000Z",
+               "enrollmentEndDate":"2023-12-30T00:00:00.000Z"
+            },
+            "eligibleLoyaltyTiers":[
+               {
+                  "tierGroup":{
+                     "name":"Group-001",
+                     "id":"0ltSB00000000T3YAI"
+                  },
+                  "tier":{
+                     "name":"Silver",
+                     "id":"0lgSB00000000srYAA"
+                  }
+               }
+            ]
+         }
+      }
+  auth: inherit
+
+runtime:
+  scripts:
+    - type: before-request
+      code: |-
+        //bru.setVar('loyaltyProgramName','xyz');
+        bru.setVar('processName','TierProcessing');
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+docs: |-
+  [Promotions Creation](https://developer.salesforce.com/docs/atlas.en-us.loyalty.meta/loyalty/connect_resources_unified_promotions.htm)
+
+  NOTE:
+
+  In the Pre-request. Script Tab, make changes in the variables value accordingly with the real Process Name to invoke.

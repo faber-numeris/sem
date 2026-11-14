@@ -1,0 +1,91 @@
+info:
+  name: Salesforce Keys
+  type: http
+  seq: 20
+
+http:
+  method: GET
+  url: "{{url}}/id/keys"
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Successful Salesforce Keys
+    request:
+      url: "{{url}}/id/keys"
+      method: GET
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: Date
+          value: Thu, 16 Nov 2023 15:55:30 GMT
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-XSS-Protection
+          value: 1; mode=block
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: Content-Type
+          value: application/json;charset=UTF-8
+        - name: Access-Control-Allow-Credentials
+          value: "false"
+        - name: Access-Control-Allow-Origin
+          value: "*"
+        - name: Expires
+          value: Thu, 01 Jan 1970 00:00:00 GMT
+        - name: Vary
+          value: Accept-Encoding
+        - name: Content-Encoding
+          value: gzip
+        - name: Transfer-Encoding
+          value: chunked
+      body:
+        type: json
+        data: |-
+          {
+              "keys": [
+                  {
+                      "kty": "RSA",
+                      "n": "<token>",
+                      "e": "AQAB",
+                      "alg": "RS256",
+                      "use": "sig",
+                      "kid": "248"
+                  },
+                  {
+                      "kty": "RSA",
+                      "n": "<token>",
+                      "e": "AQAB",
+                      "alg": "RS256",
+                      "use": "sig",
+                      "kid": "244"
+                  },
+                  {
+                      "kty": "RSA",
+                      "n": "<token>",
+                      "e": "AQAB",
+                      "alg": "RS256",
+                      "use": "sig",
+                      "kid": "246"
+                  },
+                  {
+                      "kty": "RSA",
+                      "n": "<token>",
+                      "e": "AQAB",
+                      "alg": "RS256",
+                      "use": "sig",
+                      "kid": "asset"
+                  }
+              ]
+          }

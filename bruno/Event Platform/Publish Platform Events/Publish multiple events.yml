@@ -1,0 +1,44 @@
+info:
+  name: Publish multiple events
+  type: http
+  seq: 2
+
+http:
+  method: POST
+  url: "{{_endpoint}}/services/data/v{{version}}/composite/"
+  body:
+    type: json
+    data: |-
+      {
+          "allOrNone": true,
+          "compositeRequest": [
+              {
+                  "method": "POST",
+                  "url": "/services/data/v{{version}}/sobjects/Carbon_Comparison__e",
+                  "referenceId": "event1",
+                  "body": {
+                      "Annual_Mileage__c": 12000,
+                      "Current_Vehicle__c": "Fast car 1",
+                      "Model_Year__c": 2019
+                  }
+              },
+              {
+                  "method": "POST",
+                  "url": "/services/data/v{{version}}/sobjects/Carbon_Comparison__e",
+                  "referenceId": "event2",
+                  "body": {
+                      "Annual_Mileage__c": 12000,
+                      "Current_Vehicle__c": "Fast car 2",
+                      "Model_Year__c": 2019
+                  }
+              }
+          ]
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true

@@ -1,0 +1,25 @@
+info:
+  name: 06 OAuth UserInfo
+  type: http
+  seq: 6
+
+http:
+  method: GET
+  url: "{{_endpoint}}/services/oauth2/userinfo"
+  headers:
+    - name: Authorization
+      value: "Bearer {{_accessToken}}"
+
+runtime:
+  scripts:
+    - type: tests
+      code: |-
+        test("UserInfo returns authenticated user details", function() {
+          expect(res.getStatus()).to.equal(200);
+          expect(res.getBody().organization_id).to.equal("00D000000000001EAA");
+          expect(res.getBody().preferred_username).to.equal("admin@example.com");
+        });
+
+settings:
+  encodeUrl: true
+  timeout: 0

@@ -1,0 +1,351 @@
+info:
+  name: Expression Set Retrieve
+  type: http
+  seq: 3
+
+http:
+  method: GET
+  url: "{{_endpoint}}/services/data/v{{version}}/connect/business-rules/expression-set/:expressionSetId"
+  params:
+    - name: expressionSetId
+      value: 9QLHo000000LBngOAG
+      type: path
+      description: "Expression Set Id: For Example 9QLHo000000LBjEOAW"
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Status200-RecordFound
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/connect/business-rules/expression-set/:expressionSetId"
+      method: GET
+      params:
+        - name: expressionSetId
+          value: 9QLHo000000LBjEOAW
+          type: path
+          description: "Expression Set Id: For Example 9QLHo000000LBjEOAW"
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: Date
+          value: Wed, 06 Sep 2023 09:34:42 GMT
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-XSS-Protection
+          value: 1; mode=block
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: Content-Type
+          value: application/json;charset=UTF-8
+        - name: Vary
+          value: Accept-Encoding
+        - name: Content-Encoding
+          value: gzip
+        - name: Transfer-Encoding
+          value: chunked
+      body:
+        type: json
+        data: |-
+          {
+              "apiName": "myExpressionSet",
+              "contextDefinitions": [],
+              "id": "9QLHo000000LBjEOAW",
+              "name": "myExpressionSet",
+              "usageType": "Bre",
+              "versions": [
+                  {
+                      "apiName": "myExpressionSet_V1",
+                      "description": "myExpressionSet V1 Description",
+                      "enabled": true,
+                      "id": "9QMHo000000LBjJOAW",
+                      "name": "myExpressionSet V1",
+                      "rank": 1,
+                      "showExplExternally": true,
+                      "startDate": "2023-09-06T09:27:06.000Z",
+                      "steps": [
+                          {
+                              "actionType": "AssignParameterValues",
+                              "assignment": {
+                                  "assignedParameter": "condition_output__1",
+                                  "expression": "true"
+                              },
+                              "description": "my Description",
+                              "name": "myCalculation",
+                              "resultIncluded": true,
+                              "sequenceNumber": 1,
+                              "shouldExposeConditionDetails": false,
+                              "shouldExposeExecPathMsgOnly": true,
+                              "shouldShowExplExternally": false,
+                              "stepType": "BusinessKnowledgeModel"
+                          }
+                      ],
+                      "variables": [
+                          {
+                              "collection": false,
+                              "dataType": "Boolean",
+                              "description": "condition_output__1",
+                              "input": false,
+                              "name": "condition_output__1",
+                              "output": true,
+                              "type": "Variable",
+                              "value": "False"
+                          },
+                          {
+                              "collection": false,
+                              "dataType": "Boolean",
+                              "description": "condition_output__2",
+                              "input": false,
+                              "name": "condition_output__2",
+                              "output": false,
+                              "type": "Variable",
+                              "value": "False"
+                          }
+                      ],
+                      "versionNumber": 1
+                  }
+              ]
+          }
+  - name: Status404-RecordNotFound
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/connect/business-rules/expression-set/:expressionSetId"
+      method: GET
+      params:
+        - name: expressionSetId
+          value: 9QLHo000000LBjEOA
+          type: path
+          description: "Expression Set Id: For Example 9QLHo000000LBjEOAW"
+    response:
+      status: 404
+      statusText: Not Found
+      headers:
+        - name: Date
+          value: Wed, 06 Sep 2023 09:56:59 GMT
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-XSS-Protection
+          value: 1; mode=block
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: Content-Type
+          value: application/json;charset=UTF-8
+        - name: Transfer-Encoding
+          value: chunked
+      body:
+        type: json
+        data: |-
+          [
+              {
+                  "errorCode": "NOT_FOUND",
+                  "message": "The requested resource does not exist"
+              }
+          ]
+  - name: Status400-PreviouslyDeletedRecord
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/connect/business-rules/expression-set/:expressionSetId"
+      method: GET
+      params:
+        - name: expressionSetId
+          value: 9QLHo000000LBjEOAW
+          type: path
+          description: "Expression Set Id: For Example 9QLHo000000LBjEOAW"
+    response:
+      status: 400
+      statusText: Bad Request
+      headers:
+        - name: Date
+          value: Wed, 06 Sep 2023 10:29:39 GMT
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-XSS-Protection
+          value: 1; mode=block
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: Content-Type
+          value: application/json;charset=UTF-8
+        - name: Transfer-Encoding
+          value: chunked
+      body:
+        type: json
+        data: |-
+          [
+              {
+                  "errorCode": "INVALID_INPUT",
+                  "message": "The expression set id is not available."
+              }
+          ]
+  - name: Status400-InvalidIdentifierOfVersion
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/connect/business-rules/expression-set/:expressionSetId"
+      method: GET
+      params:
+        - name: expressionSetId
+          value: 9QMHo000000LBjOOAW
+          type: path
+          description: "Expression Set Id: For Example 9QLHo000000LBjEOAW"
+    response:
+      status: 400
+      statusText: Bad Request
+      headers:
+        - name: Date
+          value: Wed, 06 Sep 2023 10:37:51 GMT
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-XSS-Protection
+          value: 1; mode=block
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: Content-Type
+          value: application/json;charset=UTF-8
+        - name: Transfer-Encoding
+          value: chunked
+      body:
+        type: json
+        data: |-
+          [
+              {
+                  "errorCode": "INVALID_ID_FIELD",
+                  "message": "Invalid identifier: 9QMHo000000LBjOOAW"
+              }
+          ]
+
+docs: |-
+  # Expression Set Retrieve and Delete (DELETE, GET)
+
+  Endpoints to read, and delete expression set.Resource
+
+  ```
+  /connect/business-rules/expression-set/${expressionSetId}
+
+   ```
+
+  Resource Example
+
+  ```
+  https://yourInstance.salesforce.com/services/data/v59.0/connect
+              /business-rules/expressionSet/$11Oxx0000006PcLEAU
+
+   ```
+
+  Available version
+
+  58.0
+
+  Requires Chatter
+
+  No
+
+  HTTP methods
+
+  DELETE, GET
+
+  Request body for GET
+
+  Root XML tag
+
+  JSON example
+
+  ```
+  {
+    "name": "CTX Mapping ES",
+    "apiName": "CTX_Mapping_ES_1",
+    "description": "...",
+    "usageType": "Bre",
+    "contextDefinitions": [
+      {
+        "id": "11Oxx0000006PcLEAU"
+      }
+    ],
+    "versions": [
+      {
+        "name": "CTX_Mapping_ES_1 V1",
+        "apiName": "CTX_Mapping_ES_1_V1",
+        "description": "Sample CTX Mapping",
+        "startDate": "2022-11-14T20:31:47.000+0000",
+        "endDate": "2022-11-14T20:31:47.000+0000",
+        "versionNumber": 1,
+        "rank": 1,
+        "enabled": true,
+        "showExplExternally": false,
+        "steps": [
+          {
+            "name": "Condition1",
+            "description": "Condition step for conditions w.r.t product",
+            "sequenceNumber": 1,
+            "resultIncluded": true,
+            "stepType": "Condition",
+            "conditionExpression": {
+              "expression": "productName == 'iPhone' && productColor == 'Red'",
+              "resultParameter": "condition_output__1"
+            }
+          }
+        ],
+        "variables": [
+          {
+            "name": "productName",
+            "collection": false,
+            "dataType": "Text",
+            "description": "productName",
+            "input": true,
+            "output": false,
+            "type": "Variable"
+          },
+          {
+            "name": "productColor",
+            "collection": false,
+            "dataType": "Text",
+            "description": "productColor",
+            "input": true,
+            "output": false,
+            "type": "Variable"
+          },
+          {
+            "name": "condition_output__1",
+            "dataType": "Boolean",
+            "description": "condition_output__1",
+            "input": false,
+            "output": true,
+            "resultStep": "Condition1",
+            "type": "Variable"
+          }
+        ]
+      }
+    ]
+  }
+
+   ```
+
+  Properties
+
+  | Name | Type | Description | Required or Optional | Available Version |
+  | --- | --- | --- | --- | --- |
+  | apiName | String | Unique name of the expression set. | Required | 58.0 |
+  | context​Definitions | [Context Definition Input](https://developer.salesforce.com/docs/atlas.en-us.industries_reference.meta/industries_reference/connect_requests_context_definition_input.htm) | List of context definitions in an expression set. | Optional | 58.0 |
+  | description | String | Description of the expression set. | Optional | 58.0 |
+  | name | String | Name of the expression set. | Required | 58.0 |
+  | usage​Type | String | Usage type of the expression set.  <br>  <br>Valid values are:  <br>  <br>\- AiAccelerator​SubscriberChurn​Prediction—Used for Industries Einstein  <br>  <br>\- Bre—Used for Business Rules Engine  <br>  <br>\- CustomLoyalty—Used for Loyalty Management  <br>  <br>\- DefaultPricing—Used for Pricing Plans in Enterprise Product Catalog (EPC) by Communications Cloud  <br>  <br>\- Qualification—Used for Industries Communications, Media, and Energy (CME)  <br>  <br>\- RecordAlert—Used for Financial Services Cloud  <br>  <br>\- ShipAndDebit—Used for Manufacturing Cloud  <br>  <br>\- TierProcessing—Used for Loyalty Management  <br>  <br>\- TransactionJournal—Used for Loyalty Management  <br>  <br>\- WarrantyClaim—Used for Manufacturing Cloud | Required | 58.0 |
+  | versions | [Expression Set Version Input](https://developer.salesforce.com/docs/atlas.en-us.industries_reference.meta/industries_reference/connect_requests_expression_set_version.htm)\[\] | List of the expression set versions. | Optional | 58.0 |
+
+  Response body for GET[Expression Set Output](https://developer.salesforce.com/docs/atlas.en-us.industries_reference.meta/industries_reference/connect_responses_expression_set_output.htm)

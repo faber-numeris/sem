@@ -1,0 +1,88 @@
+info:
+  name: SObject Create
+  type: http
+  seq: 4
+
+http:
+  method: POST
+  url: "{{_endpoint}}/services/data/v{{version}}/sobjects/:SOBJECT_API_NAME"
+  headers:
+    - name: Content-Type
+      value: application/json
+    - name: Authorization
+      value: "{{_accessToken}}"
+      description: Only used for Postman Notebooks. Auth is defined at collection-level and inherited down.
+  params:
+    - name: SOBJECT_API_NAME
+      value: ""
+      type: path
+      description: SObject API name
+  body:
+    type: json
+    data: |-
+      {
+          "Name": "Some value"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: SObject Create
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/sobjects/:SOBJECT_API_NAME"
+      method: POST
+      headers:
+        - name: Content-Type
+          value: application/json
+      params:
+        - name: SOBJECT_API_NAME
+          value: Contact
+          type: path
+          description: SObject API name
+      body:
+        type: json
+        data: |-
+          {
+              "FirstName": "John",
+              "LastName": "Doe"
+          }
+    response:
+      status: 201
+      statusText: Created
+      headers:
+        - name: Date
+          value: Mon, 21 Jul 2025 14:34:26 GMT
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: Sforce-Limit-Info
+          value: api-usage=2/15000
+        - name: Location
+          value: /services/data/v64.0/sobjects/Contact/003J800000DeOXjIAN
+        - name: Content-Type
+          value: application/json;charset=UTF-8
+        - name: Vary
+          value: Accept-Encoding
+        - name: Content-Encoding
+          value: gzip
+        - name: Transfer-Encoding
+          value: chunked
+      body:
+        type: json
+        data: |-
+          {
+              "id": "003J800000DeOXjIAN",
+              "success": true,
+              "errors": []
+          }

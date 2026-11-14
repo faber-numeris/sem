@@ -1,0 +1,19 @@
+info:
+  name: Describe managed event subscription
+  type: http
+  seq: 4
+
+http:
+  method: GET
+  url: "{{_endpoint}}/services/data/v{{version}}/tooling/sobjects/ManagedEventSubscription/describe"
+  body:
+    type: json
+    data: ""
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true

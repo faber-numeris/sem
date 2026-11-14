@@ -1,0 +1,42 @@
+info:
+  name: Contacts with Account Name
+  type: graphql
+  seq: 7
+
+graphql:
+  method: POST
+  url: "{{_endpoint}}/services/data/v{{version}}/graphql"
+  headers:
+    - name: X-Chatter-Entity-Encoding
+      value: "false"
+  body:
+    query: |-
+      query contactsByTheirAccountName {
+        uiapi {
+          query {
+            Contact(orderBy: { Account: { Name: { order: DESC } } }) {
+              edges {
+                node {
+                  Id
+                  Name {
+                    value
+                  }
+                  Account {
+                    Name {
+                      value
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true

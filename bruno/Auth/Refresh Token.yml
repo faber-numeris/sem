@@ -1,0 +1,97 @@
+info:
+  name: Refresh Token
+  type: http
+  seq: 13
+
+http:
+  method: POST
+  url: "{{url}}{{site}}/services/oauth2/token"
+  headers:
+    - name: Content-Type
+      value: application/x-www-form-urlencoded
+  body:
+    type: form-urlencoded
+    data:
+      - name: grant_type
+        value: refresh_token
+      - name: client_id
+        value: "{{clientId}}"
+      - name: client_secret
+        value: "{{clientSecret}}"
+      - name: refresh_token
+        value: "{{_refreshToken}}"
+
+runtime:
+  scripts:
+    - type: after-response
+      code: |-
+        const jsonData = res.getBody();
+
+        const context = bru.getEnvName() ? { set: (k, v) => bru.setEnvVar(k, v), get: (k) => bru.getEnvVar(k) } : { set: (k, v) => bru.setVar(k, v), get: (k) => bru.getVar(k) };
+        context.set("_accessToken", jsonData.access_token);
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Successful Refresh Token
+    request:
+      url: "{{url}}{{site}}/services/oauth2/token"
+      method: POST
+      headers:
+        - name: Content-Type
+          value: application/x-www-form-urlencoded
+      body:
+        type: form-urlencoded
+        data:
+          - name: grant_type
+            value: refresh_token
+          - name: client_id
+            value: "{{clientId}}"
+          - name: client_secret
+            value: "{{clientSecret}}"
+          - name: refresh_token
+            value: "{{_refreshToken}}"
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: Date
+          value: Thu, 16 Nov 2023 15:34:45 GMT
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-XSS-Protection
+          value: 1; mode=block
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: Expires
+          value: Thu, 01 Jan 1970 00:00:00 GMT
+        - name: Content-Type
+          value: application/json;charset=UTF-8
+        - name: Vary
+          value: Accept-Encoding
+        - name: Content-Encoding
+          value: gzip
+        - name: Transfer-Encoding
+          value: chunked
+      body:
+        type: json
+        data: |-
+          {
+              "access_token": "<access_token>",
+              "signature": "<signature>",
+              "scope": "<scope list>",
+              "id_token": "<id_token",
+              "instance_url": "https://<my_domain>",
+              "id": "https://login.salesforce.com/id/00D.../005...",
+              "token_type": "Bearer",
+              "issued_at": "<timestamp>"
+          }

@@ -1,0 +1,103 @@
+info:
+  name: SOAP DescribeValueType
+  type: http
+  seq: 2
+
+http:
+  method: POST
+  url: "{{_endpoint}}/services/Soap/m/{{version}}"
+  headers:
+    - name: Content-Type
+      value: text/xml
+    - name: charset
+      value: UTF-8
+    - name: SOAPAction
+      value: login
+    - name: Accept
+      value: text/xml
+  body:
+    type: xml
+    data: |-
+      <?xml version="1.0" encoding="utf-8"?>
+      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tns="http://soap.sforce.com/2006/04/metadata">
+      	<soapenv:Header>
+      	<tns:SessionHeader>
+      		<tns:sessionId>{{_accessToken}}</tns:sessionId>
+      	</tns:SessionHeader>
+      	</soapenv:Header>
+      	<soapenv:Body>
+      		<tns:describeValueType>
+      			<type>{http://soap.sforce.com/2006/04/metadata}INSERT_METADATA_TYPE_NAME</type>
+      		</tns:describeValueType>
+      	</soapenv:Body>
+      </soapenv:Envelope>
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Status200-Success
+    request:
+      url: "{{_endpoint}}/services/Soap/m/{{version}}"
+      method: POST
+      headers:
+        - name: Content-Type
+          value: text/xml
+        - name: charset
+          value: UTF-8
+        - name: SOAPAction
+          value: login
+        - name: Accept
+          value: text/xml
+      body:
+        type: xml
+        data: |-
+          <?xml version="1.0" encoding="utf-8"?>
+          <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tns="http://soap.sforce.com/2006/04/metadata">
+          	<soapenv:Header>
+          	<tns:SessionHeader>
+          		<tns:sessionId>{{_accessToken}}</tns:sessionId>
+          	</tns:SessionHeader>
+          	</soapenv:Header>
+          	<soapenv:Body>
+          		<tns:describeValueType>
+          			<type>{http://soap.sforce.com/2006/04/metadata}INSERT_METADATA_TYPE_NAME</type>
+          		</tns:describeValueType>
+          	</soapenv:Body>
+          </soapenv:Envelope>
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: Date
+          value: Thu, 07 Sep 2023 09:25:45 GMT
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: Content-Type
+          value: text/xml; charset=utf-8
+        - name: Vary
+          value: Accept-Encoding
+        - name: Content-Encoding
+          value: gzip
+        - name: Transfer-Encoding
+          value: chunked
+      body:
+        type: xml
+        data: |-
+          <?xml version="1.0" encoding="UTF-8"?>
+          <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns="http://soap.sforce.com/2006/04/metadata">
+              <soapenv:Body>
+                  <describeValueTypeResponse>
+                      <result>
+                          <apiCreatable>false</apiCreatable>
+                          <apiDeletable>false</apiDeletable>
+                          <apiReadable>false</apiReadable>
+                          <apiUpdatable>false</apiUpdatable>
+                      </result>
+                  </describeValueTypeResponse>
+              </soapenv:Body>
+          </soapenv:Envelope>

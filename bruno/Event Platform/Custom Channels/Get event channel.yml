@@ -1,0 +1,90 @@
+info:
+  name: Get event channel
+  type: http
+  seq: 4
+
+http:
+  method: GET
+  url: "{{_endpoint}}/services/data/v{{version}}/tooling/sobjects/PlatformEventChannel/:PLATFORM_EVENT_CHANNEL_ID"
+  params:
+    - name: PLATFORM_EVENT_CHANNEL_ID
+      value: 0YL4H0000004C93WAE
+      type: path
+  body:
+    type: json
+    data: ""
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Get event channel
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/tooling/sobjects/PlatformEventChannel/:PLATFORM_EVENT_CHANNEL_ID"
+      method: GET
+      params:
+        - name: PLATFORM_EVENT_CHANNEL_ID
+          value: 0YL4H0000004C93WAE
+          type: path
+      body:
+        type: json
+        data: ""
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: Date
+          value: Mon, 03 Jul 2023 13:15:59 GMT
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: Sforce-Limit-Info
+          value: api-usage=7/15000
+        - name: Last-Modified
+          value: Mon, 11 Jan 2021 19:33:54 GMT
+        - name: Content-Type
+          value: application/json;charset=UTF-8
+        - name: Vary
+          value: Accept-Encoding
+        - name: Content-Encoding
+          value: gzip
+        - name: Transfer-Encoding
+          value: chunked
+      body:
+        type: json
+        data: |-
+          {
+              "attributes": {
+                  "type": "PlatformEventChannel",
+                  "url": "/services/data/v58.0/tooling/sobjects/PlatformEventChannel/0YL4H0000004C93WAE"
+              },
+              "Id": "0YL4H0000004C93WAE",
+              "IsDeleted": false,
+              "DeveloperName": "HREvents",
+              "Language": "en_US",
+              "MasterLabel": "Custom Channel for the HR App",
+              "NamespacePrefix": null,
+              "ManageableState": "unmanaged",
+              "CreatedDate": "2021-01-11T19:33:54.000+0000",
+              "CreatedById": "00558000000yFyDAAU",
+              "LastModifiedDate": "2021-01-11T19:33:54.000+0000",
+              "LastModifiedById": "00558000000yFyDAAU",
+              "SystemModstamp": "2021-01-11T19:33:54.000+0000",
+              "ChannelType": "data",
+              "FullName": "HREvents__chn",
+              "Metadata": {
+                  "channelType": "data",
+                  "label": "Custom Channel for the HR App",
+                  "urls": null
+              }
+          }

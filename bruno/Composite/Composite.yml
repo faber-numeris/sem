@@ -1,0 +1,142 @@
+info:
+  name: Composite
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: "{{_endpoint}}/services/data/v{{version}}/composite/"
+  headers:
+    - name: Content-Type
+      value: application/json
+    - name: Authorization
+      value: "{{_accessToken}}"
+      description: Only used for Postman Notebooks. Auth is defined at collection-level and inherited down.
+  body:
+    type: json
+    data: |-
+      {
+          "compositeRequest": [
+              {
+                  "method": "POST",
+                  "url": "/services/data/v{{version}}/sobjects/Account",
+                  "referenceId": "refAccount",
+                  "body": {
+                      "Name": "Sample Account"
+                  }
+              },
+              {
+                  "method": "POST",
+                  "url": "/services/data/v{{version}}/sobjects/Contact",
+                  "referenceId": "refContact",
+                  "body": {
+                      "LastName": "Sample Contact",
+                      "AccountId": "@{refAccount.id}"
+                  }
+              }
+          ]
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Successful Composite
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/composite/"
+      method: POST
+      headers:
+        - name: Content-Type
+          value: application/json
+      body:
+        type: json
+        data: |-
+          {
+              "compositeRequest": [
+                  {
+                      "method": "POST",
+                      "url": "/services/data/v53.0/sobjects/Account",
+                      "referenceId": "refAccount",
+                      "body": {
+                          "Name": "Sample Account"
+                      }
+                  },
+                  {
+                      "method": "POST",
+                      "url": "/services/data/v53.0/sobjects/Contact",
+                      "referenceId": "refContact",
+                      "body": {
+                          "LastName": "Sample Contact",
+                          "AccountId": "@{refAccount.id}"
+                      }
+                  }
+              ]
+          }
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: Date
+          value: Mon, 20 Nov 2023 15:18:26 GMT
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-XSS-Protection
+          value: 1; mode=block
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: Sforce-Limit-Info
+          value: api-usage=33/15000
+        - name: Content-Type
+          value: application/json;charset=UTF-8
+        - name: Vary
+          value: Accept-Encoding
+        - name: Content-Encoding
+          value: gzip
+        - name: Transfer-Encoding
+          value: chunked
+      body:
+        type: json
+        data: |-
+          {
+              "compositeResponse": [
+                  {
+                      "body": {
+                          "id": "001...",
+                          "success": true,
+                          "errors": []
+                      },
+                      "httpHeaders": {
+                          "Location": "/services/data/v53.0/sobjects/Account/001..."
+                      },
+                      "httpStatusCode": 201,
+                      "referenceId": "refAccount"
+                  },
+                  {
+                      "body": {
+                          "id": "0032o00003WauzJAAR",
+                          "success": true,
+                          "errors": []
+                      },
+                      "httpHeaders": {
+                          "Location": "/services/data/v53.0/sobjects/Contact/003..."
+                      },
+                      "httpStatusCode": 201,
+                      "referenceId": "refContact"
+                  }
+              ]
+          }
+
+docs: |-
+  Executes a series of REST API requests in a single call. You can use the output of one request as the input to a subsequent request. The response bodies and HTTP statuses of the requests are returned in a single response body. The entire request counts as a single call toward your API limits.
+  The requests in a composite call are called subrequests. All subrequests are executed in the context of the same user. In a subrequest’s body, you specify a reference ID that maps to the subrequest’s response. You can then refer to the ID in the url or body fields of later subrequests by using a JavaScript-like reference notation.
+
+  https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/resources_composite_composite.htm

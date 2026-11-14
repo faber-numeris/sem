@@ -1,0 +1,150 @@
+info:
+  name: Platform Event Schema by Event Name
+  type: http
+  seq: 2
+
+http:
+  method: GET
+  url: "{{_endpoint}}/services/data/v{{version}}/sobjects/:EVENT_NAME/eventSchema"
+  headers:
+    - name: Content-Type
+      value: application/json
+  params:
+    - name: payloadFormat
+      value: ""
+      type: query
+      description: |-
+        (Optional query parameter. Available in API version 43.0 and later.) The format of the returned event schema. This parameter can take one of the following values.
+        EXPANDED—The JSON representation of the event schema, which is the default format when payloadFormat is not specified in API version 43.0 and later.
+        COMPACT—A format that adheres to the open-source Apache Avro specification for the record complex type (see Apache Avro Format). Subscribers use the compact schema format to deserialize compact events received in binary form.
+      disabled: true
+    - name: EVENT_NAME
+      value: ""
+      type: path
+      description: API Name of the event
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Platform Event Schema by Event Name
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/sobjects/:EVENT_NAME/eventSchema"
+      method: GET
+      headers:
+        - name: Content-Type
+          value: application/json
+      params:
+        - name: payloadFormat
+          value: ""
+          type: query
+          description: |-
+            (Optional query parameter. Available in API version 43.0 and later.) The format of the returned event schema. This parameter can take one of the following values.
+            EXPANDED—The JSON representation of the event schema, which is the default format when payloadFormat is not specified in API version 43.0 and later.
+            COMPACT—A format that adheres to the open-source Apache Avro specification for the record complex type (see Apache Avro Format). Subscribers use the compact schema format to deserialize compact events received in binary form.
+          disabled: true
+        - name: EVENT_NAME
+          value: Sample__e
+          type: path
+          description: API Name of the event
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: Date
+          value: Mon, 03 Jul 2023 13:06:08 GMT
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: Sforce-Limit-Info
+          value: api-usage=2/15000
+        - name: Content-Type
+          value: application/json;charset=UTF-8
+        - name: Vary
+          value: Accept-Encoding
+        - name: Content-Encoding
+          value: gzip
+        - name: Transfer-Encoding
+          value: chunked
+      body:
+        type: json
+        data: |-
+          {
+              "name": "Sample__e",
+              "namespace": "com.sforce.eventbus",
+              "type": "expanded-record",
+              "fields": [
+                  {
+                      "name": "data",
+                      "type": {
+                          "type": "record",
+                          "name": "Data",
+                          "namespace": "",
+                          "fields": [
+                              {
+                                  "name": "schema",
+                                  "type": "string"
+                              },
+                              {
+                                  "name": "payload",
+                                  "type": {
+                                      "type": "record",
+                                      "name": "Payload",
+                                      "doc": "",
+                                      "fields": [
+                                          {
+                                              "name": "CreatedDate",
+                                              "type": "string",
+                                              "doc": "CreatedDate:DateTime"
+                                          },
+                                          {
+                                              "name": "CreatedById",
+                                              "type": "string",
+                                              "doc": "CreatedBy:EntityId"
+                                          },
+                                          {
+                                              "name": "Message__c",
+                                              "type": [
+                                                  "null",
+                                                  "string"
+                                              ],
+                                              "doc": "Data:Text:00N4H00000Ecs0G",
+                                              "default": null
+                                          }
+                                      ]
+                                  }
+                              },
+                              {
+                                  "name": "event",
+                                  "type": {
+                                      "type": "record",
+                                      "name": "Event",
+                                      "fields": [
+                                          {
+                                              "name": "replayId",
+                                              "type": "long"
+                                          }
+                                      ]
+                                  }
+                              }
+                          ]
+                      }
+                  },
+                  {
+                      "name": "channel",
+                      "type": "string"
+                  }
+              ]
+          }
+
+docs: Set, reset, or get information about a user password. This resource is available in REST API version 24.0 and later.

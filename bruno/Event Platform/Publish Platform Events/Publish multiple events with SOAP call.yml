@@ -1,0 +1,52 @@
+info:
+  name: Publish multiple events with SOAP call
+  type: http
+  seq: 3
+
+http:
+  method: POST
+  url: "{{_endpoint}}/services/Soap/u/{{version}}"
+  headers:
+    - name: Content-Type
+      value: text/xml
+    - name: charset
+      value: UTF-8
+    - name: SOAPAction
+      value: create
+    - name: Accept
+      value: text/xml
+  body:
+    type: xml
+    data: |-
+      <?xml version="1.0" encoding="UTF-8"?>
+      <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns1="urn:sobject.partner.soap.sforce.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns2="urn:partner.soap.sforce.com">
+          <SOAP-ENV:Header>
+              <ns2:SessionHeader>
+                  <ns2:sessionId>{{_accessToken}}</ns2:sessionId>
+              </ns2:SessionHeader>
+          </SOAP-ENV:Header>
+          <SOAP-ENV:Body>
+              <ns2:create>
+                  <ns2:sObjects>
+                      <ns1:type>Carbon_Comparison__e</ns1:type>
+                      <Annual_Mileage__c>12000</Annual_Mileage__c>
+                      <Current_Vehicle__c>Fast car 1</Current_Vehicle__c>
+                      <Model_Year__c>2019</Model_Year__c>
+                  </ns2:sObjects>
+                  <ns2:sObjects>
+                      <ns1:type>Carbon_Comparison__e</ns1:type>
+                      <Annual_Mileage__c>12000</Annual_Mileage__c>
+                      <Current_Vehicle__c>Fast car 2</Current_Vehicle__c>
+                      <Model_Year__c>2019</Model_Year__c>
+                  </ns2:sObjects>
+              </ns2:create>
+          </SOAP-ENV:Body>
+      </SOAP-ENV:Envelope>
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true

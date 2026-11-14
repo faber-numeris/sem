@@ -1,0 +1,232 @@
+info:
+  name: Get Lookup Field Suggestions for a Specified Object
+  type: http
+  seq: 16
+
+http:
+  method: GET
+  url: "{{_endpoint}}/services/data/v{{version}}/ui-api/lookups/:SOBJECT_API_NAME/:FIELD_API_NAME/:TARGET_API_NAME"
+  params:
+    - name: dependentFieldBindings
+      value: ""
+      type: query
+      description: |-
+        The dependent field bindings for dependent lookups. These field bindings represent the lookup filter that restricts the valid values for the field.
+        Specify field bindings in a comma-separated list in the format dependentFieldBindings=<FIELD_API_NAME1>​=[FIELD_VALUE1],<FIELD_API_NAME2>=[FIELD_VALUE2].
+
+        To know whether a field is a dependent lookup, check the Object Info response body for a non-null filteredLookupInfo property. Specify the name and a value for each field in the controllingFields property. Get the field values from the Record response body. Both responses are returned from the /ui-api/record-ui/<RECORD_IDS> resource.
+      disabled: true
+    - name: page
+      value: ""
+      type: query
+      description: The page number. The default value is 1.
+      disabled: true
+    - name: pageSize
+      value: ""
+      type: query
+      description: |
+        The number of items per page. The default value is 25.
+      disabled: true
+    - name: q
+      value: ""
+      type: query
+      description: |-
+        The term the user is searching for.
+        When searchType=Search, specify at least 2 characters. A wildcard at the end of the search term is implied. For example, q=ca returns Cat and Cats.
+
+        When searchType=TypeAhead, specify at least 3 characters. A wildcard at the end of the search term is implied. You can’t use a ?.
+      disabled: true
+    - name: searchType
+      value: ""
+      type: query
+      description: |-
+        The type of search to perform. One of these values:
+        Recent—Return most recently used matches.
+        Search—Search for records with searchable fields that match the query term.
+        TypeAhead—Search for records whose names start with the query term.
+        The default value is Recent.
+      disabled: true
+    - name: SOBJECT_API_NAME
+      value: ""
+      type: path
+      description: The API name of a source object.
+    - name: FIELD_API_NAME
+      value: ""
+      type: path
+      description: The API name of a lookup field on the source object.
+    - name: TARGET_API_NAME
+      value: ""
+      type: path
+      description: The API name of the target (lookup) object.
+  body:
+    type: text
+    data: ""
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Get Lookup Field Suggestions for a Specified Object
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/ui-api/lookups/:SOBJECT_API_NAME/:FIELD_API_NAME/:TARGET_API_NAME"
+      method: GET
+      params:
+        - name: dependentFieldBindings
+          value: ""
+          type: query
+          description: |-
+            The dependent field bindings for dependent lookups. These field bindings represent the lookup filter that restricts the valid values for the field.
+            Specify field bindings in a comma-separated list in the format dependentFieldBindings=<FIELD_API_NAME1>​=[FIELD_VALUE1],<FIELD_API_NAME2>=[FIELD_VALUE2].
+
+            To know whether a field is a dependent lookup, check the Object Info response body for a non-null filteredLookupInfo property. Specify the name and a value for each field in the controllingFields property. Get the field values from the Record response body. Both responses are returned from the /ui-api/record-ui/<RECORD_IDS> resource.
+          disabled: true
+        - name: page
+          value: ""
+          type: query
+          description: The page number. The default value is 1.
+          disabled: true
+        - name: pageSize
+          value: ""
+          type: query
+          description: |
+            The number of items per page. The default value is 25.
+          disabled: true
+        - name: q
+          value: ""
+          type: query
+          description: |-
+            The term the user is searching for.
+            When searchType=Search, specify at least 2 characters. A wildcard at the end of the search term is implied. For example, q=ca returns Cat and Cats.
+
+            When searchType=TypeAhead, specify at least 3 characters. A wildcard at the end of the search term is implied. You can’t use a ?.
+          disabled: true
+        - name: searchType
+          value: ""
+          type: query
+          description: |-
+            The type of search to perform. One of these values:
+            Recent—Return most recently used matches.
+            Search—Search for records with searchable fields that match the query term.
+            TypeAhead—Search for records whose names start with the query term.
+            The default value is Recent.
+          disabled: true
+        - name: SOBJECT_API_NAME
+          value: Contact
+          type: path
+          description: The API name of a source object.
+        - name: FIELD_API_NAME
+          value: AccountId
+          type: path
+          description: The API name of a lookup field on the source object.
+        - name: TARGET_API_NAME
+          value: Account
+          type: path
+          description: The API name of the target (lookup) object.
+      body:
+        type: text
+        data: ""
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: Date
+          value: Wed, 27 Sep 2023 16:10:07 GMT
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-XSS-Protection
+          value: 1; mode=block
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: Content-Type
+          value: application/json;charset=UTF-8
+        - name: Vary
+          value: Accept-Encoding
+        - name: Content-Encoding
+          value: gzip
+        - name: Transfer-Encoding
+          value: chunked
+      body:
+        type: json
+        data: |-
+          {
+              "count": 2,
+              "currentPageToken": null,
+              "currentPageUrl": "/services/data/v58.0/ui-api/lookups/Contact/AccountId/Account?searchType=Recent&page=1&pageSize=25",
+              "nextPageToken": null,
+              "nextPageUrl": null,
+              "previousPageToken": null,
+              "previousPageUrl": null,
+              "records": [
+                  {
+                      "apiName": "Account",
+                      "childRelationships": {},
+                      "eTag": "2316c5f4a27ac31b407d91aab610b281",
+                      "fields": {
+                          "DisambiguationField": {
+                              "displayValue": null,
+                              "value": null
+                          },
+                          "Id": {
+                              "displayValue": null,
+                              "value": "001B000000UnQ2yIAF"
+                          },
+                          "Name": {
+                              "displayValue": null,
+                              "value": "Dickenson plc"
+                          },
+                          "Site": {
+                              "displayValue": null,
+                              "value": null
+                          }
+                      },
+                      "id": "001B000000UnQ2yIAF",
+                      "lastModifiedById": "005B0000003TOI6IAO",
+                      "lastModifiedDate": "2017-08-18T14:46:22.000Z",
+                      "recordTypeId": "012000000000000AAA",
+                      "recordTypeInfo": null,
+                      "systemModstamp": "2017-08-18T14:46:22.000Z",
+                      "weakEtag": 1503067582000
+                  },
+                  {
+                      "apiName": "Account",
+                      "childRelationships": {},
+                      "eTag": "cb5afb4494d9c9f6f81ab0e5f214585c",
+                      "fields": {
+                          "DisambiguationField": {
+                              "displayValue": null,
+                              "value": null
+                          },
+                          "Id": {
+                              "displayValue": null,
+                              "value": "001B000000UnQ2wIAF"
+                          },
+                          "Name": {
+                              "displayValue": null,
+                              "value": "Burlington Textiles Corp of America"
+                          },
+                          "Site": {
+                              "displayValue": null,
+                              "value": null
+                          }
+                      },
+                      "id": "001B000000UnQ2wIAF",
+                      "lastModifiedById": "005B0000003TOI6IAO",
+                      "lastModifiedDate": "2017-08-18T14:46:22.000Z",
+                      "recordTypeId": "012000000000000AAA",
+                      "recordTypeInfo": null,
+                      "systemModstamp": "2017-08-18T14:46:22.000Z",
+                      "weakEtag": 1503067582000
+                  }
+              ]
+          }
+
+docs: When a user edits a lookup field, use this resource to search for and display suggestions for a specified object. You can search for most recently used matches, for matching names, or for any match in a searchable field. You can also specify lookup filter bindings for dependent lookups.

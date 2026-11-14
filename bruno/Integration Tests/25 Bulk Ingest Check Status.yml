@@ -1,0 +1,23 @@
+info:
+  name: 25 Bulk Ingest Check Status
+  type: http
+  seq: 25
+
+http:
+  method: GET
+  url: "{{_endpoint}}/services/data/v{{version}}/jobs/ingest/{{ingestJobId}}/"
+
+runtime:
+  scripts:
+    - type: tests
+      code: |-
+        test("Returns JobComplete status and counts", function() {
+          expect(res.getStatus()).to.equal(200);
+          expect(res.getBody().state).to.equal("JobComplete");
+          expect(res.getBody().numberRecordsProcessed).to.equal(2);
+          expect(res.getBody().numberRecordsFailed).to.equal(1);
+        });
+
+settings:
+  encodeUrl: true
+  timeout: 0

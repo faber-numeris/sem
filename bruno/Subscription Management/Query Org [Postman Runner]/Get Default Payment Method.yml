@@ -1,0 +1,32 @@
+info:
+  name: Get Default Payment Method
+  type: http
+  seq: 13
+
+http:
+  method: GET
+  url: "{{_endpoint}}/services/data/v{{version}}/query?q=Select Id, Nickname from CardPaymentMethod Where Nickname='Default Payment Method' and Status='Active' LIMIT 1"
+  params:
+    - name: q
+      value: Select Id, Nickname from CardPaymentMethod Where Nickname='Default Payment Method' and Status='Active' LIMIT 1
+      type: query
+  body:
+    type: json
+    data: ""
+  auth: inherit
+
+runtime:
+  scripts:
+    - type: after-response
+      code: |-
+        const context = bru.getEnvName() ? { set: (k, v) => bru.setEnvVar(k, v), get: (k) => bru.getEnvVar(k) } : { set: (k, v) => bru.setVar(k, v), get: (k) => bru.getVar(k) };
+        const jsonData = res.getBody();
+
+        context.set("defaultPaymentMethodId", jsonData.records[0].Id);
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true

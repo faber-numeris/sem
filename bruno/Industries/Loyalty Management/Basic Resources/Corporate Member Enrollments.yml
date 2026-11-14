@@ -1,0 +1,111 @@
+info:
+  name: Corporate Member Enrollments
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: "{{_endpoint}}/services/data/v{{version}}/loyalty-programs/:loyaltyProgramName/corporate-member-enrollments"
+  params:
+    - name: loyaltyProgramName
+      value: ""
+      type: path
+  body:
+    type: json
+    data: |-
+      {
+          "enrollmentDate" : "2021-01-01T05:05:05",
+          "membershipNumber" : "Member123",
+          "associatedAccountDetails" : {
+              "name" : "Name1",
+              "phone" : "908989898",
+              "website" : "www.ab.com",
+              "allowDuplicateRecords" : "false"
+          },
+          "memberStatus" : "Active",
+          "createTransactionJournals" : "true"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Corporate Member Enrollments
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/loyalty-programs/:loyaltyProgramName/corporate-member-enrollments"
+      method: POST
+      headers:
+        - name: Authorization
+          value: Bearer {{accessToken}}
+      params:
+        - name: loyaltyProgramName
+          value: NTO Insider
+          type: path
+      body:
+        type: json
+        data: |-
+          {
+              "enrollmentDate" : "2021-01-01T05:05:05",
+              "membershipNumber" : "Member123",
+              "associatedAccountDetails" : {
+                  "name" : "Name1",
+                  "phone" : "908989898",
+                  "website" : "www.ab.com",
+                  "allowDuplicateRecords" : "false"
+              },
+              "memberStatus" : "Active",
+              "createTransactionJournals" : "true"
+          }
+    response:
+      status: 201
+      statusText: Created
+      headers:
+        - name: Date
+          value: Wed, 22 May 2024 15:35:25 GMT
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: Content-Type
+          value: application/json;charset=UTF-8
+        - name: Vary
+          value: Accept-Encoding
+        - name: Content-Encoding
+          value: gzip
+        - name: Transfer-Encoding
+          value: chunked
+      body:
+        type: json
+        data: |-
+          {
+              "accountId": "001J8000003MaJL",
+              "loyaltyProgramMemberId": "0lMJ8000000CaRH",
+              "loyaltyProgramName": "NTO Insider",
+              "membershipNumber": "Member123",
+              "transactionJournals": [
+                  {
+                      "activityDate": "2021-01-01T04:05:05.000Z",
+                      "journalSubType": "Member Enrollment",
+                      "journalType": "Accrual",
+                      "loyaltyProgram": "NTO Insider",
+                      "loyaltyProgramMember": "Member123",
+                      "referredMember": null,
+                      "status": "Processed",
+                      "transactionJournalId": "0lVJ8000000GmaE"
+                  }
+              ]
+          }
+
+docs: |-
+  Standard Documentation:
+
+  [https://developer.salesforce.com/docs/atlas.en-us.loyalty.meta/loyalty/connect_resources_enroll_corporate_member.htm](https://developer.salesforce.com/docs/atlas.en-us.loyalty.meta/loyalty/connect_resources_enroll_corporate_member.htm)

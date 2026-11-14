@@ -1,0 +1,44 @@
+with-expecter: true
+filename: "mock_{{.InterfaceName}}.go"
+outpkg: "mocks"
+output: "internal/mocks"
+all: true
+recursive: true
+packages:
+  github.com/faber-numeris/sem/internal/ports/inbound:
+    config:
+      dir: "internal/mocks"
+    interfaces:
+      AuthService:
+      SObjectService:
+      QueryService:
+      BulkService:
+      ToolingService:
+      EmulatorService:
+  github.com/faber-numeris/sem/internal/ports/outbound:
+    config:
+      dir: "internal/mocks"
+    interfaces:
+      AuthRepository:
+      SObjectRepository:
+      QueryRepository:
+      BulkRepository:
+      ToolingRepository:
+      Repository:
+  github.com/faber-numeris/sem/internal/adapters/outbound/postgres/gen:
+    config:
+      dir: "internal/mocks"
+    interfaces:
+      Querier:
+  github.com/faber-numeris/sem/internal/infrastructure/config:
+    config:
+      dir: "internal/mocks"
+    interfaces:
+      IServiceConfig:
+      IDatabaseConfig:
+      IAppConfig:
+  github.com/faber-numeris/sem/internal/infrastructure/postgres:
+    config:
+      dir: "internal/mocks"
+    interfaces:
+      AbstractPool:

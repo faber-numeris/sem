@@ -1,0 +1,14 @@
+info:
+  name: CPQ
+  type: folder
+  seq: 1
+
+request:
+  auth: inherit
+
+docs:
+  content: |-
+    Start working with Salesforce CPQ APIs.
+
+    📚 [Salesforce CPQ Developer Guide](https://developer.salesforce.com/docs/atlas.en-us.cpq_dev_api.meta/cpq_dev_api/cpq_developer_guide_intro.htm)
+  type: text/markdown

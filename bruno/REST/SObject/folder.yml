@@ -1,0 +1,7 @@
+info:
+  name: SObject
+  type: folder
+  seq: 2
+
+request:
+  auth: inherit

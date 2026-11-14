@@ -1,0 +1,11 @@
+info:
+  name: expressionset
+  type: folder
+  seq: 2
+
+request:
+  auth: inherit
+
+docs:
+  content: "**WATCH OUT**: expressionSet has no dash compared to the other expression set resources. Elected to create separate Postman folder to model this odity. [gjeffcock@salesforce.com](https://gjeffcock@salesforce.com)"
+  type: text/markdown

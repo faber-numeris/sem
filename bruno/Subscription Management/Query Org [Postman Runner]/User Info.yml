@@ -1,0 +1,30 @@
+info:
+  name: User Info
+  type: http
+  seq: 1
+
+http:
+  method: GET
+  url: "{{_endpoint}}/services/oauth2/userinfo"
+  headers:
+    - name: Content-Type
+      value: application/json
+  auth: inherit
+
+runtime:
+  scripts:
+    - type: after-response
+      code: |-
+        const context = bru.getEnvName() ? { set: (k, v) => bru.setEnvVar(k, v), get: (k) => bru.getEnvVar(k) } : { set: (k, v) => bru.setVar(k, v), get: (k) => bru.getVar(k) };
+        const jsonData = res.getBody();
+
+        context.set("_userId", jsonData.user_id);
+        context.set("_orgId", jsonData.organization_id);
+        context.set("_userFullName", jsonData.name);
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true

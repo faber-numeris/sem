@@ -1,0 +1,111 @@
+info:
+  name: Bulk Close Job
+  type: http
+  seq: 5
+
+http:
+  method: POST
+  url: "{{_endpoint}}/services/async/{{version}}/job/{{_jobId}}"
+  headers:
+    - name: X-SFDC-Session
+      value: "{{_accessToken}}"
+    - name: Content-Type
+      value: application/json
+    - name: charset
+      value: UTF-8
+    - name: Accept-Encoding
+      value: gzip
+      disabled: true
+    - name: Content-Encoding
+      value: gzip
+      disabled: true
+  body:
+    type: json
+    data: |-
+      {
+         "state" : "Closed"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Successful Bulk Close Job
+    request:
+      url: "{{_endpoint}}/services/async/{{version}}/job/{{_jobId}}"
+      method: POST
+      headers:
+        - name: X-SFDC-Session
+          value: "{{_accessToken}}"
+        - name: Content-Type
+          value: application/json
+        - name: charset
+          value: UTF-8
+        - name: Accept-Encoding
+          value: gzip
+          disabled: true
+        - name: Content-Encoding
+          value: gzip
+          disabled: true
+      body:
+        type: json
+        data: |-
+          {
+             "state" : "Closed"
+          }
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: Date
+          value: Thu, 16 Nov 2023 16:23:52 GMT
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-XSS-Protection
+          value: 1; mode=block
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: Content-Type
+          value: application/json
+        - name: Content-Encoding
+          value: gzip
+        - name: Transfer-Encoding
+          value: chunked
+      body:
+        type: json
+        data: |-
+          {
+              "apexProcessingTime": 64,
+              "apiActiveProcessingTime": 225,
+              "apiVersion": 58,
+              "assignmentRuleId": null,
+              "concurrencyMode": "Parallel",
+              "contentType": "CSV",
+              "createdById": "005...",
+              "createdDate": "<date_time>",
+              "externalIdFieldName": null,
+              "fastPathEnabled": false,
+              "id": "750...",
+              "numberBatchesCompleted": 1,
+              "numberBatchesFailed": 0,
+              "numberBatchesInProgress": 0,
+              "numberBatchesQueued": 0,
+              "numberBatchesTotal": 1,
+              "numberRecordsFailed": 0,
+              "numberRecordsProcessed": 1,
+              "numberRetries": 0,
+              "object": "<Object>",
+              "operation": "insert",
+              "state": "Closed",
+              "systemModstamp": "<date_time>",
+              "totalProcessingTime": 403
+          }

@@ -1,0 +1,65 @@
+info:
+  name: Upload Job Data
+  type: http
+  seq: 3
+
+http:
+  method: PUT
+  url: "{{_endpoint}}/services/data/v{{version}}/jobs/ingest/{{_jobId}}/batches"
+  headers:
+    - name: Content-Type
+      value: text/csv
+  body:
+    type: file
+    data:
+      - filePath: ""
+        contentType: application/octet-stream
+        selected: true
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Successful Upload Job Data
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/jobs/ingest/{{_jobId}}/batches"
+      method: PUT
+      headers:
+        - name: Content-Type
+          value: text/csv
+      body:
+        type: file
+        data:
+          - filePath: /Users/username/Downloads/account.csv
+            contentType: text/csv
+            selected: true
+    response:
+      status: 201
+      statusText: Created
+      headers:
+        - name: Date
+          value: Mon, 20 Nov 2023 14:59:59 GMT
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-XSS-Protection
+          value: 1; mode=block
+        - name: Content-Security-Policy
+          value: upgrade-insecure-requests
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: Sforce-Limit-Info
+          value: api-usage=2/15000
+        - name: Transfer-Encoding
+          value: chunked
+      body:
+        type: text
+        data: ""

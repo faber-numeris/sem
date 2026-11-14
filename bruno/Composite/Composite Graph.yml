@@ -1,0 +1,143 @@
+info:
+  name: Composite Graph
+  type: http
+  seq: 2
+
+http:
+  method: POST
+  url: "{{_endpoint}}/services/data/v{{version}}/composite/graph"
+  headers:
+    - name: Content-Type
+      value: application/json
+  body:
+    type: json
+    data: |-
+      {
+          "graphs": [
+              {
+                  "graphId": "graph1",
+                  "compositeRequest": [
+                      {
+                          "method": "POST",
+                          "url": "/services/data/v{{version}}/sobjects/Account/",
+                          "referenceId": "newAccount",
+                          "body": {
+                              "Name": "ACME Inc.",
+                              "Custom__c": "Hello world"
+                          }
+                      },
+                      {
+                          "method": "GET",
+                          "url": "/services/data/v{{version}}/sobjects/Account/@{newAccount.id}",
+                          "referenceId": "newAccountInfo"
+                      }
+                  ]
+              }
+          ]
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Successful Composite Graph
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/composite/graph"
+      method: POST
+      headers:
+        - name: Content-Type
+          value: application/json
+      body:
+        type: json
+        data: |-
+          {
+              "graphs": [
+                  {
+                      "graphId": "graph1",
+                      "compositeRequest": [
+                          {
+                              "method": "POST",
+                              "url": "/services/data/v{{version}}/sobjects/Account/",
+                              "referenceId": "newAccount",
+                              "body": {
+                                  "Name": "ACME Inc."
+                              }
+                          },
+                          {
+                              "method": "POST",
+                              "url": "/services/data/v{{version}}/sobjects/Contact/",
+                              "referenceId": "newContact",
+                              "body": {
+                                  "FirstName": "John",
+                                  "LastName": "Doe",
+                                  "AccountId": "@{newAccount.id}"
+                              }
+                          }
+                      ]
+                  }
+              ]
+          }
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: cache-control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: content-type
+          value: application/json;charset=UTF-8
+      body:
+        type: json
+        data: |-
+          {
+              "graphs": [
+                  {
+                      "graphId": "graph1",
+                      "graphResponse": {
+                          "compositeResponse": [
+                              {
+                                  "body": {
+                                      "id": "0014H00002x6HUhQAM",
+                                      "success": true,
+                                      "errors": []
+                                  },
+                                  "httpHeaders": {
+                                      "Location": "/services/data/v50.0/sobjects/Account/0014H00002x6HUhQAM"
+                                  },
+                                  "httpStatusCode": 201,
+                                  "referenceId": "newAccount"
+                              },
+                              {
+                                  "body": {
+                                      "id": "0034H00002JsInQQAV",
+                                      "success": true,
+                                      "errors": []
+                                  },
+                                  "httpHeaders": {
+                                      "Location": "/services/data/v50.0/sobjects/Contact/0034H00002JsInQQAV"
+                                  },
+                                  "httpStatusCode": 201,
+                                  "referenceId": "newContact"
+                              }
+                          ]
+                      },
+                      "isSuccessful": true
+                  }
+              ]
+          }
+
+docs: |-
+  Composite graphs provide an enhanced way to perform composite requests, which execute a series of REST API requests in a single call.
+  Regular composite requests allow you to execute a series of REST API requests in a single call. And you can use the output of one request as the input to a subsequent request.
+
+  Composite graphs extend this by allowing you to assemble a more complicated and complete series of related objects and records.
+
+  Composite graphs also enable you to ensure that the steps in a given set of operations are either all completed or all not completed. This avoids requiring you to check for a mix of successful and unsuccessful results.
+
+  Regular composite requests have a limit of 25 subrequests. Composite graphs increase this limit to 500. This gives a single API call much greater power.
+
+  https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/resources_composite_graph_introduction.htm

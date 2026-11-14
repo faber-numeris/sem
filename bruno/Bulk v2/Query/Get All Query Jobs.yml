@@ -1,0 +1,110 @@
+info:
+  name: Get All Query Jobs
+  type: http
+  seq: 7
+
+http:
+  method: GET
+  url: "{{_endpoint}}/services/data/v{{version}}/jobs/query?isPkChunkingEnabled=false&jobType=&concurrencyMode=&queryLocator="
+  headers:
+    - name: Content-Type
+      value: application/json
+  params:
+    - name: isPkChunkingEnabled
+      value: "false"
+      type: query
+      description: If set to true, the request only returns information about jobs where PK Chunking is enabled
+    - name: jobType
+      value: ""
+      type: query
+      description: BigObjectIngest Classic V2Query
+    - name: concurrencyMode
+      value: ""
+      type: query
+      description: serial parallel
+    - name: queryLocator
+      value: ""
+      type: query
+      description: use the value from the nextRecordsUrl from the previous set
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Successful Get All Query Jobs
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/jobs/query?isPkChunkingEnabled=false&jobType&concurrencyMode&queryLocator"
+      method: GET
+      headers:
+        - name: Content-Type
+          value: application/json
+      params:
+        - name: isPkChunkingEnabled
+          value: "false"
+          type: query
+          description: If set to true, the request only returns information about jobs where PK Chunking is enabled
+        - name: jobType
+          value: ""
+          type: query
+          description: BigObjectIngest Classic V2Query
+        - name: concurrencyMode
+          value: ""
+          type: query
+          description: serial parallel
+        - name: queryLocator
+          value: ""
+          type: query
+          description: use the value from the nextRecordsUrl from the previous set
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: Date
+          value: Mon, 20 Nov 2023 15:07:54 GMT
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-XSS-Protection
+          value: 1; mode=block
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: Sforce-Limit-Info
+          value: api-usage=23/15000
+        - name: Content-Type
+          value: application/json;charset=UTF-8
+        - name: Vary
+          value: Accept-Encoding
+        - name: Content-Encoding
+          value: gzip
+        - name: Transfer-Encoding
+          value: chunked
+      body:
+        type: json
+        data: |-
+          {
+              "done": true,
+              "nextRecordsUrl": null,
+              "records": [
+                  {
+                      "id": "750...",
+                      "operation": "insert",
+                      "object": "Account",
+                      "createdById": "005...",
+                      "createdDate": "<datetime>",
+                      "systemModstamp": "<datetime>",
+                      "state": "Open",
+                      "concurrencyMode": "Parallel",
+                      "contentType": "CSV",
+                      "apiVersion": 58,
+                      "jobType": "Classic"
+                  },
+              ]
+          }

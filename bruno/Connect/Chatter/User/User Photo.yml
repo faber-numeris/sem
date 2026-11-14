@@ -1,0 +1,105 @@
+info:
+  name: User Photo
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: "{{_endpoint}}/services/data/v{{version}}/connect/user-profiles/me/photo"
+  headers:
+    - name: Content-Type
+      value: multipart/form-data
+      disabled: true
+    - name: Content-Disposition
+      value: form-data; name="photo"
+      disabled: true
+    - name: Content-Type
+      value: application/json; charset=UTF-8
+      disabled: true
+  body:
+    type: multipart-form
+    data:
+      - name: json
+        type: text
+        value: '{"cropY":"0","cropX":"0","cropSize":"200"}'
+      - name: fileUpload
+        type: file
+        value: []
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Succesful User Photo
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/connect/user-profiles/me/photo"
+      method: POST
+      headers:
+        - name: Content-Type
+          value: multipart/form-data
+          disabled: true
+        - name: Content-Disposition
+          value: form-data; name="photo"
+          disabled: true
+        - name: Content-Type
+          value: application/json; charset=UTF-8
+          disabled: true
+      body:
+        type: multipart-form
+        data:
+          - name: json
+            type: text
+            value: '{"cropY":"0","cropX":"0","cropSize":"200"}'
+          - name: fileUpload
+            type: file
+            value:
+              - /Users/scolladon/Downloads/1x1.png
+    response:
+      status: 201
+      statusText: Created
+      headers:
+        - name: Date
+          value: Mon, 20 Nov 2023 16:15:44 GMT
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-XSS-Protection
+          value: 1; mode=block
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: Content-Type
+          value: application/json;charset=UTF-8
+        - name: Vary
+          value: Accept-Encoding
+        - name: Content-Encoding
+          value: gzip
+        - name: Transfer-Encoding
+          value: chunked
+      body:
+        type: json
+        data: |-
+          {
+              "fullEmailPhotoUrl": "https://<my_domain>/img/userprofile/default_profile_200_v2.png?fromEmail=1",
+              "largePhotoUrl": "https://<my_domain>/profilephoto/729.../F",
+              "mediumPhotoUrl": "https://<my_domain>/profilephoto/729.../M",
+              "photoVersionId": "729...",
+              "smallPhotoUrl": "https://<my_domain>/profilephoto/729.../T",
+              "standardEmailPhotoUrl": "https://<my_domain>/img/userprofile/default_profile_45_v2.png?fromEmail=1",
+              "url": "/services/data/v58.0/connect/user-profiles/005.../photo"
+          }
+
+docs: |-
+  Get, post, and crop a user photo.
+  To use an image from the Files page as a user photo, pass the file ID in the fileId property of the request body or in the fileId request parameter. Images uploaded on the User page don’t have a file ID and can’t be used as the fileId.
+
+  To upload a binary file as the user photo, you must send it in a multipart/form-data message. For information about how to create the multipart/form-data message, see Uploading Binary Files.
+
+  To display user profile photos in a feed, cache the user photos. Then use the photoVersionId property of the Photo response body to determine when you need to update a photo. This technique helps you avoid running over limits and may improve mobile client performance.

@@ -1,0 +1,67 @@
+info:
+  name: Delete a Record
+  type: http
+  seq: 14
+
+http:
+  method: DELETE
+  url: "{{_endpoint}}/services/data/v{{version}}/ui-api/records/:RECORD_ID"
+  params:
+    - name: RECORD_ID
+      value: ""
+      type: path
+      description: Record ID
+  body:
+    type: text
+    data: ""
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Delete a Record
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/ui-api/records/:RECORD_ID"
+      method: DELETE
+      params:
+        - name: RECORD_ID
+          value: 0011Q00002Z2P5jQAF
+          type: path
+          description: Record ID
+      body:
+        type: text
+        data: ""
+    response:
+      status: 204
+      statusText: No Content
+      headers:
+        - name: Date
+          value: Wed, 27 Sep 2023 16:05:14 GMT
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-XSS-Protection
+          value: 1; mode=block
+        - name: Content-Security-Policy
+          value: upgrade-insecure-requests
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+      body:
+        type: text
+        data: ""
+
+docs: |-
+  Update a record's data.
+  User Interface API enforces Salesforce validation rules. If a validation rule fails, the response is an Error with Output.
+
+  When you make a PATCH request to update a record, make sure that the record hasn’t changed since the user started editing it. To find out whether it’s safe to save a record, pass the If-Modified-Since HTTP header in the request.
+
+  As of API version 43.0, if you pass read-only fields in a request body, the response is an Error with Output.

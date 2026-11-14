@@ -1,0 +1,22 @@
+info:
+  name: 20 Execute SOQL QueryAll
+  type: http
+  seq: 20
+
+http:
+  method: GET
+  url: "{{_endpoint}}/services/data/v{{version}}/queryAll/?q=SELECT+Id,Name,IsDeleted+FROM+Custom_Object__c"
+
+runtime:
+  scripts:
+    - type: tests
+      code: |-
+        test("Executes SOQL queryAll including deleted records", function() {
+          expect(res.getStatus()).to.equal(200);
+          expect(res.getBody().totalSize).to.be.at.least(1);
+          expect(res.getBody().records).to.be.an("array");
+        });
+
+settings:
+  encodeUrl: false
+  timeout: 0

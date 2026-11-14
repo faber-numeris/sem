@@ -1,0 +1,238 @@
+/services/data/v{version}/chatter/feeds/news/me/feed-elements:
+  get:
+    tags:
+      - Connect > Chatter > Feeds
+    summary: News Feed Elements
+    description: >-
+      All feed elements from all groups the context user either owns or is a member of, as well as all files, records, and users the context user follows. Use this resource to get information about feed elements and to post feed elements.
+
+
+      For information about posting a feed element, see Feed Elements, Post and Search.
+
+
+      https://developer.salesforce.com/docs/atlas.en-us.chatterapi.meta/chatterapi/connect_resource_feeds_news.htm#cc_news_feed_elements
+    parameters:
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: OK
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Wed, 22 Nov 2023 11:04:02 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-XSS-Protection:
+            schema:
+              type: string
+              example: 1; mode=block
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Content-Type:
+            schema:
+              type: string
+              example: application/json;charset=UTF-8
+          Vary:
+            schema:
+              type: string
+              example: Accept-Encoding
+          Content-Encoding:
+            schema:
+              type: string
+              example: gzip
+          Transfer-Encoding:
+            schema:
+              type: string
+              example: chunked
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              currentPageToken: null
+              currentPageUrl: /services/data/v58.0/chatter/feeds/news/005.../feed-elements
+              elements: []
+              isModifiedToken: null
+              isModifiedUrl: null
+              nextPageToken: null
+              nextPageUrl: null
+              updatesToken: '2:1700651042000'
+              updatesUrl: >-
+                /services/data/v58.0/chatter/feeds/news/005.../feed-elements?updatedSince=2%3A1700651042000
+/services/data/v{version}/chatter/feeds/user-profile/{USER_ID}/feed-elements:
+  get:
+    tags:
+      - Connect > Chatter > Feeds
+    summary: User Profile Feed Elements
+    description: >-
+      Returns feed elements created when a user changes records that can be tracked in a feed, feed elements whose parent is the user, and feed elements that mention the user. This feed is different than the news feed, which returns more feed items, including group updates. You can post feed items to the user-profile feed. You can get another user’s user profile feed.
+
+
+      https://developer.salesforce.com/docs/atlas.en-us.chatterapi.meta/chatterapi/connect_resource_feeds_user_profile.htm
+    parameters:
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: USER_ID
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: OK
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Wed, 22 Nov 2023 11:04:39 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-XSS-Protection:
+            schema:
+              type: string
+              example: 1; mode=block
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Content-Type:
+            schema:
+              type: string
+              example: application/json;charset=UTF-8
+          Vary:
+            schema:
+              type: string
+              example: Accept-Encoding
+          Content-Encoding:
+            schema:
+              type: string
+              example: gzip
+          Transfer-Encoding:
+            schema:
+              type: string
+              example: chunked
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              currentPageToken: null
+              currentPageUrl: >-
+                /services/data/v58.0/chatter/feeds/user-profile/005.../feed-elements
+              elements: []
+              isModifiedToken: null
+              isModifiedUrl: null
+              nextPageToken: null
+              nextPageUrl: null
+              updatesToken: null
+              updatesUrl: null
+/services/data/v{version}/chatter/feeds/record/{RECORD_GROUP_ID}/feed-elements:
+  get:
+    tags:
+      - Connect > Chatter > Feeds
+    summary: Record Feed Elements
+    description: >-
+      Returns the feed elements for all the records the context user is following, or all the feed elements of the specified recordId. Use this resource to search a feed or to get the feed elements for a specific feed, including another user’s feed. To use this resource to get the feed elements for a group, specify the group ID as the recordId.
+
+
+      https://developer.salesforce.com/docs/atlas.en-us.chatterapi.meta/chatterapi/connect_resource_feeds_record.htm
+    parameters:
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: RECORD_GROUP_ID
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: OK
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Wed, 22 Nov 2023 11:05:44 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-XSS-Protection:
+            schema:
+              type: string
+              example: 1; mode=block
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Content-Type:
+            schema:
+              type: string
+              example: application/json;charset=UTF-8
+          Vary:
+            schema:
+              type: string
+              example: Accept-Encoding
+          Content-Encoding:
+            schema:
+              type: string
+              example: gzip
+          Transfer-Encoding:
+            schema:
+              type: string
+              example: chunked
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              currentPageToken: null
+              currentPageUrl: /services/data/v58.0/chatter/feeds/record/001.../feed-elements
+              elements: []
+              isModifiedToken: null
+              isModifiedUrl: null
+              nextPageToken: null
+              nextPageUrl: null
+              updatesToken: '2:1700651144000'
+              updatesUrl: >-
+                /services/data/v58.0/chatter/feeds/record/001.../feed-elements?updatedSince=2%3A1700651144000

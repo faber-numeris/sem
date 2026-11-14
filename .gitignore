@@ -1,0 +1,43 @@
+# Binaries
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+/application
+/bin/
+/dist/
+
+# Test binaries and coverage output
+*.test
+*.out
+coverage.*
+*.coverprofile
+profile.cov
+
+# Go workspace file
+go.work
+go.work.sum
+
+# Vendored dependencies (uncomment if not committing vendor/)
+# vendor/
+
+# Environment / secrets
+.env
+.env.*
+!.env.example
+
+# IDEs
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Temporary / debug
+tmp/
+__debug_bin*

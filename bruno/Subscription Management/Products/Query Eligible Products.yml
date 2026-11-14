@@ -1,0 +1,28 @@
+info:
+  name: Query Eligible Products
+  type: http
+  seq: 1
+
+http:
+  method: GET
+  url: "{{_endpoint}}/services/data/v{{version}}/query/?q=SELECT Product2.Name, ProductSellingModelId, Product2.Id FROM ProductSellingModelOption Group By Product2.Name, Product2.Id, ProductSellingModelId "
+  headers:
+    - name: Content-Type
+      value: application/json
+  params:
+    - name: q
+      value: "SELECT Product2.Name, ProductSellingModelId, Product2.Id FROM ProductSellingModelOption Group By Product2.Name, Product2.Id, ProductSellingModelId "
+      type: query
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+docs: |-
+  This query returns all the products that have a related Product Selling Model Option. To price a product with Subscription Management, the product must have a related Product Selling Model Option.
+
+  For more information, see [Set Up Products and Pricing in Subscription Management](https://help.salesforce.com/s/articleView?id=sf.subscription_mgmt_products_and_pricing_setup.htm).

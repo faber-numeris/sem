@@ -1,0 +1,23 @@
+info:
+  name: Delete event relay
+  type: http
+  seq: 4
+
+http:
+  method: DELETE
+  url: "{{_endpoint}}/services/data/v{{version}}/tooling/sobjects/EventRelayConfig/:EVENT_RELAY_CONFIG_ID"
+  params:
+    - name: EVENT_RELAY_CONFIG_ID
+      value: ""
+      type: path
+  body:
+    type: json
+    data: ""
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true

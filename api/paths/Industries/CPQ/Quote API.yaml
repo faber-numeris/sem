@@ -1,0 +1,115 @@
+/services/apexrest/SBQQ/ServiceRouter:
+  patch:
+    tags:
+      - Industries > CPQ > Quote API
+    summary: Quote Term Reader API
+    description: >-
+      The Read Product API takes the request’s product ID, pricebook ID, and currency code and returns a Product model. The Product model loads the product from your catalog when the user requests it.
+
+      Available in: Salesforce CPQ Summer ’16 and later
+
+      Special Access Rules: Users must have read access to the product2 object.
+
+
+      https://developer.salesforce.com/docs/atlas.en-us.cpq_dev_api.meta/cpq_dev_api/cpq_api_read_product.htm
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            example:
+              context:
+                templateId: a0v5C000000jTgr
+                language: es
+    parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: loader
+        in: query
+        schema:
+          type: string
+        example: SBQQ.QuoteTermAPI.Load
+      - name: uid
+        in: query
+        schema:
+          type: string
+    responses:
+      '200':
+        description: Successful response
+        content:
+          application/json: {}
+  post:
+    tags:
+      - Industries > CPQ
+    summary: Generate Quote Document API
+    description: >-
+      Creates and saves a CPQ quote document.
+
+      Available in: Salesforce CPQ Winter ’19 and later
+
+
+      https://developer.salesforce.com/docs/atlas.en-us.cpq_dev_api.meta/cpq_dev_api/cpq_api_generate_proposal.htm
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            example:
+              saver: SBQQ.QuoteDocumentAPI.Save
+              model:
+                name: test
+                quoteId: <SFDC_ID>
+                templateId: <SFDC_ID>
+                outputFormat: PDF
+                language: en_US
+                paperSize: Default
+    parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: loader
+        in: query
+        schema:
+          type: string
+        example: QuoteDocumentAPI.SaveProposal
+    responses:
+      '200':
+        description: Successful response
+        content:
+          application/json: {}
+  get:
+    tags:
+      - Industries > CPQ > Quote API
+    summary: Read Quote API
+    description: >-
+      The Read Quote API reads a quote from a CPQ quote ID.
+
+      Available in: Salesforce CPQ Summer ’16 and later
+
+
+      https://developer.salesforce.com/docs/atlas.en-us.cpq_dev_api.meta/cpq_dev_api/cpq_api_read_quote.htm
+    parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: reader
+        in: query
+        schema:
+          type: string
+        example: SBQQ.QuoteAPI.QuoteReader
+      - name: uid
+        in: query
+        schema:
+          type: string
+    responses:
+      '200':
+        description: Successful response
+        content:
+          application/json: {}

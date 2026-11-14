@@ -1,0 +1,830 @@
+openapi: 3.0.0
+info:
+  title: Salesforce Platform APIs
+  description: "The Salesforce Platform APIs collection contains 250+ requests and example responses for the following APIs:\n\n<table><tbody><tr><td><div>Auth<br>Bulk (v1 &amp; v2)<br>Composite<br>Connect<br>CPQ<br>Einstein Prediction Service<br>Event Platform</div><div contenteditable=\"false\"><div><div><div></div></div></div><div></div></div></td><td><div>GraphQL<br>Loyalty Management<br>Metadata<br>REST<br>Subscription Management<br>Tooling<br>UI</div><div contenteditable=\"false\"><div><div><div></div></div></div><div></div></div></td></tr></tbody></table>\n\n**⚠️ Disclaimer:** this collection is not covered by Salesforce support and SLAs.\n\n## Get Started\n\nClick the button below and follow the instructions from the following sections:  \n[<img src=\"https://run.pstmn.io/button.svg\" alt=\"Run In Postman\">](https://god.gw.postman.com/run-collection/12721794-67cb9baa-e0da-4986-957e-88d8734647e2?action=collection%2Ffork&source=rip_markdown&collection-url=entityId%3D12721794-67cb9baa-e0da-4986-957e-88d8734647e2%26entityType%3Dcollection%26workspaceId%3D34382471-0c97-40e5-a206-f947271665c4)\n\n### New Salesforce Users\n\nIf you are new to Salesforce, start by obtaining a free [Developer Edition Org](https://developer.salesforce.com/signup) then, follow the rest of the instructions from this documentation.\n\nYou can also watch our [Beginner's Mind YouTube series](https://www.youtube.com/playlist?list=PLgIMQe2PKPSKJ33M6CX-VLvgax7Xptcmz) for a tour of the Salesforce Platform (the last episode focuses on APIs).\n\n### New Postman Users\n\n<table><tbody><tr><td><div><p>If you are new to Postman, complete this Trailhead project to setup the collection: <a rel=\"noreferrer noopener nofollow\" href=\"https://trailhead.salesforce.com/content/learn/projects/quick-start-connect-postman-to-salesforce\" target=\"_blank\" url=\"https://trailhead.salesforce.com/content/learn/projects/quick-start-connect-postman-to-salesforce\">Quick Start: Connect Postman to Salesforce</a>.<br></p><figure editor=\"[object Object]\"><div contenteditable=\"false\"><div><img src=\"https://res.cloudinary.com/hy4kyit2a/f_auto,fl_lossy,q_70/learn/projects/quick-start-connect-postman-to-salesforce/d281185a04fbccaf4f1d37e51a3b0049_badge.png\" alt=\"\"><div><div></div><div><div></div></div><div></div><div><div></div></div><div></div><div></div><div></div><div></div></div></div></div></figure></div><div contenteditable=\"false\"><div><div><div></div></div></div><div></div></div></td><td><div><p>If you want to learn more about Postman in general, you can also complete this optional Trailhead badge: <a rel=\"noreferrer noopener nofollow\" href=\"https://trailhead.salesforce.com/content/learn/modules/postman-api-client\" target=\"_blank\" url=\"https://trailhead.salesforce.com/content/learn/modules/postman-api-client\">Postman API Client</a>.<br></p><figure editor=\"[object Object]\"><div contenteditable=\"false\"><div><img src=\"https://res.cloudinary.com/hy4kyit2a/f_auto,fl_lossy,q_70/learn/modules/postman-api-client/c4f5ce5df16040d22df5f1cfb77af5a6_badge.png\" alt=\"\"><div><div></div><div><div></div></div><div></div><div><div></div></div><div></div><div></div><div></div><div></div></div></div></div></figure></div><div contenteditable=\"false\"><div><div><div></div></div></div><div></div></div></td></tr></tbody></table>\n\n### Regular Postman Users\n\nIf you are already familiar with Postman, here are the minimal getting started steps:\n\n1. If using Postman Web UI, follow these [steps to set up CORS](https://github.com/forcedotcom/postman-salesforce-apis/blob/master/install-with-web.md#enable-cors-in-salesforce) in your Salesforce Org. This is not required when working with the Postman Desktop app.\n\n2. Assign a value to the `url` collection variable based on your Salesforce Org type:\n    \n    | URL | Org Type |\n    | --- | --- |\n    | `https://test.salesforce.com` | Sandboxes or Scratch orgs. |\n    | `https://login.salesforce.com` | Production, Trailhead Playground and Developer Edition orgs. |\n    | Custom My Domain base URL | Org with a custom domain. |\n    \n3. Click **Get New Access Token** from the collection's **Authorization** tab.\n    \n4. When prompted to do so, log in to your Salesforce org and allow access to \"Salesforce APIs Collection for Postman\".\n    \n5. Copy the value of the `instance_url` field from the token details view.\n    \n6. Click **Use Token**.\n    \n7. Save the value that you copied in the `_endpoint` variable.\n    \n8. Click **Save** and you're good to go!\n    \n\n## Resources\n\nCheck out [the documentation](https://github.com/forcedotcom/postman-salesforce-apis) for videos and extra information on how to install, update and contribute to the collection.\n\nWe also have an [demo video](https://www.youtube.com/watch?v=W-IwW6RM4F0) on how to setup the collection.\n\n<img src=\"https://i3.ytimg.com/vi/W-IwW6RM4F0/maxresdefault.jpg\" width=\"80%\">\n\nReport issues and ask questions [here](https://github.com/forcedotcom/postman-salesforce-apis/issues).\n\n## Variables Reference\n\nThe collection relies on the following variables:\n\n| Variable | Description |\n| --- | --- |\n| `_endpoint` | Your Salesforce Org's instance URL. |\n| `url` | The URL used for logging in. Either:  <br>\\- `https://test.salesforce.com` for sandboxes or Scratch orgs  <br>\\- `https://login.salesforce.com` for production, Trailhead Playground and Developer Edition orgs  <br>\\- your custom My Domain base URL. |\n| `version` | The Salesforce API version (e.g.: 50.0). |\n| `username` | Your username. |\n| `password` | Your password. |\n| `secretToken` | Your personal [security token](https://help.salesforce.com/articleView?id=user_security_token.htm). |\n| `clientId` | Connected App client Id. |\n| `clientSecret` | Connected App client secret. |\n| `redirectUrl` | Connected App redirect URL for OAuth 2.0. |\n| `initAccessToken` | Initial access token for dynamic Connected App registration. |\n| `site` | Community suffix when connecting with an Experience Cloud user. |\n\nOnly a few of these variables are mandatory. The authentication requests will automatically register and set extra \"private\" variables identified with a `_` prefix (e.g.: `_accessToken`, `_orgId`, `_userId`...)."
+  version: '66.0'
+servers:
+  - url: http://localhost:9090
+    description: Salesforce emulator (sem)
+  - url: https://login.salesforce.com
+    description: Salesforce
+components:
+  securitySchemes:
+    noauthAuth:
+      type: http
+      scheme: noauth
+    oauth2Auth:
+      type: http
+      scheme: oauth2
+security:
+  - oauth2Auth: []
+tags:
+  - name: Auth
+    description: >-
+      Use requests from this folder to obtain an Access Token.
+
+
+      The authentication requests automatically fill the endpoint URL and access token environment variables for subsequent API calls.
+  - name: Auth > Headless Identity API Demo
+    description: "Salesforce Headless Identity gives you the ability to separate back-end authentication processes from front-end identity experiences. By calling Headless Identity APIs, you can use the power of Customer Identity for authentication while maintaining complete control over the user experience in an off-platform or third-party app.\n\nSalesforce offers three Headless Identity features: login with Headless Login API, registration with Headless Registration API, and password reset with Headless Forgot Password API. You can also link a single sign-on (SSO) provider to your headless app to create a native SSO experience.\n\n\U0001F4DA [Headless Identity Implementation Guide](https://resources.docs.salesforce.com/244/latest/en-us/sfdc/pdf/headless_identity_impl_guide.pdf)"
+  - name: Auth > External Client Apps
+    description: >-
+      > External client apps is a packageable framework to integrate a third-party application with Salesforce using APIs and security protocols. External client apps provide single sign-on (SSO) and use OAuth protocols to authorize third-party apps. The third-party apps that are integrated with Salesforce can run on the customer success platform as well as other platforms, devices, or SaaS subscriptions. Use the credentials endpoints in this collection to get OAuth credentials for a single consumer or all consumers associated with an external client app. The OAuth usage endpoints return information about the external client apps in your org, users for an app, and tokens. OAuth usage also includes Revoke endpoints that you can use to revoke one token, all tokens by app, or all tokens by user. [External Client Apps](https://help.salesforce.com/s/articleView?id=sf.external_client_apps.htm&type=5)
+  - name: Auth > External Client Apps > OAuth Usage
+    description: >-
+      > Get External Client App OAuth usage information and revoke tokens. These Connect API endpoints return information about the external client apps that users in your org are connecting to, a list of all OAuth users for an app, or the tokens for a given app and user. If you want to revoke access to an external client app, use the OAuth usage resources to revoke a specific token, all tokens associated with an app, or the tokens associated with a specific user. [External Client App OAuth Usage](https://help.salesforce.com/s/articleView?id=sf.external_client_app_oauth_usage.htm&type=5)
+  - name: Auth > External Client Apps > Credentials
+    description: >-
+      > Use these Connect API endpoints to get credentials for OAuth consumers of an external client app. Collections returns credentials for all consumers associated with an external client app. Resources returns the the key, secret, or both key and secret for a specific consumer.
+  - name: Bulk v1
+    description: "The Bulk API provides a programmatic option to quickly load your org’s data into Salesforce. To use the API requires basic familiarity with software development, web services, and the Salesforce user interface.\n\nThe functionality described is available only if your org has the Bulk API feature enabled. This feature is enabled by default for Performance, Unlimited, Enterprise, and Developer Editions.\n\n\U0001F4DA [Bulk API Developer Guide](https://developer.salesforce.com/docs/atlas.en-us.api_asynch.meta/api_asynch/asynch_api_intro.htm)\n\n**Note:** All Bulk API requests except \"Create Job\" require a `_jobId` variable. This variable is automatically set by the \"Create Job\" request."
+  - name: Bulk v1 > Query
+  - name: Bulk v2
+    description: "Bulk API 2.0 provides a simple interface to quickly load large amounts of data into your Salesforce org and to perform bulk queries on your org data.\n\nBulk API 2.0 is available in API version 41.0 and later. Query jobs in Bulk API 2.0 are available in API version 47.0 and later.\n\n\U0001F4DA [Bulk API 2.0 Documentation](https://developer.salesforce.com/docs/atlas.en-us.api_bulk_v2.meta/api_bulk_v2/introduction_bulk_api_2.htm)\n\n**Note:** All Bulk API requests except \"Create Job\" require a `_jobId` variable. This variable is automatically set by the \"Create Job\" request."
+  - name: Bulk v2 > Query
+  - name: Composite
+    description: >-
+      The Composite API executes a series of REST API requests in a single POST request, or retrieves a list of other composite resources with a GET request.
+
+
+      There are three types of Composite requests sometime referred to as APIs:
+
+      - [Composite](https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/resources_composite_composite.htm) (the original)
+
+      - [Composite Batch](https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/resources_composite_batch.htm)
+
+      - [Composite Graph](https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/resources_composite_graph.htm) (the most recent)
+  - name: Connect
+    description: "Integrate mobile apps, intranet sites, and third-party web applications with Salesforce using Connect REST API. Responses are localized, structured for presentation, and can be filtered to contain only what the app needs.\n\nConnect REST API provides programmatic access to B2B Commerce, CMS managed content, Experience Cloud sites, files, notifications, topics, and more. Use Connect REST API to display Chatter feeds, users, and groups, especially in mobile applications.\n\n\U0001F4DA [Connect REST API Developer Guide](https://developer.salesforce.com/docs/atlas.en-us.chatterapi.meta/chatterapi/intro_what_is_chatter_connect.htm)"
+  - name: Connect > File
+    description: >-
+      Get information about files, including content and sharing. Post files, update files shares link.
+  - name: Connect > Named Credential
+    description: "Get, create, update, and delete a credential. Get the URL for the OAuth token flow for an external credential. Get external credentials.\n\n\U0001F4DA [Named Credentials Resources in the Connect REST API Developer Guide](https://developer.salesforce.com/docs/atlas.en-us.chatterapi.meta/chatterapi/connect_resources_named_credentials_resources.htm)"
+  - name: Connect > Chatter
+    description: >-
+      Get feeds, post and delete feed elements. Get, update, and delete comments. Get groups and group members. Create groups, invites, and members. Create user photos and user messages. Get user subscription information. Delete a subscription.
+  - name: Connect > Chatter > Feeds
+    description: >-
+      Feeds are made up of feed items. There are many feed types. Each feed type has an algorithm that determines which feed items it contains.
+  - name: Connect > Chatter > Feed Elements
+    description: Post and delete feed elements.
+  - name: Connect > Chatter > Comments
+    description: Get, edit, and delete comments.
+  - name: Connect > Chatter > Groups
+    description: Get groups and group members. Create groups, invites, and members.
+  - name: Connect > Chatter > User
+    description: Create user photos and user messages. Get user subscription information.
+  - name: Connect > Industries
+    description: >-
+      [Industries Common Resources Developer Guide](https://developer.salesforce.com/docs/atlas.en-us.246.0.industries_reference.meta/industries_reference/)
+  - name: Connect > Industries > Business Rules Engine
+    description: "Business Rules Engine is a suite of services, components, and objects that can be used to create business rules that perform complex lookups and calculations. The key components of Business Rules Engine are expression sets, decision matrices, and decision tables.\n\n<img src=\"https://content.pstmn.io/c5600a2e-eabd-480f-ab49-a89e4721683f/U2NyZWVuc2hvdCAyMDIzLTA5LTA1IGF0IDEzLjAxLjMyLnBuZw==\" alt=\"\">\n\nSee Developers Salesforce Help Docs: [Business Rules Engine](https://developer.salesforce.com/docs/atlas.en-us.246.0.industries_reference.meta/industries_reference/business_rules_engine.htm)\n\nSee Salesforce Help Docs: [Business Rules Engine](https://help.salesforce.com/s/articleView?id=sf.business_rules_engine.htm)\n\n# Business Rules Engine Business APIs\n\nBusiness Rules Engine Connect REST APIs help customers, partners, and ISVs integrate with Salesforce software and UIs.\n\nThe runtime service for Business Rules Engine components is exposed through Connect APIs.\n\n## Sign Up for a Developer Edition Org with Business Rules Engine\n\nIf you want to practice and try out the steps, you need a special Developer Edition org that contains Business Rules Engine and our sample data. Here’s how to get the free Developer Edition now.\n\n1. Sign up for a free Developer Edition org with [<u>Business Rules Engine</u>](https://trailhead.salesforce.com/promo/orgs/business-rules-engine).\n    \n2. Fill out the form.\n    \n    1. For Email, enter an active email address.\n        \n    2. For Username, enter a username that looks like an email address and is unique. It doesn’t need to be a valid email account (for example, [yourname@hc4evah.com](https://mailto:yourname@hc4evah.com) is fine).\n        \n3. Click **Sign me up**. A confirmation message appears.\n    \n4. When you receive the activation email (this might take a few minutes), open it and click **Verify Account**.\n    \n5. Complete your registration by setting your password and challenge question.  \n    **Tip:** Write down your username, password, and login URL for easy access later.\n    \n\nYou are logged into your trial org. For more information on setting up Business Rules Engine and configuring your users, see [<u>Set Up Business Rules Engine</u>](https://help.salesforce.com/s/articleView?id=sf.set_up_business_rules_engine.htm&type=5).\n\nSpecfially this collection is designed to [answer](https://help.salesforce.com/s/articleView?id=sf.third_party_workflows.htm):\n\n<img src=\"https://content.pstmn.io/2ef103a8-6fd7-472a-af82-49402d9c63ae/U2NyZWVuc2hvdCAyMDIzLTA5LTA1IGF0IDEzLjEzLjExLnBuZw==\" alt=\"\">"
+  - name: Connect > Industries > Business Rules Engine > expression-set
+    description: >-
+      [SALESFORCE &gt; HELP DOCS &gt; INDUSTRIES COMMON FEATURES GUIDE &gt; Expression Sets](https://help.salesforce.com/s/articleView?id=sf.expression_sets.htm)
+
+
+      [SALESFORCE &gt; HELP DOCS &gt; INDUSTRIES COMMON FEATURES GUIDE &gt; Expression Sets for Developers](https://help.salesforce.com/s/articleView?id=sf.expression_sets_for_developers.htm)
+
+
+      <img src="https://content.pstmn.io/59d04738-6425-4a2f-a7d1-ecab54b8a98a/U2NyZWVuc2hvdCAyMDIzLTA5LTA3IGF0IDA5LjI2LjA3LnBuZw==" alt="">
+  - name: Connect > Industries > Business Rules Engine > expression-set > version
+  - name: Connect > Industries > Business Rules Engine > expressionset
+    description: >-
+      **WATCH OUT**: expressionSet has no dash compared to the other expression set resources. Elected to create separate Postman folder to model this odity. [gjeffcock@salesforce.com](https://gjeffcock@salesforce.com)
+  - name: Connect > Industries > Business Rules Engine > decision-matrices
+    description: "# [Decision Matrices for Developers](https://help.salesforce.com/s/articleView?id=sf.decision_matrices_for_developers.htm)\n\nDevelopers in your Salesforce org can employ decision matrix developer resources to use and extend decision matrices.\n\n### REQUIRED EDITIONS\n\n| Available in: Lightning Experience |\n| Available in: **Enterprise**, **Unlimited**, and **Developer** Editions for Industries clouds that have Business Rules Engine enabled |\n\n## Connect REST API\n\n- [Look up decision matrices](https://developer.salesforce.com/docs/atlas.en-us.246.0.industries_reference.meta/industries_reference/connect_resources_bre_decision_matrix.htm)\n    \n- [Export decision matrix versions to DMN files](https://developer.salesforce.com/docs/atlas.en-us.246.0.industries_reference.meta/industries_reference/connect_resources_bre_decision_model_entity.htm)\n    \n\n## Metadata API\n\n- [Create decision matrices](https://developer.salesforce.com/docs/atlas.en-us.246.0.industries_reference.meta/industries_reference/meta_decisionmatrixdefinition.htm)\n    \n\n## Invocable Actions\n\n- [Invoke a decision matrix in a flow using the decision matrix action](https://developer.salesforce.com/docs/atlas.en-us.246.0.industries_reference.meta/industries_reference/actions_obj_decision_matrix.htm)"
+  - name: Connect > Industries > Business Rules Engine > decision-models
+  - name: Connect > Industries > Business Rules Engine > decision-table
+  - name: Connect > Industries > Business Rules Engine > decision-table > lookup
+  - name: Connect > Industries > Business Rules Engine > lookup-tables
+    description: >-
+      [<b>Lookup Tables (GET)</b>](https://developer.salesforce.com/docs/atlas.en-us.246.0.industries_reference.meta/industries_reference/connect_resources_bre_search_lookup_tables.htm)
+
+
+      <img src="https://content.pstmn.io/9d1da0f6-7e11-43d0-ba2d-8de51f92a994/U2NyZWVuc2hvdCAyMDIzLTA5LTA1IGF0IDEzLjI3LjIzLnBuZw==" alt="">
+
+
+      [Response Message](https://developer.salesforce.com/docs/atlas.en-us.246.0.industries_reference.meta/industries_reference/connect_responses_lookup_tables_result_list.htm)
+  - name: Connect > Industries > Commerce Webstore
+    description: "Get, create, update, and delete your commerce data. Work with carts, orders, products, promotions, wishlists, and search settings.\n\nThis feature requires a [specific license](https://help.salesforce.com/s/articleView?id=sf.b2b_commerce_license.htm&type=5).\n\n\U0001F4DA [B2B Commerce on Lightning Experience Resources in the Connect REST API Developer Guide](https://developer.salesforce.com/docs/atlas.en-us.chatterapi.meta/chatterapi/connect_resources_commerce.htm)"
+  - name: Connect > Industries > Commerce Webstore > Cart Items
+  - name: Connect > Industries > Fundraising
+    description: "The Fundraising Business Process APIs empower teams to build robust integrations through industry standard tools. Instead of making multiple calls using multiple APIs to multiple objects, use our composite Fundraising BP API to send over a single, complex payload - and let us do the rest. Developer-friendly APIs do not require a detailed and complete understanding of the NPC data model, which greatly simplifies integrations. Automatic record matching, batch processing of fields, bulk support, and dynamic mapping of data to custom fields enables scalability and flexibility for customers and partners alike. Five robust endpoints are currently available to:\n\n- Create bulk gift transactions with related donor and designations\n- Create bulk gift commitments with related donor, schedule, and default designations\n- Modify the future recurring schedule on a gift commitment\n- Apply payment update metadata to gift transactions and future gift commitment installments\n    \n\nThe Fundraising Business Process APIs are available as a standard Salesforce Connect API REST endpoint as well as through Apex.\n\n\U0001F4DA [Fundraising Business APIs](https://developer.salesforce.com/docs/atlas.en-us.nonprofit_cloud.meta/nonprofit_cloud/npc_fundraising_business_api_rest_reference.htm)"
+  - name: Connect > Industries > Fundraising > Gifts
+  - name: Connect > Industries > Fundraising > Commitments
+  - name: Connect > Einstein
+  - name: Connect > Messaging
+  - name: Einstein Prediction Service
+    description: "After deploying models with Einstein Discovery, use the Einstein Prediction Service API to embed your predictions into any website or application.\n\n⚠️ Einstein Discovery requires either the Einstein Analytics Plus license or the Einstein Predictions license, both of which are available for an extra cost.\n\n\U0001F4DA [Einstein Prediction Service documentation](https://help.salesforce.com/articleView?id=sf.bi_edd_prediction_service.htm&type=5)."
+  - name: Event Platform
+    description: >-
+      This folder is a collection of API requests for managing platform events, change data capture events, and event relays.
+  - name: Event Platform > Custom Channels
+    description: >-
+      This folder contains API requests for managing custom channels for platform events and Change Data Capture.
+
+
+      Channels group event messages of one or more events in one stream that a client can subscribe to. Event relays use channels to send events to Amazon EventBridge in AWS. Also, you can subscribe to channels using Streaming API (CometD) and Pub/Sub API.
+  - name: Event Platform > Custom Channels > Change Data Capture
+    description: >-
+      To learn about channels and features for Change Data Capture, check out these resources in the _Change Data Capture Developer Guide._
+
+
+      - [Compose Streams of Change Data Capture Notifications with Custom Channels](https://developer.salesforce.com/docs/atlas.en-us.change_data_capture.meta/change_data_capture/cdc_custom_channel.htm)
+
+      - [Enrich Change Events with Extra Fields](https://developer.salesforce.com/docs/atlas.en-us.change_data_capture.meta/change_data_capture/cdc_enrich_intro.htm)
+
+      - [Filter Your Stream of Change Events with Channels](https://developer.salesforce.com/docs/atlas.en-us.change_data_capture.meta/change_data_capture/cdc_filter_section.htm)
+  - name: Event Platform > Custom Channels > Platform Event
+    description: >-
+      To learn about channels and features for platform events, check out these resources in the _Platform Events Developer Guide._
+
+
+      - [Group Platform Events into One Stream with a Custom Channel](https://developer.salesforce.com/docs/atlas.en-us.platform_events.meta/platform_events/platform_events_subscribe_custom_channels.htm)
+
+      - [Filter Your Stream of Platform Events with Custom Channels](https://developer.salesforce.com/docs/atlas.en-us.platform_events.meta/platform_events/platform_events_filter_section.htm)
+  - name: Event Platform > Publish Platform Events
+    description: >-
+      This folder contains requests to publish platform event messages using REST, the REST composite resource, and SOAP API.
+
+
+      To learn more about platform events, see the [Platform Events Developer Guide](https://developer.salesforce.com/docs/atlas.en-us.platform_events.meta/platform_events/platform_events_intro.htm).
+  - name: Event Platform > Event Relay Configuration
+    description: >-
+      This folder contains requests for creating an event relay and its prerequisite item, a named credential. Also, you can query the status of an event relay with EventRelayFeedback.
+
+
+      For more information, see [Event Relay](https://help.salesforce.com/s/articleView?id=sf.ev_relay_intro.htm&type=5) in _Salesforce Help_.
+  - name: Event Platform > Event Relay Configuration > Named Credential
+    description: "This folder contains requests for creating and manipulating named credentials, which are used by event relays to store AWS account information.  \n\nFor the POST and PATCH requests, replace the AWS_REGION and AWS_ACCOUNT_ID placeholders with valid values.\n\nFor more information, see [Event Relay](https://desktop.postman.com/?desktopVersion=10.14.2&userId=1220894&teamId=0) in _Salesforce Help_."
+  - name: Event Platform > Event Relay Configuration > Event Relay Config
+    description: "This folder contains requests for creating and manipulating event relays.\n\nFor more information, see [Event Relay](https://desktop.postman.com/?desktopVersion=10.14.2&userId=1220894&teamId=0) in _Salesforce Help_."
+  - name: Event Platform > Event Relay Configuration > Event Relay Feedback
+    description: >-
+      This folder contains requests for querying the status of event relays using EventRelayFeedback.
+
+
+      For more information, see [Event Relay](https://desktop.postman.com/?desktopVersion=10.14.2&userId=1220894&teamId=0) in _Salesforce Help_.
+  - name: Event Platform > Event Schema
+    description: >-
+      This folder contains API requests for getting the event schema for platform events and change data capture events.
+
+
+      For more information, see these resources in the REST API Developer Guide.
+
+
+      - [Platform Event Schema by Schema ID](https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/resources_event_eventschema.htm)
+
+      - [Platform Event Schema by Event Name](https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/resources_sobject_eventschema.htm)
+  - name: Event Platform > Managed Event Subscriptions
+    description: "This folder contains requests for working with Managed Event Subscriptions (beta).  \nTo learn more, see [Managed Event Subscriptions (Beta)](https://developer.salesforce.com/docs/platform/pub-sub-api/guide/managed-sub.html) in the Pub/Sub API Developer Guide."
+  - name: Industries
+    description: "This folder regroups API request for products under the **Industries** umbrella.\n\n⚠️ Industries products require specific licenses.\n\n\U0001F4DA [Industries documentation](https://help.salesforce.com/s/articleView?id=release-notes.rn_industries.htm&release=244&type=5)."
+  - name: Industries > CPQ
+    description: "Start working with Salesforce CPQ APIs.\n\n\U0001F4DA [Salesforce CPQ Developer Guide](https://developer.salesforce.com/docs/atlas.en-us.cpq_dev_api.meta/cpq_dev_api/cpq_developer_guide_intro.htm)"
+  - name: Industries > CPQ > Configuration API
+  - name: Industries > CPQ > Contract API
+  - name: Industries > CPQ > Quote API
+  - name: Industries > Loyalty Management
+    description: "These API Section (Resources) come from Standard Loyalty Management Developer Guide.\n\n\U0001F4DA [Standard Loyalty Management Developer Guide](https://developer.salesforce.com/docs/atlas.en-us.loyalty.meta/loyalty/loyalty_management_apis_resources.htm)."
+  - name: Industries > Loyalty Management > Basic Resources
+  - name: Industries > Loyalty Management > Loyalty Program Process
+    description: >-
+      Run a loyalty process created from a loyalty program process template.
+
+
+      Out-of-the-box loyalty program process templates come with a default set of process parameters. You can configure new parameters or remove the default ones by simply cloning a template and running the configured parameters as a customized loyalty process using the [loyalty program process API](https://developer.salesforce.com/docs/atlas.en-us.loyalty.meta/loyalty/connect_resources_process_name.htm). For example, when using the CreditPointsToMembers process template to credit points to a loyalty member, you can configure the currency value so that the credited points can be redeemed in the currency you’ve specified.
+
+
+      The request and response parameters for the loyalty program process API vary depending on the input and output parameters configured for a loyalty program process in a Salesforce org
+  - name: Industries > Loyalty Management > Gamification
+    description: >-
+      Who doesn’t like to play a game? Engage your customers more by gamifying customer activities, such as placing an order, or events, such as birthdays and anniversaries.
+
+
+      Assign eligible games to a customer, let the customer play the game, and then win a reward on an external system using the [gamification REST APIs](https://developer.salesforce.com/docs/atlas.en-us.loyalty.meta/loyalty/loyalty_gamification_apis_reference.htm).
+  - name: Industries > Loyalty Management > Promotion
+    description: >-
+      The [promotion APIs](https://developer.salesforce.com/docs/atlas.en-us.loyalty.meta/loyalty/loyalty_promotion_apis_reference.htm) allow you to set eligibility rules and limits for a promotion, choose a promotion template, and create a promotion. You can also get the details of a specific promotion, and view a list of eligible promotions for a customer’s cart.
+  - name: Industries > OmniStudio
+    description: >-
+      You can invoke [Integration Procedures](https://help.salesforce.com/s/articleView?id=sf.os_integration_procedure_invocation_55721.htm&type=5) from other OmniStudio tools such as OmniScripts and Cards. You can also invoke Integration Procedures from Apex classes, batch jobs, REST APIs, or Salesforce flows.
+  - name: GraphQL
+    description: "Aggregate records, request explicit fields, version at field-level, and more with the GraphQL API for Salesforce.\n\nGraphQL is an open-source data query and manipulation platform for APIs.\n\n**Integration Made Easy**\n\nA well-defined type system that makes it easy for clients to integrate any resource from the server into their request and caching logic.\n\n**Secure Information at Scale**\n\nA schema that reflects the user's Field Level Security, so they only see the types and fields permitted at their level.\n\n\U0001F4DA [Salesforce GraphQL API documentation](https://developer.salesforce.com/docs/platform/graphql/guide/graphql-about.html)"
+  - name: GraphQL > UI
+  - name: GraphQL > Introspection
+  - name: GraphQL > Mutation
+  - name: Metadata
+    description: "Use Metadata API to retrieve, deploy, create, update or delete customization information, such as custom object definitions and page layouts, for your organization. This API is intended for managing customizations and for building tools that can manage the metadata model, not the data itself. To create, retrieve, update or delete records, such as accounts or leads, use data SOAP API or REST API.\n\n\U0001F4DA [Metadata API Developer Guide](https://developer.salesforce.com/docs/atlas.en-us.api_meta.meta/api_meta/meta_intro.htm)"
+  - name: REST
+    description: "REST API provides a powerful, convenient, and simple Web services API for interacting with Lightning Platform. Its advantages include ease of integration and development, and it’s an excellent choice of technology for use with mobile applications and Web 2.0 projects. If you have many records to process, consider using Bulk API, which is based on REST principles and optimized for large sets of data.\n\n\U0001F4DA [REST API Developer Guide](https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/intro_what_is_rest_api.htm)"
+  - name: REST > Actions
+  - name: REST > Actions > custom
+  - name: REST > Actions > custom > Business Rules Engine Invocable Actions
+    description: >-
+      [https://developer.salesforce.com/docs/atlas.en-us.246.0.industries_reference.meta/industries_reference/business_rules_engine_actions.htm](https://developer.salesforce.com/docs/atlas.en-us.246.0.industries_reference.meta/industries_reference/business_rules_engine_actions.htm)
+
+
+      <img src="https://content.pstmn.io/3b34f906-e87d-47a6-900e-516ee295b8e7/aW1hZ2UucG5n" alt="" height="786" width="1532">
+  - name: REST > SObject
+  - name: REST > OpenAPI Schema (Beta)
+    description: >-
+      Generate an OpenAPI 3.0 Schema (OAS) document for selected sObjects REST API resources. The generated schema is specific to your Salesforce Org and reflects your customizations.
+
+
+      This is a [Beta feature](https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/openapi_beta.htm) that requires an activation step before it can be used.
+
+
+      Once the feature is enabled, run these requests to generate an OpenAPI schema:
+
+      1. Request OpenAPI schema
+
+      1. Retrieve OpenAPI schema
+  - name: REST > Lightning Metrics
+  - name: REST > List Views
+  - name: REST > Logs
+  - name: REST > Scheduling
+  - name: REST > Search
+  - name: REST > Processes
+  - name: REST > Support and Knowledge
+  - name: SOAP
+  - name: Subscription Management
+    description: "Use [Subscription Management API](https://developer.salesforce.com/docs/revenue/subscription-management/overview?_ga=2.87750811.2015639846.1688494637-2111347203.1688046721) to build a product-to-cash solution for your recurring business.\n\nYou can use this collection on its own or authenticate to a provisioned Trailhead playground org. If you authenticate to a playground org, use the Postman runner to populate object IDs in the Subscription Management environment variables. Then, you can make successful requests against your org.\n\n### Sign Up for a Trailhead Playground Org\n\nSign up for your org [here](https://trailhead.salesforce.com/promo/orgs/poc-revenue-cloud). When you receive the verification email, follow the instructions to verify your org.\n\n### Authenticate to Your Trailhead Playground Org\n\nUse the Salesforce Platform APIs authentication mechanism to authenticate to your Trailhead Playground org.\n\n1. Ensure the only org you're logged in to is your Subscription Management Trailhead Playground org.\n2. In Postman, ensure the **Subscription Management** environment is selected.\n3. Select the Collections tab then select the **Salesforce Platform APIs** folder.\n4. Open the **Authorization** tab.\n5. Ensure the **Type** is `OAuth 2.0`\n6. Click **Get New Access** Token.\n7. A success message appears briefly, and then you're redirected to the Manage Access Tokens dialog.\n8. Copy the instance_url to use later. Be sure to copy only the URL with no extra characters.\n9. Click **Use Token**.\n10. Open the Subscription Management environment, then open the **Variables** tab.\n11. In the **_endpoint** row, CURRENT VALUE column, paste the instance_url value that you copied in a previous step.\n12. Click **Save**.\n    \n\nYour Postman collection is now authenticated to the demo Subscription Management org.\n\n## Test Your Connection\n\nLet's verify that the connection is working.\n\n1. In **Collections**, select the **Salesforce Platform APIs** collection.\n2. Select the **Subscription Management** folder to expand it.\n2. Select the **Products** folder to expand it.\n3. Select **Query Eligible** Products to open the request in the main panel.\n4. Click **Send**.\n    \n\nPostman queries the active products in the demo org. Verify the success response.\n\n**NOTE:** You may need to turn **Follow Authorization header configuration** ON to retain the authorization header when a redirect happens to a different hostname.\n\nYou've successfully authenticated with your Trailhead Playground. To make further requests against this org, populate the environment variables with object IDs using the [Postman Collection Runner](postmanRunner.md).\n\n### Query Your Org IDs with the Postman Collection Runner\n\nUse the Postman Collection Runner to populate the environment variables with the IDs of important objects from your Trailhead Playground org.\n\n1. Ensure your environment is set to **Subscription Management.**\n2. Hover over the **Query Org \\[Postman Runner\\]** folder, select the three dots, then select **Run collection**.\n3. Ensure all the requests are checked and **Run manually** is selected. Select **Run \\[name of your collection\\]**.\n    \n\n<img src=\"https://resources.docs.salesforce.com/rel1/doc/en-us/static/misc/postman/post-runner.png\">\n\nPostman runs the queries in the Set Variables folder and populates the environment variables with the object IDs from your Trailhead Playground org.\n\nTo verify these steps, expand the Pricing folder and make a **Calculate Price (New Sale)** request. Verify the 201 Created response."
+  - name: Subscription Management > Query Org [Postman Runner]
+    description: >-
+      Use this Postman runner to query your Trailhead Playground org for object IDs, then populate those IDs in the Subscription Management environment variables. Then, make successful requests against a Subscription Management org.
+
+
+      For detailed instructions, see the documentation for the Subscription Management folder.
+  - name: Subscription Management > Products
+    description: >-
+      To view products that can be used with Subscription Management API, query your org for products with a related Product Selling Model. For more information, see [Products](https://developer.salesforce.com/docs/revenue/subscription-management/references/products?meta=Summary) in Salesforce Developers.
+  - name: Subscription Management > Pricing
+    description: >-
+      Use Subscription Management pricing to calculate the price of items in a subscription order, prorating the cost per period over the length of the subscription. System-level price adjustments, such as volume-based or term-based discounts, are calculated automatically. For more information see [Calculate Price](https://developer.salesforce.com/docs/revenue/subscription-management/references/prices?meta=Calculate+price) in Salesforce Developers.
+  - name: Subscription Management > Quotes
+  - name: Subscription Management > Orders
+    description: "A Subscription management Order must be related to an OrderAction and an AppUsageAssignment.\n\n- **OrderAction** - specifies whether the order is a new sale, a renewal, a cancellation, an amendment, or another type of order.\n- **AppUsageAssignment** - specifies that this order has the app usage type `SubscriptionManagement`.\n    \n\n**Use Price Book Entry, Not Product**\n\nNotice that you don't pass in the ID of the product that is ordered, because a product can have multiple Selling Model Options. For example, a product can be sold one time, on a monthly termed subscription, and as an evergreen subscription. Instead of passing in the product ID, you pass in the Price Book Entry that is related to the Product Selling Model Option.\n\nTo learn more about creating orders, see [Create an order](https://developer.salesforce.com/docs/revenue/subscription-management/references/orders?meta=Create+an+order) in Salesforce Developers."
+  - name: Subscription Management > Lifecycle Management
+    description: >-
+      **NOTE:** You must manually populate the IDs of your order and assets. This colleciton won't collect or store order and asset IDs.
+
+
+      An asset represents a product or service that a customer has purchased. Lifecycle-managed assets show information from the initial sale of a subscription through its end date, including any cancellations, quantity changes, or renewals. Use lifecycle-managed assets for an up-to-date view of your customer's purchases and your monthly recurring revenue.
+
+
+      For more information, see [Assets](https://developer.salesforce.com/docs/revenue/subscription-management/references/assets?meta=Summary) in Salesforce Developers.
+  - name: Tooling
+    description: "Use Tooling API to build custom development tools or apps for Lightning Platform applications. Tooling API’s SOQL capabilities for many metadata types allow you to retrieve smaller pieces of metadata. Smaller retrieves improve performance, which makes Tooling API a better fit for developing interactive applications. Tooling API provides SOAP and REST interfaces.\n\n\U0001F4DA [Tooling API Documentation](https://developer.salesforce.com/docs/atlas.en-us.api_tooling.meta/api_tooling/intro_api_tooling.htm)"
+  - name: Tooling > Sandbox
+    description: Manage sandboxes
+  - name: UI
+    description: "Build Salesforce UI for native mobile apps and custom web apps using the same API that Salesforce uses to build Lightning Experience and Salesforce for Android, iOS, and mobile web. Build user interfaces that let users work with records, list views, actions, favorites, and more. Not only do you get data and metadata in a single response, but the response matches metadata changes made to the org by Salesforce admins. You don’t have to worry about layouts, picklists, field-level security, or sharing—all you have to do is build an app that users love.\n\n\U0001F4DA [User Interface API Developer Guide](https://developer.salesforce.com/docs/atlas.en-us.uiapi.meta/uiapi/ui_api_get_started.htm)"
+  - name: UI > Records
+  - name: UI > Actions
+  - name: UI > Favorites
+  - name: UI > List Views
+    description: >-
+      Use these resources to get data and metadata about list views that are displayed in the Salesforce UI.
+  - name: UI > Apps
+paths:
+  /services/auth/headless/init/registration:
+    $ref: paths/Auth/Headless%20Identity%20API%20Demo.yaml#/~1services~1auth~1headless~1init~1registration
+  /services/oauth2/authorize:
+    $ref: paths/Auth/Headless%20Identity%20API%20Demo.yaml#/~1services~1oauth2~1authorize
+  /services/oauth2/token:
+    $ref: paths/Auth.yaml#/~1services~1oauth2~1token
+  /services/auth/headless/forgot_password:
+    $ref: paths/Auth/Headless%20Identity%20API%20Demo.yaml#/~1services~1auth~1headless~1forgot_password
+  /services/auth/headless/init/passwordless/login:
+    $ref: paths/Auth/Headless%20Identity%20API%20Demo.yaml#/~1services~1auth~1headless~1init~1passwordless~1login
+  /services/oauth2/userinfo:
+    $ref: paths/Subscription%20Management/Query%20Org%20%5BPostman%20Runner%5D.yaml#/~1services~1oauth2~1userinfo
+  /services/oauth2/revoke:
+    $ref: paths/Auth.yaml#/~1services~1oauth2~1revoke
+  /services/data/v{version}/apps/oauth/usage:
+    $ref: paths/Auth/External%20Client%20Apps/OAuth%20Usage.yaml#/~1services~1data~1v%7Bversion%7D~1apps~1oauth~1usage
+  /services/data/v{version}/apps/oauth/usage/{_appId}/users:
+    $ref: paths/Auth/External%20Client%20Apps/OAuth%20Usage.yaml#/~1services~1data~1v%7Bversion%7D~1apps~1oauth~1usage~1%7B_appId%7D~1users
+  /services/data/v{version}/apps/oauth/usage/{_appId}/{_userId}/tokens:
+    $ref: paths/Auth/External%20Client%20Apps/OAuth%20Usage.yaml#/~1services~1data~1v%7Bversion%7D~1apps~1oauth~1usage~1%7B_appId%7D~1%7B_userId%7D~1tokens
+  /services/data/v{version}/apps/oauth/usage/{_appId}/tokens:
+    $ref: paths/Auth/External%20Client%20Apps/OAuth%20Usage.yaml#/~1services~1data~1v%7Bversion%7D~1apps~1oauth~1usage~1%7B_appId%7D~1tokens
+  /services/data/v{version}/apps/oauth/usage/tokens/{_tokenId}:
+    $ref: paths/Auth/External%20Client%20Apps/OAuth%20Usage.yaml#/~1services~1data~1v%7Bversion%7D~1apps~1oauth~1usage~1tokens~1%7B_tokenId%7D
+  /services/data/v{version}/apps/oauth/credentials/{_appId}:
+    $ref: paths/Auth/External%20Client%20Apps/Credentials.yaml#/~1services~1data~1v%7Bversion%7D~1apps~1oauth~1credentials~1%7B_appId%7D
+  /services/data/v{version}/apps/oauth/credentials/{_appId}/{_consumerId}:
+    $ref: paths/Auth/External%20Client%20Apps/Credentials.yaml#/~1services~1data~1v%7Bversion%7D~1apps~1oauth~1credentials~1%7B_appId%7D~1%7B_consumerId%7D
+  /.well-known/openid-configuration:
+    $ref: paths/Auth.yaml#/~1.well-known~1openid-configuration
+  /.well-known/auth-configuration:
+    $ref: paths/Auth.yaml#/~1.well-known~1auth-configuration
+  /services/oauth2/introspect:
+    $ref: paths/Auth.yaml#/~1services~1oauth2~1introspect
+  /services/oauth2/register:
+    $ref: paths/Auth.yaml#/~1services~1oauth2~1register
+  /id/keys:
+    $ref: paths/Auth.yaml#/~1id~1keys
+  /id/{_orgId}/{_userId}:
+    $ref: paths/Auth.yaml#/~1id~1%7B_orgId%7D~1%7B_userId%7D
+  /services/data/v{version}/jobs/query/{_jobId}:
+    $ref: paths/Bulk%20v2/Query.yaml#/~1services~1data~1v%7Bversion%7D~1jobs~1query~1%7B_jobId%7D
+  /services/data/v{version}/jobs/query/{_jobId}/results:
+    $ref: paths/Bulk%20v2/Query.yaml#/~1services~1data~1v%7Bversion%7D~1jobs~1query~1%7B_jobId%7D~1results
+  /services/data/v{version}/jobs/query:
+    $ref: paths/Bulk%20v2/Query.yaml#/~1services~1data~1v%7Bversion%7D~1jobs~1query
+  /services/async/{version}/job:
+    $ref: paths/Bulk%20v1.yaml#/~1services~1async~1%7Bversion%7D~1job
+  /services/async/{version}/job/{_jobId}/spec:
+    $ref: paths/Bulk%20v1.yaml#/~1services~1async~1%7Bversion%7D~1job~1%7B_jobId%7D~1spec
+  /services/async/{version}/job/{_jobId}/batch:
+    $ref: paths/Bulk%20v1.yaml#/~1services~1async~1%7Bversion%7D~1job~1%7B_jobId%7D~1batch
+  /services/async/{version}/job/{_jobId}:
+    $ref: paths/Bulk%20v1.yaml#/~1services~1async~1%7Bversion%7D~1job~1%7B_jobId%7D
+  /services/async/{version}/job/{_jobId}/batch/{_batchId}/result:
+    $ref: paths/Bulk%20v1.yaml#/~1services~1async~1%7Bversion%7D~1job~1%7B_jobId%7D~1batch~1%7B_batchId%7D~1result
+  /services/async/{version}/job/{_jobId}/batch/{_batchId}/result/{batchResultId}:
+    $ref: paths/Bulk%20v1.yaml#/~1services~1async~1%7Bversion%7D~1job~1%7B_jobId%7D~1batch~1%7B_batchId%7D~1result~1%7BbatchResultId%7D
+  /services/data/v{version}/jobs/query/{_jobId}/resultPages:
+    $ref: paths/Bulk%20v2/Query.yaml#/~1services~1data~1v%7Bversion%7D~1jobs~1query~1%7B_jobId%7D~1resultPages
+  /services/data/v{version}/jobs/ingest:
+    $ref: paths/Bulk%20v2.yaml#/~1services~1data~1v%7Bversion%7D~1jobs~1ingest
+  /services/data/v{version}/jobs/ingest/{_jobId}/batches:
+    $ref: paths/Bulk%20v2.yaml#/~1services~1data~1v%7Bversion%7D~1jobs~1ingest~1%7B_jobId%7D~1batches
+  /services/data/v{version}/jobs/ingest/{_jobId}:
+    $ref: paths/Bulk%20v2.yaml#/~1services~1data~1v%7Bversion%7D~1jobs~1ingest~1%7B_jobId%7D
+  /services/data/v{version}/jobs/ingest/{_jobId}/successfulResults:
+    $ref: paths/Bulk%20v2.yaml#/~1services~1data~1v%7Bversion%7D~1jobs~1ingest~1%7B_jobId%7D~1successfulResults
+  /services/data/v{version}/jobs/ingest/{_jobId}/failedResults:
+    $ref: paths/Bulk%20v2.yaml#/~1services~1data~1v%7Bversion%7D~1jobs~1ingest~1%7B_jobId%7D~1failedResults
+  /services/data/v{version}/jobs/ingest/{_jobId}/unprocessedrecords:
+    $ref: paths/Bulk%20v2.yaml#/~1services~1data~1v%7Bversion%7D~1jobs~1ingest~1%7B_jobId%7D~1unprocessedrecords
+  /services/data/v{version}/composite:
+    $ref: paths/Subscription%20Management/Orders.yaml#/~1services~1data~1v%7Bversion%7D~1composite
+  /services/data/v{version}/composite/graph:
+    $ref: paths/Composite.yaml#/~1services~1data~1v%7Bversion%7D~1composite~1graph
+  /services/data/v{version}/composite/batch:
+    $ref: paths/Composite.yaml#/~1services~1data~1v%7Bversion%7D~1composite~1batch
+  /services/data/v{version}/composite/tree/{SOBJECT_API_NAME}:
+    $ref: paths/Composite.yaml#/~1services~1data~1v%7Bversion%7D~1composite~1tree~1%7BSOBJECT_API_NAME%7D
+  /services/data/v{version}/composite/sobjects:
+    $ref: paths/Composite.yaml#/~1services~1data~1v%7Bversion%7D~1composite~1sobjects
+  /services/data/v{version}/composite/sobjects/{SOBJECT_API_NAME}:
+    $ref: paths/Composite.yaml#/~1services~1data~1v%7Bversion%7D~1composite~1sobjects~1%7BSOBJECT_API_NAME%7D
+  /services/data/v{version}/composite/sobjects/{SOBJECT_API_NAME}/{FIELD_NAME}:
+    $ref: paths/Composite.yaml#/~1services~1data~1v%7Bversion%7D~1composite~1sobjects~1%7BSOBJECT_API_NAME%7D~1%7BFIELD_NAME%7D
+  /services/data/v{version}/connect/files/users/me:
+    $ref: paths/Connect/File.yaml#/~1services~1data~1v%7Bversion%7D~1connect~1files~1users~1me
+  /services/data/v{version}/connect/files/{FILE_ID}:
+    $ref: paths/Connect/File.yaml#/~1services~1data~1v%7Bversion%7D~1connect~1files~1%7BFILE_ID%7D
+  /services/data/v{version}/connect/files/{FILE_ID}/content:
+    $ref: paths/Connect/File.yaml#/~1services~1data~1v%7Bversion%7D~1connect~1files~1%7BFILE_ID%7D~1content
+  /services/data/v{version}/connect/files/{FILE_ID}/file-shares:
+    $ref: paths/Connect/File.yaml#/~1services~1data~1v%7Bversion%7D~1connect~1files~1%7BFILE_ID%7D~1file-shares
+  /services/data/v{version}/connect/files/{FILE_ID}/file-shares/link:
+    $ref: paths/Connect/File.yaml#/~1services~1data~1v%7Bversion%7D~1connect~1files~1%7BFILE_ID%7D~1file-shares~1link
+  /services/data/v{version}/named-credentials/credential:
+    $ref: paths/Connect/Named%20Credential.yaml#/~1services~1data~1v%7Bversion%7D~1named-credentials~1credential
+  /services/data/v{version}/named-credentials/external-credentials:
+    $ref: paths/Connect/Named%20Credential.yaml#/~1services~1data~1v%7Bversion%7D~1named-credentials~1external-credentials
+  /services/data/v{version}/named-credentials/named-credential-setup:
+    $ref: paths/Connect/Named%20Credential.yaml#/~1services~1data~1v%7Bversion%7D~1named-credentials~1named-credential-setup
+  /services/data/v{version}/named-credentials/external-credentials/{DEVELOPER_NAME}:
+    $ref: paths/Connect/Named%20Credential.yaml#/~1services~1data~1v%7Bversion%7D~1named-credentials~1external-credentials~1%7BDEVELOPER_NAME%7D
+  /services/data/v{version}/named-credentials/named-credential-setup/{DEVELOPER_NAME}:
+    $ref: paths/Connect/Named%20Credential.yaml#/~1services~1data~1v%7Bversion%7D~1named-credentials~1named-credential-setup~1%7BDEVELOPER_NAME%7D
+  /services/data/v{version}/chatter/feeds/news/me/feed-elements:
+    $ref: paths/Connect/Chatter/Feeds.yaml#/~1services~1data~1v%7Bversion%7D~1chatter~1feeds~1news~1me~1feed-elements
+  /services/data/v{version}/chatter/feeds/user-profile/{USER_ID}/feed-elements:
+    $ref: paths/Connect/Chatter/Feeds.yaml#/~1services~1data~1v%7Bversion%7D~1chatter~1feeds~1user-profile~1%7BUSER_ID%7D~1feed-elements
+  /services/data/v{version}/chatter/feeds/record/{RECORD_GROUP_ID}/feed-elements:
+    $ref: paths/Connect/Chatter/Feeds.yaml#/~1services~1data~1v%7Bversion%7D~1chatter~1feeds~1record~1%7BRECORD_GROUP_ID%7D~1feed-elements
+  /services/data/v{version}/chatter/feed-elements:
+    $ref: paths/Connect/Chatter/Feed%20Elements.yaml#/~1services~1data~1v%7Bversion%7D~1chatter~1feed-elements
+  /services/data/v{version}/chatter/feed-elements/batch:
+    $ref: paths/Connect/Chatter/Feed%20Elements.yaml#/~1services~1data~1v%7Bversion%7D~1chatter~1feed-elements~1batch
+  /services/data/v{version}/chatter/feed-elements/{FEED_ELEMENT_ID}:
+    $ref: paths/Connect/Chatter/Feed%20Elements.yaml#/~1services~1data~1v%7Bversion%7D~1chatter~1feed-elements~1%7BFEED_ELEMENT_ID%7D
+  /services/data/v{version}/chatter/feed-elements/{FEED_ELEMENT_ID}/capabilities/comments/items:
+    $ref: paths/Connect/Chatter/Feed%20Elements.yaml#/~1services~1data~1v%7Bversion%7D~1chatter~1feed-elements~1%7BFEED_ELEMENT_ID%7D~1capabilities~1comments~1items
+  /services/data/v{version}/chatter/comments/{COMMENT_ID}:
+    $ref: paths/Connect/Chatter/Comments.yaml#/~1services~1data~1v%7Bversion%7D~1chatter~1comments~1%7BCOMMENT_ID%7D
+  /services/data/v{version}/chatter/groups:
+    $ref: paths/Connect/Chatter/Groups.yaml#/~1services~1data~1v%7Bversion%7D~1chatter~1groups
+  /services/data/v{version}/chatter/groups/{GROUP_ID}/members/requests:
+    $ref: paths/Connect/Chatter/Groups.yaml#/~1services~1data~1v%7Bversion%7D~1chatter~1groups~1%7BGROUP_ID%7D~1members~1requests
+  /services/data/v{version}/chatter/groups/group/{GROUP_ID}/invite:
+    $ref: paths/Connect/Chatter/Groups.yaml#/~1services~1data~1v%7Bversion%7D~1chatter~1groups~1group~1%7BGROUP_ID%7D~1invite
+  /services/data/v{version}/chatter/groups/{GROUP_ID}/members:
+    $ref: paths/Connect/Chatter/Groups.yaml#/~1services~1data~1v%7Bversion%7D~1chatter~1groups~1%7BGROUP_ID%7D~1members
+  /services/data/v{version}/chatter/group-membership-requests/{CHATTER_GROUP_REQUEST_ID}:
+    $ref: paths/Connect/Chatter/Groups.yaml#/~1services~1data~1v%7Bversion%7D~1chatter~1group-membership-requests~1%7BCHATTER_GROUP_REQUEST_ID%7D
+  /services/data/v{version}/connect/user-profiles/me/photo:
+    $ref: paths/Connect/Chatter/User.yaml#/~1services~1data~1v%7Bversion%7D~1connect~1user-profiles~1me~1photo
+  /services/data/v{version}/chatter/users/me/messages:
+    $ref: paths/Connect/Chatter/User.yaml#/~1services~1data~1v%7Bversion%7D~1chatter~1users~1me~1messages
+  /services/data/v{version}/chatter/users/{USER_ID}/following:
+    $ref: paths/Connect/Chatter/User.yaml#/~1services~1data~1v%7Bversion%7D~1chatter~1users~1%7BUSER_ID%7D~1following
+  /services/data/v{version}/chatter/subscriptions/{SUBSCRIPTION_ID}:
+    $ref: paths/Connect/Chatter.yaml#/~1services~1data~1v%7Bversion%7D~1chatter~1subscriptions~1%7BSUBSCRIPTION_ID%7D
+  /services/data/v{version}/connect/business-rules/expression-set/version/{expressionSetVersionId}/dependencies:
+    $ref: paths/Connect/Industries/Business%20Rules%20Engine/expression-set/version.yaml#/~1services~1data~1v%7Bversion%7D~1connect~1business-rules~1expression-set~1version~1%7BexpressionSetVersionId%7D~1dependencies
+  /services/data/v{version}/connect/business-rules/expression-set:
+    $ref: paths/Connect/Industries/Business%20Rules%20Engine/expression-set.yaml#/~1services~1data~1v%7Bversion%7D~1connect~1business-rules~1expression-set
+  /services/data/v{version}/connect/business-rules/expression-set/{expressionSetId}:
+    $ref: paths/Connect/Industries/Business%20Rules%20Engine/expression-set.yaml#/~1services~1data~1v%7Bversion%7D~1connect~1business-rules~1expression-set~1%7BexpressionSetId%7D
+  /services/data/v{version}/connect/business-rules/expressionset/{expressionSetAPIName}:
+    $ref: paths/Connect/Industries/Business%20Rules%20Engine/expressionset.yaml#/~1services~1data~1v%7Bversion%7D~1connect~1business-rules~1expressionset~1%7BexpressionSetAPIName%7D
+  /services/data/v{version}/connect/business-rules/decision-matrices/{matrixUniqueName}:
+    $ref: paths/Connect/Industries/Business%20Rules%20Engine/decision-matrices.yaml#/~1services~1data~1v%7Bversion%7D~1connect~1business-rules~1decision-matrices~1%7BmatrixUniqueName%7D
+  /services/data/v{version}/connect/business-rules/decision-models/export:
+    $ref: paths/Connect/Industries/Business%20Rules%20Engine/decision-models.yaml#/~1services~1data~1v%7Bversion%7D~1connect~1business-rules~1decision-models~1export
+  /services/data/v{version}/connect/business-rules/decision-table/lookup/{decisionTableId}:
+    $ref: paths/Connect/Industries/Business%20Rules%20Engine/decision-table/lookup.yaml#/~1services~1data~1v%7Bversion%7D~1connect~1business-rules~1decision-table~1lookup~1%7BdecisionTableId%7D
+  /services/data/v{version}/connect/business-rules/decision-table/definitions:
+    $ref: paths/Connect/Industries/Business%20Rules%20Engine/decision-table.yaml#/~1services~1data~1v%7Bversion%7D~1connect~1business-rules~1decision-table~1definitions
+  /services/data/v{version}/connect/business-rules/decision-table/definitions/{decisionTableId}:
+    $ref: paths/Connect/Industries/Business%20Rules%20Engine/decision-table.yaml#/~1services~1data~1v%7Bversion%7D~1connect~1business-rules~1decision-table~1definitions~1%7BdecisionTableId%7D
+  /services/data/v{version}/connect/business-rules/decision-table/{decisionTableId}:
+    $ref: paths/Connect/Industries/Business%20Rules%20Engine/decision-table.yaml#/~1services~1data~1v%7Bversion%7D~1connect~1business-rules~1decision-table~1%7BdecisionTableId%7D
+  /services/data/v{version}/connect/business-rules/lookup-tables:
+    $ref: paths/Connect/Industries/Business%20Rules%20Engine/lookup-tables.yaml#/~1services~1data~1v%7Bversion%7D~1connect~1business-rules~1lookup-tables
+  /services/data/v{version}/commerce/webstores/{webstoreId}/carts/{webCartId}/cart-items:
+    $ref: paths/Connect/Industries/Commerce%20Webstore/Cart%20Items.yaml#/~1services~1data~1v%7Bversion%7D~1commerce~1webstores~1%7BwebstoreId%7D~1carts~1%7BwebCartId%7D~1cart-items
+  /services/data/v{version}/connect/fundraising/gifts:
+    $ref: paths/Connect/Industries/Fundraising/Gifts.yaml#/~1services~1data~1v%7Bversion%7D~1connect~1fundraising~1gifts
+  /services/data/v{version}/connect/fundraising/transactions/payment-updates:
+    $ref: paths/Connect/Industries/Fundraising/Gifts.yaml#/~1services~1data~1v%7Bversion%7D~1connect~1fundraising~1transactions~1payment-updates
+  /services/data/v{version}/connect/fundraising/commitments:
+    $ref: paths/Connect/Industries/Fundraising/Commitments.yaml#/~1services~1data~1v%7Bversion%7D~1connect~1fundraising~1commitments
+  /services/data/v{version}/connect/fundraising/commitments/{commitmentId}:
+    $ref: paths/Connect/Industries/Fundraising/Commitments.yaml#/~1services~1data~1v%7Bversion%7D~1connect~1fundraising~1commitments~1%7BcommitmentId%7D
+  /services/data/v{version}/connect/fundraising/commitments/payment-updates:
+    $ref: paths/Connect/Industries/Fundraising/Commitments.yaml#/~1services~1data~1v%7Bversion%7D~1connect~1fundraising~1commitments~1payment-updates
+  /services/data/v{version}/einstein/prompt-templates/{PROMPT_TEMPLATE_API_NAME}/generations:
+    $ref: paths/Connect/Einstein.yaml#/~1services~1data~1v%7Bversion%7D~1einstein~1prompt-templates~1%7BPROMPT_TEMPLATE_API_NAME%7D~1generations
+  /services/data/v{version}/einstein/ai-evaluations/runs:
+    $ref: paths/Connect/Einstein.yaml#/~1services~1data~1v%7Bversion%7D~1einstein~1ai-evaluations~1runs
+  /services/data/v{version}/einstein/ai-evaluations/runs/{runId}:
+    $ref: paths/Connect/Einstein.yaml#/~1services~1data~1v%7Bversion%7D~1einstein~1ai-evaluations~1runs~1%7BrunId%7D
+  /services/data/v{version}/einstein/ai-evaluations/runs/{runId}/results:
+    $ref: paths/Connect/Einstein.yaml#/~1services~1data~1v%7Bversion%7D~1einstein~1ai-evaluations~1runs~1%7BrunId%7D~1results
+  /services/data/v{version}/connect/conversation/{conversationIdentifier}/entries:
+    $ref: paths/Connect/Messaging.yaml#/~1services~1data~1v%7Bversion%7D~1connect~1conversation~1%7BconversationIdentifier%7D~1entries
+  /services/data/v{version}/smartdatadiscovery/predict:
+    $ref: paths/Einstein%20Prediction%20Service.yaml#/~1services~1data~1v%7Bversion%7D~1smartdatadiscovery~1predict
+  /services/data/v{version}/smartdatadiscovery/predictionDefinitions:
+    $ref: paths/Einstein%20Prediction%20Service.yaml#/~1services~1data~1v%7Bversion%7D~1smartdatadiscovery~1predictionDefinitions
+  /services/data/v{version}/smartdatadiscovery/predictionDefinitions/{PREDICTION_DEFINITION_ID}:
+    $ref: paths/Einstein%20Prediction%20Service.yaml#/~1services~1data~1v%7Bversion%7D~1smartdatadiscovery~1predictionDefinitions~1%7BPREDICTION_DEFINITION_ID%7D
+  /services/data/v{version}/smartdatadiscovery/predictionDefinitions/{PREDICTION_DEFINITION_ID}/models:
+    $ref: paths/Einstein%20Prediction%20Service.yaml#/~1services~1data~1v%7Bversion%7D~1smartdatadiscovery~1predictionDefinitions~1%7BPREDICTION_DEFINITION_ID%7D~1models
+  /services/data/v{version}/tooling/sobjects/PlatformEventChannel:
+    $ref: paths/Event%20Platform/Custom%20Channels/Platform%20Event.yaml#/~1services~1data~1v%7Bversion%7D~1tooling~1sobjects~1PlatformEventChannel
+  /services/data/v{version}/tooling/sobjects/PlatformEventChannel/{PLATFORM_EVENT_CHANNEL_ID}:
+    $ref: paths/Event%20Platform/Custom%20Channels/Platform%20Event.yaml#/~1services~1data~1v%7Bversion%7D~1tooling~1sobjects~1PlatformEventChannel~1%7BPLATFORM_EVENT_CHANNEL_ID%7D
+  /services/data/v{version}/tooling/sobjects/PlatformEventChannelMember/{PLATFORM_EVENT_CHANNEL_MEMBER_ID}:
+    $ref: paths/Event%20Platform/Custom%20Channels/Platform%20Event.yaml#/~1services~1data~1v%7Bversion%7D~1tooling~1sobjects~1PlatformEventChannelMember~1%7BPLATFORM_EVENT_CHANNEL_MEMBER_ID%7D
+  /services/data/v{version}/tooling/sobjects/PlatformEventChannelMember:
+    $ref: paths/Event%20Platform/Custom%20Channels/Platform%20Event.yaml#/~1services~1data~1v%7Bversion%7D~1tooling~1sobjects~1PlatformEventChannelMember
+  /services/data/v{version}/tooling/query:
+    $ref: paths/Tooling.yaml#/~1services~1data~1v%7Bversion%7D~1tooling~1query
+  /services/data/v{version}/tooling/sobjects/PlatformEventChannel/describe:
+    $ref: paths/Event%20Platform/Custom%20Channels.yaml#/~1services~1data~1v%7Bversion%7D~1tooling~1sobjects~1PlatformEventChannel~1describe
+  /services/data/v{version}/sobjects/{EventApiName}:
+    $ref: paths/Event%20Platform/Publish%20Platform%20Events.yaml#/~1services~1data~1v%7Bversion%7D~1sobjects~1%7BEventApiName%7D
+  /services/Soap/u/{version}:
+    $ref: paths/Event%20Platform/Publish%20Platform%20Events.yaml#/~1services~1Soap~1u~1%7Bversion%7D
+  /services/data/v{version}/tooling/sobjects/NamedCredential/{NAMED_CREDENTIAL_ID}:
+    $ref: paths/Event%20Platform/Event%20Relay%20Configuration/Named%20Credential.yaml#/~1services~1data~1v%7Bversion%7D~1tooling~1sobjects~1NamedCredential~1%7BNAMED_CREDENTIAL_ID%7D
+  /services/data/v{version}/tooling/sobjects/NamedCredential:
+    $ref: paths/Event%20Platform/Event%20Relay%20Configuration/Named%20Credential.yaml#/~1services~1data~1v%7Bversion%7D~1tooling~1sobjects~1NamedCredential
+  /services/data/v{version}/tooling/sobjects/EventRelayConfig/describe:
+    $ref: paths/Event%20Platform/Event%20Relay%20Configuration/Event%20Relay%20Config.yaml#/~1services~1data~1v%7Bversion%7D~1tooling~1sobjects~1EventRelayConfig~1describe
+  /services/data/v{version}/tooling/sobjects/EventRelayConfig:
+    $ref: paths/Event%20Platform/Event%20Relay%20Configuration/Event%20Relay%20Config.yaml#/~1services~1data~1v%7Bversion%7D~1tooling~1sobjects~1EventRelayConfig
+  /services/data/v{version}/tooling/sobjects/EventRelayConfig/{EVENT_RELAY_CONFIG_ID}:
+    $ref: paths/Event%20Platform/Event%20Relay%20Configuration/Event%20Relay%20Config.yaml#/~1services~1data~1v%7Bversion%7D~1tooling~1sobjects~1EventRelayConfig~1%7BEVENT_RELAY_CONFIG_ID%7D
+  /services/data/v{version}/query:
+    $ref: paths/Subscription%20Management/Products.yaml#/~1services~1data~1v%7Bversion%7D~1query
+  /services/data/v{version}/sobjects/EventRelayFeedback/{EVENT_RELAY_FEEDBACK_ID}:
+    $ref: paths/Event%20Platform/Event%20Relay%20Configuration/Event%20Relay%20Feedback.yaml#/~1services~1data~1v%7Bversion%7D~1sobjects~1EventRelayFeedback~1%7BEVENT_RELAY_FEEDBACK_ID%7D
+  /services/data/v{version}/sobjects/EventRelayFeedback/describe:
+    $ref: paths/Event%20Platform/Event%20Relay%20Configuration/Event%20Relay%20Feedback.yaml#/~1services~1data~1v%7Bversion%7D~1sobjects~1EventRelayFeedback~1describe
+  /services/data/v{version}/event/eventSchema/{SCHEMA_ID}:
+    $ref: paths/Event%20Platform/Event%20Schema.yaml#/~1services~1data~1v%7Bversion%7D~1event~1eventSchema~1%7BSCHEMA_ID%7D
+  /services/data/v{version}/sobjects/{EVENT_NAME}/eventSchema:
+    $ref: paths/Event%20Platform/Event%20Schema.yaml#/~1services~1data~1v%7Bversion%7D~1sobjects~1%7BEVENT_NAME%7D~1eventSchema
+  /services/data/v{version}/tooling/sobjects/ManagedEventSubscription:
+    $ref: paths/Event%20Platform/Managed%20Event%20Subscriptions.yaml#/~1services~1data~1v%7Bversion%7D~1tooling~1sobjects~1ManagedEventSubscription
+  /services/data/v{version}/tooling/sobjects/ManagedEventSubscription/{managedEventSubscriptionId}:
+    $ref: paths/Event%20Platform/Managed%20Event%20Subscriptions.yaml#/~1services~1data~1v%7Bversion%7D~1tooling~1sobjects~1ManagedEventSubscription~1%7BmanagedEventSubscriptionId%7D
+  /services/data/v{version}/tooling/sobjects/ManagedEventSubscription/describe:
+    $ref: paths/Event%20Platform/Managed%20Event%20Subscriptions.yaml#/~1services~1data~1v%7Bversion%7D~1tooling~1sobjects~1ManagedEventSubscription~1describe
+  /services/apexrest/SBQQ/ServiceRouter:
+    $ref: paths/Industries/CPQ/Quote%20API.yaml#/~1services~1apexrest~1SBQQ~1ServiceRouter
+  /services/data/v{version}/loyalty-programs/{loyaltyProgramName}/corporate-member-enrollments:
+    $ref: paths/Industries/Loyalty%20Management/Basic%20Resources.yaml#/~1services~1data~1v%7Bversion%7D~1loyalty-programs~1%7BloyaltyProgramName%7D~1corporate-member-enrollments
+  /services/data/v{version}/loyalty-programs/{loyaltyProgramName}/individual-member-enrollments:
+    $ref: paths/Industries/Loyalty%20Management/Basic%20Resources.yaml#/~1services~1data~1v%7Bversion%7D~1loyalty-programs~1%7BloyaltyProgramName%7D~1individual-member-enrollments
+  /services/data/v{version}/connect/loyalty/member/{memberId}/memberbenefits:
+    $ref: paths/Industries/Loyalty%20Management/Basic%20Resources.yaml#/~1services~1data~1v%7Bversion%7D~1connect~1loyalty~1member~1%7BmemberId%7D~1memberbenefits
+  /services/data/v{version}/loyalty-programs/{loyaltyProgramName}/members:
+    $ref: paths/Industries/Loyalty%20Management/Basic%20Resources.yaml#/~1services~1data~1v%7Bversion%7D~1loyalty-programs~1%7BloyaltyProgramName%7D~1members
+  /services/data/v{version}/loyalty/programs/{loyaltyProgramName}/members/{membershipNumber}/vouchers/{voucherCode}/redeem:
+    $ref: paths/Industries/Loyalty%20Management/Basic%20Resources.yaml#/~1services~1data~1v%7Bversion%7D~1loyalty~1programs~1%7BloyaltyProgramName%7D~1members~1%7BmembershipNumber%7D~1vouchers~1%7BvoucherCode%7D~1redeem
+  /services/data/v{version}/connect/loyalty/programs/{loyaltyProgramName}/transaction-history:
+    $ref: paths/Industries/Loyalty%20Management/Basic%20Resources.yaml#/~1services~1data~1v%7Bversion%7D~1connect~1loyalty~1programs~1%7BloyaltyProgramName%7D~1transaction-history
+  /services/data/v{version}/loyalty/programs/{loyaltyProgramName}/members/{membershipNumber}/transaction-ledger-summary:
+    $ref: paths/Industries/Loyalty%20Management/Basic%20Resources.yaml#/~1services~1data~1v%7Bversion%7D~1loyalty~1programs~1%7BloyaltyProgramName%7D~1members~1%7BmembershipNumber%7D~1transaction-ledger-summary
+  /services/data/v{version}/connect/realtime/loyalty/programs/{loyaltyProgramName}:
+    $ref: paths/Industries/Loyalty%20Management/Basic%20Resources.yaml#/~1services~1data~1v%7Bversion%7D~1connect~1realtime~1loyalty~1programs~1%7BloyaltyProgramName%7D
+  /services/data/v{version}/loyalty/programs/{loyaltyProgramName}/members/{membershipNumber}/vouchers:
+    $ref: paths/Industries/Loyalty%20Management/Basic%20Resources.yaml#/~1services~1data~1v%7Bversion%7D~1loyalty~1programs~1%7BloyaltyProgramName%7D~1members~1%7BmembershipNumber%7D~1vouchers
+  /services/data/v{version}/connect/loyalty/programs/{loyaltyProgramName}/program-processes/{processName}:
+    $ref: paths/Industries/Loyalty%20Management/Loyalty%20Program%20Process.yaml#/~1services~1data~1v%7Bversion%7D~1connect~1loyalty~1programs~1%7BloyaltyProgramName%7D~1program-processes~1%7BprocessName%7D
+  /services/data/v{version}/game/participant/{participantId}/games:
+    $ref: paths/Industries/Loyalty%20Management/Gamification.yaml#/~1services~1data~1v%7Bversion%7D~1game~1participant~1%7BparticipantId%7D~1games
+  /services/data/v{version}/game/gameparticipantreward/{gameParticipantRewardId}/game-reward:
+    $ref: paths/Industries/Loyalty%20Management/Gamification.yaml#/~1services~1data~1v%7Bversion%7D~1game~1gameparticipantreward~1%7BgameParticipantRewardId%7D~1game-reward
+  /services/data/v{version}/global-promotions-management/eligible-promotions:
+    $ref: paths/Industries/Loyalty%20Management/Promotion.yaml#/~1services~1data~1v%7Bversion%7D~1global-promotions-management~1eligible-promotions
+  /services/data/v{version}/global-promotions-management/promotions:
+    $ref: paths/Industries/Loyalty%20Management/Promotion.yaml#/~1services~1data~1v%7Bversion%7D~1global-promotions-management~1promotions
+  /services/data/v{version}/global-promotions-management/promotions/{promotionId}:
+    $ref: paths/Industries/Loyalty%20Management/Promotion.yaml#/~1services~1data~1v%7Bversion%7D~1global-promotions-management~1promotions~1%7BpromotionId%7D
+  /services/apexrest/{NAMESPACE}/v1/integrationprocedure/{TYPE_SUBTYPE}:
+    $ref: paths/Industries/OmniStudio.yaml#/~1services~1apexrest~1%7BNAMESPACE%7D~1v1~1integrationprocedure~1%7BTYPE_SUBTYPE%7D
+  /services/data/v{version}/graphql:
+    $ref: paths/GraphQL/Mutation.yaml#/~1services~1data~1v%7Bversion%7D~1graphql
+  /services/Soap/m/{version}:
+    $ref: paths/Metadata.yaml#/~1services~1Soap~1m~1%7Bversion%7D
+  /services/data/v{version}/actions/custom/runExpressionSet/{expressionSetAPIName}:
+    $ref: paths/REST/Actions/custom/Business%20Rules%20Engine%20Invocable%20Actions.yaml#/~1services~1data~1v%7Bversion%7D~1actions~1custom~1runExpressionSet~1%7BexpressionSetAPIName%7D
+  /services/data/v{version}/actions/custom/runDecisionMatrix/{UniqueName}:
+    $ref: paths/REST/Actions/custom/Business%20Rules%20Engine%20Invocable%20Actions.yaml#/~1services~1data~1v%7Bversion%7D~1actions~1custom~1runDecisionMatrix~1%7BUniqueName%7D
+  /services/data/v{version}/actions/standard:
+    $ref: paths/REST/Actions.yaml#/~1services~1data~1v%7Bversion%7D~1actions~1standard
+  /services/data/v{version}/actions/custom:
+    $ref: paths/REST/Actions.yaml#/~1services~1data~1v%7Bversion%7D~1actions~1custom
+  /services/data/v{version}/actions/custom/flow/{flowApiName}:
+    $ref: paths/REST/Actions.yaml#/~1services~1data~1v%7Bversion%7D~1actions~1custom~1flow~1%7BflowApiName%7D
+  /services/data/v{version}/quickActions:
+    $ref: paths/REST/Actions.yaml#/~1services~1data~1v%7Bversion%7D~1quickActions
+  /services/data/v{version}/sobjects:
+    $ref: paths/REST/SObject.yaml#/~1services~1data~1v%7Bversion%7D~1sobjects
+  /services/data/v54.0/sobjects/ContentVersion/0681k0000020wLFAAY/VersionData:
+    $ref: paths/REST/SObject.yaml#/~1services~1data~1v54.0~1sobjects~1ContentVersion~10681k0000020wLFAAY~1VersionData
+  /services/data/v{version}/sobjects/{SOBJECT_API_NAME}:
+    $ref: paths/REST/SObject.yaml#/~1services~1data~1v%7Bversion%7D~1sobjects~1%7BSOBJECT_API_NAME%7D
+  /services/data/v{version}/sobjects/{SOBJECT_API_NAME}/describe:
+    $ref: paths/REST/SObject.yaml#/~1services~1data~1v%7Bversion%7D~1sobjects~1%7BSOBJECT_API_NAME%7D~1describe
+  /services/data/v{version}/sobjects/{SOBJECT_API_NAME}/deleted:
+    $ref: paths/REST/SObject.yaml#/~1services~1data~1v%7Bversion%7D~1sobjects~1%7BSOBJECT_API_NAME%7D~1deleted
+  /services/data/v{version}/sobjects/{SOBJECT_API_NAME}/updated:
+    $ref: paths/REST/SObject.yaml#/~1services~1data~1v%7Bversion%7D~1sobjects~1%7BSOBJECT_API_NAME%7D~1updated
+  /services/data/v{version}/sobjects/{SOBJECT_API_NAME}/describe/namedLayouts/{LAYOUT_NAME}:
+    $ref: paths/REST/SObject.yaml#/~1services~1data~1v%7Bversion%7D~1sobjects~1%7BSOBJECT_API_NAME%7D~1describe~1namedLayouts~1%7BLAYOUT_NAME%7D
+  /services/data/v{version}/sobjects/{SOBJECT_API_NAME}/{RECORD_ID}:
+    $ref: paths/REST/SObject.yaml#/~1services~1data~1v%7Bversion%7D~1sobjects~1%7BSOBJECT_API_NAME%7D~1%7BRECORD_ID%7D
+  /services/data/v{version}/sobjects/{SOBJECT_API_NAME}/{FIELD_NAME}/{FIELD_VALUE}:
+    $ref: paths/REST/SObject.yaml#/~1services~1data~1v%7Bversion%7D~1sobjects~1%7BSOBJECT_API_NAME%7D~1%7BFIELD_NAME%7D~1%7BFIELD_VALUE%7D
+  /services/data/v{version}/sobjects/{SOBJECT_API_NAME}/{RECORD_ID}/{BLOB_FIELD}:
+    $ref: paths/REST/SObject.yaml#/~1services~1data~1v%7Bversion%7D~1sobjects~1%7BSOBJECT_API_NAME%7D~1%7BRECORD_ID%7D~1%7BBLOB_FIELD%7D
+  /services/data/v{version}/sobjects/{SOBJECT_API_NAME}/describe/approvalLayouts/{APPROVAL_PROCESS_NAME}:
+    $ref: paths/REST/SObject.yaml#/~1services~1data~1v%7Bversion%7D~1sobjects~1%7BSOBJECT_API_NAME%7D~1describe~1approvalLayouts~1%7BAPPROVAL_PROCESS_NAME%7D
+  /services/data/v{version}/sobjects/{SOBJECT_API_NAME}/describe/describe/compactLayouts:
+    $ref: paths/REST/SObject.yaml#/~1services~1data~1v%7Bversion%7D~1sobjects~1%7BSOBJECT_API_NAME%7D~1describe~1describe~1compactLayouts
+  /services/data/v{version}/sobjects/Global/describe/layouts:
+    $ref: paths/REST/SObject.yaml#/~1services~1data~1v%7Bversion%7D~1sobjects~1Global~1describe~1layouts
+  /services/data/v{version}/sobjects/{SOBJECT_API_NAME}/describe/layouts:
+    $ref: paths/REST/SObject.yaml#/~1services~1data~1v%7Bversion%7D~1sobjects~1%7BSOBJECT_API_NAME%7D~1describe~1layouts
+  /services/data/v{version}/sobjects/{SOBJECT_API_NAME}/describe/layouts/{RECORD_TYPE_ID}:
+    $ref: paths/REST/SObject.yaml#/~1services~1data~1v%7Bversion%7D~1sobjects~1%7BSOBJECT_API_NAME%7D~1describe~1layouts~1%7BRECORD_TYPE_ID%7D
+  /services/data/v{version}/sobjects/PlatformAction:
+    $ref: paths/REST/SObject.yaml#/~1services~1data~1v%7Bversion%7D~1sobjects~1PlatformAction
+  /services/data/v{version}/sobjects/{SOBJECT_API_NAME}/quickActions:
+    $ref: paths/REST/SObject.yaml#/~1services~1data~1v%7Bversion%7D~1sobjects~1%7BSOBJECT_API_NAME%7D~1quickActions
+  /services/data/v{version}/sobjects/{SOBJECT_API_NAME}/{RECORD_ID}/richTextImageFields/{FIELD_NAME}/{CONTENT_REFERENCE_ID}:
+    $ref: paths/REST/SObject.yaml#/~1services~1data~1v%7Bversion%7D~1sobjects~1%7BSOBJECT_API_NAME%7D~1%7BRECORD_ID%7D~1richTextImageFields~1%7BFIELD_NAME%7D~1%7BCONTENT_REFERENCE_ID%7D
+  /services/data/v{version}/sobjects/{SOBJECT_API_NAME}/{RECORD_ID}/{RELATIONSHIP_FIELD_NAME}:
+    $ref: paths/REST/SObject.yaml#/~1services~1data~1v%7Bversion%7D~1sobjects~1%7BSOBJECT_API_NAME%7D~1%7BRECORD_ID%7D~1%7BRELATIONSHIP_FIELD_NAME%7D
+  /services/data/v{version}/sobjects/{SOBJECT_API_NAME}/suggestedArticles:
+    $ref: paths/REST/SObject.yaml#/~1services~1data~1v%7Bversion%7D~1sobjects~1%7BSOBJECT_API_NAME%7D~1suggestedArticles
+  /services/data/v{version}/sobjects/User/{USER_ID}/password:
+    $ref: paths/REST/SObject.yaml#/~1services~1data~1v%7Bversion%7D~1sobjects~1User~1%7BUSER_ID%7D~1password
+  /services/data/v{version}/sobjects/SelfServiceUser/{USER_ID}/password:
+    $ref: paths/REST/SObject.yaml#/~1services~1data~1v%7Bversion%7D~1sobjects~1SelfServiceUser~1%7BUSER_ID%7D~1password
+  /services/data/v{version}/compactLayouts:
+    $ref: paths/REST/SObject.yaml#/~1services~1data~1v%7Bversion%7D~1compactLayouts
+  /services/data/v{version}/async/specifications/oas3:
+    $ref: paths/REST/OpenAPI%20Schema%20%28Beta%29.yaml#/~1services~1data~1v%7Bversion%7D~1async~1specifications~1oas3
+  /services/data/v{version}/async/specifications/oas3/{schemaId}:
+    $ref: paths/REST/OpenAPI%20Schema%20%28Beta%29.yaml#/~1services~1data~1v%7Bversion%7D~1async~1specifications~1oas3~1%7BschemaId%7D
+  /services/data/v{version}/sobjects/LightningToggleMetrics:
+    $ref: paths/REST/Lightning%20Metrics.yaml#/~1services~1data~1v%7Bversion%7D~1sobjects~1LightningToggleMetrics
+  /services/data/v{version}/sobjects/LightningUsageByBrowserMetrics:
+    $ref: paths/REST/Lightning%20Metrics.yaml#/~1services~1data~1v%7Bversion%7D~1sobjects~1LightningUsageByBrowserMetrics
+  /services/data/v{version}/sobjects/LightningUsageByAppTypeMetrics:
+    $ref: paths/REST/Lightning%20Metrics.yaml#/~1services~1data~1v%7Bversion%7D~1sobjects~1LightningUsageByAppTypeMetrics
+  /services/data/v{version}/sobjects/LightningUsageByFlexiPageMetrics:
+    $ref: paths/REST/Lightning%20Metrics.yaml#/~1services~1data~1v%7Bversion%7D~1sobjects~1LightningUsageByFlexiPageMetrics
+  /services/data/v{version}/sobjects/LightningExitByPageMetrics:
+    $ref: paths/REST/Lightning%20Metrics.yaml#/~1services~1data~1v%7Bversion%7D~1sobjects~1LightningExitByPageMetrics
+  /services/data/v{version}/sobjects/{SOBJECT_API_NAME}/listviews:
+    $ref: paths/REST/List%20Views.yaml#/~1services~1data~1v%7Bversion%7D~1sobjects~1%7BSOBJECT_API_NAME%7D~1listviews
+  /services/data/v{version}/sobjects/{SOBJECT_API_NAME}/listviews/{QUERY_LOCATOR}/describe:
+    $ref: paths/REST/List%20Views.yaml#/~1services~1data~1v%7Bversion%7D~1sobjects~1%7BSOBJECT_API_NAME%7D~1listviews~1%7BQUERY_LOCATOR%7D~1describe
+  /services/data/v{version}/sobjects/{SOBJECT_API_NAME}/listviews/{LIST_VIEW_ID}/results:
+    $ref: paths/REST/List%20Views.yaml#/~1services~1data~1v%7Bversion%7D~1sobjects~1%7BSOBJECT_API_NAME%7D~1listviews~1%7BLIST_VIEW_ID%7D~1results
+  /services/data/v{version}/sobjects/{SOBJECT_API_NAME}/listviews/recent:
+    $ref: paths/REST/List%20Views.yaml#/~1services~1data~1v%7Bversion%7D~1sobjects~1%7BSOBJECT_API_NAME%7D~1listviews~1recent
+  /services/data/v{version}/sobjects/EventLogFile/{id}/LogFile:
+    $ref: paths/REST/Logs.yaml#/~1services~1data~1v%7Bversion%7D~1sobjects~1EventLogFile~1%7Bid%7D~1LogFile
+  /services/data/v{version}/scheduling:
+    $ref: paths/REST/Scheduling.yaml#/~1services~1data~1v%7Bversion%7D~1scheduling
+  /services/data/v{version}/scheduling/getAppointmentSlots:
+    $ref: paths/REST/Scheduling.yaml#/~1services~1data~1v%7Bversion%7D~1scheduling~1getAppointmentSlots
+  /services/data/v{version}/scheduling/getAppointmentCandidates:
+    $ref: paths/REST/Scheduling.yaml#/~1services~1data~1v%7Bversion%7D~1scheduling~1getAppointmentCandidates
+  /services/data/v{version}/search:
+    $ref: paths/REST/Search.yaml#/~1services~1data~1v%7Bversion%7D~1search
+  /services/data/v{version}/search/scopeOrder:
+    $ref: paths/REST/Search.yaml#/~1services~1data~1v%7Bversion%7D~1search~1scopeOrder
+  /services/data/v{version}/search/layout:
+    $ref: paths/REST/Search.yaml#/~1services~1data~1v%7Bversion%7D~1search~1layout
+  /services/data/v{version}/search/suggestions:
+    $ref: paths/REST/Search.yaml#/~1services~1data~1v%7Bversion%7D~1search~1suggestions
+  /services/data/v{version}/search/suggestSearchQueries:
+    $ref: paths/REST/Search.yaml#/~1services~1data~1v%7Bversion%7D~1search~1suggestSearchQueries
+  /services/data/v{version}/parameterizedSearch:
+    $ref: paths/REST/Search.yaml#/~1services~1data~1v%7Bversion%7D~1parameterizedSearch
+  /services/data/v{version}/sobjects/relevantItems:
+    $ref: paths/REST/Search.yaml#/~1services~1data~1v%7Bversion%7D~1sobjects~1relevantItems
+  /services/data/v{version}/process/approvals:
+    $ref: paths/REST/Processes.yaml#/~1services~1data~1v%7Bversion%7D~1process~1approvals
+  /services/data/v{version}/process/rules:
+    $ref: paths/REST/Processes.yaml#/~1services~1data~1v%7Bversion%7D~1process~1rules
+  /services/data/v{version}/support/embeddedservice/configuration/{EMBEDDED_SERVICE_CONFIG_DEVELOPERNAME}:
+    $ref: paths/REST/Support%20and%20Knowledge.yaml#/~1services~1data~1v%7Bversion%7D~1support~1embeddedservice~1configuration~1%7BEMBEDDED_SERVICE_CONFIG_DEVELOPERNAME%7D
+  /services/data/v{version}/support/dataCategoryGroups:
+    $ref: paths/REST/Support%20and%20Knowledge.yaml#/~1services~1data~1v%7Bversion%7D~1support~1dataCategoryGroups
+  /services/data/v{version}/support/dataCategoryGroups/{GROUP}/dataCategories/{CATEGORY}:
+    $ref: paths/REST/Support%20and%20Knowledge.yaml#/~1services~1data~1v%7Bversion%7D~1support~1dataCategoryGroups~1%7BGROUP%7D~1dataCategories~1%7BCATEGORY%7D
+  /services/data/v{version}/support/knowledgeArticles:
+    $ref: paths/REST/Support%20and%20Knowledge.yaml#/~1services~1data~1v%7Bversion%7D~1support~1knowledgeArticles
+  /services/data/v{version}/support/knowledgeArticles/{ARTICLE_ID}:
+    $ref: paths/REST/Support%20and%20Knowledge.yaml#/~1services~1data~1v%7Bversion%7D~1support~1knowledgeArticles~1%7BARTICLE_ID%7D
+  /services/data/v{version}/knowledgeManagement/settings:
+    $ref: paths/REST/Support%20and%20Knowledge.yaml#/~1services~1data~1v%7Bversion%7D~1knowledgeManagement~1settings
+  /services/apexrest/{urlMapping}:
+    $ref: paths/REST.yaml#/~1services~1apexrest~1%7BurlMapping%7D
+  /services/data:
+    $ref: paths/Subscription%20Management/Query%20Org%20%5BPostman%20Runner%5D.yaml#/~1services~1data
+  /services/data/v{version}:
+    $ref: paths/REST.yaml#/~1services~1data~1v%7Bversion%7D
+  /services/data/v{version}/limits:
+    $ref: paths/REST.yaml#/~1services~1data~1v%7Bversion%7D~1limits
+  /services/data/v{version}/appMenu:
+    $ref: paths/REST.yaml#/~1services~1data~1v%7Bversion%7D~1appMenu
+  /services/data/v{version}/consent/action/action:
+    $ref: paths/REST.yaml#/~1services~1data~1v%7Bversion%7D~1consent~1action~1action
+  /services/data/v{version}/sobjects/OpportunityLineItem/{OPPORTUNITY_LINE_ITEM_ID}/OpportunityLineItemSchedules:
+    $ref: paths/REST.yaml#/~1services~1data~1v%7Bversion%7D~1sobjects~1OpportunityLineItem~1%7BOPPORTUNITY_LINE_ITEM_ID%7D~1OpportunityLineItemSchedules
+  /services/data/v{version}/queryAll:
+    $ref: paths/REST.yaml#/~1services~1data~1v%7Bversion%7D~1queryAll
+  /services/data/v{version}/limits/recordCount:
+    $ref: paths/REST.yaml#/~1services~1data~1v%7Bversion%7D~1limits~1recordCount
+  /services/data/v{version}/tabs:
+    $ref: paths/REST.yaml#/~1services~1data~1v%7Bversion%7D~1tabs
+  /services/data/v{version}/theme:
+    $ref: paths/REST.yaml#/~1services~1data~1v%7Bversion%7D~1theme
+  /services/data/v{version}/named/query/{NQ_API_NAME}:
+    $ref: paths/REST.yaml#/~1services~1data~1v%7Bversion%7D~1named~1query~1%7BNQ_API_NAME%7D
+  /services/Soap/c/{version}:
+    $ref: paths/SOAP.yaml#/~1services~1Soap~1c~1%7Bversion%7D
+  /services/data/v{version}/commerce/payments/payment-methods:
+    $ref: paths/Subscription%20Management/Query%20Org%20%5BPostman%20Runner%5D.yaml#/~1services~1data~1v%7Bversion%7D~1commerce~1payments~1payment-methods
+  /services/data/v{version}/commerce/catalog-products/actions/get-products:
+    $ref: paths/Subscription%20Management/Products.yaml#/~1services~1data~1v%7Bversion%7D~1commerce~1catalog-products~1actions~1get-products
+  /services/data/v{version}/commerce/pricing/salestransaction/actions/calculate-price:
+    $ref: paths/Subscription%20Management/Pricing.yaml#/~1services~1data~1v%7Bversion%7D~1commerce~1pricing~1salestransaction~1actions~1calculate-price
+  /services/data/v{version}/commerce/quotes/actions/place:
+    $ref: paths/Subscription%20Management/Quotes.yaml#/~1services~1data~1v%7Bversion%7D~1commerce~1quotes~1actions~1place
+  /services/data/v{version}/actions/standard/createOrderFromQuote:
+    $ref: paths/Subscription%20Management/Orders.yaml#/~1services~1data~1v%7Bversion%7D~1actions~1standard~1createOrderFromQuote
+  /services/data/v{version}/actions/standard/createOrUpdateAssetFromOrder:
+    $ref: paths/Subscription%20Management/Lifecycle%20Management.yaml#/~1services~1data~1v%7Bversion%7D~1actions~1standard~1createOrUpdateAssetFromOrder
+  /services/data/v{version}/asset-management/assets/collection/actions/initiate-cancellation:
+    $ref: paths/Subscription%20Management/Lifecycle%20Management.yaml#/~1services~1data~1v%7Bversion%7D~1asset-management~1assets~1collection~1actions~1initiate-cancellation
+  /services/data/v{version}/asset-management/assets/collection/actions/initiate-renewal:
+    $ref: paths/Subscription%20Management/Lifecycle%20Management.yaml#/~1services~1data~1v%7Bversion%7D~1asset-management~1assets~1collection~1actions~1initiate-renewal
+  /services/data/v{version}/asset-management/assets/collection/actions/initiate-amend-quantity:
+    $ref: paths/Subscription%20Management/Lifecycle%20Management.yaml#/~1services~1data~1v%7Bversion%7D~1asset-management~1assets~1collection~1actions~1initiate-amend-quantity
+  /services/data/v{version}/tooling/sobjects/SandboxInfo:
+    $ref: paths/Tooling/Sandbox.yaml#/~1services~1data~1v%7Bversion%7D~1tooling~1sobjects~1SandboxInfo
+  /services/data/v{version}/tooling/sobjects/SandboxInfo/{SANDBOX_INFO_ID}:
+    $ref: paths/Tooling/Sandbox.yaml#/~1services~1data~1v%7Bversion%7D~1tooling~1sobjects~1SandboxInfo~1%7BSANDBOX_INFO_ID%7D
+  /services/data/v{version}/tooling/completions:
+    $ref: paths/Tooling.yaml#/~1services~1data~1v%7Bversion%7D~1tooling~1completions
+  /services/data/v{version}/tooling/executeAnonymous:
+    $ref: paths/Tooling.yaml#/~1services~1data~1v%7Bversion%7D~1tooling~1executeAnonymous
+  /services/data/v{version}/tooling/runTestsAsynchronous:
+    $ref: paths/Tooling.yaml#/~1services~1data~1v%7Bversion%7D~1tooling~1runTestsAsynchronous
+  /services/data/v{version}/tooling/runTestsSynchronous:
+    $ref: paths/Tooling.yaml#/~1services~1data~1v%7Bversion%7D~1tooling~1runTestsSynchronous
+  /services/data/v{version}/tooling/search:
+    $ref: paths/Tooling.yaml#/~1services~1data~1v%7Bversion%7D~1tooling~1search
+  /services/data/v{version}/tooling/sobjects:
+    $ref: paths/Tooling.yaml#/~1services~1data~1v%7Bversion%7D~1tooling~1sobjects
+  /services/data/v{version}/tooling/sobjects/{SOBJECT_API_NAME}:
+    $ref: paths/Tooling.yaml#/~1services~1data~1v%7Bversion%7D~1tooling~1sobjects~1%7BSOBJECT_API_NAME%7D
+  /services/data/v{version}/tooling/sobjects/{SOBJECT_API_NAME}/describe:
+    $ref: paths/Tooling.yaml#/~1services~1data~1v%7Bversion%7D~1tooling~1sobjects~1%7BSOBJECT_API_NAME%7D~1describe
+  /services/data/v{version}/tooling/sobjects/{SOBJECT_API_NAME}/{RECORD_ID}:
+    $ref: paths/Tooling.yaml#/~1services~1data~1v%7Bversion%7D~1tooling~1sobjects~1%7BSOBJECT_API_NAME%7D~1%7BRECORD_ID%7D
+  /services/data/v{version}/ui-api/record-ui/{RECORD_IDS}:
+    $ref: paths/UI/Records.yaml#/~1services~1data~1v%7Bversion%7D~1ui-api~1record-ui~1%7BRECORD_IDS%7D
+  /services/data/v{version}/ui-api/layout/{SOBJECT_API_NAME}:
+    $ref: paths/UI/Records.yaml#/~1services~1data~1v%7Bversion%7D~1ui-api~1layout~1%7BSOBJECT_API_NAME%7D
+  /services/data/v{version}/ui-api/object-info:
+    $ref: paths/UI/Records.yaml#/~1services~1data~1v%7Bversion%7D~1ui-api~1object-info
+  /services/data/v{version}/ui-api/object-info/{SOBJECT_API_NAME}:
+    $ref: paths/UI/Records.yaml#/~1services~1data~1v%7Bversion%7D~1ui-api~1object-info~1%7BSOBJECT_API_NAME%7D
+  /services/data/v{version}/ui-api/object-info/{SOBJECT_API_NAME}/picklist-values/{RECORD_TYPE_ID}/{FIELD_API_NAME}:
+    $ref: paths/UI/Records.yaml#/~1services~1data~1v%7Bversion%7D~1ui-api~1object-info~1%7BSOBJECT_API_NAME%7D~1picklist-values~1%7BRECORD_TYPE_ID%7D~1%7BFIELD_API_NAME%7D
+  /services/data/v{version}/ui-api/object-info/{SOBJECT_API_NAME}/picklist-values/{RECORD_TYPE_ID}:
+    $ref: paths/UI/Records.yaml#/~1services~1data~1v%7Bversion%7D~1ui-api~1object-info~1%7BSOBJECT_API_NAME%7D~1picklist-values~1%7BRECORD_TYPE_ID%7D
+  /services/data/v{version}/ui-api/records/{RECORD_ID}/child-relationships/{RELATIONSHIP_NAME}:
+    $ref: paths/UI/Records.yaml#/~1services~1data~1v%7Bversion%7D~1ui-api~1records~1%7BRECORD_ID%7D~1child-relationships~1%7BRELATIONSHIP_NAME%7D
+  /services/data/v{version}/ui-api/records/{RECORD_ID}:
+    $ref: paths/UI/Records.yaml#/~1services~1data~1v%7Bversion%7D~1ui-api~1records~1%7BRECORD_ID%7D
+  /services/data/v{version}/ui-api/records/batch/{RECORD_IDS}:
+    $ref: paths/UI/Records.yaml#/~1services~1data~1v%7Bversion%7D~1ui-api~1records~1batch~1%7BRECORD_IDS%7D
+  /services/data/v{version}/ui-api/records:
+    $ref: paths/UI/Records.yaml#/~1services~1data~1v%7Bversion%7D~1ui-api~1records
+  /services/data/v{version}/ui-api/record-defaults/clone/{RECORD_ID}:
+    $ref: paths/UI/Records.yaml#/~1services~1data~1v%7Bversion%7D~1ui-api~1record-defaults~1clone~1%7BRECORD_ID%7D
+  /services/data/v{version}/ui-api/record-defaults/create/{SOBJECT_API_NAME}:
+    $ref: paths/UI/Records.yaml#/~1services~1data~1v%7Bversion%7D~1ui-api~1record-defaults~1create~1%7BSOBJECT_API_NAME%7D
+  /services/data/v{version}/ui-api/lookups/{SOBJECT_API_NAME}/{FIELD_API_NAME}:
+    $ref: paths/UI/Records.yaml#/~1services~1data~1v%7Bversion%7D~1ui-api~1lookups~1%7BSOBJECT_API_NAME%7D~1%7BFIELD_API_NAME%7D
+  /services/data/v{version}/ui-api/lookups/{SOBJECT_API_NAME}/{FIELD_API_NAME}/{TARGET_API_NAME}:
+    $ref: paths/UI/Records.yaml#/~1services~1data~1v%7Bversion%7D~1ui-api~1lookups~1%7BSOBJECT_API_NAME%7D~1%7BFIELD_API_NAME%7D~1%7BTARGET_API_NAME%7D
+  /services/data/v{version}/ui-api/actions/global:
+    $ref: paths/UI/Actions.yaml#/~1services~1data~1v%7Bversion%7D~1ui-api~1actions~1global
+  /services/data/v{version}/ui-api/actions/record/{RECORD_IDS}:
+    $ref: paths/UI/Actions.yaml#/~1services~1data~1v%7Bversion%7D~1ui-api~1actions~1record~1%7BRECORD_IDS%7D
+  /services/data/v{version}/ui-api/actions/record/{RECORD_ID}/record-edit:
+    $ref: paths/UI/Actions.yaml#/~1services~1data~1v%7Bversion%7D~1ui-api~1actions~1record~1%7BRECORD_ID%7D~1record-edit
+  /services/data/v{version}/ui-api/actions/record/{RECORD_ID}/related-list/{RELATED_LIST_IDS}:
+    $ref: paths/UI/Actions.yaml#/~1services~1data~1v%7Bversion%7D~1ui-api~1actions~1record~1%7BRECORD_ID%7D~1related-list~1%7BRELATED_LIST_IDS%7D
+  /services/data/v{version}/ui-api/actions/record/{RECORD_ID}/related-list-record/{RELATED_LIST_RECORD_IDS}:
+    $ref: paths/UI/Actions.yaml#/~1services~1data~1v%7Bversion%7D~1ui-api~1actions~1record~1%7BRECORD_ID%7D~1related-list-record~1%7BRELATED_LIST_RECORD_IDS%7D
+  /services/data/v{version}/ui-api/actions/list-view/{LIST_VIEW_IDS}:
+    $ref: paths/UI/Actions.yaml#/~1services~1data~1v%7Bversion%7D~1ui-api~1actions~1list-view~1%7BLIST_VIEW_IDS%7D
+  /services/data/v{version}/ui-api/actions/list-view-record/{RECORD_IDS}:
+    $ref: paths/UI/Actions.yaml#/~1services~1data~1v%7Bversion%7D~1ui-api~1actions~1list-view-record~1%7BRECORD_IDS%7D
+  /services/data/v{version}/ui-api/actions/list-view-chart/{SOBJECT_API_NAME}:
+    $ref: paths/UI/Actions.yaml#/~1services~1data~1v%7Bversion%7D~1ui-api~1actions~1list-view-chart~1%7BSOBJECT_API_NAME%7D
+  /services/data/v{version}/ui-api/actions/flexipage/{FLEXIPAGE_NAMES}:
+    $ref: paths/UI/Actions.yaml#/~1services~1data~1v%7Bversion%7D~1ui-api~1actions~1flexipage~1%7BFLEXIPAGE_NAMES%7D
+  /services/data/v{version}/ui-api/actions/lookup/{SOBJECT_API_NAMES}:
+    $ref: paths/UI/Actions.yaml#/~1services~1data~1v%7Bversion%7D~1ui-api~1actions~1lookup~1%7BSOBJECT_API_NAMES%7D
+  /services/data/v{version}/ui-api/actions/mru-list/{SOBJECT_API_NAMES}:
+    $ref: paths/UI/Actions.yaml#/~1services~1data~1v%7Bversion%7D~1ui-api~1actions~1mru-list~1%7BSOBJECT_API_NAMES%7D
+  /services/data/v{version}/ui-api/actions/photo/{RECORD_IDS}:
+    $ref: paths/UI/Actions.yaml#/~1services~1data~1v%7Bversion%7D~1ui-api~1actions~1photo~1%7BRECORD_IDS%7D
+  /services/data/v{version}/ui-api/favorites:
+    $ref: paths/UI/Favorites.yaml#/~1services~1data~1v%7Bversion%7D~1ui-api~1favorites
+  /services/data/v{version}/ui-api/favorites/{FAVORITE_ID}:
+    $ref: paths/UI/Favorites.yaml#/~1services~1data~1v%7Bversion%7D~1ui-api~1favorites~1%7BFAVORITE_ID%7D
+  /services/data/v{version}/ui-api/favorites/batch:
+    $ref: paths/UI/Favorites.yaml#/~1services~1data~1v%7Bversion%7D~1ui-api~1favorites~1batch
+  /services/data/v{version}/ui-api/favorites/{FAVORITE_ID}/usage:
+    $ref: paths/UI/Favorites.yaml#/~1services~1data~1v%7Bversion%7D~1ui-api~1favorites~1%7BFAVORITE_ID%7D~1usage
+  /services/data/v{version}/ui-api/list-info/{SOBJECT_API_NAME}:
+    $ref: paths/UI/List%20Views.yaml#/~1services~1data~1v%7Bversion%7D~1ui-api~1list-info~1%7BSOBJECT_API_NAME%7D
+  /services/data/v{version}/ui-api/list-records/{LIST_VIEW_ID}:
+    $ref: paths/UI/List%20Views.yaml#/~1services~1data~1v%7Bversion%7D~1ui-api~1list-records~1%7BLIST_VIEW_ID%7D
+  /services/data/v{version}/ui-api/list-records/{SOBJECT_API_NAME}/{LIST_VIEW_API_NAME}:
+    $ref: paths/UI/List%20Views.yaml#/~1services~1data~1v%7Bversion%7D~1ui-api~1list-records~1%7BSOBJECT_API_NAME%7D~1%7BLIST_VIEW_API_NAME%7D
+  /services/data/v{version}/ui-api/list-info/{LIST_VIEW_ID}:
+    $ref: paths/UI/List%20Views.yaml#/~1services~1data~1v%7Bversion%7D~1ui-api~1list-info~1%7BLIST_VIEW_ID%7D
+  /services/data/v{version}/ui-api/list-info/{SOBJECT_API_NAME}/{LIST_VIEW_API_NAME}:
+    $ref: paths/UI/List%20Views.yaml#/~1services~1data~1v%7Bversion%7D~1ui-api~1list-info~1%7BSOBJECT_API_NAME%7D~1%7BLIST_VIEW_API_NAME%7D
+  /services/data/v{version}/ui-api/apps:
+    $ref: paths/UI/Apps.yaml#/~1services~1data~1v%7Bversion%7D~1ui-api~1apps
+  /services/data/v{version}/ui-api/apps/{APP_ID}:
+    $ref: paths/UI/Apps.yaml#/~1services~1data~1v%7Bversion%7D~1ui-api~1apps~1%7BAPP_ID%7D
+  /services/data/v{version}/ui-api/apps/selected:
+    $ref: paths/UI/Apps.yaml#/~1services~1data~1v%7Bversion%7D~1ui-api~1apps~1selected
+  /services/data/v{version}/ui-api/apps/{APP_ID}/user-nav-items:
+    $ref: paths/UI/Apps.yaml#/~1services~1data~1v%7Bversion%7D~1ui-api~1apps~1%7BAPP_ID%7D~1user-nav-items
+  /services/data/v{version}/ui-api/nav-items:
+    $ref: paths/UI/Apps.yaml#/~1services~1data~1v%7Bversion%7D~1ui-api~1nav-items
+  /services/data/v{version}/ui-api/themes/active:
+    $ref: paths/UI.yaml#/~1services~1data~1v%7Bversion%7D~1ui-api~1themes~1active

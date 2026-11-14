@@ -1,0 +1,22 @@
+/services/data/v{version}/sobjects/EventLogFile/{id}/LogFile:
+  get:
+    tags:
+      - REST > Logs
+    summary: Get event log file
+    parameters:
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: id
+        in: path
+        schema:
+          type: string
+        required: true
+        description: Log event Id
+    responses:
+      '200':
+        description: Successful response
+        content:
+          application/json: {}

@@ -1,0 +1,26 @@
+info:
+  name: Update Personalized Navigation Items
+  type: http
+  seq: 7
+
+http:
+  method: PUT
+  url: "{{_endpoint}}/services/data/v{{version}}/ui-api/apps/:APP_ID/user-nav-items"
+  params:
+    - name: APP_ID
+      value: ""
+      type: path
+      description: Application ID
+  body:
+    type: json
+    data: ""
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+docs: Updates the order of a user’s personalized navigation items (tabs) and adds a navigation item to the list in the order specified.

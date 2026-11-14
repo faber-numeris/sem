@@ -1,0 +1,29 @@
+info:
+  name: Update managed event subscription
+  type: http
+  seq: 5
+
+http:
+  method: PATCH
+  url: "{{_endpoint}}/services/data/v{{version}}/tooling/sobjects/ManagedEventSubscription/:managedEventSubscriptionId"
+  params:
+    - name: managedEventSubscriptionId
+      value: ""
+      type: path
+  body:
+    type: json
+    data: |-
+      {
+          "FullName": "Managed_Sub_OpportunityChangeEvent",
+          "Metadata": {
+              "state": "STOP"
+          }
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true

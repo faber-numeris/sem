@@ -1,0 +1,182 @@
+info:
+  name: Themes
+  type: http
+  seq: 22
+
+http:
+  method: GET
+  url: "{{_endpoint}}/services/data/v{{version}}/theme"
+  headers:
+    - name: Content-Type
+      value: application/json
+  body:
+    type: json
+    data: ""
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Themes
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/theme"
+      method: GET
+      headers:
+        - name: Content-Type
+          value: application/json
+      body:
+        type: json
+        data: ""
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: Date
+          value: Wed, 27 Sep 2023 15:30:15 GMT
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-XSS-Protection
+          value: 1; mode=block
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: Sforce-Limit-Info
+          value: api-usage=8/15000
+        - name: ETag
+          value: '"81846348--gzip"'
+        - name: Last-Modified
+          value: Tue, 19 Sep 2023 22:01:04 GMT
+        - name: Content-Type
+          value: application/json;charset=UTF-8
+        - name: Vary
+          value: Accept-Encoding
+        - name: Content-Encoding
+          value: gzip
+        - name: Transfer-Encoding
+          value: chunked
+      body:
+        type: json
+        data: |-
+          {
+              "themeItems": [
+                  {
+                      "colors": [
+                          {
+                              "color": "5867E8",
+                              "context": "primary",
+                              "theme": "theme4"
+                          },
+                          {
+                              "color": "236FBD",
+                              "context": "primary",
+                              "theme": "theme3"
+                          }
+                      ],
+                      "icons": [
+                          {
+                              "contentType": "image/png",
+                              "height": 32,
+                              "theme": "theme3",
+                              "url": "https://nto-df17-demo-dev-ed.my.salesforce.com/img/icon/accounts32.png",
+                              "width": 32
+                          },
+                          {
+                              "contentType": "image/png",
+                              "height": 16,
+                              "theme": "theme3",
+                              "url": "https://nto-df17-demo-dev-ed.my.salesforce.com/img/icon/accounts16.png",
+                              "width": 16
+                          },
+                          {
+                              "contentType": "image/svg+xml",
+                              "height": 0,
+                              "theme": "theme4",
+                              "url": "https://nto-df17-demo-dev-ed.my.salesforce.com/img/icon/t4v35/standard/account.svg",
+                              "width": 0
+                          },
+                          {
+                              "contentType": "image/png",
+                              "height": 60,
+                              "theme": "theme4",
+                              "url": "https://nto-df17-demo-dev-ed.my.salesforce.com/img/icon/t4v35/standard/account_60.png",
+                              "width": 60
+                          },
+                          {
+                              "contentType": "image/png",
+                              "height": 120,
+                              "theme": "theme4",
+                              "url": "https://nto-df17-demo-dev-ed.my.salesforce.com/img/icon/t4v35/standard/account_120.png",
+                              "width": 120
+                          }
+                      ],
+                      "name": "Account"
+                  },
+                  {
+                      "colors": [
+                          {
+                              "color": "5867E8",
+                              "context": "primary",
+                              "theme": "theme4"
+                          },
+                          {
+                              "color": "5867E8",
+                              "context": "primary",
+                              "theme": "theme3"
+                          }
+                      ],
+                      "icons": [
+                          {
+                              "contentType": "image/png",
+                              "height": 32,
+                              "theme": "theme3",
+                              "url": "https://nto-df17-demo-dev-ed.my.salesforce.com/img/icon/account_brand32.png",
+                              "width": 32
+                          },
+                          {
+                              "contentType": "image/png",
+                              "height": 16,
+                              "theme": "theme3",
+                              "url": "https://nto-df17-demo-dev-ed.my.salesforce.com/img/icon/account_brand16.png",
+                              "width": 16
+                          },
+                          {
+                              "contentType": "image/svg+xml",
+                              "height": 0,
+                              "theme": "theme4",
+                              "url": "https://nto-df17-demo-dev-ed.my.salesforce.com/img/icon/t4v35/standard/account_brand.svg",
+                              "width": 0
+                          },
+                          {
+                              "contentType": "image/png",
+                              "height": 60,
+                              "theme": "theme4",
+                              "url": "https://nto-df17-demo-dev-ed.my.salesforce.com/img/icon/t4v35/standard/account_brand_60.png",
+                              "width": 60
+                          },
+                          {
+                              "contentType": "image/png",
+                              "height": 120,
+                              "theme": "theme4",
+                              "url": "https://nto-df17-demo-dev-ed.my.salesforce.com/img/icon/t4v35/standard/brand_120.png",
+                              "width": 120
+                          }
+                      ],
+                      "name": "AccountBrand"
+                  }
+              ]
+          }
+
+docs: |-
+  Gets the list of icons and colors used by themes in the Salesforce application. Theme information is provided for objects in your organization that use icons and colors in the Salesforce UI.
+
+  The If-Modified-Since header can be used with this resource, with a date format of EEE, dd MMM yyyy HH:mm:ss z. When this header is used, if the object metadata has not changed since the provided date, a 304 Not Modified status code is returned, with no response body.
+
+  https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/resources_themes.htm

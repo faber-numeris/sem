@@ -1,0 +1,35 @@
+info:
+  name: Game Reward
+  type: http
+  seq: 2
+
+http:
+  method: GET
+  url: "{{_endpoint}}/services/data/v{{version}}/game/gameparticipantreward/:gameParticipantRewardId/game-reward"
+  params:
+    - name: gameParticipantRewardId
+      value: ""
+      type: path
+  body:
+    type: json
+    data: ""
+  auth: inherit
+
+runtime:
+  scripts:
+    - type: before-request
+      code: bru.setVar('gameParticipantRewardId','12345');
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+docs: |-
+  [Game Reward](https://developer.salesforce.com/docs/atlas.en-us.loyalty.meta/loyalty/connect_resources_game_result.htm)
+
+  NOTE:
+
+  In the Pre-request. Script Tab, make changes in the variables value accordingly with the real Process Name to invoke.

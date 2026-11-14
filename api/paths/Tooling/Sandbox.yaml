@@ -1,0 +1,301 @@
+/services/data/v{version}/tooling/sobjects/SandboxInfo:
+  post:
+    tags:
+      - Tooling > Sandbox
+    summary: Create/Clone Sandbox
+    description: >-
+      Creates or clones a sandbox. If you wish to clone, fill the SourceId body field with the org Id of the source sandbox.
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            example:
+              SandboxName: devSandbox
+              LicenseType: DEVELOPER
+              TemplateId: null
+              HistoryDays: 0
+              CopyChatter: false
+              AutoActivate: false
+              ApexClassId: null
+              Description: My new fresh sandbox
+              SourceId: null
+    parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '201':
+        description: Created
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Mon, 11 Dec 2023 10:44:57 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Sforce-Limit-Info:
+            schema:
+              type: string
+              example: api-usage=312/15000
+          Location:
+            schema:
+              type: string
+              example: >-
+                /services/data/v59.0/tooling/sobjects/SandboxInfo/0GQ4H000000CxSzWAK
+          Content-Type:
+            schema:
+              type: string
+              example: application/json;charset=UTF-8
+          Vary:
+            schema:
+              type: string
+              example: Accept-Encoding
+          Content-Encoding:
+            schema:
+              type: string
+              example: gzip
+          Transfer-Encoding:
+            schema:
+              type: string
+              example: chunked
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              id: 0GQ4H000000CxSzWAK
+              success: true
+              errors: []
+              warnings: []
+              infos: []
+/services/data/v{version}/tooling/sobjects/SandboxInfo/{SANDBOX_INFO_ID}:
+  get:
+    tags:
+      - Tooling > Sandbox
+    summary: Get Sandbox
+    description: Retrieves a sandbox record.
+    parameters:
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: SANDBOX_INFO_ID
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: OK
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Mon, 11 Dec 2023 10:45:48 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Sforce-Limit-Info:
+            schema:
+              type: string
+              example: api-usage=316/15000
+          Last-Modified:
+            schema:
+              type: string
+              example: Mon, 11 Dec 2023 10:44:58 GMT
+          Content-Type:
+            schema:
+              type: string
+              example: application/json;charset=UTF-8
+          Vary:
+            schema:
+              type: string
+              example: Accept-Encoding
+          Content-Encoding:
+            schema:
+              type: string
+              example: gzip
+          Transfer-Encoding:
+            schema:
+              type: string
+              example: chunked
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              attributes:
+                type: SandboxInfo
+                url: >-
+                  /services/data/v59.0/tooling/sobjects/SandboxInfo/0GQ4H000000CxSzWAK
+              Id: 0GQ4H000000CxSzWAK
+              IsDeleted: false
+              CreatedDate: 2023-12-11T10:44:58.000+0000
+              CreatedById: 00558000000yFyDAAU
+              LastModifiedDate: 2023-12-11T10:44:58.000+0000
+              LastModifiedById: 00558000000yFyDAAU
+              SystemModstamp: 2023-12-11T10:44:58.000+0000
+              SandboxName: devSandbox
+              LicenseType: DEVELOPER
+              TemplateId: null
+              HistoryDays: 0
+              CopyChatter: false
+              AutoActivate: false
+              ApexClassId: null
+              Description: My new fresh sandbox
+              SourceId: null
+  patch:
+    tags:
+      - Tooling > Sandbox
+    summary: Refresh Sandbox
+    description: Refreshes a sandbox.
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            example:
+              LicenseType: DEVELOPER
+              AutoActivate: true
+    parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: SANDBOX_INFO_ID
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '204':
+        description: No Content
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Wed, 13 Dec 2023 12:33:55 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          Content-Security-Policy:
+            schema:
+              type: string
+              example: upgrade-insecure-requests
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Sforce-Limit-Info:
+            schema:
+              type: string
+              example: api-usage=2/15000
+        content:
+          text/plain:
+            schema:
+              type: string
+            example: null
+  delete:
+    tags:
+      - Tooling > Sandbox
+    summary: Delete Sandbox
+    description: Deletes a sandbox.
+    parameters:
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: SANDBOX_INFO_ID
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '204':
+        description: No Content
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Fri, 15 Dec 2023 13:34:29 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          Content-Security-Policy:
+            schema:
+              type: string
+              example: upgrade-insecure-requests
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Sforce-Limit-Info:
+            schema:
+              type: string
+              example: api-usage=2/15000
+        content:
+          text/plain:
+            schema:
+              type: string
+            example: null

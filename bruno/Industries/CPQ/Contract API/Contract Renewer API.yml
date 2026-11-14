@@ -1,0 +1,49 @@
+info:
+  name: Contract Renewer API
+  type: http
+  seq: 2
+
+http:
+  method: PATCH
+  url: "{{_endpoint}}/services/apexrest/SBQQ/ServiceRouter?loader=SBQQ.ContractManipulationAPI.ContractRenewer"
+  headers:
+    - name: Content-Type
+      value: application/json
+  params:
+    - name: loader
+      value: SBQQ.ContractManipulationAPI.ContractRenewer
+      type: query
+  body:
+    type: json
+    data: |-
+      {
+          "context": {
+              "masterContractId": null,
+              "renewedContracts": [
+                  {
+                      "attributes": {
+                          "type": "Contract"
+                      },
+                      "Id": "800540000006LLVAA2"
+                  }
+              ]
+          }
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+docs: |-
+  Receive a CPQ contract in a request, and return quote data for one or more renewal quotes.
+  Available in: Salesforce CPQ Summer ’16 and later
+  Special Access Rules: All of these user permissions are required.
+  Insert and update on quote and opportunity objects
+  Read on quote, opportunity, and product2 objects
+  Delete on quote object
+
+  https://developer.salesforce.com/docs/atlas.en-us.cpq_dev_api.meta/cpq_dev_api/cpq_api_contract_renewer.htm

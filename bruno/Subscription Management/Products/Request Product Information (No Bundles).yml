@@ -1,0 +1,45 @@
+info:
+  name: Request Product Information (No Bundles)
+  type: http
+  seq: 2
+
+http:
+  method: POST
+  url: "{{_endpoint}}/services/data/v{{version}}/commerce/catalog-products/actions/get-products"
+  headers:
+    - name: Content-Type
+      value: application/json
+  body:
+    type: json
+    data: |-
+      {
+        "productContexts": [
+          {
+            "product2Id": "{{ClassTrainingProduct}}",
+            "productSellingModelId": "{{OneTimePSM}}"
+          },
+          {
+            "product2Id": "{{VirtualRouterProduct}}"  
+          }
+        ],
+        "fields": [
+          "id",
+          "name",
+          "IsActive",
+          "ProductCode"
+        ],
+        "retrievalType": "ExcludeChildComponents"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+docs: |-
+  Request information for two products that aren't bundles. For the first product, request only the information about the specified product selling model. For the second product, request information about all related product selling models.
+
+  See [Request Product Information](https://desktop.postman.com/?desktopVersion=10.13.6&webVersion=10.13.7-ui-230522-1730&userId=10709048&teamId=0).

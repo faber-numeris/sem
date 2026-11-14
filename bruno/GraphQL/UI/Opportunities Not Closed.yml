@@ -1,0 +1,53 @@
+info:
+  name: Opportunities Not Closed
+  type: graphql
+  seq: 11
+
+graphql:
+  method: POST
+  url: "{{_endpoint}}/services/data/v{{version}}/graphql"
+  headers:
+    - name: X-Chatter-Entity-Encoding
+      value: "false"
+  body:
+    query: |-
+      query opportunitiesNotClosed {
+        uiapi {
+          query {
+            Opportunity(
+              where: {
+                not: {
+                  or: [
+                    { StageName: { eq: "Closed Won" } }
+                    { StageName: { eq: "Closed Lost" } }
+                  ]
+                }
+              }
+            ) {
+              edges {
+                node {
+                  Id
+                  Name {
+                    value
+                  }
+                  CloseDate {
+                    value
+                    displayValue
+                  }
+                  StageName {
+                    value
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true

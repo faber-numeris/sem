@@ -1,0 +1,35 @@
+info:
+  name: Change event relay state
+  type: http
+  seq: 6
+
+http:
+  method: PATCH
+  url: "{{_endpoint}}/services/data/v{{version}}/tooling/sobjects/EventRelayConfig/:EVENT_RELAY_CONFIG_ID"
+  headers:
+    - name: Content-Type
+      value: application/json
+    - name: SOAPAction
+      value: '""'
+    - name: Authorization
+      value: Bearer {{_accessToken}}
+  params:
+    - name: EVENT_RELAY_CONFIG_ID
+      value: ""
+      type: path
+  body:
+    type: json
+    data: |-
+      {
+          "Metadata": {
+              "state": "RUN"
+          }
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true

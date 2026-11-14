@@ -1,0 +1,95 @@
+info:
+  name: Transaction History
+  type: http
+  seq: 6
+
+http:
+  method: POST
+  url: "{{_endpoint}}/services/data/v{{version}}/connect/loyalty/programs/:loyaltyProgramName/transaction-history?page="
+  params:
+    - name: page
+      value: ""
+      type: query
+    - name: loyaltyProgramName
+      value: ""
+      type: path
+  body:
+    type: json
+    data: |-
+      {
+         "membershipNumber":"Member1",
+         "journalType":"Accrual",
+         "journalSubType":"Social",
+         "periodStartDate":"2022-01-27T00:00:00Z",
+         "periodEndDate":"2022-11-27T00:00:00Z"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Transaction History
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/connect/loyalty/programs/:loyaltyProgramName/transaction-history?page=2"
+      method: POST
+      headers:
+        - name: Authorization
+          value: Bearer {{accessToken}}
+      params:
+        - name: page
+          value: "2"
+          type: query
+        - name: loyaltyProgramName
+          value: NTO Insider
+          type: path
+      body:
+        type: json
+        data: |-
+          {
+             "membershipNumber":"Member1",
+             "journalType":"Accrual",
+             "journalSubType":"Social",
+             "periodStartDate":"2022-01-27T00:00:00Z",
+             "periodEndDate":"2022-11-27T00:00:00Z"
+          }
+    response:
+      status: 201
+      statusText: Created
+      headers:
+        - name: Date
+          value: Wed, 22 May 2024 16:22:05 GMT
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: Content-Type
+          value: application/json;charset=UTF-8
+        - name: Vary
+          value: Accept-Encoding
+        - name: Content-Encoding
+          value: gzip
+        - name: Transfer-Encoding
+          value: chunked
+      body:
+        type: json
+        data: |-
+          {
+              "message": null,
+              "status": true,
+              "totalCount": 0,
+              "transactionJournals": []
+          }
+
+docs: |-
+  Standard Documentation:
+
+  [https://developer.salesforce.com/docs/atlas.en-us.loyalty.meta/loyalty/connect_resources_transaction_history.htm](https://developer.salesforce.com/docs/atlas.en-us.loyalty.meta/loyalty/connect_resources_transaction_history.htm)

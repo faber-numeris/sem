@@ -1,0 +1,83 @@
+info:
+  name: Get Sandbox
+  type: http
+  seq: 3
+
+http:
+  method: GET
+  url: "{{_endpoint}}/services/data/v{{version}}/tooling/sobjects/SandboxInfo/:SANDBOX_INFO_ID"
+  params:
+    - name: SANDBOX_INFO_ID
+      value: ""
+      type: path
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Get Sandbox
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/tooling/sobjects/SandboxInfo/:SANDBOX_INFO_ID"
+      method: GET
+      params:
+        - name: SANDBOX_INFO_ID
+          value: 0GQ4H000000CxSzWAK
+          type: path
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: Date
+          value: Mon, 11 Dec 2023 10:45:48 GMT
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: Sforce-Limit-Info
+          value: api-usage=316/15000
+        - name: Last-Modified
+          value: Mon, 11 Dec 2023 10:44:58 GMT
+        - name: Content-Type
+          value: application/json;charset=UTF-8
+        - name: Vary
+          value: Accept-Encoding
+        - name: Content-Encoding
+          value: gzip
+        - name: Transfer-Encoding
+          value: chunked
+      body:
+        type: json
+        data: |-
+          {
+              "attributes": {
+                  "type": "SandboxInfo",
+                  "url": "/services/data/v59.0/tooling/sobjects/SandboxInfo/0GQ4H000000CxSzWAK"
+              },
+              "Id": "0GQ4H000000CxSzWAK",
+              "IsDeleted": false,
+              "CreatedDate": "2023-12-11T10:44:58.000+0000",
+              "CreatedById": "00558000000yFyDAAU",
+              "LastModifiedDate": "2023-12-11T10:44:58.000+0000",
+              "LastModifiedById": "00558000000yFyDAAU",
+              "SystemModstamp": "2023-12-11T10:44:58.000+0000",
+              "SandboxName": "devSandbox",
+              "LicenseType": "DEVELOPER",
+              "TemplateId": null,
+              "HistoryDays": 0,
+              "CopyChatter": false,
+              "AutoActivate": false,
+              "ApexClassId": null,
+              "Description": "My new fresh sandbox",
+              "SourceId": null
+          }
+
+docs: Retrieves a sandbox record.

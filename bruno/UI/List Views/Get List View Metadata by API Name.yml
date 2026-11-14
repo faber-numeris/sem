@@ -1,0 +1,172 @@
+info:
+  name: Get List View Metadata by API Name
+  type: http
+  seq: 6
+
+http:
+  method: GET
+  url: "{{_endpoint}}/services/data/v{{version}}/ui-api/list-info/:SOBJECT_API_NAME/:LIST_VIEW_API_NAME"
+  params:
+    - name: SOBJECT_API_NAME
+      value: ""
+      type: path
+      description: API name of the UI API supported object.
+    - name: LIST_VIEW_API_NAME
+      value: ""
+      type: path
+      description: API name of a list view, such as AllAccounts, __Recent, or __SearchResult.
+  body:
+    type: json
+    data: ""
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Get List View Metadata by API Name
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/ui-api/list-info/:SOBJECT_API_NAME/:LIST_VIEW_API_NAME"
+      method: GET
+      params:
+        - name: SOBJECT_API_NAME
+          value: Account
+          type: path
+          description: API name of the UI API supported object.
+        - name: LIST_VIEW_API_NAME
+          value: AllAccounts
+          type: path
+          description: API name of a list view, such as AllAccounts, __Recent, or __SearchResult.
+      body:
+        type: json
+        data: ""
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: Date
+          value: Fri, 06 Oct 2023 09:56:56 GMT
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: ETag
+          value: '"55ebdd0de6c2f1e17f63bf4581d64f76--gzip"'
+        - name: Content-Type
+          value: application/json;charset=UTF-8
+        - name: Vary
+          value: Accept-Encoding
+        - name: Content-Encoding
+          value: gzip
+        - name: Transfer-Encoding
+          value: chunked
+      body:
+        type: json
+        data: |-
+          {
+              "cloneable": true,
+              "createable": true,
+              "deletable": true,
+              "displayColumns": [
+                  {
+                      "fieldApiName": "Name",
+                      "inlineEditAttributes": {},
+                      "label": "Account Name",
+                      "lookupId": "Id",
+                      "searchable": true,
+                      "sortable": true
+                  },
+                  {
+                      "fieldApiName": "Site",
+                      "inlineEditAttributes": {},
+                      "label": "Account Site",
+                      "lookupId": null,
+                      "searchable": true,
+                      "sortable": true
+                  },
+                  {
+                      "fieldApiName": "Phone",
+                      "inlineEditAttributes": {},
+                      "label": "Phone",
+                      "lookupId": null,
+                      "searchable": true,
+                      "sortable": true
+                  },
+                  {
+                      "fieldApiName": "Type",
+                      "inlineEditAttributes": {},
+                      "label": "Type",
+                      "lookupId": null,
+                      "searchable": true,
+                      "sortable": true
+                  },
+                  {
+                      "fieldApiName": "BillingCountry",
+                      "inlineEditAttributes": {},
+                      "label": "Billing Country",
+                      "lookupId": null,
+                      "searchable": true,
+                      "sortable": true
+                  },
+                  {
+                      "fieldApiName": "Owner.Alias",
+                      "inlineEditAttributes": {},
+                      "label": "Account Owner Alias",
+                      "lookupId": "Owner.Id",
+                      "searchable": true,
+                      "sortable": true
+                  }
+              ],
+              "filterLogicString": null,
+              "filteredByInfo": [],
+              "hasMassActions": true,
+              "inlineEditDetails": {},
+              "label": "All Accounts",
+              "listReference": {
+                  "id": "00B58000002ssinEAA",
+                  "listViewApiName": "AllAccounts",
+                  "objectApiName": "Account",
+                  "type": "listView"
+              },
+              "listShares": {},
+              "objectApiNames": [],
+              "orderedByInfo": [
+                  {
+                      "fieldApiName": "BillingCountry",
+                      "isAscending": false,
+                      "label": "Billing Country"
+                  }
+              ],
+              "scope": {},
+              "updateable": true,
+              "userPreferences": {
+                  "columnWidths": {
+                      "Site": -1,
+                      "Type": -1,
+                      "BillingCountry": -1,
+                      "Owner.Alias": -1,
+                      "Phone": -1,
+                      "Name": -1
+                  },
+                  "columnWrap": {
+                      "Site": false,
+                      "Type": false,
+                      "BillingCountry": false,
+                      "Owner.Alias": false,
+                      "Phone": false,
+                      "Name": false
+                  }
+              },
+              "visibility": "Public",
+              "visibilityEditable": true
+          }
+
+docs: Get list view metadata by list view API name using URL parameters.

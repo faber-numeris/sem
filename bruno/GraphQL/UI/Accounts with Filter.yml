@@ -1,0 +1,45 @@
+info:
+  name: Accounts with Filter
+  type: graphql
+  seq: 3
+
+graphql:
+  method: POST
+  url: "{{_endpoint}}/services/data/v{{version}}/graphql"
+  headers:
+    - name: X-Chatter-Entity-Encoding
+      value: "false"
+  body:
+    query: |-
+      query accountsWithFilter($where: Account_Filter = {Name: {like: "s%"}}) {
+        uiapi {
+          query {
+            Account(where: $where) {
+              edges {
+                node {
+                  Id
+                  Name {
+                    value
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    variables: |-
+      {
+          "where": {
+              "Name": {
+                  "like": "%united%"
+              }
+          }
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true

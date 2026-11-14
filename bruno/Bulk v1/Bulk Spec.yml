@@ -1,0 +1,83 @@
+info:
+  name: Bulk Spec
+  type: http
+  seq: 3
+
+http:
+  method: POST
+  url: "{{_endpoint}}/services/async/{{version}}/job/{{_jobId}}/spec"
+  headers:
+    - name: X-SFDC-Session
+      value: "{{_accessToken}}"
+    - name: Content-Type
+      value: text/csv
+    - name: charset
+      value: UTF-8
+    - name: Accept-Encoding
+      value: gzip
+    - name: Content-Encoding
+      value: gzip
+  body:
+    type: text
+    data: |-
+      Salesforce Field,Csv Header,Value,Hint
+      Name,Full Name,,
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Successful Bulk Spec
+    request:
+      url: "{{_endpoint}}/services/async/{{version}}/job/{{_jobId}}/spec"
+      method: POST
+      headers:
+        - name: X-SFDC-Session
+          value: "{{_accessToken}}"
+        - name: Content-Type
+          value: text/csv
+        - name: charset
+          value: UTF-8
+        - name: Accept-Encoding
+          value: gzip
+        - name: Content-Encoding
+          value: gzip
+      body:
+        type: text
+        data: |-
+          Salesforce Field,Csv Header,Value,Hint
+          Name,Full Name,,
+    response:
+      status: 201
+      statusText: Created
+      headers:
+        - name: Date
+          value: Thu, 16 Nov 2023 16:12:34 GMT
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-XSS-Protection
+          value: 1; mode=block
+        - name: Content-Security-Policy
+          value: upgrade-insecure-requests
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: Location
+          value: /services/async/58.0/job/7502o00000kjNCsAAM/spec/0Aj2o000000PbakCAC
+        - name: Vary
+          value: Accept-Encoding
+        - name: Content-Encoding
+          value: gzip
+        - name: Transfer-Encoding
+          value: chunked
+      body:
+        type: text
+        data: ""

@@ -1,0 +1,140 @@
+/services/data/v{version}/event/eventSchema/{SCHEMA_ID}:
+  get:
+    tags:
+      - Event Platform > Event Schema
+    summary: Platform Event Schema by Schema ID
+    description: >-
+      Set, reset, or get information about a user password. This resource is available in REST API version 24.0 and later.
+    parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: SCHEMA_ID
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: Successful response
+        content:
+          application/json: {}
+/services/data/v{version}/sobjects/{EVENT_NAME}/eventSchema:
+  get:
+    tags:
+      - Event Platform > Event Schema
+    summary: Platform Event Schema by Event Name
+    description: >-
+      Set, reset, or get information about a user password. This resource is available in REST API version 24.0 and later.
+    parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: EVENT_NAME
+        in: path
+        schema:
+          type: string
+        required: true
+        description: API Name of the event
+    responses:
+      '200':
+        description: OK
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Mon, 03 Jul 2023 13:06:08 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Sforce-Limit-Info:
+            schema:
+              type: string
+              example: api-usage=2/15000
+          Content-Type:
+            schema:
+              type: string
+              example: application/json;charset=UTF-8
+          Vary:
+            schema:
+              type: string
+              example: Accept-Encoding
+          Content-Encoding:
+            schema:
+              type: string
+              example: gzip
+          Transfer-Encoding:
+            schema:
+              type: string
+              example: chunked
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              name: Sample__e
+              namespace: com.sforce.eventbus
+              type: expanded-record
+              fields:
+                - name: data
+                  type:
+                    type: record
+                    name: Data
+                    namespace: ''
+                    fields:
+                      - name: schema
+                        type: string
+                      - name: payload
+                        type:
+                          type: record
+                          name: Payload
+                          doc: ''
+                          fields:
+                            - name: CreatedDate
+                              type: string
+                              doc: CreatedDate:DateTime
+                            - name: CreatedById
+                              type: string
+                              doc: CreatedBy:EntityId
+                            - name: Message__c
+                              type:
+                                - 'null'
+                                - string
+                              doc: Data:Text:00N4H00000Ecs0G
+                              default: null
+                      - name: event
+                        type:
+                          type: record
+                          name: Event
+                          fields:
+                            - name: replayId
+                              type: long
+                - name: channel
+                  type: string

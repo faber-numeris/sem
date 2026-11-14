@@ -1,0 +1,29 @@
+info:
+  name: Data Category Groups
+  type: http
+  seq: 2
+
+http:
+  method: GET
+  url: "{{_endpoint}}/services/data/v{{version}}/support/dataCategoryGroups?sObjectName="
+  headers:
+    - name: Content-Type
+      value: application/json
+  params:
+    - name: topCategoriesOnly
+      value: ""
+      type: query
+      disabled: true
+    - name: sObjectName
+      value: ""
+      type: query
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+docs: Returns the list of list views for the specified sObject, including the ID and other basic information about each list view. You can also get basic information for a specific list view by ID.

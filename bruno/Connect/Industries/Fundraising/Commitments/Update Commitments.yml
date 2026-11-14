@@ -1,0 +1,516 @@
+info:
+  name: Update Commitments
+  type: http
+  seq: 3
+
+http:
+  method: PATCH
+  url: "{{_endpoint}}/services/data/v{{version}}/connect/fundraising/commitments/:commitmentId"
+  params:
+    - name: commitmentId
+      value: ""
+      type: path
+  body:
+    type: json
+    data: |-
+      {
+      "amount": 150.25,
+        "transactionPeriod": "monthly",
+        "transactionInterval": 3,
+        "transactionDay": "5",
+        "startDate": "2024-07-06",
+        "endDate": "2024-07-06",
+        "campaign": {
+          "id": "<CAMPAIGN_ID>"
+        },
+        "outreachSourceCode": {
+          "id": "<SOURCE_CODE_ID>",
+          "sourceCode": "AnimalEmailCampaign2023"
+        },
+        "donor": {
+          "donorType": "individual",
+          "organizationName": "mini cat town",
+          "firstName": "David",
+          "lastName": "Taylor",
+          "phone": "510-434-8920",
+          "email": "davidtaylor@salesforce.com",
+          "address": [
+            {
+              "addressType": "mailing",
+              "street": "123 Main Street",
+              "city": "Oakland",
+              "state": "CA",
+              "postalCode": "94610",
+              "country": "US"
+            }
+          ],
+          "accountCustomFields": [
+            {
+              "fieldName": "string",
+              "fieldValue": "string"
+            }
+          ]
+        },
+        "paymentInstrument": {
+          "type": "credit card",
+          "accountHolderName": "david taylor",
+          "expiryMonth": "10",
+          "expiryYear": "2026",
+          "last4": "4585",
+          "cardBrand": "visa",
+          "bankName": "chase",
+          "digitalWalletProvider": "apple pay",
+          "bankAccountHolderType": "primary",
+          "bankAccountType": "checking",
+          "bankAccountNumber": "123456",
+          "bankCode": "HBUK",
+          "gatewayName": "stripe",
+          "processorName": "classy",
+          "processorPaymentReference": "string",
+          "gatewayReference": "string"
+        },
+        "giftCommitmentCustomFields": [
+          {
+            "fieldName": "string",
+            "fieldValue": "string"
+          }
+        ],
+        "giftCommitmentScheduleCustomFields": [
+          {
+            "fieldName": "string",
+            "fieldValue": "string"
+          }
+        ]
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Status200-UpdateCommitmentSuccess
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/connect/fundraising/commitments/:commitmentId"
+      method: POST
+      params:
+        - name: commitmentId
+          value: ""
+          type: path
+      body:
+        type: json
+        data: |-
+          {
+          "amount": 150.25,
+            "transactionPeriod": "monthly",
+            "transactionInterval": 3,
+            "transactionDay": "5",
+            "startDate": "2024-07-06",
+            "endDate": "2024-07-06",
+            "campaign": {
+              "id": "<CAMPAIGN_ID>"
+            },
+            "outreachSourceCode": {
+              "id": "<SOURCE_CODE_ID>",
+              "sourceCode": "AnimalEmailCampaign2023"
+            },
+            "donor": {
+              "donorType": "individual",
+              "organizationName": "mini cat town",
+              "firstName": "David",
+              "lastName": "Taylor",
+              "phone": "510-434-8920",
+              "email": "davidtaylor@salesforce.com",
+              "address": [
+                {
+                  "addressType": "mailing",
+                  "street": "123 Main Street",
+                  "city": "Oakland",
+                  "state": "CA",
+                  "postalCode": "94610",
+                  "country": "US"
+                }
+              ],
+              "accountCustomFields": [
+                {
+                  "fieldName": "string",
+                  "fieldValue": "string"
+                }
+              ]
+            },
+            "paymentInstrument": {
+              "type": "credit card",
+              "accountHolderName": "david taylor",
+              "expiryMonth": "10",
+              "expiryYear": "2026",
+              "last4": "4585",
+              "cardBrand": "visa",
+              "bankName": "chase",
+              "digitalWalletProvider": "apple pay",
+              "bankAccountHolderType": "primary",
+              "bankAccountType": "checking",
+              "bankAccountNumber": "123456",
+              "bankCode": "HBUK",
+              "gatewayName": "stripe",
+              "processorName": "classy",
+              "processorPaymentReference": "string",
+              "gatewayReference": "string"
+            },
+            "giftCommitmentCustomFields": [
+              {
+                "fieldName": "string",
+                "fieldValue": "string"
+              }
+            ],
+            "giftCommitmentScheduleCustomFields": [
+              {
+                "fieldName": "string",
+                "fieldValue": "string"
+              }
+            ]
+          }
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: Content-Type
+          value: application/json
+      body:
+        type: json
+        data: |-
+          {
+            "success": true,
+            "links": {
+              "giftcommitment": {
+                "href": "/services/data/vXX.X/sobjects/sObject/<SFDC_GIFT_COMMITMENT_ID>",
+                "id": "<SFDC_GIFT_COMMITMENT_ID>"
+              },
+              "giftcommitmentschedule": {
+                "href": "/services/data/vXX.X/sobjects/sObject/<SFDC_GIFT_COMMITMENT_SCHEDULE_ID>",
+                "id": "<SFDC_GIFT_COMMITMENT_SCHEDULE_ID>"
+              }
+            }
+          }
+  - name: Status200-UpdateCommitmentRequestValidationFailure
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/connect/fundraising/commitments/:commitmentId"
+      method: POST
+      params:
+        - name: commitmentId
+          value: ""
+          type: path
+      body:
+        type: json
+        data: |-
+          {
+            "amount": 150.25,
+            "transactionPeriod": "monthly",
+            "transactionInterval": 3,
+            "transactionDay": "5",
+            "startDate": "2024-07-06",
+            "endDate": "2024-07-06",
+            "campaign": {
+              "id": "<SFDC_CAMPAIGN_ID>"
+            },
+            "outreachSourceCode": {
+              "sourceCode": "AnimalEmailCampaign2023"
+            },
+            "paymentInstrument": {
+              "type": "credit card",
+              "accountHolderName": "test donor",
+              "expiryMonth": "10",
+              "expiryYear": "2026",
+              "last4": "4585",
+              "cardBrand": "visa",
+              "bankName": "chase",
+              "digitalWalletProvider": "apple pay",
+              "bankAccountHolderType": "primary",
+              "bankAccountType": "checking",
+              "bankAccountNumber": "123456",
+              "bankCode": "HBUK",
+              "gatewayName": "stripe",
+              "processorName": "test processor",
+              "processorPaymentReference": "string",
+              "gatewayReference": "string"
+            }
+          }
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: Content-Type
+          value: application/json
+      body:
+        type: json
+        data: |-
+          {
+              "errors": [
+                  {
+                      "field": "donor.id",
+                      "message": "You cant include the donor ID in the request for the Gift Commitment Patch endpoint. Remove the ID from the Donor JSON request and try again."
+                  }
+              ],
+              "success": false
+          }
+  - name: Status200-UpdateCommitmentDatabaseFailure
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/connect/fundraising/commitments/:commitmentId"
+      method: POST
+      params:
+        - name: commitmentId
+          value: ""
+          type: path
+      body:
+        type: json
+        data: |-
+          {
+            "amount": 150.25,
+            "transactionPeriod": "tomorrow",
+            "transactionInterval": 3,
+            "transactionDay": "5",
+            "startDate": "2024-07-06",
+            "endDate": "2024-07-06",
+            "outreachSourceCode": {
+              "sourceCode": "AnimalEmailCampaign2023"
+            },
+            "paymentInstrument": {
+              "type": "credit card",
+              "accountHolderName": "test donor",
+              "expiryMonth": "10",
+              "expiryYear": "2026",
+              "last4": "4585",
+              "cardBrand": "visa",
+              "bankName": "chase",
+              "digitalWalletProvider": "apple pay",
+              "bankAccountHolderType": "primary",
+              "bankAccountType": "checking",
+              "bankAccountNumber": "123456",
+              "bankCode": "HBUK",
+              "gatewayName": "stripe",
+              "processorName": "test processor",
+              "processorPaymentReference": "string",
+              "gatewayReference": "string"
+            }
+          }
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: Content-Type
+          value: application/json
+      body:
+        type: json
+        data: |-
+          {
+              "errors": [
+                  {
+                      "message": "Transaction Period: bad value for restricted picklist field: tomorrow"
+                  }
+              ],
+              "success": false
+          }
+  - name: Status200-UpdateCommitmentSuccessWithExternalIds
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/connect/fundraising/commitments/{fieldValue}?externalIdField={fieldName}"
+      method: POST
+      params:
+        - name: externalIdField
+          value: "{fieldName}"
+          type: query
+      body:
+        type: json
+        data: |-
+          {
+          "amount": 150.25,
+            "transactionPeriod": "monthly",
+            "transactionInterval": 3,
+            "transactionDay": "5",
+            "startDate": "2024-07-06",
+            "endDate": "2024-07-06",
+            "campaign": {
+              "externalId": {
+                  "fieldName": "<EXTERNAL_ID_FIELD_NAME>",
+                  "fieldValue": "<EXTERNAL_ID_FIELD_VALUE>"
+              }
+            },
+            "outreachSourceCode": {
+              "id": "<SOURCE_CODE_ID>",
+              "sourceCode": "AnimalEmailCampaign2023"
+            },
+            "donor": {
+              "donorType": "individual",
+              "organizationName": "ABC Inc.",
+              "firstName": "David",
+              "lastName": "Chavez",
+              "phone": "510-434-8920",
+              "email": "d.chavez@salesforce.com",
+              "address": [
+                {
+                  "addressType": "mailing",
+                  "street": "123 Main Street",
+                  "city": "Oakland",
+                  "state": "CA",
+                  "postalCode": "94610",
+                  "country": "US"
+                }
+              ],
+              "accountCustomFields": [
+                {
+                  "fieldName": "string",
+                  "fieldValue": "string"
+                }
+              ]
+            },
+            "paymentInstrument": {
+              "type": "credit card",
+              "accountHolderName": "david chavez",
+              "expiryMonth": "10",
+              "expiryYear": "2026",
+              "last4": "4585",
+              "cardBrand": "visa",
+              "bankName": "chase",
+              "digitalWalletProvider": "apple pay",
+              "bankAccountHolderType": "primary",
+              "bankAccountType": "checking",
+              "bankAccountNumber": "123456",
+              "bankCode": "HBUK",
+              "gatewayName": "stripe",
+              "processorName": "classy",
+              "processorPaymentReference": "string",
+              "gatewayReference": "string"
+            },
+            "giftCommitmentCustomFields": [
+              {
+                "fieldName": "string",
+                "fieldValue": "string"
+              }
+            ],
+            "giftCommitmentScheduleCustomFields": [
+              {
+                "fieldName": "string",
+                "fieldValue": "string"
+              }
+            ]
+          }
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: Content-Type
+          value: application/json
+      body:
+        type: json
+        data: |-
+          {
+            "success": true,
+            "links": {
+              "giftcommitment": {
+                "href": "/services/data/vXX.X/sobjects/sObject/<SFDC_GIFT_COMMITMENT_ID>",
+                "id": "<SFDC_GIFT_COMMITMENT_ID>"
+              },
+              "giftcommitmentschedule": {
+                "href": "/services/data/vXX.X/sobjects/sObject/<SFDC_GIFT_COMMITMENT_SCHEDULE_ID>",
+                "id": "<SFDC_GIFT_COMMITMENT_SCHEDULE_ID>"
+              }
+            }
+          }
+  - name: Status400-BadRequestError
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/connect/fundraising/commitments/:commitmentId"
+      method: POST
+      params:
+        - name: commitmentId
+          value: ""
+          type: path
+      body:
+        type: json
+        data: |-
+          {
+            "amount": 150.25,
+            "transactionPeriod": "monthly",
+            "transactionInterval": 3,
+            "transactionDay": "5",
+            "startDate": "2024-07-06",
+            "endDate": "2024-07-06",
+            "outreachSourceCode": {
+              "sourceCode": "AnimalEmailCampaign2023"
+            },
+            "paymentInstrument": {
+              "type": "credit card",
+              "accountHolderName": "test donor",
+              "expiryMonth": "10",
+              "expiryYear": "2026",
+              "last4": "4585",
+              "cardBrand": "visa",
+              "bankName": "chase",
+              "digitalWalletProvider": "apple pay",
+              "bankAccountHolderType": "primary",
+              "bankAccountType": "checking",
+              "bankAccountNumber": "123456",
+              "bankCode": "HBUK",
+              "gatewayName": "stripe",
+              "processorName": "test processor",
+              "processorPaymentReference": "string",
+              "gatewayReference": "string"
+            }
+          }
+    response:
+      status: 400
+      statusText: Bad Request
+      headers:
+        - name: Content-Type
+          value: application/json
+      body:
+        type: json
+        data: |2-
+              // Even if the JSON request is valid, this is an example of a 400 error code that will be returned if duplicate matching rules are not active. Any non 200 error code would have a similar response structure.
+              {
+                  "errorCode": "UNKNOWN_EXCEPTION",
+                  "message": "Provide active duplicate matching rules on Account and Person Account for donor matching. -- industries.fundraisingops.connect.impl.validator.ValidatorUtil.validateMatchingMethod(ValidatorUtil.java:103)"
+              }
+
+docs: |-
+  Modify the schedule or payment instrument metadata on an existing active gift commitment.
+
+  ## Required Attributes:
+
+  - {commitmentId}
+      
+  - amount
+      
+  - transactionPeriod (Monthly, Weekly, Yearly, etc.)
+      
+  - startDate
+      
+  - paymentInstrument.type
+      
+
+  All other attributes are optional can be left as an empty string or just removed from the request body entirely. The only exceptions to this are:
+
+  - CustomFields collections - These cannot be left in the request body as an empty collection or with an empty string for the FieldName.
+      
+
+  ## Validated Property Formats (an empty string is considered valid)
+
+  - DateTime - YYYY-MM-DDTHH:MM:SSZ
+      
+  - Date - YYYY-MM-DD
+      
+  - Email - a valid formatted email address
+      
+
+  ### Other Attributes
+
+  - OutreachSource -- This is optional. Be sure to create the OutreachSourceCode record in the system if passing a value
+      
+  - Will accept either an OutreachSourceCode.id (SalesforceId) or an OutreachSourceCode.Code.
+      
+
+  ### Custom Fields
+
+  - The field_value can be a text string (inc. for a date data-type) or a numeric value (without quotes)
+      
+  - Do not include an empty collection or an empty fieldName in the request body

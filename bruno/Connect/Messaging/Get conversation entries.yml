@@ -1,0 +1,145 @@
+info:
+  name: Get conversation entries
+  type: http
+  seq: 1
+
+http:
+  method: GET
+  url: "{{_endpoint}}/services/data/v{{version}}/connect/conversation/:conversationIdentifier/entries"
+  params:
+    - name: conversationIdentifier
+      value: ""
+      type: path
+      description: Conversation identifier UUID
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Get conversation entries
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/connect/conversation/:conversationIdentifier/entries"
+      method: GET
+      params:
+        - name: conversationIdentifier
+          value: bf94a5f1-5210-4227-b67b-125a994656ca
+          type: path
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: Date
+          value: Fri, 10 Jan 2025 11:40:26 GMT
+        - name: Content-Type
+          value: application/json;charset=UTF-8
+        - name: Transfer-Encoding
+          value: chunked
+        - name: Connection
+          value: keep-alive
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: Content-Encoding
+          value: gzip
+        - name: Sforce-Limit-Info
+          value: api-usage=246/15000
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: Vary
+          value: Accept-Encoding
+        - name: X-Robots-Tag
+          value: none
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: Server
+          value: sfdcedge
+        - name: X-SFDC-Request-Id
+          value: 5a8f2802ad688ae208710a5df1950663
+        - name: X-Request-Id
+          value: 5a8f2802ad688ae208710a5df1950663
+        - name: X-SFDC-Edge-Cache
+          value: MISS
+      body:
+        type: json
+        data: |-
+          {
+              "conversationEntries": [
+                  {
+                      "clientDuration": 0,
+                      "clientTimestamp": 1736508089610,
+                      "identifier": "06a1182e-d932-4178-9864-6de5b7b3d3fd",
+                      "messageText": "The Canyon Zip Line Excursion is an exhilarating adventure where you can soar over deep canyons and lush forest canopies. Here are some details:\n\n- Description: Soar over deep canyons and lush forest canopies on our thrilling zip line tour.\n- Activity Level: High\n- Type: Adventure Activities\n\nWould you like to know the available sessions for this excursion? If so, please provide the date you&#39;re interested in.",
+                      "relatedRecords": [],
+                      "sender": {
+                          "appType": "chatbot",
+                          "role": "Chatbot",
+                          "subject": "0XxKj000000xpJh"
+                      },
+                      "serverReceivedTimestamp": 1736508089657
+                  },
+                  {
+                      "clientDuration": 0,
+                      "clientTimestamp": 1736508081161,
+                      "identifier": "414e8b7b-af09-4349-beee-79806657495c",
+                      "messageText": "sofiarodriguez@example.com and 10008155",
+                      "relatedRecords": [
+                          "0MwKj000007sdiM"
+                      ],
+                      "sender": {
+                          "appType": "iamessage",
+                          "role": "EndUser",
+                          "subject": "v2/iamessage/UNAUTH/NA/uid:cee38146-34f1-41a2-a96c-a5c4c9b8b62b"
+                      },
+                      "serverReceivedTimestamp": 1736508081203
+                  },
+                  {
+                      "clientDuration": 0,
+                      "clientTimestamp": 1736508041619,
+                      "identifier": "981246f2-7be4-4fa4-a8ea-2bb134c7f6ff",
+                      "messageText": "Could you please provide your email address and membership number so I can look up your details and get the information for you?",
+                      "relatedRecords": [],
+                      "sender": {
+                          "appType": "chatbot",
+                          "role": "Chatbot",
+                          "subject": "0XxKj000000xpJh"
+                      },
+                      "serverReceivedTimestamp": 1736508041627
+                  },
+                  {
+                      "clientDuration": 0,
+                      "clientTimestamp": 1736508034543,
+                      "identifier": "7db791fe-1f23-46d7-b685-7ad7b3f56f9d",
+                      "messageText": "show me more information about the canyon zip line excursion",
+                      "relatedRecords": [
+                          "0MwKj000007sdiM"
+                      ],
+                      "sender": {
+                          "appType": "iamessage",
+                          "role": "EndUser",
+                          "subject": "v2/iamessage/UNAUTH/NA/uid:cee38146-34f1-41a2-a96c-a5c4c9b8b62b"
+                      },
+                      "serverReceivedTimestamp": 1736508034755
+                  },
+                  {
+                      "clientDuration": 0,
+                      "clientTimestamp": 1736508015523,
+                      "identifier": "e9762707-0b3c-4656-8b91-9f10d04aa313",
+                      "messageText": "Hi, I&#39;m an AI service assistant. How can I help you?",
+                      "relatedRecords": [],
+                      "sender": {
+                          "appType": "chatbot",
+                          "role": "Chatbot",
+                          "subject": "0XxKj000000xpJh"
+                      },
+                      "serverReceivedTimestamp": 1736508015579
+                  }
+              ]
+          }
+
+docs: |-
+  Gets in-app messaging conversation entries.
+  https://developer.salesforce.com/docs/atlas.en-us.chatterapi.meta/chatterapi/connect_resources_conversation_entries.htm

@@ -1,0 +1,228 @@
+/services/data/v{version}/search:
+  get:
+    tags:
+      - REST > Search
+    summary: Search
+    description: >-
+      Executes the specified SOSL search. The search string must be URL-encoded.
+
+
+      https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/resources_search.htm
+    parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: q
+        in: query
+        schema:
+          type: string
+        description: A SOSL statement that is properly URL-encoded.
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: Successful response
+        content:
+          application/json: {}
+/services/data/v{version}/search/scopeOrder:
+  get:
+    tags:
+      - REST > Search
+    summary: Search Scope and Order
+    description: >-
+      Returns an ordered list of objects in the default global search scope of a logged-in user. Global search keeps track of which objects the user interacts with and how often and arranges the search results accordingly. Objects used most frequently appear at the top of the list.
+
+      The returned list reflects the object order in the user’s default search scope, including any pinned objects on the user’s search results page. This call is useful if you want to implement a custom search results page using the optimized global search scope. The search string must be URL-encoded.
+
+
+      https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/resources_search_scope_order.htm
+    parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: Successful response
+        content:
+          application/json: {}
+/services/data/v{version}/search/layout:
+  get:
+    tags:
+      - REST > Search
+    summary: Search Result Layouts
+    description: >-
+      Returns search result layout information for the objects in the query string. For each object, this call returns the list of fields displayed on the search results page as columns, the number of rows displayed on the first page, and the label used on the search results page.
+
+      This call supports bulk fetch for up to 100 objects in a query.
+
+
+      https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/resources_search_layouts.htm
+    parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: q
+        in: query
+        schema:
+          type: string
+        description: Comma delimited object list
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: Successful response
+        content:
+          application/json: {}
+/services/data/v{version}/search/suggestions:
+  get:
+    tags:
+      - REST > Search
+    summary: Search Suggested Article Title Matches
+    description: >-
+      Returns a list of Salesforce Knowledge article titles that match the user’s search query string. Provides a shortcut to navigate directly to likely relevant articles before the user performs a search.
+
+
+      https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/resources_search_suggest_title_matches.htm
+    parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: q
+        in: query
+        schema:
+          type: string
+      - name: publishStatus
+        in: query
+        schema:
+          type: string
+      - name: language
+        in: query
+        schema:
+          type: string
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: Successful response
+        content:
+          application/json: {}
+/services/data/v{version}/search/suggestSearchQueries:
+  get:
+    tags:
+      - REST > Search
+    summary: Search Suggested Queries
+    description: >-
+      Returns a list of suggested searches based on the user’s query string text matching searches that other users have performed in Salesforce Knowledge. Provides a way to improve search effectiveness, before the user performs a search.
+
+
+      https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/resources_search_suggest_queries.htm
+    parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: q
+        in: query
+        schema:
+          type: string
+      - name: language
+        in: query
+        schema:
+          type: string
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: Successful response
+        content:
+          application/json: {}
+/services/data/v{version}/parameterizedSearch:
+  get:
+    tags:
+      - REST > Search
+    summary: Parameterized Search
+    description: >-
+      Executes a simple RESTful search using parameters instead of a SOSL clause. Indicate parameters in a URL in the GET method. Or, use POST for more complex JSON searches.
+    parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: q
+        in: query
+        schema:
+          type: string
+        description: A search string that is properly URL-encoded
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: Successful response
+        content:
+          application/json: {}
+/services/data/v{version}/sobjects/relevantItems:
+  get:
+    tags:
+      - REST > Search
+    summary: Relevant Items
+    description: >-
+      Gets the current user’s most relevant items. Relevant items include records for objects in the user’s global search scope and also most recently used (MRU) objects.
+
+      Relevant items include up to 50 of the most recently viewed or updated records for each object in the user’s global search scope.
+
+      Note
+
+      The user’s global search scope includes the objects the user interacted with most in the last 30 days, including objects the user pinned from the search results page in the Salesforce Classic.
+
+
+      Then, the resource finds more recent records for each most recently used (MRU) object until the maximum number of records, which is 2,000, is returned.
+
+      This resource only accesses the relevant item information. Modifying the list of relevant items is not currently supported
+
+      https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/resources_relevant_items.htm
+    parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: Successful response
+        content:
+          application/json: {}

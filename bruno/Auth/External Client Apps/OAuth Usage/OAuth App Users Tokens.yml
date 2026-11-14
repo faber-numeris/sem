@@ -1,0 +1,47 @@
+info:
+  name: OAuth App Users Tokens
+  type: http
+  seq: 3
+
+http:
+  method: GET
+  url: "{{url}}{{site}}/services/data/v{{version}}/apps/oauth/usage/{{_appId}}/{{_userId}}/tokens"
+  headers:
+    - name: Authorization
+      value: Bearer <token>
+      description: Replace <token> with your access token
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: OAuth App Users Tokens
+    request:
+      url: "{{url}}{{site}}/services/data/v{{version}}/apps/oauth/usage/{{_appId}}/{{_userId}}/tokens"
+      method: GET
+    response:
+      body:
+        type: text
+        data: |-
+          {
+            "currentPageUrl": "/services/data/<version>/apps/oauth/usage/<identifier>/<userIdentifier>/tokens",
+            "tokens": [
+              {
+                "accessTokenFormat": "<accessTokenFormat>",
+                "appDeveloperName": "<appDeveloperName>",
+                "appIdentifier": "<identifier>",
+                "initialConnectionAt": "<timestamp>",
+                "lastUsedAt": "<timestamp>",
+                "revocationUrl": "/services/data/<version>/apps/oauth/usage/tokens/<tokenIdentifier>",
+                "useCount": integer,
+                "userIdentifier": "<userIdentifier>",
+                "username": "<username>"
+              }
+            ]
+          }
+
+docs: Lists all tokens for a user of the external client app. See [Refresh Token by User and App](https://developer.salesforce.com/docs/atlas.en-us.246.0.chatterapi.meta/chatterapi/connect_resources_usage_app_id_user_id_tokens.htm).

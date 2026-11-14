@@ -1,0 +1,82 @@
+info:
+  name: Update a Favorite
+  type: http
+  seq: 4
+
+http:
+  method: PATCH
+  url: "{{_endpoint}}/services/data/v{{version}}/ui-api/favorites/:FAVORITE_ID"
+  params:
+    - name: FAVORITE_ID
+      value: ""
+      type: path
+      description: The ID of a favorite
+  body:
+    type: json
+    data: |
+      {
+        "name": "Red Accounts",
+        "sortOrder": 1
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Update a Favorite
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/ui-api/favorites/:FAVORITE_ID"
+      method: PATCH
+      params:
+        - name: FAVORITE_ID
+          value: 0MV4H0000004qIeWAI
+          type: path
+          description: The ID of a favorite
+      body:
+        type: json
+        data: |
+          {
+            "name": "AllAccountsListViewFavoriteRenamed",
+            "sortOrder": 1
+          }
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: Date
+          value: Fri, 06 Oct 2023 10:06:33 GMT
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: Content-Type
+          value: application/json;charset=UTF-8
+        - name: Transfer-Encoding
+          value: chunked
+      body:
+        type: json
+        data: |-
+          {
+              "accessCount": 1,
+              "iconColor": "5867E8",
+              "iconUrl": "https://pozil-dev-ed.my.salesforce.com/img/icon/t4v35/standard/account_120.png",
+              "id": "0MV4H0000004qIeWAI",
+              "lastAccessDate": "2023-10-06T10:03:32.000Z",
+              "name": "AllAccountsListViewFavoriteRenamed",
+              "objectType": "Account",
+              "sortOrder": 1,
+              "subtitle": "Accounts",
+              "target": "00B58000002ssinEAA",
+              "targetType": "ListView"
+          }
+
+docs: Update a Favorite

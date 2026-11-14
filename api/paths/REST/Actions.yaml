@@ -1,0 +1,109 @@
+/services/data/v{version}/actions/standard:
+  get:
+    tags:
+      - REST > Actions
+    summary: Standard Invocable Actions
+    description: >-
+      Returns the list of actions that can be statically invoked. You can also get basic information for each type of action.
+
+      This resource is available in REST API version 32.0 and later.
+    parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: Successful response
+        content:
+          application/json: {}
+/services/data/v{version}/actions/custom:
+  get:
+    tags:
+      - REST > Actions
+    summary: Custom Invocable Actions
+    description: >-
+      Returns the list of all custom actions. You can also get basic information for each type of action.
+
+      This resource is available in REST API version 32.0 and later.
+    parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: Successful response
+        content:
+          application/json: {}
+/services/data/v{version}/actions/custom/flow/{flowApiName}:
+  post:
+    tags:
+      - REST > Actions
+    summary: Launch Flow
+    description: Launches an Autolaunched Flow with the supplied input parameters.
+    requestBody:
+      content:
+        '*/*':
+          schema:
+            type: string
+            example: '"{\n    \"inputs\": [\n        {}\n    ]\n}"'
+    parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: flowApiName
+        in: path
+        schema:
+          type: string
+        required: true
+        description: Flow API Name
+    responses:
+      '200':
+        description: Successful response
+        content:
+          application/json: {}
+/services/data/v{version}/quickActions:
+  get:
+    tags:
+      - REST > Actions
+    summary: Quick Actions
+    description: >-
+      Returns a list of global actions and object-specific actions. This resource is available in REST API version 28.0 and later. When working with actions, also refer to SObject Quick Actions.
+
+      https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/resources_quickactions.htm
+    parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: Successful response
+        content:
+          application/json: {}

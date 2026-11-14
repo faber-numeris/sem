@@ -1,0 +1,816 @@
+/services/data/v{version}/loyalty-programs/{loyaltyProgramName}/corporate-member-enrollments:
+  post:
+    tags:
+      - Industries > Loyalty Management > Basic Resources
+    summary: Corporate Member Enrollments
+    description: >-
+      Standard Documentation:
+
+
+      [https://developer.salesforce.com/docs/atlas.en-us.loyalty.meta/loyalty/connect_resources_enroll_corporate_member.htm](https://developer.salesforce.com/docs/atlas.en-us.loyalty.meta/loyalty/connect_resources_enroll_corporate_member.htm)
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            example:
+              enrollmentDate: '2021-01-01T05:05:05'
+              membershipNumber: Member123
+              associatedAccountDetails:
+                name: Name1
+                phone: '908989898'
+                website: www.ab.com
+                allowDuplicateRecords: 'false'
+              memberStatus: Active
+              createTransactionJournals: 'true'
+    parameters:
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: loyaltyProgramName
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '201':
+        description: Created
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Wed, 22 May 2024 15:35:25 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Content-Type:
+            schema:
+              type: string
+              example: application/json;charset=UTF-8
+          Vary:
+            schema:
+              type: string
+              example: Accept-Encoding
+          Content-Encoding:
+            schema:
+              type: string
+              example: gzip
+          Transfer-Encoding:
+            schema:
+              type: string
+              example: chunked
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              accountId: 001J8000003MaJL
+              loyaltyProgramMemberId: 0lMJ8000000CaRH
+              loyaltyProgramName: NTO Insider
+              membershipNumber: Member123
+              transactionJournals:
+                - activityDate: '2021-01-01T04:05:05.000Z'
+                  journalSubType: Member Enrollment
+                  journalType: Accrual
+                  loyaltyProgram: NTO Insider
+                  loyaltyProgramMember: Member123
+                  referredMember: null
+                  status: Processed
+                  transactionJournalId: 0lVJ8000000GmaE
+/services/data/v{version}/loyalty-programs/{loyaltyProgramName}/individual-member-enrollments:
+  post:
+    tags:
+      - Industries > Loyalty Management > Basic Resources
+    summary: Individual Member Enrollments
+    description: >-
+      Standard Documentation:
+
+
+      [https://developer.salesforce.com/docs/atlas.en-us.loyalty.meta/loyalty/connect_resources_enroll_individual_member.htm](https://developer.salesforce.com/docs/atlas.en-us.loyalty.meta/loyalty/connect_resources_enroll_individual_member.htm)
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            example:
+              enrollmentDate: '2021-01-01T00:00:00'
+              membershipNumber: Member1
+              associatedContactDetails:
+                firstName: Name1
+                lastName: Name2
+                email: ab@email.com
+                allowDuplicateRecords: 'false'
+              memberStatus: Active
+              createTransactionJournals: 'true'
+              transactionJournalStatementFrequency: Monthly
+              transactionJournalStatementMethod: Mail
+              enrollmentChannel: Email
+              canReceivePromotions: 'true'
+              canReceivePartnerPromotions: 'true'
+              membershipEndDate: '2022-01-01T00:00:00'
+    parameters:
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: loyaltyProgramName
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '201':
+        description: Created
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Wed, 22 May 2024 15:39:01 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Content-Type:
+            schema:
+              type: string
+              example: application/json;charset=UTF-8
+          Vary:
+            schema:
+              type: string
+              example: Accept-Encoding
+          Content-Encoding:
+            schema:
+              type: string
+              example: gzip
+          Transfer-Encoding:
+            schema:
+              type: string
+              example: chunked
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              contactId: 003J8000002Yu0Z
+              loyaltyProgramMemberId: 0lMJ8000000CaRM
+              loyaltyProgramName: NTO Insider
+              membershipNumber: Member1
+              transactionJournals:
+                - activityDate: '2020-12-31T23:00:00.000Z'
+                  journalSubType: Member Enrollment
+                  journalType: Accrual
+                  loyaltyProgram: NTO Insider
+                  loyaltyProgramMember: Member1
+                  referredMember: null
+                  status: Processed
+                  transactionJournalId: 0lVJ8000000GmaJ
+/services/data/v{version}/connect/loyalty/member/{memberId}/memberbenefits:
+  get:
+    tags:
+      - Industries > Loyalty Management > Basic Resources
+    summary: Member Benefits
+    description: >-
+      Standard Documentation:
+
+
+      [https://developer.salesforce.com/docs/atlas.en-us.loyalty.meta/loyalty/connect_resources_member_benefits.htm](https://developer.salesforce.com/docs/atlas.en-us.loyalty.meta/loyalty/connect_resources_member_benefits.htm)
+    parameters:
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: memberId
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: OK
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Wed, 22 May 2024 16:11:06 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Content-Type:
+            schema:
+              type: string
+              example: application/json;charset=UTF-8
+          Vary:
+            schema:
+              type: string
+              example: Accept-Encoding
+          Content-Encoding:
+            schema:
+              type: string
+              example: gzip
+          Transfer-Encoding:
+            schema:
+              type: string
+              example: chunked
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              memberBenefits:
+                - benefitId: 0jiJ80000008OIFIA2
+                  benefitName: Free Shipping
+                  benefitTypeId: 0jhJ80000008OI5IAM
+                  benefitTypeName: Shipping
+                  createdRecordId: null
+                  createdRecordName: null
+                  description: null
+                  endDate: null
+                  isActive: true
+                  memberBenefitStatus: null
+                  startDate: null
+                - benefitId: 0jiJ80000008OI5IAM
+                  benefitName: 5% of Discount
+                  benefitTypeId: 0jhJ80000008OIAIA2
+                  benefitTypeName: Discount Percentage
+                  createdRecordId: null
+                  createdRecordName: null
+                  description: null
+                  endDate: null
+                  isActive: true
+                  memberBenefitStatus: null
+                  startDate: null
+/services/data/v{version}/loyalty-programs/{loyaltyProgramName}/members:
+  get:
+    tags:
+      - Industries > Loyalty Management > Basic Resources
+    summary: Member Profile
+    description: >-
+      Standard Documentation:
+
+
+      [https://developer.salesforce.com/docs/atlas.en-us.loyalty.meta/loyalty/connect_resources_member_profile.htm](https://developer.salesforce.com/docs/atlas.en-us.loyalty.meta/loyalty/connect_resources_member_profile.htm)
+    parameters:
+      - name: memberId
+        in: query
+        schema:
+          type: string
+        description: The ID of the loyalty program member.
+      - name: membershipNumber
+        in: query
+        schema:
+          type: string
+        description: The membership number of the loyalty program member.
+      - name: programCurrencyName
+        in: query
+        schema:
+          type: string
+        description: >-
+          The name of the loyalty program currency associated with the member.
+
+          Use this parameter to get the details of the member’s points-related information for a specific currency.
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: loyaltyProgramName
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: OK
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Wed, 22 May 2024 16:16:23 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Content-Type:
+            schema:
+              type: string
+              example: application/json;charset=UTF-8
+          Vary:
+            schema:
+              type: string
+              example: Accept-Encoding
+          Content-Encoding:
+            schema:
+              type: string
+              example: gzip
+          Transfer-Encoding:
+            schema:
+              type: string
+              example: chunked
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              additionalLoyaltyProgramMemberFields: {}
+              associatedAccount: null
+              associatedContact:
+                contactId: 003J8000002Yu0ZIAS
+                email: ab@email.com
+                firstName: Name1
+                lastName: Name2
+              canReceivePartnerPromotions: true
+              canReceivePromotions: true
+              enrollmentChannel: Email
+              enrollmentDate: '2021-01-01'
+              groupCreatedByMember: null
+              groupName: null
+              lastActivityDate: null
+              loyaltyProgramMemberId: 0lMJ8000000CaRMMA0
+              loyaltyProgramName: NTO Insider
+              memberCurrencies:
+                - additionalLoyaltyMemberCurrencyFields:
+                    Level_Before_Reset__c: null
+                  escrowPointsBalance: 0
+                  expirablePoints: 0
+                  lastAccrualProcessedDate: null
+                  lastEscrowProcessedDate: null
+                  lastExpirationProcessRunDate: null
+                  lastPointsAggregationDate: null
+                  lastPointsResetDate: null
+                  loyaltyMemberCurrencyName: NTO Qualifying Points
+                  loyaltyProgramCurrencyId: 0lcJ8000000CaR7IAK
+                  loyaltyProgramCurrencyName: null
+                  memberCurrencyId: 0lzJ8000000CaRMIA0
+                  nextQualifyingPointsResetDate: '2024-12-31'
+                  pointsBalance: 0
+                  qualifyingPointsBalanceBeforeReset: 0
+                  totalEscrowPointsAccrued: 0
+                  totalEscrowRolloverPoints: 0
+                  totalPointsAccrued: 0
+                  totalPointsExpired: 0
+                  totalPointsRedeemed: 0
+              memberStatus: Active
+              memberTiers:
+                - additionalLoyaltyMemberTierFields: {}
+                  areTierBenefitsAssigned: false
+                  loyaltyMemberTierId: 0lyJ8000000CaRMIA0
+                  loyaltyMemberTierName: Bronze
+                  tierChangeReason: null
+                  tierChangeReasonType: null
+                  tierEffectiveDate: '2021-01-01'
+                  tierExpirationDate: null
+                  tierGroupId: 0ltJ8000000CaR8IAK
+                  tierGroupName: null
+                  tierId: 0lgJ80000008OI5IAM
+                  tierSequenceNumber: 10
+              memberType: Individual
+              membershipEndDate: '2022-01-01'
+              membershipLastRenewalDate: null
+              membershipNumber: Member1
+              referredBy: null
+              relatedCorporateMembershipNumber: null
+              transactionJournalStatementFrequency: Monthly
+              transactionJournalStatementLastGeneratedDate: null
+              transactionJournalStatementMethod: Mail
+/services/data/v{version}/loyalty/programs/{loyaltyProgramName}/members/{membershipNumber}/vouchers/{voucherCode}/redeem:
+  post:
+    tags:
+      - Industries > Loyalty Management > Basic Resources
+    summary: Redeem Voucher
+    description: >-
+      Standard Documentation:
+
+
+      [https://developer.salesforce.com/docs/atlas.en-us.loyalty.meta/loyalty/connect_resources_redeem_voucher.htm](https://developer.salesforce.com/docs/atlas.en-us.loyalty.meta/loyalty/connect_resources_redeem_voucher.htm)
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            example:
+              currencyIsoCode: EUR
+              redeemAmount: 1.5
+    parameters:
+      - name: voucherNumber
+        in: query
+        schema:
+          type: string
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: loyaltyProgramName
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The loyalty program name.
+      - name: membershipNumber
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The loyalty program membership number.
+      - name: voucherCode
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The voucher code to be redeemed.
+    responses:
+      '201':
+        description: Created
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Mon, 27 May 2024 19:35:17 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Content-Type:
+            schema:
+              type: string
+              example: application/json;charset=UTF-8
+          Vary:
+            schema:
+              type: string
+              example: Accept-Encoding
+          Content-Encoding:
+            schema:
+              type: string
+              example: gzip
+          Transfer-Encoding:
+            schema:
+              type: string
+              example: chunked
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              currencyIsoCode: EUR
+              remainingAmount: 3.5
+/services/data/v{version}/connect/loyalty/programs/{loyaltyProgramName}/transaction-history:
+  post:
+    tags:
+      - Industries > Loyalty Management > Basic Resources
+    summary: Transaction History
+    description: >-
+      Standard Documentation:
+
+
+      [https://developer.salesforce.com/docs/atlas.en-us.loyalty.meta/loyalty/connect_resources_transaction_history.htm](https://developer.salesforce.com/docs/atlas.en-us.loyalty.meta/loyalty/connect_resources_transaction_history.htm)
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            example:
+              membershipNumber: Member1
+              journalType: Accrual
+              journalSubType: Social
+              periodStartDate: '2022-01-27T00:00:00Z'
+              periodEndDate: '2022-11-27T00:00:00Z'
+    parameters:
+      - name: page
+        in: query
+        schema:
+          type: string
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: loyaltyProgramName
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '201':
+        description: Created
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Wed, 22 May 2024 16:22:05 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Content-Type:
+            schema:
+              type: string
+              example: application/json;charset=UTF-8
+          Vary:
+            schema:
+              type: string
+              example: Accept-Encoding
+          Content-Encoding:
+            schema:
+              type: string
+              example: gzip
+          Transfer-Encoding:
+            schema:
+              type: string
+              example: chunked
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              message: null
+              status: true
+              totalCount: 0
+              transactionJournals: []
+/services/data/v{version}/loyalty/programs/{loyaltyProgramName}/members/{membershipNumber}/transaction-ledger-summary:
+  get:
+    tags:
+      - Industries > Loyalty Management > Basic Resources
+    summary: Transaction Ledger Summary
+    description: >-
+      Standard Documentation:
+
+
+      [https://developer.salesforce.com/docs/atlas.en-us.loyalty.meta/loyalty/connect_resources_transaction_ledger.htm](https://developer.salesforce.com/docs/atlas.en-us.loyalty.meta/loyalty/connect_resources_transaction_ledger.htm)
+    parameters:
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: loyaltyProgramName
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: membershipNumber
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: OK
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Mon, 27 May 2024 19:37:52 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Content-Type:
+            schema:
+              type: string
+              example: application/json;charset=UTF-8
+          Vary:
+            schema:
+              type: string
+              example: Accept-Encoding
+          Content-Encoding:
+            schema:
+              type: string
+              example: gzip
+          Transfer-Encoding:
+            schema:
+              type: string
+              example: chunked
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              message: null
+              status: true
+              transactionJournalCount: 1
+              transactionJournals:
+                - activityDate: '2021-01-01T04:05:05.000Z'
+                  additionalTransactionJournalAttributes: []
+                  journalSubTypeName: Member Enrollment
+                  journalTypeName: Accrual
+                  pointsChange: []
+                  transactionJournalId: 0lVJ8000000GmaEMAS
+                  transactionJournalNumber: '00000008'
+/services/data/v{version}/connect/realtime/loyalty/programs/{loyaltyProgramName}:
+  post:
+    tags:
+      - Industries > Loyalty Management > Basic Resources
+    summary: Transaction Journals Simulation
+    description: >-
+      Standard Documentation:
+
+
+      [https://developer.salesforce.com/docs/atlas.en-us.loyalty.meta/loyalty/connect_resources_loyalty_program_process_simulation.htm](https://developer.salesforce.com/docs/atlas.en-us.loyalty.meta/loyalty/connect_resources_loyalty_program_process_simulation.htm)
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            example:
+              transactionJournals:
+                - CurrencyIsoCode: EUR
+                  ActivityDate: '2022-01-04T12:45:19Z'
+                  JournalDate: '2022-01-04T00:45:19Z'
+                  Brand: ''
+                  Establishment: Apple
+                  ExternalTransactionNumber: P1-981950
+                  JournalTypeId: 0lET10000004CQp
+                  LoyaltyProgramId: 0lpT10000004CdN
+                  MemberId: 0lMT10000004CfA
+                  TransactionAmount: '117'
+                  TransactionLocation: HitechCity
+                  VoucherCode: ''
+                  Origin: asdf
+                  Distance: '5'
+                  Destination: Hyderabad
+                  FlightNumber: SF-Ran-001
+                  Status: Pending
+              runSetting:
+                isSimulation: true
+    parameters:
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: loyaltyProgramName
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: Successful response
+        content:
+          application/json: {}
+/services/data/v{version}/loyalty/programs/{loyaltyProgramName}/members/{membershipNumber}/vouchers:
+  get:
+    tags:
+      - Industries > Loyalty Management > Basic Resources
+    summary: Member Vouchers
+    description: >-
+      [Member Vouchers](https://developer.salesforce.com/docs/atlas.en-us.loyalty.meta/loyalty/connect_resources_member_vouchers.htm)
+
+
+      NOTE:
+
+
+      In the Pre-request. Script Tab, make changes in the variables value accordingly with the real Process Name to invoke.
+    parameters:
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: loyaltyProgramName
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: membershipNumber
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: OK
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Wed, 22 May 2024 16:34:18 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Content-Type:
+            schema:
+              type: string
+              example: application/json;charset=UTF-8
+          Vary:
+            schema:
+              type: string
+              example: Accept-Encoding
+          Content-Encoding:
+            schema:
+              type: string
+              example: gzip
+          Transfer-Encoding:
+            schema:
+              type: string
+              example: chunked
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              voucherCount: 0
+              vouchers: []

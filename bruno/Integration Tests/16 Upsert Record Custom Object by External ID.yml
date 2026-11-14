@@ -1,0 +1,38 @@
+info:
+  name: 16 Upsert Record Custom Object by External ID
+  type: http
+  seq: 16
+
+http:
+  method: PATCH
+  url: "{{_endpoint}}/services/data/v{{version}}/sobjects/Custom_Object__c/External_ID__c/{{extId}}"
+  headers:
+    - name: Content-Type
+      value: application/json
+  body:
+    type: json
+    data: |-
+      {
+        "Name": "Bruno Custom Item",
+        "Field_To_Update__c": "Updated Value"
+      }
+
+runtime:
+  scripts:
+    - type: before-request
+      code: |-
+        bru.setVar("extId", "EXT-BRUNO-" + Date.now());
+    - type: after-response
+      code: |-
+        bru.setVar("customObjId", res.getBody().id);
+    - type: tests
+      code: |-
+        test("Upserts Custom_Object__c by External_ID__c", function() {
+          expect([200, 201]).to.include(res.getStatus());
+          expect(res.getBody().success).to.equal(true);
+          expect(res.getBody().id).to.be.a("string");
+        });
+
+settings:
+  encodeUrl: true
+  timeout: 0

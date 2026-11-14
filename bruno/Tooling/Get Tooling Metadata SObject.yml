@@ -1,0 +1,96 @@
+info:
+  name: Get Tooling Metadata SObject
+  type: http
+  seq: 9
+
+http:
+  method: GET
+  url: "{{_endpoint}}/services/data/v{{version}}/tooling/sobjects/:SOBJECT_API_NAME"
+  params:
+    - name: SOBJECT_API_NAME
+      value: ""
+      type: path
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Get Tooling Metadata SObject
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/tooling/sobjects/:SOBJECT_API_NAME"
+      method: GET
+      params:
+        - name: SOBJECT_API_NAME
+          value: ApexClass
+          type: path
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: Date
+          value: Mon, 11 Dec 2023 10:36:20 GMT
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: Sforce-Limit-Info
+          value: api-usage=298/15000
+        - name: Content-Type
+          value: application/json;charset=UTF-8
+        - name: Vary
+          value: Accept-Encoding
+        - name: Content-Encoding
+          value: gzip
+        - name: Transfer-Encoding
+          value: chunked
+      body:
+        type: json
+        data: |-
+          {
+              "objectDescribe": {
+                  "activateable": false,
+                  "associateEntityType": null,
+                  "associateParentEntity": null,
+                  "createable": true,
+                  "custom": false,
+                  "customSetting": false,
+                  "deepCloneable": false,
+                  "deletable": true,
+                  "deprecatedAndHidden": false,
+                  "feedEnabled": false,
+                  "hasSubtypes": false,
+                  "isInterface": false,
+                  "isSubtype": false,
+                  "keyPrefix": "01p",
+                  "label": "Apex Class",
+                  "labelPlural": "Apex Classes",
+                  "layoutable": true,
+                  "mergeable": false,
+                  "mruEnabled": true,
+                  "name": "ApexClass",
+                  "queryable": true,
+                  "replicateable": true,
+                  "retrieveable": true,
+                  "searchable": true,
+                  "triggerable": false,
+                  "undeletable": false,
+                  "updateable": true,
+                  "urls": {
+                      "compactLayouts": "/services/data/v59.0/tooling/sobjects/ApexClass/describe/compactLayouts",
+                      "rowTemplate": "/services/data/v59.0/tooling/sobjects/ApexClass/{ID}",
+                      "describe": "/services/data/v59.0/tooling/sobjects/ApexClass/describe",
+                      "layouts": "/services/data/v59.0/tooling/sobjects/ApexClass/describe/layouts",
+                      "sobject": "/services/data/v59.0/tooling/sobjects/ApexClass"
+                  }
+              },
+              "recentItems": []
+          }

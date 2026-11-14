@@ -1,0 +1,34 @@
+info:
+  name: SObject Rows Update
+  type: http
+  seq: 10
+
+http:
+  method: PATCH
+  url: "{{_endpoint}}/services/data/v{{version}}/sobjects/:SOBJECT_API_NAME/:RECORD_ID"
+  headers:
+    - name: Content-Type
+      value: application/json
+  params:
+    - name: SOBJECT_API_NAME
+      value: ""
+      type: path
+    - name: RECORD_ID
+      value: ""
+      type: path
+  body:
+    type: json
+    data: |-
+      {
+      	"field API name": "value"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+docs: Accesses records based on the specified object ID. Retrieves, updates, or deletes records. This resource can also be used to retrieve field values. Use the GET method to retrieve records or fields, the DELETE method to delete records, and the PATCH method to update records.

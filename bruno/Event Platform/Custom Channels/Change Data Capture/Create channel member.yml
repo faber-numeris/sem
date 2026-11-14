@@ -1,0 +1,26 @@
+info:
+  name: Create channel member
+  type: http
+  seq: 4
+
+http:
+  method: POST
+  url: "{{_endpoint}}/services/data/v{{version}}/tooling/sobjects/PlatformEventChannelMember"
+  body:
+    type: json
+    data: |
+      {
+          "FullName": "Account_Channel_chn_AccountChangeEvent",
+          "Metadata": {
+              "eventChannel": "Account_Channel__chn",
+              "selectedEntity": "AccountChangeEvent"
+          }
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true

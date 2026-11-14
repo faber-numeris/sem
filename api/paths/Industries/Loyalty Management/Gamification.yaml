@@ -1,0 +1,58 @@
+/services/data/v{version}/game/participant/{participantId}/games:
+  get:
+    tags:
+      - Industries > Loyalty Management > Gamification
+    summary: Games
+    description: >-
+      [Games](https://developer.salesforce.com/docs/atlas.en-us.loyalty.meta/loyalty/connect_resources_gamification.htm)
+
+
+      NOTE:
+
+
+      In the Pre-request. Script Tab, make changes in the variables value accordingly with the real Process Name to invoke.
+    parameters:
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: participantId
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: Successful response
+        content:
+          application/json: {}
+/services/data/v{version}/game/gameparticipantreward/{gameParticipantRewardId}/game-reward:
+  get:
+    tags:
+      - Industries > Loyalty Management > Gamification
+    summary: Game Reward
+    description: >-
+      [Game Reward](https://developer.salesforce.com/docs/atlas.en-us.loyalty.meta/loyalty/connect_resources_game_result.htm)
+
+
+      NOTE:
+
+
+      In the Pre-request. Script Tab, make changes in the variables value accordingly with the real Process Name to invoke.
+    parameters:
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: gameParticipantRewardId
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: Successful response
+        content:
+          application/json: {}

@@ -1,0 +1,96 @@
+info:
+  name: Device Flow 1
+  type: http
+  seq: 10
+
+http:
+  method: POST
+  url: "{{url}}{{site}}/services/oauth2/token"
+  body:
+    type: multipart-form
+    data:
+      - name: response_type
+        type: text
+        value: device_code
+      - name: client_id
+        type: text
+        value: "{{clientId}}"
+      - name: format
+        type: text
+        value: json
+      - name: scope
+        type: text
+        value: full refresh_token
+
+runtime:
+  scripts:
+    - type: after-response
+      code: |-
+        const jsonData = res.getBody();
+        const context = bru.getEnvName() ? { set: (k, v) => bru.setEnvVar(k, v), get: (k) => bru.getEnvVar(k) } : { set: (k, v) => bru.setVar(k, v), get: (k) => bru.getVar(k) };
+        context.set("_deviceCode", jsonData.device_code);
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Successful Device Flow 1
+    request:
+      url: "{{url}}{{site}}/services/oauth2/token"
+      method: POST
+      body:
+        type: multipart-form
+        data:
+          - name: response_type
+            type: text
+            value: device_code
+          - name: client_id
+            type: text
+            value: "{{clientId}}"
+          - name: format
+            type: text
+            value: json
+          - name: scope
+            type: text
+            value: full refresh_token
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: Date
+          value: Thu, 16 Nov 2023 15:29:39 GMT
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-XSS-Protection
+          value: 1; mode=block
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: Expires
+          value: Thu, 01 Jan 1970 00:00:00 GMT
+        - name: X-ReadOnlyMode
+          value: "false"
+        - name: Content-Type
+          value: application/json;charset=UTF-8
+        - name: Vary
+          value: Accept-Encoding
+        - name: Content-Encoding
+          value: gzip
+        - name: Transfer-Encoding
+          value: chunked
+      body:
+        type: json
+        data: |-
+          {
+              "user_code": "<user_code>",
+              "device_code": "<device_code",
+              "interval": integer,
+              "verification_uri": "https://<my_domain>/setup/connect"
+          }

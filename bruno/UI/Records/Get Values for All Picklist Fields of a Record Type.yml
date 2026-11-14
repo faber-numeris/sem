@@ -1,0 +1,380 @@
+info:
+  name: Get Values for All Picklist Fields of a Record Type
+  type: http
+  seq: 6
+
+http:
+  method: GET
+  url: "{{_endpoint}}/services/data/v{{version}}/ui-api/object-info/:SOBJECT_API_NAME/picklist-values/:RECORD_TYPE_ID"
+  params:
+    - name: SOBJECT_API_NAME
+      value: ""
+      type: path
+      description: Object API Name
+    - name: RECORD_TYPE_ID
+      value: ""
+      type: path
+      description: Record type Id. Use `012000000000000AAA` as default when there are no custom record types.
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Get Values for All Picklist Fields of a Record Type
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/ui-api/object-info/:SOBJECT_API_NAME/picklist-values/:RECORD_TYPE_ID"
+      method: GET
+      params:
+        - name: SOBJECT_API_NAME
+          value: Contact
+          type: path
+        - name: RECORD_TYPE_ID
+          value: 012000000000000AAA
+          type: path
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: Date
+          value: Wed, 27 Sep 2023 15:55:22 GMT
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-XSS-Protection
+          value: 1; mode=block
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: ETag
+          value: '"ef21257ca08f8952ff154f57dc775336--gzip"'
+        - name: Content-Type
+          value: application/json;charset=UTF-8
+        - name: Vary
+          value: Accept-Encoding
+        - name: Content-Encoding
+          value: gzip
+        - name: Transfer-Encoding
+          value: chunked
+      body:
+        type: json
+        data: |-
+          {
+              "eTag": "ef21257ca08f8952ff154f57dc775336",
+              "picklistFieldValues": {
+                  "CleanStatus": {
+                      "controllerValues": {},
+                      "defaultValue": null,
+                      "eTag": "bd535d2876948d8bb91fad409b69e359",
+                      "url": "/services/data/v58.0/ui-api/object-info/Contact/picklist-values/012000000000000AAA/CleanStatus",
+                      "values": [
+                          {
+                              "attributes": null,
+                              "label": "In Sync",
+                              "validFor": [],
+                              "value": "Matched"
+                          },
+                          {
+                              "attributes": null,
+                              "label": "Different",
+                              "validFor": [],
+                              "value": "Different"
+                          },
+                          {
+                              "attributes": null,
+                              "label": "Reviewed",
+                              "validFor": [],
+                              "value": "Acknowledged"
+                          },
+                          {
+                              "attributes": null,
+                              "label": "Not Found",
+                              "validFor": [],
+                              "value": "NotFound"
+                          },
+                          {
+                              "attributes": null,
+                              "label": "Inactive",
+                              "validFor": [],
+                              "value": "Inactive"
+                          },
+                          {
+                              "attributes": null,
+                              "label": "Not Compared",
+                              "validFor": [],
+                              "value": "Pending"
+                          },
+                          {
+                              "attributes": null,
+                              "label": "Select Match",
+                              "validFor": [],
+                              "value": "SelectMatch"
+                          },
+                          {
+                              "attributes": null,
+                              "label": "Skipped",
+                              "validFor": [],
+                              "value": "Skipped"
+                          }
+                      ]
+                  },
+                  "LeadSource": {
+                      "controllerValues": {},
+                      "defaultValue": null,
+                      "eTag": "edb5c49da4ff7bfe2cf15ecae67a306c",
+                      "url": "/services/data/v58.0/ui-api/object-info/Contact/picklist-values/012000000000000AAA/LeadSource",
+                      "values": [
+                          {
+                              "attributes": null,
+                              "label": "Web",
+                              "validFor": [],
+                              "value": "Web"
+                          },
+                          {
+                              "attributes": null,
+                              "label": "Phone Inquiry",
+                              "validFor": [],
+                              "value": "Phone Inquiry"
+                          },
+                          {
+                              "attributes": null,
+                              "label": "Partner Referral",
+                              "validFor": [],
+                              "value": "Partner Referral"
+                          },
+                          {
+                              "attributes": null,
+                              "label": "Purchased List",
+                              "validFor": [],
+                              "value": "Purchased List"
+                          },
+                          {
+                              "attributes": null,
+                              "label": "Other",
+                              "validFor": [],
+                              "value": "Other"
+                          }
+                      ]
+                  },
+                  "Level__c": {
+                      "controllerValues": {},
+                      "defaultValue": null,
+                      "eTag": "ffef8adfed014c3057fd14658f5202c4",
+                      "url": "/services/data/v58.0/ui-api/object-info/Contact/picklist-values/012000000000000AAA/Level__c",
+                      "values": [
+                          {
+                              "attributes": null,
+                              "label": "Secondary",
+                              "validFor": [],
+                              "value": "Secondary"
+                          },
+                          {
+                              "attributes": null,
+                              "label": "Tertiary",
+                              "validFor": [],
+                              "value": "Tertiary"
+                          },
+                          {
+                              "attributes": null,
+                              "label": "Primary",
+                              "validFor": [],
+                              "value": "Primary"
+                          }
+                      ]
+                  },
+                  "MailingGeocodeAccuracy": {
+                      "controllerValues": {},
+                      "defaultValue": null,
+                      "eTag": "776a2f5e98c411bafb45081e39a6f1ec",
+                      "url": "/services/data/v58.0/ui-api/object-info/Contact/picklist-values/012000000000000AAA/MailingGeocodeAccuracy",
+                      "values": [
+                          {
+                              "attributes": null,
+                              "label": "Address",
+                              "validFor": [],
+                              "value": "Address"
+                          },
+                          {
+                              "attributes": null,
+                              "label": "NearAddress",
+                              "validFor": [],
+                              "value": "NearAddress"
+                          },
+                          {
+                              "attributes": null,
+                              "label": "Block",
+                              "validFor": [],
+                              "value": "Block"
+                          },
+                          {
+                              "attributes": null,
+                              "label": "Street",
+                              "validFor": [],
+                              "value": "Street"
+                          },
+                          {
+                              "attributes": null,
+                              "label": "ExtendedZip",
+                              "validFor": [],
+                              "value": "ExtendedZip"
+                          },
+                          {
+                              "attributes": null,
+                              "label": "Zip",
+                              "validFor": [],
+                              "value": "Zip"
+                          },
+                          {
+                              "attributes": null,
+                              "label": "Neighborhood",
+                              "validFor": [],
+                              "value": "Neighborhood"
+                          },
+                          {
+                              "attributes": null,
+                              "label": "City",
+                              "validFor": [],
+                              "value": "City"
+                          },
+                          {
+                              "attributes": null,
+                              "label": "County",
+                              "validFor": [],
+                              "value": "County"
+                          },
+                          {
+                              "attributes": null,
+                              "label": "State",
+                              "validFor": [],
+                              "value": "State"
+                          },
+                          {
+                              "attributes": null,
+                              "label": "Unknown",
+                              "validFor": [],
+                              "value": "Unknown"
+                          }
+                      ]
+                  },
+                  "OtherGeocodeAccuracy": {
+                      "controllerValues": {},
+                      "defaultValue": null,
+                      "eTag": "776a2f5e98c411bafb45081e39a6f1ec",
+                      "url": "/services/data/v58.0/ui-api/object-info/Contact/picklist-values/012000000000000AAA/OtherGeocodeAccuracy",
+                      "values": [
+                          {
+                              "attributes": null,
+                              "label": "Address",
+                              "validFor": [],
+                              "value": "Address"
+                          },
+                          {
+                              "attributes": null,
+                              "label": "NearAddress",
+                              "validFor": [],
+                              "value": "NearAddress"
+                          },
+                          {
+                              "attributes": null,
+                              "label": "Block",
+                              "validFor": [],
+                              "value": "Block"
+                          },
+                          {
+                              "attributes": null,
+                              "label": "Street",
+                              "validFor": [],
+                              "value": "Street"
+                          },
+                          {
+                              "attributes": null,
+                              "label": "ExtendedZip",
+                              "validFor": [],
+                              "value": "ExtendedZip"
+                          },
+                          {
+                              "attributes": null,
+                              "label": "Zip",
+                              "validFor": [],
+                              "value": "Zip"
+                          },
+                          {
+                              "attributes": null,
+                              "label": "Neighborhood",
+                              "validFor": [],
+                              "value": "Neighborhood"
+                          },
+                          {
+                              "attributes": null,
+                              "label": "City",
+                              "validFor": [],
+                              "value": "City"
+                          },
+                          {
+                              "attributes": null,
+                              "label": "County",
+                              "validFor": [],
+                              "value": "County"
+                          },
+                          {
+                              "attributes": null,
+                              "label": "State",
+                              "validFor": [],
+                              "value": "State"
+                          },
+                          {
+                              "attributes": null,
+                              "label": "Unknown",
+                              "validFor": [],
+                              "value": "Unknown"
+                          }
+                      ]
+                  },
+                  "Salutation": {
+                      "controllerValues": {},
+                      "defaultValue": null,
+                      "eTag": "2de0a04925bdf8e3c70fe1177129a63f",
+                      "url": "/services/data/v58.0/ui-api/object-info/Contact/picklist-values/012000000000000AAA/Salutation",
+                      "values": [
+                          {
+                              "attributes": null,
+                              "label": "Mr.",
+                              "validFor": [],
+                              "value": "Mr."
+                          },
+                          {
+                              "attributes": null,
+                              "label": "Ms.",
+                              "validFor": [],
+                              "value": "Ms."
+                          },
+                          {
+                              "attributes": null,
+                              "label": "Mrs.",
+                              "validFor": [],
+                              "value": "Mrs."
+                          },
+                          {
+                              "attributes": null,
+                              "label": "Dr.",
+                              "validFor": [],
+                              "value": "Dr."
+                          },
+                          {
+                              "attributes": null,
+                              "label": "Prof.",
+                              "validFor": [],
+                              "value": "Prof."
+                          }
+                      ]
+                  }
+              }
+          }
+
+docs: Get metadata about a specific object. The response includes metadata describing fields, child relationships, record type, and theme.

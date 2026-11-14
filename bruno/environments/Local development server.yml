@@ -1,0 +1,20 @@
+name: Local development server
+variables:
+  - name: url
+    value: http://localhost:8080
+  - name: _endpoint
+    value: http://localhost:8080
+  - name: version
+    value: "61.0"
+  - name: clientId
+    value: 3MVG98_Psg5cppyYCmk1gZNC25o00SXpgpodlS29IZ6pXiHkt3xuPa5qIjBTtEgdsiMuIWVN_8F0jnwEtbDh4
+  - name: clientSecret
+    value: secret
+  - name: username
+    value: admin@example.com
+  - name: password
+    value: password123
+  - name: redirectUrl
+    value: http://localhost:8080/oauth2/callback
+  - name: site
+    value: ""

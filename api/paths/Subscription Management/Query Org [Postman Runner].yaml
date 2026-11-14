@@ -1,0 +1,66 @@
+/services/oauth2/userinfo:
+  get:
+    tags:
+      - Subscription Management > Query Org [Postman Runner]
+    summary: User Info
+    parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+    responses:
+      '200':
+        description: Successful response
+        content:
+          application/json: {}
+/services/data:
+  get:
+    tags:
+      - Subscription Management > Query Org [Postman Runner]
+    summary: Get Latest Release Version
+    responses:
+      '200':
+        description: Successful response
+        content:
+          application/json: {}
+/services/data/v{version}/commerce/payments/payment-methods:
+  post:
+    tags:
+      - Subscription Management > Query Org [Postman Runner]
+    summary: Create Payment Method
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            example:
+              paymentGatewayId: '{{defaultPaymentGatewayId}}'
+              cardPaymentMethod:
+                cardHolderName: '{{_userFullName}}'
+                expiryMonth: '11'
+                expiryYear: '2222'
+                cardNumber: '4111111111111111'
+                cvv: '111'
+                cardCategory: CreditCard
+                cardType: VISA
+                startYear: '2013'
+                startMonth: '7'
+                nickName: Default Payment Method
+                accountId: '{{defaultAccountId}}'
+              phone: '4155551212'
+              email: '{{_userEmail}}'
+              additionalData:
+                key1: value1
+                key2: value2
+    parameters:
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: Successful response
+        content:
+          application/json: {}

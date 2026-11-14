@@ -1,0 +1,21 @@
+info:
+  name: OAuth Token Revoke
+  type: http
+  seq: 6
+
+http:
+  method: DELETE
+  url: "{{url}}{{site}}/services/data/v{{version}}/apps/oauth/usage/tokens/{{_tokenId}}"
+  headers:
+    - name: Authorization
+      value: Bearer <token>
+      description: Replace <token> with your access token
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+docs: Revokes one token. See [OAuth Refresh Token](https://developer.salesforce.com/docs/atlas.en-us.246.0.chatterapi.meta/chatterapi/connect_resources_usage_tokens_token_id.htm).

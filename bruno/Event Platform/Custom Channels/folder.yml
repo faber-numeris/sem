@@ -1,0 +1,14 @@
+info:
+  name: Custom Channels
+  type: folder
+  seq: 1
+
+request:
+  auth: inherit
+
+docs:
+  content: |-
+    This folder contains API requests for managing custom channels for platform events and Change Data Capture.
+
+    Channels group event messages of one or more events in one stream that a client can subscribe to. Event relays use channels to send events to Amazon EventBridge in AWS. Also, you can subscribe to channels using Streaming API (CometD) and Pub/Sub API.
+  type: text/markdown

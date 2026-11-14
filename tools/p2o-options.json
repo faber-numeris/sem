@@ -1,0 +1,7 @@
+{
+  "outputFormat": "yaml",
+  "servers": [
+    { "url": "http://localhost:9090", "description": "Salesforce emulator (sem)" },
+    { "url": "https://login.salesforce.com", "description": "Salesforce" }
+  ]
+}

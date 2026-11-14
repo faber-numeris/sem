@@ -1,0 +1,37 @@
+info:
+  name: Contacts Ordered
+  type: graphql
+  seq: 6
+
+graphql:
+  method: POST
+  url: "{{_endpoint}}/services/data/v{{version}}/graphql"
+  headers:
+    - name: X-Chatter-Entity-Encoding
+      value: "false"
+  body:
+    query: |-
+      query contactsOrderBy {
+        uiapi {
+          query {
+            Contact(orderBy: { Name: { order: ASC }}) {
+              edges {
+                node {
+                  Id
+                  Name {
+                    value
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true

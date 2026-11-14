@@ -1,0 +1,31 @@
+info:
+  name: Calculate Quote API
+  type: http
+  seq: 2
+
+http:
+  method: PATCH
+  url: "{{_endpoint}}/services/apexrest/SBQQ/ServiceRouter?loader=SBQQ.QuoteAPI.QuoteCalculator"
+  headers:
+    - name: Content-Type
+      value: application/json
+  params:
+    - name: loader
+      value: SBQQ.QuoteAPI.QuoteCalculator
+      type: query
+  body:
+    type: json
+    data: ""
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+docs: |-
+  The Calculate Quote API calculates the prices of a CPQ quote.
+
+  https://developer.salesforce.com/docs/atlas.en-us.cpq_dev_api.meta/cpq_dev_api/cpq_quote_api_calculate_final.htm

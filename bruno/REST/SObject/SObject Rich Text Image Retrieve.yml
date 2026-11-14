@@ -1,0 +1,37 @@
+info:
+  name: SObject Rich Text Image Retrieve
+  type: http
+  seq: 21
+
+http:
+  method: GET
+  url: "{{_endpoint}}/services/data/v{{version}}/sobjects/:SOBJECT_API_NAME/:RECORD_ID/richTextImageFields/:FIELD_NAME/:CONTENT_REFERENCE_ID"
+  headers:
+    - name: Content-Type
+      value: application/json
+  params:
+    - name: SOBJECT_API_NAME
+      value: ""
+      type: path
+    - name: RECORD_ID
+      value: ""
+      type: path
+    - name: FIELD_NAME
+      value: ""
+      type: path
+    - name: CONTENT_REFERENCE_ID
+      value: ""
+      type: path
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+docs: |-
+  Retrieves the specified image data from a specific rich text area field in a given record.
+  contentReferenceId	The reference ID that uniquely identifies an image within a rich text area field.
+  You can obtain the reference by retrieving information for the object. The description will show the contents of the rich text area field

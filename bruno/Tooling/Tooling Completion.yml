@@ -1,0 +1,26 @@
+info:
+  name: Tooling Completion
+  type: http
+  seq: 2
+
+http:
+  method: GET
+  url: "{{_endpoint}}/services/data/v{{version}}/tooling/completions?type="
+  headers:
+    - name: Accept
+      value: application/json
+  params:
+    - name: type
+      value: ""
+      type: query
+      description: apex or visualforce
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+docs: Retrieves available code completions of the referenced type for Apex system method symbols (type=apex). Available from API version 28.0 or later.

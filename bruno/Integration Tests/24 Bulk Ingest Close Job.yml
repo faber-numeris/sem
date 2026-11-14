@@ -1,0 +1,30 @@
+info:
+  name: 24 Bulk Ingest Close Job
+  type: http
+  seq: 24
+
+http:
+  method: PATCH
+  url: "{{_endpoint}}/services/data/v{{version}}/jobs/ingest/{{ingestJobId}}/"
+  headers:
+    - name: Content-Type
+      value: application/json
+  body:
+    type: json
+    data: |-
+      {
+        "state": "UploadComplete"
+      }
+
+runtime:
+  scripts:
+    - type: tests
+      code: |-
+        test("Closes and processes Bulk ingest job", function() {
+          expect(res.getStatus()).to.equal(200);
+          expect(res.getBody().state).to.equal("JobComplete");
+        });
+
+settings:
+  encodeUrl: true
+  timeout: 0

@@ -1,0 +1,176 @@
+info:
+  name: Get Child Records
+  type: http
+  seq: 7
+
+http:
+  method: GET
+  url: |
+    {{_endpoint}}/services/data/v{{version}}/ui-api/records/:RECORD_ID/child-relationships/:RELATIONSHIP_NAME
+  params:
+    - name: fields
+      value: ""
+      type: query
+      description: |-
+        Specifies the fields to return. If this property is specified, the response is a union of fields and optionalFields.
+        If the context user doesn’t have access to a field, an error is returned.
+
+        If you’re not sure whether the context user has access to a field and you don’t want the request to fail if they don’t, use the optionalFields parameter.
+
+        Specify names in the format ObjectApiName.FieldName. You can get any field that has a named relationship to this record. There is no limit to the number of fields you can specify.
+      disabled: true
+    - name: optionalFields
+      value: ""
+      type: query
+      description: |-
+        A collection of optional field names. If a field is accessible to the context user, it’s included in the response. If a field isn’t accessible to the context user, it isn’t included in the response, but it doesn’t cause an error.
+        Specify names in the format ObjectApiName.FieldName. You can get any field that has a named relationship to this record. There is no limit to the number of fields you can specify.
+      disabled: true
+    - name: page
+      value: ""
+      type: query
+      description: The page offset from which to begin returning records. The default value is 0, which returns records from the first page. For example, for page=2 and pageSize=10, the first record returned is the 21st record in the list.
+      disabled: true
+    - name: pageSize
+      value: ""
+      type: query
+      description: The maximum number of child records to return on a page. The default value is 5.
+      disabled: true
+    - name: pageToken
+      value: ""
+      type: query
+      description: A token that represents the page offset.
+      disabled: true
+    - name: RECORD_ID
+      value: ""
+      type: path
+      description: Record ID
+    - name: |
+        RELATIONSHIP_NAME
+      value: ""
+      type: path
+      description: API name of the relationship
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Get Child Records
+    request:
+      url: |
+        {{_endpoint}}/services/data/v{{version}}/ui-api/records/:RECORD_ID/child-relationships/:RELATIONSHIP_NAME
+      method: GET
+      params:
+        - name: fields
+          value: ""
+          type: query
+          description: |-
+            Specifies the fields to return. If this property is specified, the response is a union of fields and optionalFields.
+            If the context user doesn’t have access to a field, an error is returned.
+
+            If you’re not sure whether the context user has access to a field and you don’t want the request to fail if they don’t, use the optionalFields parameter.
+
+            Specify names in the format ObjectApiName.FieldName. You can get any field that has a named relationship to this record. There is no limit to the number of fields you can specify.
+          disabled: true
+        - name: optionalFields
+          value: ""
+          type: query
+          description: |-
+            A collection of optional field names. If a field is accessible to the context user, it’s included in the response. If a field isn’t accessible to the context user, it isn’t included in the response, but it doesn’t cause an error.
+            Specify names in the format ObjectApiName.FieldName. You can get any field that has a named relationship to this record. There is no limit to the number of fields you can specify.
+          disabled: true
+        - name: page
+          value: ""
+          type: query
+          description: The page offset from which to begin returning records. The default value is 0, which returns records from the first page. For example, for page=2 and pageSize=10, the first record returned is the 21st record in the list.
+          disabled: true
+        - name: pageSize
+          value: ""
+          type: query
+          description: The maximum number of child records to return on a page. The default value is 5.
+          disabled: true
+        - name: pageToken
+          value: ""
+          type: query
+          description: A token that represents the page offset.
+          disabled: true
+        - name: RECORD_ID
+          value: 001B000000UnQ2wIAF
+          type: path
+          description: Record ID
+        - name: |
+            RELATIONSHIP_NAME
+          value: Contacts
+          type: path
+          description: API name of the relationship
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: Date
+          value: Wed, 27 Sep 2023 15:57:35 GMT
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-XSS-Protection
+          value: 1; mode=block
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: Content-Type
+          value: application/json;charset=UTF-8
+        - name: Vary
+          value: Accept-Encoding
+        - name: Content-Encoding
+          value: gzip
+        - name: Transfer-Encoding
+          value: chunked
+      body:
+        type: json
+        data: |-
+          {
+              "count": 1,
+              "currentPageToken": "1;5;001B000000UnQ2wIAF;Contacts;Contact.Id,Contact.Name;",
+              "currentPageUrl": "/services/data/v58.0/ui-api/records/001B000000UnQ2wIAF/child-relationships/Contacts?fields=Contact.Id%2CContact.Name&page=1&pageSize=5",
+              "nextPageToken": null,
+              "nextPageUrl": null,
+              "previousPageToken": null,
+              "previousPageUrl": null,
+              "records": [
+                  {
+                      "apiName": "Contact",
+                      "childRelationships": {},
+                      "eTag": "c3d33add9008aed557a1efa68173aa9b",
+                      "fields": {
+                          "AccountId": {
+                              "displayValue": null,
+                              "value": "001B000000UnQ2wIAF"
+                          },
+                          "Id": {
+                              "displayValue": null,
+                              "value": "003B00000097MToIAM"
+                          },
+                          "Name": {
+                              "displayValue": null,
+                              "value": "Jack Rogers"
+                          }
+                      },
+                      "id": "003B00000097MToIAM",
+                      "lastModifiedById": "005B0000003TOI6IAO",
+                      "lastModifiedDate": "2017-08-18T14:46:22.000Z",
+                      "recordTypeId": "012000000000000AAA",
+                      "recordTypeInfo": null,
+                      "systemModstamp": "2017-08-18T14:46:22.000Z",
+                      "weakEtag": 1503067582000
+                  }
+              ]
+          }
+
+docs: Get child records for a specified record and child relationship name. Relationships are connections between records. On a record detail page, each record in a related list has a child relationship to the parent record.

@@ -1,0 +1,130 @@
+info:
+  name: User Agent Flow
+  type: http
+  seq: 5
+
+http:
+  method: GET
+  url: "{{url}}{{site}}/services/oauth2/authorize?response_type=token&client_id={{clientId}}&redirect_uri={{redirectUrl}}&display=touch&login_hint=&nonce=awesome"
+  params:
+    - name: response_type
+      value: token
+      type: query
+    - name: client_id
+      value: "{{clientId}}"
+      type: query
+    - name: redirect_uri
+      value: "{{redirectUrl}}"
+      type: query
+    - name: display
+      value: touch
+      type: query
+    - name: login_hint
+      value: ""
+      type: query
+    - name: nonce
+      value: awesome
+      type: query
+
+runtime:
+  scripts:
+    - type: after-response
+      code: |-
+        const jsonData = res.getBody();
+        const id = jsonData.id.split('/');
+
+        const context = bru.getEnvName() ? { set: (k, v) => bru.setEnvVar(k, v), get: (k) => bru.getEnvVar(k) } : { set: (k, v) => bru.setVar(k, v), get: (k) => bru.getVar(k) };
+        context.set("_accessToken", jsonData.access_token);
+        context.set("_refreshToken", jsonData.refresh_token);
+        context.set("_endpoint", jsonData.instance_url);
+        context.set("_userId", id.pop());
+        context.set("_orgId", id.pop());
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Successful User Agent Flow
+    request:
+      url: "{{url}}{{site}}/services/oauth2/authorize?response_type=token&client_id={{clientId}}&redirect_uri={{redirectUrl}}&display=touch&login_hint&nonce=awesome"
+      method: GET
+      params:
+        - name: response_type
+          value: token
+          type: query
+        - name: client_id
+          value: "{{clientId}}"
+          type: query
+        - name: redirect_uri
+          value: "{{redirectUrl}}"
+          type: query
+        - name: display
+          value: touch
+          type: query
+        - name: login_hint
+          value: ""
+          type: query
+        - name: nonce
+          value: awesome
+          type: query
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-XSS-Protection
+          value: 1; mode=block
+        - name: Content-Security-Policy
+          value: upgrade-insecure-requests
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: must-revalidate,no-cache,no-store
+        - name: Content-Type
+          value: text/html; charset=UTF-8
+        - name: Vary
+          value: Accept-Encoding
+        - name: Content-Encoding
+          value: gzip
+        - name: Connection
+          value: close
+      body:
+        type: html
+        data: |
+          
+
+
+          <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+          <html>
+              <head>
+                  <meta HTTP-EQUIV="PRAGMA" CONTENT="NO-CACHE">
+                  <script>
+          function redirectOnLoad() {
+          if (this.SfdcApp && this.SfdcApp.projectOneNavigator) { SfdcApp.projectOneNavigator.handleRedirect('<my-domain>?ec=302&startURL=%2Fsetup%2Fsecur%2FRemoteAccessAuthorizationPage.apexp%3Fsource%3D<token>%26display%3Dtouch&display=touch'); }  else 
+          if (window.location.replace){ 
+          window.location.replace('<my-domain>>?ec=302&startURL=%2Fsetup%2Fsecur%2FRemoteAccessAuthorizationPage.apexp%3Fsource%3D<token>%26display%3Dtouch&display=touch');
+          } else {
+          window.location.href ='<my-domain>>?ec=302&startURL=%2Fsetup%2Fsecur%2FRemoteAccessAuthorizationPage.apexp%3Fsource%3D<token>%26display%3Dtouch&display=touch';
+          } 
+          } 
+          redirectOnLoad();
+          </script>
+              </head>
+          </html>
+          <!-- Body events -->
+          <script type="text/javascript">function bodyOnLoad(){if(window.PreferenceBits){window.PreferenceBits.prototype.csrfToken="null";};}function bodyOnBeforeUnload(){}function bodyOnFocus(){}function bodyOnUnload(){}</script>
+          </body>
+          </html>
+          <!--
+          ...................................................................................................
+          ...................................................................................................
+          ...................................................................................................
+          ...................................................................................................
+          -->

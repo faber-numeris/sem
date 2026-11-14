@@ -1,0 +1,43 @@
+/services/data/v{version}/commerce/webstores/{webstoreId}/carts/{webCartId}/cart-items:
+  post:
+    tags:
+      - Connect > Industries > Commerce Webstore > Cart Items
+    summary: Add an item to a cart
+    requestBody:
+      content:
+        '*/*':
+          schema:
+            type: string
+            example: >-
+              "{\n    \"productId\":\"<PRODUCT-ID>\",\n    \"quantity\":3,\n    \"type\":\"Product\"\n}"
+    parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: effectiveAccountId
+        in: query
+        schema:
+          type: string
+        example: <EFFECTiVE_ACCOUNT_ID>
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: webstoreId
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: webCartId
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: Successful response
+        content:
+          application/json: {}

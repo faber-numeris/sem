@@ -1,0 +1,36 @@
+info:
+  name: 22 Bulk Ingest Create Job
+  type: http
+  seq: 22
+
+http:
+  method: POST
+  url: "{{_endpoint}}/services/data/v{{version}}/jobs/ingest/"
+  headers:
+    - name: Content-Type
+      value: application/json
+  body:
+    type: json
+    data: |-
+      {
+        "operation": "insert",
+        "object": "Account",
+        "contentType": "CSV"
+      }
+
+runtime:
+  scripts:
+    - type: after-response
+      code: |-
+        bru.setVar("ingestJobId", res.getBody().id);
+    - type: tests
+      code: |-
+        test("Creates Bulk 2.0 ingest job", function() {
+          expect(res.getStatus()).to.equal(200);
+          expect(res.getBody().id).to.be.a("string");
+          expect(res.getBody().state).to.equal("Open");
+        });
+
+settings:
+  encodeUrl: true
+  timeout: 0

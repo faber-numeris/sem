@@ -1,0 +1,134 @@
+info:
+  name: Group Members—Private
+  type: http
+  seq: 2
+
+http:
+  method: GET
+  url: "{{_endpoint}}/services/data/v{{version}}/chatter/groups/:GROUP_ID/members/requests"
+  params:
+    - name: status
+      value: Accepted
+      type: query
+      description: |-
+        Optional. If you include this parameter, results are filtered to include those that match the specified status. Valid values:
+        Accepted
+        Declined
+        Pending
+      disabled: true
+    - name: GROUP_ID
+      value: 0F9...
+      type: path
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Successful Group Members—Private
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/chatter/groups/:GROUP_ID/members/requests"
+      method: GET
+      params:
+        - name: status
+          value: Accepted
+          type: query
+          description: |-
+            Optional. If you include this parameter, results are filtered to include those that match the specified status. Valid values:
+            Accepted
+            Declined
+            Pending
+          disabled: true
+        - name: GROUP_ID
+          value: 0F9...
+          type: path
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: Date
+          value: Wed, 22 Nov 2023 11:47:04 GMT
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-XSS-Protection
+          value: 1; mode=block
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: Content-Type
+          value: application/json;charset=UTF-8
+        - name: Vary
+          value: Accept-Encoding
+        - name: Content-Encoding
+          value: gzip
+        - name: Transfer-Encoding
+          value: chunked
+      body:
+        type: json
+        data: |-
+          {
+              "requests": [
+                  {
+                      "createdDate": "2023-11-22T11:46:32.000Z",
+                      "id": "0I5...",
+                      "lastUpdateDate": "2023-11-22T11:46:32.000Z",
+                      "requestedGroup": {
+                          "id": "0F9...",
+                          "url": "/services/data/v58.0/chatter/groups/0F9..."
+                      },
+                      "responseMessage": null,
+                      "status": "Pending",
+                      "url": "/services/data/v58.0/chatter/group-membership-requests/0I5...",
+                      "user": {
+                          "additionalLabel": null,
+                          "communityNickname": "User1700653511864742682",
+                          "companyName": null,
+                          "displayName": "User Sample",
+                          "firstName": "User",
+                          "id": "005...",
+                          "isActive": true,
+                          "isInThisCommunity": true,
+                          "lastName": "Sample",
+                          "motif": {
+                              "color": "1B96FF",
+                              "largeIconUrl": "/img/icon/profile64.png",
+                              "mediumIconUrl": "/img/icon/profile32.png",
+                              "smallIconUrl": "/img/icon/profile16.png",
+                              "svgIconUrl": null
+                          },
+                          "mySubscription": null,
+                          "name": "User Sample",
+                          "outOfOffice": {
+                              "message": ""
+                          },
+                          "photo": {
+                              "fullEmailPhotoUrl": "https://<my_domain>/img/userprofile/default_profile_200_v2.png?fromEmail=1",
+                              "largePhotoUrl": "https://<my_domain>/profilephoto/005/F",
+                              "mediumPhotoUrl": "https://<my_domain>/profilephoto/005/M",
+                              "photoVersionId": null,
+                              "smallPhotoUrl": "https://<my_domain>/profilephoto/005/T",
+                              "standardEmailPhotoUrl": "https://<my_domain>/img/userprofile/default_profile_45_v2.png?fromEmail=1",
+                              "url": "/services/data/v58.0/connect/user-profiles/005.../photo"
+                          },
+                          "reputation": null,
+                          "title": null,
+                          "type": "User",
+                          "url": "/services/data/v58.0/chatter/users/005...",
+                          "userType": "Internal"
+                      }
+                  }
+              ],
+              "total": null
+          }
+
+docs: |-
+  Request membership in a private group or get the status of requests to a join a private group.
+
+  https://developer.salesforce.com/docs/atlas.en-us.chatterapi.meta/chatterapi/connect_resources_groups_GroupMembersRequests.htm

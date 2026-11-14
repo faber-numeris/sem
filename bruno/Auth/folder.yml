@@ -1,0 +1,14 @@
+info:
+  name: Auth
+  type: folder
+  seq: 1
+
+request:
+  auth: inherit
+
+docs:
+  content: |-
+    Use requests from this folder to obtain an Access Token.
+
+    The authentication requests automatically fill the endpoint URL and access token environment variables for subsequent API calls.
+  type: text/markdown

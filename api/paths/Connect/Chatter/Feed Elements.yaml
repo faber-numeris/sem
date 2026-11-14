@@ -1,0 +1,1022 @@
+/services/data/v{version}/chatter/feed-elements:
+  post:
+    tags:
+      - Connect > Chatter > Feed Elements
+    summary: Feed Elements, Post and Search
+    description: >-
+      https://developer.salesforce.com/docs/atlas.en-us.chatterapi.meta/chatterapi/connect_resources_feed_element.htm
+
+
+      https://developer.salesforce.com/docs/atlas.en-us.chatterapi.meta/chatterapi/connect_resources_feed_element.htm
+    requestBody:
+      content:
+        '*/*':
+          schema:
+            type: string
+            example: >-
+              "{\n   \"body\": {\n      \"messageSegments\": [\n         {\n            \"type\": \"Text\",\n            \"text\": \"Chatter Feed Item Created via API: \"\n         },\n         {\n            \"markupType\" : \"Paragraph\",\n            \"type\" : \"MarkupBegin\"\n         },\n         {\n            \"markupType\" : \"Bold\",\n            \"type\" : \"MarkupBegin\"\n         },\n         {\n             \"text\" : \"First line of text.\",\n             \"type\" : \"Text\"\n         },\n         {\n            \"markupType\" : \"Bold\",\n            \"type\" : \"MarkupEnd\"\n         },\n         {\n            \"markupType\" : \"Paragraph\",\n            \"type\" : \"MarkupEnd\"\n         },\n         {\n            \"markupType\" : \"Paragraph\",\n            \"type\" : \"MarkupBegin\"\n         },\n         {\n            \"text\" : \"&nbsp;\",\n            \"type\" : \"Text\"\n         },\n         {\n            \"markupType\" : \"Paragraph\",\n            \"type\" : \"MarkupEnd\"\n         },\n         {\n            \"markupType\" : \"Paragraph\",\n            \"type\" : \"MarkupBegin\"\n         },\n         {\n            \"text\" : \"Second line of text.\",\n            \"type\" : \"Text\"\n         },\n         {\n            \"markupType\" : \"Paragraph\",\n            \"type\" : \"MarkupEnd\"\n         },\n         {\n            \"markupType\" : \"Code\",\n            \"type\" : \"MarkupBegin\"\n         },\n         {\n             \"text\" : \"<script>\\nvar i, t = 0;\\nfor (i = 0; i < 5; i++) {\\n   t += i;\\n}\\n</script>\",\n             \"type\" : \"Text\"\n         },\n         {\n            \"markupType\" : \"Code\",\n            \"type\" : \"MarkupEnd\"\n         },\n         {\n            \"type\": \"Mention\",\n            \"id\": \"<USER_GROUP_ID>\"\n         }\n      ]\n   },\n   \"capabilities\": {\n      \"files\": {\n         \"items\": [\n            {\n               \"id\": \"<FILE_ID>\"\n            }\n         ]\n      }\n   },\n   \"subjectId\": \"<USER_RECORD_GROUP_ID>\",\n   \"feedElementType\": \"FeedItem\"\n}"
+    parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '201':
+        description: Created
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Wed, 22 Nov 2023 11:08:36 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-XSS-Protection:
+            schema:
+              type: string
+              example: 1; mode=block
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Content-Type:
+            schema:
+              type: string
+              example: application/json;charset=UTF-8
+          Vary:
+            schema:
+              type: string
+              example: Accept-Encoding
+          Content-Encoding:
+            schema:
+              type: string
+              example: gzip
+          Transfer-Encoding:
+            schema:
+              type: string
+              example: chunked
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              actor:
+                additionalLabel: null
+                communityNickname: User1696423780773910041
+                companyName: Salesforce
+                displayName: Name
+                firstName: Firstname
+                id: 005...
+                isActive: true
+                isInThisCommunity: true
+                lastName: Name
+                motif:
+                  color: 1B96FF
+                  largeIconUrl: /img/icon/profile64.png
+                  mediumIconUrl: /img/icon/profile32.png
+                  smallIconUrl: /img/icon/profile16.png
+                  svgIconUrl: null
+                mySubscription: null
+                name: Name
+                outOfOffice:
+                  message: ''
+                photo:
+                  fullEmailPhotoUrl: >-
+                    https://<my_domain>/ncsphoto/1wsMlOd3tVC7boygqBO8wMT9KzA0D6tqzpbs-Uw0IogXzXAXaYKJnuWCNQmXymRq?fromEmail=1
+                  largePhotoUrl: https://<my_domain>/profilephoto/729.../F
+                  mediumPhotoUrl: https://<my_domain>/profilephoto/729.../M
+                  photoVersionId: 729...
+                  smallPhotoUrl: https://<my_domain>/profilephoto/729.../T
+                  standardEmailPhotoUrl: >-
+                    https://<my_domain>/ncsphoto/1wsMlOd3tVC7boygqBO8wMT9KzA0D6tqzpbs-Uw0Ioi-dtynkoFWsl46as__TDFU?fromEmail=1
+                  url: /services/data/v58.0/connect/user-profiles/005.../photo
+                reputation: null
+                title: null
+                type: User
+                url: /services/data/v58.0/chatter/users/005...
+                userType: Internal
+              body:
+                isRichText: true
+                messageSegments:
+                  - text: 'Chatter Feed Item Created via API: '
+                    type: Text
+                  - altText: null
+                    htmlTag: p
+                    markupType: Paragraph
+                    text: ''
+                    type: MarkupBegin
+                    url: null
+                  - altText: null
+                    htmlTag: b
+                    markupType: Bold
+                    text: ''
+                    type: MarkupBegin
+                    url: null
+                  - text: First line of text.
+                    type: Text
+                  - htmlTag: b
+                    markupType: Bold
+                    text: ''
+                    type: MarkupEnd
+                  - htmlTag: p
+                    markupType: Paragraph
+                    text: |2+
+                    type: MarkupEnd
+                  - altText: null
+                    htmlTag: p
+                    markupType: Paragraph
+                    text: ''
+                    type: MarkupBegin
+                    url: null
+                  - text: " "
+                    type: Text
+                  - htmlTag: p
+                    markupType: Paragraph
+                    text: |2+
+                    type: MarkupEnd
+                  - altText: null
+                    htmlTag: p
+                    markupType: Paragraph
+                    text: ''
+                    type: MarkupBegin
+                    url: null
+                  - text: Second line of text.
+                    type: Text
+                  - htmlTag: p
+                    markupType: Paragraph
+                    text: |2+
+                    type: MarkupEnd
+                  - altText: null
+                    htmlTag: code
+                    markupType: Code
+                    text: |
+                      [Start code block]
+                    type: MarkupBegin
+                    url: null
+                  - text: |-
+                      &lt;script&gt;
+                      var i, t = 0;
+                      for (i = 0; i &lt; 5; i++) {
+                         t += i;
+                      }
+                      &lt;/script&gt;
+                    type: Text
+                  - htmlTag: code
+                    markupType: Code
+                    text: |2-
+                      [End code block]
+                    type: MarkupEnd
+                  - accessible: true
+                    name: Name
+                    record:
+                      additionalLabel: null
+                      communityNickname: User1696423780773910041
+                      companyName: Salesforce
+                      displayName: Name
+                      firstName: Firstname
+                      id: 005...
+                      isActive: true
+                      isInThisCommunity: true
+                      lastName: Name
+                      motif:
+                        color: 1B96FF
+                        largeIconUrl: /img/icon/profile64.png
+                        mediumIconUrl: /img/icon/profile32.png
+                        smallIconUrl: /img/icon/profile16.png
+                        svgIconUrl: null
+                      mySubscription: null
+                      name: Name
+                      outOfOffice:
+                        message: ''
+                      photo:
+                        fullEmailPhotoUrl: >-
+                          https://<my_domain>/ncsphoto/1wsMlOd3tVC7boygqBO8wMT9KzA0D6tqzpbs-Uw0IogXzXAXaYKJnuWCNQmXymRq?fromEmail=1
+                        largePhotoUrl: https://<my_domain>/profilephoto/729.../F
+                        mediumPhotoUrl: https://<my_domain>/profilephoto/729.../M
+                        photoVersionId: 729...
+                        smallPhotoUrl: https://<my_domain>/profilephoto/729.../T
+                        standardEmailPhotoUrl: >-
+                          https://<my_domain>/ncsphoto/1wsMlOd3tVC7boygqBO8wMT9KzA0D6tqzpbs-Uw0Ioi-dtynkoFWsl46as__TDFU?fromEmail=1
+                        url: >-
+                          /services/data/v58.0/connect/user-profiles/005.../photo
+                      reputation: null
+                      title: null
+                      type: User
+                      url: /services/data/v58.0/chatter/users/005...
+                      userType: Internal
+                    text: '@Name'
+                    type: Mention
+                text: "Chatter Feed Item Created via API: First line of text.\n \nSecond line of text.\n[Start code block]\n&lt;script&gt;\nvar i, t = 0;\nfor (i = 0; i &lt; 5; i++) {\n   t += i;\n}\n&lt;/script&gt;\n[End code block]@Name"
+              capabilities:
+                associatedActions:
+                  platformActionGroups: []
+                bookmarks:
+                  isBookmarkedByCurrentUser: false
+                chatterLikes:
+                  isLikedByCurrentUser: false
+                  likesMessage: null
+                  myLike: null
+                  page:
+                    currentPageToken: 0
+                    currentPageUrl: >-
+                      /services/data/v58.0/chatter/feed-elements/0D5.../capabilities/chatter-likes/items
+                    items: []
+                    nextPageToken: null
+                    nextPageUrl: null
+                    previousPageToken: null
+                    previousPageUrl: null
+                    total: 0
+                close:
+                  canContextUserUpdateIsClosed: true
+                  isClosed: false
+                comments:
+                  page:
+                    currentPageToken: null
+                    currentPageUrl: >-
+                      /services/data/v58.0/chatter/feed-elements/0D5.../capabilities/comments/items
+                    items: []
+                    nextPageToken: null
+                    nextPageUrl: null
+                    previousPageToken: null
+                    previousPageUrl: null
+                    total: 0
+                edit:
+                  isEditRestricted: false
+                  isEditableByMeUrl: >-
+                    /services/data/v58.0/chatter/feed-elements/0D5.../capabilities/edit/is-editable-by-me
+                  lastEditedBy: null
+                  lastEditedDate: null
+                  latestRevision: 1
+                  relativeLastEditedDate: null
+                interactions:
+                  count: 0
+                mute:
+                  isMutedByMe: false
+                readBy:
+                  isReadByMe: true
+                  lastReadDateByMe: '2023-11-22T11:08:37.000Z'
+                  page:
+                    currentPageToken: null
+                    currentPageUrl: >-
+                      /services/data/v58.0/chatter/feed-elements/0D5.../capabilities/read-by/items?pageSize=3
+                    items: []
+                    nextPageToken: null
+                    nextPageUrl: null
+                    previousPageToken: null
+                    previousPageUrl: null
+                    total: 0
+                status:
+                  feedEntityStatus: Published
+                  isApprovableByMe: true
+                topics:
+                  canAssignTopics: true
+                  items: []
+                upDownVote:
+                  downVoteCount: 0
+                  myVote: None
+                  upVoteCount: 0
+              clientInfo:
+                applicationName: Postman Playground
+                applicationUrl: null
+              createdDate: '2023-11-22T11:08:37.000Z'
+              event: false
+              feedElementType: FeedItem
+              hasVerifiedComment: false
+              header:
+                isRichText: null
+                messageSegments:
+                  - motif:
+                      color: 1B96FF
+                      largeIconUrl: /img/icon/profile64.png
+                      mediumIconUrl: /img/icon/profile32.png
+                      smallIconUrl: /img/icon/profile16.png
+                      svgIconUrl: null
+                    reference:
+                      id: 005...
+                      url: /services/data/v58.0/chatter/users/005...
+                    text: Name
+                    type: EntityLink
+                text: Name
+              id: 0D5...
+              isDeleteRestricted: false
+              isSharable: false
+              modifiedDate: '2023-11-22T11:08:37.000Z'
+              originalFeedItem: null
+              originalFeedItemActor: null
+              parent:
+                entityLabel:
+                  label: Account
+                  labelPlural: Accounts
+                id: 001...
+                motif:
+                  color: '5867E8'
+                  largeIconUrl: /img/icon/accounts64.png
+                  mediumIconUrl: /img/icon/accounts32.png
+                  smallIconUrl: /img/icon/accounts16.png
+                  svgIconUrl: null
+                mySubscription: null
+                name: Burlington Textiles Corp of America
+                type: Account
+                url: /services/data/v58.0/chatter/records/001...
+              photoUrl: https://<my_domain>/profilephoto/729.../T
+              relativeCreatedDate: Just now
+              type: TextPost
+              url: /services/data/v58.0/chatter/feed-elements/0D5...
+              visibility: InternalUsers
+/services/data/v{version}/chatter/feed-elements/batch:
+  post:
+    tags:
+      - Connect > Chatter > Feed Elements
+    summary: Feed Elements, Batch Post
+    description: >-
+      Post a batch of up to 500 feed elements.
+
+
+      https://developer.salesforce.com/docs/atlas.en-us.chatterapi.meta/chatterapi/connect_resources_feed_element_batch_post.htm
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            example:
+              inputs:
+                - richInput:
+                    subjectId: <USER_GROUP_RECORD_ID>
+                    body:
+                      messageSegments:
+                        - type: Text
+                          text: Post Number 1
+                    capabilities:
+                      files:
+                        items:
+                          - id: <FILE_ID>
+                    feedElementType: FeedItem
+                - richInput:
+                    subjectId: <USER_GROUP_RECORD_ID>
+                    body:
+                      messageSegments:
+                        - type: Text
+                          text: Post Number 2
+                    feedElementType: FeedItem
+                - richInput:
+                    subjectId: me
+                    body:
+                      messageSegments:
+                        - type: Text
+                          text: Post Number 3 with Inline
+                        - type: InlineImage
+                          fileId: <FILE_ID>
+                          altText: Test Inline
+                    feedElementType: FeedItem
+    parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: OK
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Wed, 22 Nov 2023 11:11:25 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-XSS-Protection:
+            schema:
+              type: string
+              example: 1; mode=block
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Content-Type:
+            schema:
+              type: string
+              example: application/json;charset=UTF-8
+          Vary:
+            schema:
+              type: string
+              example: Accept-Encoding
+          Content-Encoding:
+            schema:
+              type: string
+              example: gzip
+          Transfer-Encoding:
+            schema:
+              type: string
+              example: chunked
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              hasErrors: true
+              results:
+                - result:
+                    actor:
+                      additionalLabel: null
+                      communityNickname: User1696423780773910041
+                      companyName: Salesforce
+                      displayName: Name
+                      firstName: Firstname
+                      id: 005...
+                      isActive: true
+                      isInThisCommunity: true
+                      lastName: Name
+                      motif:
+                        color: 1B96FF
+                        largeIconUrl: /img/icon/profile64.png
+                        mediumIconUrl: /img/icon/profile32.png
+                        smallIconUrl: /img/icon/profile16.png
+                        svgIconUrl: null
+                      mySubscription: null
+                      name: Name
+                      outOfOffice:
+                        message: ''
+                      photo:
+                        fullEmailPhotoUrl: >-
+                          https://<my_domain>/ncsphoto/1wsMlOd3tVC7boygqBO8wMT9KzA0D6tqzpbs-Uw0IogXzXAXaYKJnuWCNQmXymRq?fromEmail=1
+                        largePhotoUrl: https://<my_domain>/profilephoto/729.../F
+                        mediumPhotoUrl: https://<my_domain>/profilephoto/729.../M
+                        photoVersionId: 729...
+                        smallPhotoUrl: https://<my_domain>/profilephoto/729.../T
+                        standardEmailPhotoUrl: >-
+                          https://<my_domain>/ncsphoto/1wsMlOd3tVC7boygqBO8wMT9KzA0D6tqzpbs-Uw0Ioi-dtynkoFWsl46as__TDFU?fromEmail=1
+                        url: >-
+                          /services/data/v58.0/connect/user-profiles/005.../photo
+                      reputation: null
+                      title: null
+                      type: User
+                      url: /services/data/v58.0/chatter/users/005...
+                      userType: Internal
+                    body:
+                      isRichText: false
+                      messageSegments:
+                        - text: Post Number 1
+                          type: Text
+                      text: Post Number 1
+                    capabilities:
+                      associatedActions:
+                        platformActionGroups: []
+                      bookmarks:
+                        isBookmarkedByCurrentUser: false
+                      chatterLikes:
+                        isLikedByCurrentUser: false
+                        likesMessage: null
+                        myLike: null
+                        page:
+                          currentPageToken: 0
+                          currentPageUrl: >-
+                            /services/data/v58.0/chatter/feed-elements/0D5.../capabilities/chatter-likes/items
+                          items: []
+                          nextPageToken: null
+                          nextPageUrl: null
+                          previousPageToken: null
+                          previousPageUrl: null
+                          total: 0
+                      close:
+                        canContextUserUpdateIsClosed: true
+                        isClosed: false
+                      comments:
+                        page:
+                          currentPageToken: null
+                          currentPageUrl: >-
+                            /services/data/v58.0/chatter/feed-elements/0D5.../capabilities/comments/items
+                          items: []
+                          nextPageToken: null
+                          nextPageUrl: null
+                          previousPageToken: null
+                          previousPageUrl: null
+                          total: 0
+                      edit:
+                        isEditRestricted: false
+                        isEditableByMeUrl: >-
+                          /services/data/v58.0/chatter/feed-elements/0D5.../capabilities/edit/is-editable-by-me
+                        lastEditedBy: null
+                        lastEditedDate: null
+                        latestRevision: 1
+                        relativeLastEditedDate: null
+                      interactions:
+                        count: 0
+                      mute:
+                        isMutedByMe: false
+                      readBy:
+                        isReadByMe: true
+                        lastReadDateByMe: '2023-11-22T11:11:25.000Z'
+                        page:
+                          currentPageToken: null
+                          currentPageUrl: >-
+                            /services/data/v58.0/chatter/feed-elements/0D5.../capabilities/read-by/items?pageSize=3
+                          items: []
+                          nextPageToken: null
+                          nextPageUrl: null
+                          previousPageToken: null
+                          previousPageUrl: null
+                          total: 0
+                      status:
+                        feedEntityStatus: Published
+                        isApprovableByMe: true
+                      topics:
+                        canAssignTopics: true
+                        items: []
+                      upDownVote:
+                        downVoteCount: 0
+                        myVote: None
+                        upVoteCount: 0
+                    clientInfo:
+                      applicationName: Postman Playground
+                      applicationUrl: null
+                    createdDate: '2023-11-22T11:11:25.000Z'
+                    event: false
+                    feedElementType: FeedItem
+                    hasVerifiedComment: false
+                    header:
+                      isRichText: null
+                      messageSegments:
+                        - motif:
+                            color: 1B96FF
+                            largeIconUrl: /img/icon/profile64.png
+                            mediumIconUrl: /img/icon/profile32.png
+                            smallIconUrl: /img/icon/profile16.png
+                            svgIconUrl: null
+                          reference:
+                            id: 005...
+                            url: /services/data/v58.0/chatter/users/005...
+                          text: Name
+                          type: EntityLink
+                      text: Name
+                    id: 0D5...
+                    isDeleteRestricted: false
+                    isSharable: false
+                    modifiedDate: '2023-11-22T11:11:25.000Z'
+                    originalFeedItem: null
+                    originalFeedItemActor: null
+                    parent:
+                      entityLabel:
+                        label: Account
+                        labelPlural: Accounts
+                      id: 001...
+                      motif:
+                        color: '5867E8'
+                        largeIconUrl: /img/icon/accounts64.png
+                        mediumIconUrl: /img/icon/accounts32.png
+                        smallIconUrl: /img/icon/accounts16.png
+                        svgIconUrl: null
+                      mySubscription: null
+                      name: Burlington Textiles Corp of America
+                      type: Account
+                      url: /services/data/v58.0/chatter/records/001...
+                    photoUrl: https://<my_domain>/profilephoto/729.../T
+                    relativeCreatedDate: Just now
+                    type: TextPost
+                    url: /services/data/v58.0/chatter/feed-elements/0D5...
+                    visibility: InternalUsers
+                  statusCode: 201
+                - result:
+                    actor:
+                      additionalLabel: null
+                      communityNickname: User1696423780773910041
+                      companyName: Salesforce
+                      displayName: Name
+                      firstName: Firstname
+                      id: 005...
+                      isActive: true
+                      isInThisCommunity: true
+                      lastName: Name
+                      motif:
+                        color: 1B96FF
+                        largeIconUrl: /img/icon/profile64.png
+                        mediumIconUrl: /img/icon/profile32.png
+                        smallIconUrl: /img/icon/profile16.png
+                        svgIconUrl: null
+                      mySubscription: null
+                      name: Name
+                      outOfOffice:
+                        message: ''
+                      photo:
+                        fullEmailPhotoUrl: >-
+                          https://<my_domain>/ncsphoto/1wsMlOd3tVC7boygqBO8wMT9KzA0D6tqzpbs-Uw0IogXzXAXaYKJnuWCNQmXymRq?fromEmail=1
+                        largePhotoUrl: https://<my_domain>/profilephoto/729.../F
+                        mediumPhotoUrl: https://<my_domain>/profilephoto/729.../M
+                        photoVersionId: 729...
+                        smallPhotoUrl: https://<my_domain>/profilephoto/729.../T
+                        standardEmailPhotoUrl: >-
+                          https://<my_domain>/ncsphoto/1wsMlOd3tVC7boygqBO8wMT9KzA0D6tqzpbs-Uw0Ioi-dtynkoFWsl46as__TDFU?fromEmail=1
+                        url: >-
+                          /services/data/v58.0/connect/user-profiles/005.../photo
+                      reputation: null
+                      title: null
+                      type: User
+                      url: /services/data/v58.0/chatter/users/005...
+                      userType: Internal
+                    body:
+                      isRichText: false
+                      messageSegments:
+                        - text: Post Number 2
+                          type: Text
+                      text: Post Number 2
+                    capabilities:
+                      associatedActions:
+                        platformActionGroups: []
+                      bookmarks:
+                        isBookmarkedByCurrentUser: false
+                      chatterLikes:
+                        isLikedByCurrentUser: false
+                        likesMessage: null
+                        myLike: null
+                        page:
+                          currentPageToken: 0
+                          currentPageUrl: >-
+                            /services/data/v58.0/chatter/feed-elements/0D5.../capabilities/chatter-likes/items
+                          items: []
+                          nextPageToken: null
+                          nextPageUrl: null
+                          previousPageToken: null
+                          previousPageUrl: null
+                          total: 0
+                      close:
+                        canContextUserUpdateIsClosed: true
+                        isClosed: false
+                      comments:
+                        page:
+                          currentPageToken: null
+                          currentPageUrl: >-
+                            /services/data/v58.0/chatter/feed-elements/0D5.../capabilities/comments/items
+                          items: []
+                          nextPageToken: null
+                          nextPageUrl: null
+                          previousPageToken: null
+                          previousPageUrl: null
+                          total: 0
+                      edit:
+                        isEditRestricted: false
+                        isEditableByMeUrl: >-
+                          /services/data/v58.0/chatter/feed-elements/0D5.../capabilities/edit/is-editable-by-me
+                        lastEditedBy: null
+                        lastEditedDate: null
+                        latestRevision: 1
+                        relativeLastEditedDate: null
+                      interactions:
+                        count: 0
+                      mute:
+                        isMutedByMe: false
+                      readBy:
+                        isReadByMe: true
+                        lastReadDateByMe: '2023-11-22T11:11:25.000Z'
+                        page:
+                          currentPageToken: null
+                          currentPageUrl: >-
+                            /services/data/v58.0/chatter/feed-elements/0D5.../capabilities/read-by/items?pageSize=3
+                          items: []
+                          nextPageToken: null
+                          nextPageUrl: null
+                          previousPageToken: null
+                          previousPageUrl: null
+                          total: 0
+                      status:
+                        feedEntityStatus: Published
+                        isApprovableByMe: true
+                      topics:
+                        canAssignTopics: true
+                        items: []
+                      upDownVote:
+                        downVoteCount: 0
+                        myVote: None
+                        upVoteCount: 0
+                    clientInfo:
+                      applicationName: Postman Playground
+                      applicationUrl: null
+                    createdDate: '2023-11-22T11:11:25.000Z'
+                    event: false
+                    feedElementType: FeedItem
+                    hasVerifiedComment: false
+                    header:
+                      isRichText: null
+                      messageSegments:
+                        - motif:
+                            color: 1B96FF
+                            largeIconUrl: /img/icon/profile64.png
+                            mediumIconUrl: /img/icon/profile32.png
+                            smallIconUrl: /img/icon/profile16.png
+                            svgIconUrl: null
+                          reference:
+                            id: 005...
+                            url: /services/data/v58.0/chatter/users/005...
+                          text: Name
+                          type: EntityLink
+                      text: Name
+                    id: 0D5...
+                    isDeleteRestricted: false
+                    isSharable: true
+                    modifiedDate: '2023-11-22T11:11:25.000Z'
+                    originalFeedItem: null
+                    originalFeedItemActor: null
+                    parent:
+                      additionalLabel: null
+                      communityNickname: User1696423780773910041
+                      companyName: Salesforce
+                      displayName: Name
+                      firstName: Firstname
+                      id: 005...
+                      isActive: true
+                      isInThisCommunity: true
+                      lastName: Name
+                      motif:
+                        color: 1B96FF
+                        largeIconUrl: /img/icon/profile64.png
+                        mediumIconUrl: /img/icon/profile32.png
+                        smallIconUrl: /img/icon/profile16.png
+                        svgIconUrl: null
+                      mySubscription: null
+                      name: Name
+                      outOfOffice:
+                        message: ''
+                      photo:
+                        fullEmailPhotoUrl: >-
+                          https://<my_domain>/ncsphoto/1wsMlOd3tVC7boygqBO8wMT9KzA0D6tqzpbs-Uw0IogXzXAXaYKJnuWCNQmXymRq?fromEmail=1
+                        largePhotoUrl: https://<my_domain>/profilephoto/729.../F
+                        mediumPhotoUrl: https://<my_domain>/profilephoto/729.../M
+                        photoVersionId: 729...
+                        smallPhotoUrl: https://<my_domain>/profilephoto/729.../T
+                        standardEmailPhotoUrl: >-
+                          https://<my_domain>/ncsphoto/1wsMlOd3tVC7boygqBO8wMT9KzA0D6tqzpbs-Uw0Ioi-dtynkoFWsl46as__TDFU?fromEmail=1
+                        url: >-
+                          /services/data/v58.0/connect/user-profiles/005.../photo
+                      reputation: null
+                      title: null
+                      type: User
+                      url: /services/data/v58.0/chatter/users/005...
+                      userType: Internal
+                    photoUrl: https://<my_domain>/profilephoto/729.../T
+                    relativeCreatedDate: Just now
+                    type: TextPost
+                    url: /services/data/v58.0/chatter/feed-elements/0D5...
+                    visibility: AllUsers
+                  statusCode: 201
+                - result:
+                    - errorCode: INVALID_MARKUP
+                      message: >-
+                        Error while parsing Rich Text Content: The value of attribute &quot;src&quot; associated with an element type &quot;img&quot; must not contain the &#39;&lt;&#39; character.
+                  statusCode: 400
+/services/data/v{version}/chatter/feed-elements/{FEED_ELEMENT_ID}:
+  delete:
+    tags:
+      - Connect > Chatter > Feed Elements
+    summary: Feed Element - Delete
+    description: >-
+      Access, edit, or delete a feed element. Feed items are the only type of feed element that can be edited.
+
+
+      https://developer.salesforce.com/docs/atlas.en-us.chatterapi.meta/chatterapi/connect_resources_feed_element_specific.htm
+    parameters:
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: FEED_ELEMENT_ID
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '204':
+        description: No Content
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Wed, 22 Nov 2023 11:13:51 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-XSS-Protection:
+            schema:
+              type: string
+              example: 1; mode=block
+          Content-Security-Policy:
+            schema:
+              type: string
+              example: upgrade-insecure-requests
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+        content:
+          text/plain:
+            schema:
+              type: string
+            example: null
+/services/data/v{version}/chatter/feed-elements/{FEED_ELEMENT_ID}/capabilities/comments/items:
+  post:
+    tags:
+      - Connect > Chatter > Feed Elements
+    summary: Feed Elements Capability, Comments Items
+    description: >-
+      Access comments for a feed element, or add a comment to a feed element.
+
+      To upload a binary file to attach to a comment, you must send it in a multipart/form-data request. To send the text of the comment, you can choose to include a JSON or XML rich input body part in the multipart/form-data request. Alternately, you can choose to pass the information in request parameter parts. For information about how to create the multipart/form-data message, see Uploading Binary Files.
+
+
+      https://developer.salesforce.com/docs/atlas.en-us.chatterapi.meta/chatterapi/connect_resources_feed_element_capability_comments_items.htm#connect_resources_feed_element_capability_comments_items
+    requestBody:
+      content: {}
+    parameters:
+      - name: text
+        in: query
+        schema:
+          type: string
+        example: New Comment
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: FEED_ELEMENT_ID
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '201':
+        description: Created
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Wed, 22 Nov 2023 11:14:33 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-XSS-Protection:
+            schema:
+              type: string
+              example: 1; mode=block
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Content-Type:
+            schema:
+              type: string
+              example: application/json;charset=UTF-8
+          Vary:
+            schema:
+              type: string
+              example: Accept-Encoding
+          Content-Encoding:
+            schema:
+              type: string
+              example: gzip
+          Transfer-Encoding:
+            schema:
+              type: string
+              example: chunked
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              body:
+                isRichText: false
+                messageSegments:
+                  - text: New Comment
+                    type: Text
+                text: New Comment
+              capabilities:
+                edit:
+                  isEditRestricted: false
+                  isEditableByMeUrl: >-
+                    /services/data/v58.0/chatter/comments/0D7.../capabilities/edit/is-editable-by-me
+                  lastEditedBy: null
+                  lastEditedDate: null
+                  latestRevision: 1
+                  relativeLastEditedDate: null
+                status:
+                  feedEntityStatus: Published
+                  isApprovableByMe: true
+                upDownVote:
+                  downVoteCount: 0
+                  myVote: None
+                  upVoteCount: 0
+                verified:
+                  isVerifiableByMe: false
+                  isVerified: false
+                  isVerifiedByAnonymized: null
+                  lastVerifiedByUser: null
+                  lastVerifiedDate: null
+              clientInfo:
+                applicationName: Postman Playground
+                applicationUrl: null
+              createdDate: '2023-11-22T11:14:33.000Z'
+              feedElement:
+                id: 0D5...
+                url: /services/data/v58.0/chatter/feed-elements/0D5...
+              id: 0D7...
+              isDeleteRestricted: false
+              likes:
+                currentPageToken: null
+                currentPageUrl: /services/data/v58.0/chatter/comments/0D7.../likes
+                items: []
+                nextPageToken: null
+                nextPageUrl: null
+                previousPageToken: null
+                previousPageUrl: null
+                total: 0
+              likesMessage: null
+              moderationFlags: null
+              myLike: null
+              parent:
+                id: 001...
+                url: /services/data/v58.0/chatter/records/001...
+              relativeCreatedDate: Just now
+              threadLevel: 0
+              threadParentId: null
+              type: TextComment
+              url: /services/data/v58.0/chatter/comments/0D7...
+              user:
+                additionalLabel: null
+                communityNickname: User1696423780773910041
+                companyName: Salesforce
+                displayName: Name
+                firstName: Firstname
+                id: 005...
+                isActive: true
+                isInThisCommunity: true
+                lastName: Name
+                motif:
+                  color: 1B96FF
+                  largeIconUrl: /img/icon/profile64.png
+                  mediumIconUrl: /img/icon/profile32.png
+                  smallIconUrl: /img/icon/profile16.png
+                  svgIconUrl: null
+                mySubscription: null
+                name: Name
+                outOfOffice:
+                  message: ''
+                photo:
+                  fullEmailPhotoUrl: >-
+                    https://<my_domain>/ncsphoto/1wsMlOd3tVC7boygqBO8wMT9KzA0D6tqzpbs-Uw0IogXzXAXaYKJnuWCNQmXymRq?fromEmail=1
+                  largePhotoUrl: https://<my_domain>/profilephoto/729.../F
+                  mediumPhotoUrl: https://<my_domain>/profilephoto/729.../M
+                  photoVersionId: 729...
+                  smallPhotoUrl: https://<my_domain>/profilephoto/729.../T
+                  standardEmailPhotoUrl: >-
+                    https://<my_domain>/ncsphoto/1wsMlOd3tVC7boygqBO8wMT9KzA0D6tqzpbs-Uw0Ioi-dtynkoFWsl46as__TDFU?fromEmail=1
+                  url: /services/data/v58.0/connect/user-profiles/005.../photo
+                reputation: null
+                title: null
+                type: User
+                url: /services/data/v58.0/chatter/users/005...
+                userType: Internal

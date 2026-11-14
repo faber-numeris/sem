@@ -1,0 +1,133 @@
+info:
+  name: Individual Member Enrollments
+  type: http
+  seq: 2
+
+http:
+  method: POST
+  url: "{{_endpoint}}/services/data/v{{version}}/loyalty-programs/:loyaltyProgramName/individual-member-enrollments"
+  params:
+    - name: ""
+      value: ""
+      type: query
+      disabled: true
+    - name: loyaltyProgramName
+      value: ""
+      type: path
+  body:
+    type: json
+    data: |-
+      {
+        "enrollmentDate" : "2021-01-01T00:00:00",
+        "membershipNumber" : "Member1",
+        "associatedContactDetails" : {
+          "firstName" : "Name1",
+          "lastName" : "Name2",
+          "email" : "ab@email.com",
+          "allowDuplicateRecords" : "false"
+        },
+
+        "memberStatus" : "Active",
+        "createTransactionJournals" : "true",
+        "transactionJournalStatementFrequency" : "Monthly",
+        "transactionJournalStatementMethod" : "Mail",
+        "enrollmentChannel" : "Email",
+        "canReceivePromotions": "true",
+        "canReceivePartnerPromotions" : "true",
+        "membershipEndDate" : "2022-01-01T00:00:00"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Individual Member Enrollments
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/loyalty-programs/:loyaltyProgramName/individual-member-enrollments"
+      method: POST
+      headers:
+        - name: Authorization
+          value: Bearer {{accessToken}}
+      params:
+        - name: ""
+          value: ""
+          type: query
+          disabled: true
+        - name: loyaltyProgramName
+          value: NTO Insider
+          type: path
+      body:
+        type: json
+        data: |-
+          {
+            "enrollmentDate" : "2021-01-01T00:00:00",
+            "membershipNumber" : "Member1",
+            "associatedContactDetails" : {
+              "firstName" : "Name1",
+              "lastName" : "Name2",
+              "email" : "ab@email.com",
+              "allowDuplicateRecords" : "false"
+            },
+
+            "memberStatus" : "Active",
+            "createTransactionJournals" : "true",
+            "transactionJournalStatementFrequency" : "Monthly",
+            "transactionJournalStatementMethod" : "Mail",
+            "enrollmentChannel" : "Email",
+            "canReceivePromotions": "true",
+            "canReceivePartnerPromotions" : "true",
+            "membershipEndDate" : "2022-01-01T00:00:00"
+          }
+    response:
+      status: 201
+      statusText: Created
+      headers:
+        - name: Date
+          value: Wed, 22 May 2024 15:39:01 GMT
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: Content-Type
+          value: application/json;charset=UTF-8
+        - name: Vary
+          value: Accept-Encoding
+        - name: Content-Encoding
+          value: gzip
+        - name: Transfer-Encoding
+          value: chunked
+      body:
+        type: json
+        data: |-
+          {
+              "contactId": "003J8000002Yu0Z",
+              "loyaltyProgramMemberId": "0lMJ8000000CaRM",
+              "loyaltyProgramName": "NTO Insider",
+              "membershipNumber": "Member1",
+              "transactionJournals": [
+                  {
+                      "activityDate": "2020-12-31T23:00:00.000Z",
+                      "journalSubType": "Member Enrollment",
+                      "journalType": "Accrual",
+                      "loyaltyProgram": "NTO Insider",
+                      "loyaltyProgramMember": "Member1",
+                      "referredMember": null,
+                      "status": "Processed",
+                      "transactionJournalId": "0lVJ8000000GmaJ"
+                  }
+              ]
+          }
+
+docs: |-
+  Standard Documentation:
+
+  [https://developer.salesforce.com/docs/atlas.en-us.loyalty.meta/loyalty/connect_resources_enroll_individual_member.htm](https://developer.salesforce.com/docs/atlas.en-us.loyalty.meta/loyalty/connect_resources_enroll_individual_member.htm)

@@ -1,0 +1,67 @@
+info:
+  name: Articles List
+  type: http
+  seq: 4
+
+http:
+  method: GET
+  url: "{{_endpoint}}/services/data/v{{version}}/support/knowledgeArticles"
+  headers:
+    - name: Content-Type
+      value: application/json
+  params:
+    - name: q
+      value: ""
+      type: query
+      description: Optional, Performs an SOSL search. If the query string is null, empty, or not given, an SOQL query runs.
+      disabled: true
+    - name: channel
+      value: ""
+      type: query
+      description: |-
+        Optional, defaults to user’s context. For information on channel values, see Valid channel values.
+        App: Visible in the internal Salesforce Knowledge application
+        Pkb: Visible in the public knowledge base
+        Csp: Visible in the Customer Portal
+        Prm: Visible in the Partner Portal
+      disabled: true
+    - name: categories
+      value: ""
+      type: query
+      description: Optional, defaults to None. Category group must be unique in each group:category pair, otherwise you get ARGUMENT_OBJECT_PARSE_ERROR
+      disabled: true
+    - name: queryMethod
+      value: ""
+      type: query
+      description: "values are: AT, BELOW, ABOVE, ABOVE_OR_BELOW. Only valid when categories are specified, defaults to ABOVE_OR_BELOW"
+      disabled: true
+    - name: sort
+      value: ""
+      type: query
+      description: Optional, a sortable field name LastPublishedDate, CreatedDate, Title, ViewScore. Defaults to LastPublishedDate for query and relevance for search.
+      disabled: true
+    - name: order
+      value: ""
+      type: query
+      description: Optional, either ASC or DESC, defaults to DESC. Valid only when sort is valid
+      disabled: true
+    - name: pageSize
+      value: ""
+      type: query
+      description: Optional, defaults to 20. Valid range 1 to 100
+      disabled: true
+    - name: pageNumber
+      value: ""
+      type: query
+      description: Optional, defaults to 1
+      disabled: true
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+docs: Get a page of online articles for the given language and category through either search or query.

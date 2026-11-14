@@ -1,0 +1,56 @@
+info:
+  name: Comment - Delete
+  type: http
+  seq: 3
+
+http:
+  method: DELETE
+  url: "{{_endpoint}}/services/data/v{{version}}/chatter/comments/:COMMENT_ID"
+  params:
+    - name: COMMENT_ID
+      value: ""
+      type: path
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Successful Comment - Delete
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/chatter/comments/:COMMENT_ID"
+      method: DELETE
+      params:
+        - name: COMMENT_ID
+          value: 0D7...
+          type: path
+    response:
+      status: 204
+      statusText: No Content
+      headers:
+        - name: Date
+          value: Wed, 22 Nov 2023 11:24:36 GMT
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-XSS-Protection
+          value: 1; mode=block
+        - name: Content-Security-Policy
+          value: upgrade-insecure-requests
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+      body:
+        type: text
+        data: ""
+
+docs: |-
+  Get information about, edit, or delete a comment.
+
+  https://developer.salesforce.com/docs/atlas.en-us.chatterapi.meta/chatterapi/connect_resources_comments_specific.htm#connect_resources_comments_specific

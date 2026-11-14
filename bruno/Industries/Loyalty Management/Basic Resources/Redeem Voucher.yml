@@ -1,0 +1,105 @@
+info:
+  name: Redeem Voucher
+  type: http
+  seq: 5
+
+http:
+  method: POST
+  url: "{{_endpoint}}/services/data/v{{version}}/loyalty/programs/:loyaltyProgramName/members/:membershipNumber/vouchers/:voucherCode/redeem?voucherNumber="
+  params:
+    - name: voucherNumber
+      value: ""
+      type: query
+    - name: loyaltyProgramName
+      value: ""
+      type: path
+      description: The loyalty program name.
+    - name: membershipNumber
+      value: ""
+      type: path
+      description: The loyalty program membership number.
+    - name: voucherCode
+      value: ""
+      type: path
+      description: The voucher code to be redeemed.
+  body:
+    type: json
+    data: |-
+      {
+         "currencyIsoCode" : "EUR",
+         "redeemAmount" : 1.5
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Redeem Voucher
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/loyalty/programs/:loyaltyProgramName/members/:membershipNumber/vouchers/:voucherCode/redeem?voucherNumber=00000018"
+      method: POST
+      headers:
+        - name: Authorization
+          value: Bearer {{accessToken}}
+      params:
+        - name: voucherNumber
+          value: "00000018"
+          type: query
+        - name: loyaltyProgramName
+          value: NTO Insider
+          type: path
+          description: The loyalty program name.
+        - name: membershipNumber
+          value: Member123
+          type: path
+          description: The loyalty program membership number.
+        - name: voucherCode
+          value: 44KYEWZ5
+          type: path
+          description: The voucher code to be redeemed.
+      body:
+        type: json
+        data: |-
+          {
+             "currencyIsoCode" : "EUR",
+             "redeemAmount" : 1.5
+          }
+    response:
+      status: 201
+      statusText: Created
+      headers:
+        - name: Date
+          value: Mon, 27 May 2024 19:35:17 GMT
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: Content-Type
+          value: application/json;charset=UTF-8
+        - name: Vary
+          value: Accept-Encoding
+        - name: Content-Encoding
+          value: gzip
+        - name: Transfer-Encoding
+          value: chunked
+      body:
+        type: json
+        data: |-
+          {
+              "currencyIsoCode": "EUR",
+              "remainingAmount": 3.5
+          }
+
+docs: |-
+  Standard Documentation:
+
+  [https://developer.salesforce.com/docs/atlas.en-us.loyalty.meta/loyalty/connect_resources_redeem_voucher.htm](https://developer.salesforce.com/docs/atlas.en-us.loyalty.meta/loyalty/connect_resources_redeem_voucher.htm)

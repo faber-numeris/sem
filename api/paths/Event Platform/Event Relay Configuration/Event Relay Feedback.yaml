@@ -1,0 +1,38 @@
+/services/data/v{version}/sobjects/EventRelayFeedback/{EVENT_RELAY_FEEDBACK_ID}:
+  get:
+    tags:
+      - Event Platform > Event Relay Configuration > Event Relay Feedback
+    summary: Get event relay feedback
+    parameters:
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: EVENT_RELAY_FEEDBACK_ID
+        in: path
+        schema:
+          type: string
+        required: true
+        example: 7k4RM000000008AYAQ
+    responses:
+      '200':
+        description: Successful response
+        content:
+          application/json: {}
+/services/data/v{version}/sobjects/EventRelayFeedback/describe:
+  get:
+    tags:
+      - Event Platform > Event Relay Configuration > Event Relay Feedback
+    summary: Describe event felay feedback
+    parameters:
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: Successful response
+        content:
+          application/json: {}

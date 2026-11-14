@@ -1,0 +1,32 @@
+info:
+  name: Request Product Information (Bundled Components)
+  type: http
+  seq: 3
+
+http:
+  method: POST
+  url: "{{_endpoint}}/services/data/v{{version}}/commerce/catalog-products/actions/get-products"
+  headers:
+    - name: Content-Type
+      value: application/json
+  body:
+    type: json
+    data: |-
+      {
+        "productContexts": [
+          {
+            "product2Id": "{{WorkAnywhereBundleProduct}}"
+          }
+        ],
+        "retrievalType": "IncludeChildComponents"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+docs: Request information for a single bundle product and all it's bundle components. See [Request Product Information](https://developer.salesforce.com/docs/revenue/subscription-management/references/products?meta=Request+Product+Information).

@@ -1,0 +1,111 @@
+info:
+  name: Get Member Promotions
+  type: http
+  seq: 5
+
+http:
+  method: POST
+  url: "{{_endpoint}}/services/data/v{{version}}/connect/loyalty/programs/:loyaltyProgramName/program-processes/:processName"
+  params:
+    - name: journalTypeId
+      value: ""
+      type: query
+      disabled: true
+    - name: loyaltyProgramName
+      value: ""
+      type: path
+    - name: processName
+      value: ""
+      type: path
+  body:
+    type: json
+    data: |-
+      {
+         "processParameters":[
+            {
+               "MemberId":"0lMRM0000004G5h2AE"
+            }
+         ]
+      }
+  auth: inherit
+
+runtime:
+  scripts:
+    - type: before-request
+      code: |-
+        //bru.setVar('loyaltyProgramName','xyz');
+        bru.setVar('processName','GetMemberPromotions');
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: example with a member ID
+    request:
+      url: https://itab2c--devloyalty.sandbox.my.salesforce.com/services/data/v60.0/connect/loyalty/programs/Volare/program-processes/processName
+      method: POST
+      headers:
+        - name: Authorization
+          value: Bearer {{accessToken}}
+      params:
+        - name: journalTypeId
+          value: ""
+          type: query
+          disabled: true
+      body:
+        type: json
+        data: |-
+          {
+             "processParameters":[
+                {
+                   "MemberId":"0lMRM0000004G5h2AE"
+                }
+             ]
+          }
+    response:
+      body:
+        type: text
+        data: ""
+  - name: example with a membership number
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/connect/loyalty/programs/:loyaltyProgramName/program-processes/:processName"
+      method: POST
+      headers:
+        - name: Authorization
+          value: Bearer {{accessToken}}
+      params:
+        - name: journalTypeId
+          value: ""
+          type: query
+          disabled: true
+        - name: loyaltyProgramName
+          value: ""
+          type: path
+        - name: processName
+          value: ""
+          type: path
+      body:
+        type: json
+        data: |-
+          {
+             "processParameters":[
+                {
+                   "MembershipNumber":"M1234"
+                }
+             ]
+          }
+    response:
+      body:
+        type: text
+        data: ""
+
+docs: |-
+  [Get Member Promotions](https://developer.salesforce.com/docs/atlas.en-us.loyalty.meta/loyalty/connect_resources_get_member_promotions.htm)
+
+  NOTE:
+
+  In the Pre-request. Script Tab, make changes in the variables value accordingly with the real Process Name to invoke.

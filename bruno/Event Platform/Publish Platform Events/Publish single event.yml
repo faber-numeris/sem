@@ -1,0 +1,84 @@
+info:
+  name: Publish single event
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: "{{_endpoint}}/services/data/v{{version}}/sobjects/:EventApiName/"
+  params:
+    - name: EventApiName
+      value: Carbon_Comparison__e
+      type: path
+  body:
+    type: json
+    data: |-
+      {
+          "Annual_Mileage__c": 12000,
+          "Current_Vehicle__c": "Fast car",
+          "Model_Year__c": 2019
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Publish single event
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/sobjects/:EventApiName/"
+      method: POST
+      params:
+        - name: EventApiName
+          value: Sample__e
+          type: path
+      body:
+        type: json
+        data: |-
+          {
+              "Message__c": "Hello World!"
+          }
+    response:
+      status: 201
+      statusText: Created
+      headers:
+        - name: Date
+          value: Mon, 03 Jul 2023 13:18:20 GMT
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: Sforce-Limit-Info
+          value: api-usage=16/15000
+        - name: Location
+          value: /services/data/v58.0/sobjects/Sample__e/e00xx0000000001AAA
+        - name: Content-Type
+          value: application/json;charset=UTF-8
+        - name: Vary
+          value: Accept-Encoding
+        - name: Content-Encoding
+          value: gzip
+        - name: Transfer-Encoding
+          value: chunked
+      body:
+        type: json
+        data: |-
+          {
+              "id": "e00xx0000000001AAA",
+              "success": true,
+              "errors": [
+                  {
+                      "statusCode": "OPERATION_ENQUEUED",
+                      "message": "234995b6-53b6-4887-93fc-ecd0fac8b36c",
+                      "fields": []
+                  }
+              ]
+          }

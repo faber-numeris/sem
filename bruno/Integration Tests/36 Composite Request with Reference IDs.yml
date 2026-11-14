@@ -1,0 +1,53 @@
+info:
+  name: 36 Composite Request with Reference IDs
+  type: http
+  seq: 36
+
+http:
+  method: POST
+  url: "{{_endpoint}}/services/data/v{{version}}/composite"
+  headers:
+    - name: Content-Type
+      value: application/json
+  body:
+    type: json
+    data: |-
+      {
+        "compositeRequest": [
+          {
+            "method": "POST",
+            "url": "/services/data/v61.0/sobjects/Account",
+            "referenceId": "newAccount",
+            "body": {
+              "Name": "Parent Corp"
+            }
+          },
+          {
+            "method": "POST",
+            "url": "/services/data/v61.0/sobjects/Contact",
+            "referenceId": "newContact",
+            "body": {
+              "LastName": "Smith",
+              "AccountId": "@{newAccount.id}"
+            }
+          }
+        ]
+      }
+
+runtime:
+  scripts:
+    - type: tests
+      code: |-
+        test("Executes Composite sub-requests with referenceId interpolation", function() {
+          expect(res.getStatus()).to.equal(200);
+          const responses = res.getBody().compositeResponse;
+          expect(responses).to.have.lengthOf(2);
+          expect(responses[0].httpStatusCode).to.equal(201);
+          expect(responses[0].referenceId).to.equal("newAccount");
+          expect(responses[1].httpStatusCode).to.equal(201);
+          expect(responses[1].referenceId).to.equal("newContact");
+        });
+
+settings:
+  encodeUrl: true
+  timeout: 0

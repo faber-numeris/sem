@@ -1,0 +1,223 @@
+info:
+  name: Get All Navigation Items
+  type: http
+  seq: 6
+
+http:
+  method: GET
+  url: "{{_endpoint}}/services/data/v{{version}}/ui-api/nav-items"
+  params:
+    - name: formFactor
+      value: Small
+      type: query
+      description: The form factor for each app that the user has access to (`Large`, `Medium` or `Small`)
+      disabled: true
+    - name: navItemNames
+      value: ""
+      type: query
+      description: A comma delimited list of TabDefinition name values to include in the response.
+      disabled: true
+    - name: page
+      value: ""
+      type: query
+      description: The page offset form which to begin returning nav items. The default value is 0, which returns nav items from the first page. For example, for `page=2` and `pageSize=10`, the first nav item returned is the 21st nav item in the list.
+      disabled: true
+    - name: pageSize
+      value: ""
+      type: query
+      description: The maximum number of nav items to return on a page. The default value is 25.
+      disabled: true
+  body:
+    type: json
+    data: ""
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Get All Navigation Items
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/ui-api/nav-items?formFactor=Small&page=1&pageSize=5"
+      method: GET
+      params:
+        - name: formFactor
+          value: Small
+          type: query
+          description: The form factor for each app that the user has access to (`Large`, `Medium` or `Small`)
+        - name: navItemNames
+          value: ""
+          type: query
+          description: A comma delimited list of TabDefinition name values to include in the response.
+          disabled: true
+        - name: page
+          value: "1"
+          type: query
+          description: The page offset form which to begin returning nav items. The default value is 0, which returns nav items from the first page. For example, for `page=2` and `pageSize=10`, the first nav item returned is the 21st nav item in the list.
+        - name: pageSize
+          value: "5"
+          type: query
+          description: The maximum number of nav items to return on a page. The default value is 25.
+      body:
+        type: json
+        data: ""
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: Date
+          value: Fri, 06 Oct 2023 09:45:07 GMT
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: ETag
+          value: '"425dfe9232c5bd0e9c6e4b94771c91b8--gzip"'
+        - name: Content-Type
+          value: application/json;charset=UTF-8
+        - name: Vary
+          value: Accept-Encoding
+        - name: Content-Encoding
+          value: gzip
+        - name: Transfer-Encoding
+          value: chunked
+      body:
+        type: json
+        data: |-
+          {
+              "currentPageUrl": "/services/data/v58.0/ui-api/nav-items?formFactor=Small&page=1&pageSize=5",
+              "eTag": "425dfe9232c5bd0e9c6e4b94771c91b8",
+              "navItems": [
+                  {
+                      "availableInClassic": true,
+                      "availableInLightning": true,
+                      "color": null,
+                      "content": "https://pozil-dev-ed.my.salesforce.com/4nK/o",
+                      "custom": false,
+                      "developerName": "standard-AssetStatePeriod",
+                      "iconUrl": null,
+                      "id": null,
+                      "itemType": "Entity",
+                      "label": "Asset State Periods",
+                      "objectApiName": "AssetStatePeriod",
+                      "objectLabel": "Asset State Period",
+                      "objectLabelPlural": "Asset State Periods",
+                      "pageReference": {
+                          "attributes": {
+                              "objectApiName": "AssetStatePeriod",
+                              "actionName": "home"
+                          },
+                          "state": {},
+                          "type": "standard__objectPage"
+                      },
+                      "standardType": null
+                  },
+                  {
+                      "availableInClassic": true,
+                      "availableInLightning": true,
+                      "color": null,
+                      "content": "https://pozil-dev-ed.my.salesforce.com/02i/o",
+                      "custom": false,
+                      "developerName": "standard-Asset",
+                      "iconUrl": null,
+                      "id": null,
+                      "itemType": "Entity",
+                      "label": "Assets",
+                      "objectApiName": "Asset",
+                      "objectLabel": "Asset",
+                      "objectLabelPlural": "Assets",
+                      "pageReference": {
+                          "attributes": {
+                              "objectApiName": "Asset",
+                              "actionName": "home"
+                          },
+                          "state": {},
+                          "type": "standard__objectPage"
+                      },
+                      "standardType": null
+                  },
+                  {
+                      "availableInClassic": true,
+                      "availableInLightning": true,
+                      "color": null,
+                      "content": "https://pozil-dev-ed.my.salesforce.com/0cI/o",
+                      "custom": false,
+                      "developerName": "standard-AuthorizationForm",
+                      "iconUrl": null,
+                      "id": null,
+                      "itemType": "Entity",
+                      "label": "Authorization Form",
+                      "objectApiName": "AuthorizationForm",
+                      "objectLabel": "Authorization Form",
+                      "objectLabelPlural": "Authorization Forms",
+                      "pageReference": {
+                          "attributes": {
+                              "objectApiName": "AuthorizationForm",
+                              "actionName": "home"
+                          },
+                          "state": {},
+                          "type": "standard__objectPage"
+                      },
+                      "standardType": null
+                  },
+                  {
+                      "availableInClassic": true,
+                      "availableInLightning": true,
+                      "color": null,
+                      "content": "https://pozil-dev-ed.my.salesforce.com/0cK/o",
+                      "custom": false,
+                      "developerName": "standard-AuthorizationFormConsent",
+                      "iconUrl": null,
+                      "id": null,
+                      "itemType": "Entity",
+                      "label": "Authorization Form Consent",
+                      "objectApiName": "AuthorizationFormConsent",
+                      "objectLabel": "Authorization Form Consent",
+                      "objectLabelPlural": "Authorization Form Consents",
+                      "pageReference": {
+                          "attributes": {
+                              "objectApiName": "AuthorizationFormConsent",
+                              "actionName": "home"
+                          },
+                          "state": {},
+                          "type": "standard__objectPage"
+                      },
+                      "standardType": null
+                  },
+                  {
+                      "availableInClassic": true,
+                      "availableInLightning": true,
+                      "color": null,
+                      "content": "https://pozil-dev-ed.my.salesforce.com/0cM/o",
+                      "custom": false,
+                      "developerName": "standard-AuthorizationFormDataUse",
+                      "iconUrl": null,
+                      "id": null,
+                      "itemType": "Entity",
+                      "label": "Authorization Form Data Use",
+                      "objectApiName": "AuthorizationFormDataUse",
+                      "objectLabel": "Authorization Form Data Use",
+                      "objectLabelPlural": "Authorization Form Data Uses",
+                      "pageReference": {
+                          "attributes": {
+                              "objectApiName": "AuthorizationFormDataUse",
+                              "actionName": "home"
+                          },
+                          "state": {},
+                          "type": "standard__objectPage"
+                      },
+                      "standardType": null
+                  }
+              ],
+              "nextPageUrl": "/services/data/v58.0/ui-api/nav-items?formFactor=Small&page=2&pageSize=5"
+          }
+
+docs: Gets all navigation items (tabs) that the user has access to.

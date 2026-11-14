@@ -1,0 +1,128 @@
+info:
+  name: Following - POST
+  type: http
+  seq: 4
+
+http:
+  method: POST
+  url: "{{_endpoint}}/services/data/v{{version}}/chatter/users/:USER_ID/following?subjectId=<RECORD_ID>"
+  params:
+    - name: subjectId
+      value: <RECORD_ID>
+      type: query
+    - name: USER_ID
+      value: ""
+      type: path
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Successful Following - POST
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/chatter/users/:USER_ID/following?subjectId=0012o00003O9lADAAZ"
+      method: POST
+      params:
+        - name: subjectId
+          value: 0012o00003O9lADAAZ
+          type: query
+        - name: USER_ID
+          value: 0052o00000DKQarAAH
+          type: path
+    response:
+      status: 201
+      statusText: Created
+      headers:
+        - name: Date
+          value: Mon, 20 Nov 2023 16:27:09 GMT
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-XSS-Protection
+          value: 1; mode=block
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: Content-Type
+          value: application/json;charset=UTF-8
+        - name: Vary
+          value: Accept-Encoding
+        - name: Content-Encoding
+          value: gzip
+        - name: Transfer-Encoding
+          value: chunked
+      body:
+        type: json
+        data: |-
+          {
+              "community": null,
+              "id": "0E8...",
+              "subject": {
+                  "entityLabel": {
+                      "label": "Account",
+                      "labelPlural": "Accounts"
+                  },
+                  "id": "001...",
+                  "motif": {
+                      "color": "5867E8",
+                      "largeIconUrl": "/img/icon/accounts64.png",
+                      "mediumIconUrl": "/img/icon/accounts32.png",
+                      "smallIconUrl": "/img/icon/accounts16.png",
+                      "svgIconUrl": null
+                  },
+                  "mySubscription": null,
+                  "name": "Exemple de comptes pour les autorisations",
+                  "type": "Account",
+                  "url": "/services/data/v58.0/chatter/records/001..."
+              },
+              "subscriber": {
+                  "additionalLabel": null,
+                  "communityNickname": "integration1.4407085834085586E12",
+                  "companyName": "Salesforce",
+                  "displayName": "Integration User",
+                  "firstName": "Integration",
+                  "id": "005...",
+                  "isActive": true,
+                  "isInThisCommunity": true,
+                  "lastName": "User",
+                  "motif": {
+                      "color": "1B96FF",
+                      "largeIconUrl": "/img/icon/profile64.png",
+                      "mediumIconUrl": "/img/icon/profile32.png",
+                      "smallIconUrl": "/img/icon/profile16.png",
+                      "svgIconUrl": null
+                  },
+                  "mySubscription": null,
+                  "name": "Integration User",
+                  "outOfOffice": {
+                      "message": ""
+                  },
+                  "photo": {
+                      "fullEmailPhotoUrl": "https://<my_domain>/img/userprofile/default_profile_200_v2.png?fromEmail=1",
+                      "largePhotoUrl": "https://<my_domain>/profilephoto/005/F",
+                      "mediumPhotoUrl": "https://<my_domain>/profilephoto/005/M",
+                      "photoVersionId": null,
+                      "smallPhotoUrl": "https://<my_domain>/profilephoto/005/T",
+                      "standardEmailPhotoUrl": "https://<my_domain>/img/userprofile/default_profile_45_v2.png?fromEmail=1",
+                      "url": "/services/data/v58.0/connect/user-profiles/005.../photo"
+                  },
+                  "reputation": null,
+                  "title": null,
+                  "type": "User",
+                  "url": "/services/data/v58.0/chatter/users/005...",
+                  "userType": "Internal"
+              },
+              "url": "/services/data/v58.0/chatter/subscriptions/0E8..."
+          }
+
+docs: |-
+  Returns a list of people, groups, records, topics, and files that the specified user is following. Also used to follow records.
+
+  https://developer.salesforce.com/docs/atlas.en-us.chatterapi.meta/chatterapi/connect_resources_users_FollowingUsers.htm?search_text=following

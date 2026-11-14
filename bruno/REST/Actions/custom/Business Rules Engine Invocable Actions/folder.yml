@@ -1,0 +1,14 @@
+info:
+  name: Business Rules Engine Invocable Actions
+  type: folder
+  seq: 1
+
+request:
+  auth: inherit
+
+docs:
+  content: |-
+    [https://developer.salesforce.com/docs/atlas.en-us.246.0.industries_reference.meta/industries_reference/business_rules_engine_actions.htm](https://developer.salesforce.com/docs/atlas.en-us.246.0.industries_reference.meta/industries_reference/business_rules_engine_actions.htm)
+
+    <img src="https://content.pstmn.io/3b34f906-e87d-47a6-900e-516ee295b8e7/aW1hZ2UucG5n" alt="" height="786" width="1532">
+  type: text/markdown

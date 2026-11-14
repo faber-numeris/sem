@@ -1,0 +1,117 @@
+/services/data/v{version}/connect/business-rules/lookup-tables:
+  get:
+    tags:
+      - Connect > Industries > Business Rules Engine > lookup-tables
+    summary: Retrieve lookup tables
+    description: >-
+      # Lookup Tables (GET)
+
+
+      Retrieve lookup tables.Resource
+
+
+      ```
+
+      /connect/business-rules/lookup-tables
+
+
+       ```
+
+      Resource example
+
+
+      ```
+
+      https://yourInstance.salesforce.com/services/data/v59.0/connect/business-rules/lookup-tables?searchKey=D&usageType=Bre&lookupTypes=DecisionTable,DecisionMatrix
+
+
+       ```
+
+      ```
+
+      https://yourInstance.salesforce.com/services/data/v59.0/connect/business-rules/lookup-tables?searchKey=D&usageType=Bre
+
+
+       ```
+
+      Available version59.0Requires ChatterNoHTTP methodsGETRequest parameters for GET
+
+
+      | Parameter Name | Type | Description | Required or Optional | Available Version |
+
+      | --- | --- | --- | --- | --- |
+
+      | lookupTypes | String | Type of lookup table. Valid values are:<br><br>- DecisionMatrix<br>    <br>- DecisionTable | Optional | 59.0 |
+
+      | searchKey | String | The search text entered by the user to retrieve a list of lookup tables. | Required | 59.0 |
+
+      | usageType | String | Usage type of the lookup table. Valid values are:<br><br>- AiAccelerator​SubscriberChurn​Prediction—Used for Industries Einstein<br>    <br>- Bre—Used for Business Rules Engine<br>    <br>- CustomLoyalty—Used for Loyalty Management<br>    <br>- DefaultPricing—Used for Pricing Plans in Enterprise Product Catalog (EPC) by Communications Cloud<br>    <br>- Qualification—Used for Industries Communications, Media, and Energy (CME)<br>    <br>- RecordAlert—Used for Financial Services Cloud<br>    <br>- ShipAndDebit—Used for Manufacturing Cloud<br>    <br>- TierProcessing—Used for Loyalty Management<br>    <br>- TransactionJournal—Used for Loyalty Management<br>    <br>- WarrantyClaim—Used for Manufacturing Cloud | Required | 59.0 |
+
+
+      Response body for GET[Lookup Tables Result List](https://developer.salesforce.com/docs/atlas.en-us.industries_reference.meta/industries_reference/connect_responses_lookup_tables_result_list.htm)
+    parameters:
+      - name: searchKey
+        in: query
+        schema:
+          type: string
+        example: my
+      - name: usageType
+        in: query
+        schema:
+          type: string
+        example: Bre
+      - name: lookupTypes
+        in: query
+        schema:
+          type: string
+        description: >-
+          Optional: Type of lookup table. Valid values are: DecisionMatrix, DecisionTable
+        example: DecisionTable
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '404':
+        description: Not Found
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Wed, 06 Sep 2023 08:56:11 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-XSS-Protection:
+            schema:
+              type: string
+              example: 1; mode=block
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Content-Type:
+            schema:
+              type: string
+              example: application/json;charset=UTF-8
+          Transfer-Encoding:
+            schema:
+              type: string
+              example: chunked
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              - errorCode: NOT_FOUND
+                message: The requested resource does not exist

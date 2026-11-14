@@ -1,0 +1,88 @@
+info:
+  name: Member Vouchers
+  type: http
+  seq: 10
+
+http:
+  method: GET
+  url: "{{_endpoint}}/services/data/v{{version}}/loyalty/programs/:loyaltyProgramName/members/:membershipNumber/vouchers"
+  params:
+    - name: loyaltyProgramName
+      value: ""
+      type: path
+    - name: membershipNumber
+      value: ""
+      type: path
+  body:
+    type: json
+    data: ""
+  auth: inherit
+
+runtime:
+  scripts:
+    - type: before-request
+      code: |-
+        //bru.setVar('loyaltyProgramName','Nuotare');
+        //bru.setVar('membershipNumber','xyz');
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Member Vouchers
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/loyalty/programs/:loyaltyProgramName/members/:membershipNumber/vouchers"
+      method: GET
+      headers:
+        - name: Authorization
+          value: Bearer {{accessToken}}
+      params:
+        - name: loyaltyProgramName
+          value: NTO Insider
+          type: path
+        - name: membershipNumber
+          value: member1
+          type: path
+      body:
+        type: json
+        data: ""
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: Date
+          value: Wed, 22 May 2024 16:34:18 GMT
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: Content-Type
+          value: application/json;charset=UTF-8
+        - name: Vary
+          value: Accept-Encoding
+        - name: Content-Encoding
+          value: gzip
+        - name: Transfer-Encoding
+          value: chunked
+      body:
+        type: json
+        data: |-
+          {
+              "voucherCount": 0,
+              "vouchers": []
+          }
+
+docs: |-
+  [Member Vouchers](https://developer.salesforce.com/docs/atlas.en-us.loyalty.meta/loyalty/connect_resources_member_vouchers.htm)
+
+  NOTE:
+
+  In the Pre-request. Script Tab, make changes in the variables value accordingly with the real Process Name to invoke.

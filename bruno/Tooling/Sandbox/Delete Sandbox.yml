@@ -1,0 +1,53 @@
+info:
+  name: Delete Sandbox
+  type: http
+  seq: 6
+
+http:
+  method: DELETE
+  url: "{{_endpoint}}/services/data/v{{version}}/tooling/sobjects/SandboxInfo/:SANDBOX_INFO_ID"
+  params:
+    - name: SANDBOX_INFO_ID
+      value: ""
+      type: path
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Delete Sandbox
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/tooling/sobjects/SandboxInfo/:SANDBOX_INFO_ID"
+      method: DELETE
+      params:
+        - name: SANDBOX_INFO_ID
+          value: 0GQ4H000000CxSzWAK
+          type: path
+    response:
+      status: 204
+      statusText: No Content
+      headers:
+        - name: Date
+          value: Fri, 15 Dec 2023 13:34:29 GMT
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: Content-Security-Policy
+          value: upgrade-insecure-requests
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: Sforce-Limit-Info
+          value: api-usage=2/15000
+      body:
+        type: text
+        data: ""
+
+docs: Deletes a sandbox.

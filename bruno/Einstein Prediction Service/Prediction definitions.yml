@@ -1,0 +1,88 @@
+info:
+  name: Prediction definitions
+  type: http
+  seq: 2
+
+http:
+  method: GET
+  url: "{{_endpoint}}/services/data/v{{version}}/smartdatadiscovery/predictionDefinitions"
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Prediction definitions
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/smartdatadiscovery/predictionDefinitions"
+      method: GET
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: Date
+          value: Thu, 04 Mar 2021 13:45:15 GMT
+        - name: Strict-Transport-Security
+          value: max-age=31536002; includeSubDomains
+        - name: Expect-CT
+          value: max-age=86400, report-uri="https://a.forcesslreports.com/Expect-CT-report/00D5Y000001crJvm"
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-XSS-Protection
+          value: 1; mode=block
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: Content-Type
+          value: application/json;charset=UTF-8
+        - name: Vary
+          value: Accept-Encoding
+        - name: Content-Encoding
+          value: gzip
+        - name: Transfer-Encoding
+          value: chunked
+      body:
+        type: json
+        data: |-
+          {
+              "nextPageUrl": null,
+              "predictionDefinitions": [
+                  {
+                      "countOfActiveModels": 1,
+                      "countOfModels": 1,
+                      "createdBy": {
+                          "id": "0055Y00000DWwAIQA1",
+                          "name": "Philippe Ozil",
+                          "profilePhotoUrl": "https://crm-analytics-deorg-dev-ed--c.documentforce.com/profilephoto/005/T"
+                      },
+                      "createdDate": "2021-03-04T13:37:02.000Z",
+                      "id": "1OR5Y0000010ws8WAA",
+                      "label": "Sales_per_Customer",
+                      "lastModifiedBy": {
+                          "id": "0055Y00000DWwAIQA1",
+                          "name": "Philippe Ozil",
+                          "profilePhotoUrl": "https://crm-analytics-deorg-dev-ed--c.documentforce.com/profilephoto/005/T"
+                      },
+                      "lastModifiedDate": "2021-03-04T13:37:02.000Z",
+                      "modelsUrl": "/services/data/v51.0/smartdatadiscovery/predictiondefinitions/1OR5Y0000010ws8WAA/models",
+                      "name": "Sales_per_Customer",
+                      "outcome": {
+                          "goal": "Maximize",
+                          "label": "Sales per Customer",
+                          "name": "Sales_per_Customer"
+                      },
+                      "predictionType": "Regression",
+                      "status": "Enabled",
+                      "url": "/services/data/v51.0/smartdatadiscovery/predictiondefinitions/1OR5Y0000010ws8WAA"
+                  }
+              ],
+              "totalSize": 1,
+              "url": "/services/data/v51.0/smartdatadiscovery/predictiondefinitions?pageSize=25"
+          }
+
+docs: Get available prediction definitions.

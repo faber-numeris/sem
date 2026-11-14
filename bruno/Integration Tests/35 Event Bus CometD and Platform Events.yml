@@ -1,0 +1,46 @@
+info:
+  name: 35 Event Bus CometD and Platform Events
+  type: http
+  seq: 35
+
+http:
+  method: POST
+  url: "{{_endpoint}}/cometd/{{version}}/"
+  headers:
+    - name: Content-Type
+      value: application/json
+  body:
+    type: json
+    data: |-
+      [
+        {
+          "channel": "/meta/handshake",
+          "id": "1",
+          "version": "1.0",
+          "supportedConnectionTypes": ["long-polling"]
+        },
+        {
+          "channel": "/event/Order_Event__e",
+          "id": "2",
+          "data": {
+            "Order_Number__c": "ORD-BRUNO-100",
+            "Status__c": "Shipped"
+          }
+        }
+      ]
+
+runtime:
+  scripts:
+    - type: tests
+      code: |-
+        test("CometD handshake and platform event publish succeed", function() {
+          expect(res.getStatus()).to.equal(200);
+          expect(res.getBody()).to.be.an("array");
+          expect(res.getBody()[0].successful).to.equal(true);
+          expect(res.getBody()[0].clientId).to.be.a("string");
+          expect(res.getBody()[1].successful).to.equal(true);
+        });
+
+settings:
+  encodeUrl: true
+  timeout: 0

@@ -1,0 +1,207 @@
+info:
+  name: List of Groups - POST
+  type: http
+  seq: 3
+
+http:
+  method: POST
+  url: "{{_endpoint}}/services/data/v{{version}}/chatter/groups?name=New Chatter Group  (Private Access)&visibility=PrivateAccess&description=Created via API&information=Private Information&isArchived=false&isAutoArchiveDisabled=false&isBroadcast=false&canHaveChatterGuests\t=true"
+  params:
+    - name: name
+      value: New Chatter Group  (Private Access)
+      type: query
+    - name: visibility
+      value: PrivateAccess
+      type: query
+      description: |-
+        PrivateAccess—Only members of the group can see posts to this group.
+        PublicAccess—All users within the community can see posts to this group.
+        Unlisted—Reserved for future use.
+    - name: description
+      value: Created via API
+      type: query
+    - name: information
+      value: Private Information
+      type: query
+      description: If the group is private, the “Information” section is visible only to members.
+    - name: isArchived
+      value: "false"
+      type: query
+    - name: isAutoArchiveDisabled
+      value: "false"
+      type: query
+      description: true if automatic archiving is turned off for the group, false otherwise. Defaults to false. If true, if there are no posts or comments for 90 days the group is archived.
+    - name: isBroadcast
+      value: "false"
+      type: query
+      description: true if only group owners and managers can create posts in the group, false otherwise.
+    - name: "canHaveChatterGuests\t"
+      value: "true"
+      type: query
+      description: true if this group allows Chatter customers, false otherwise. After this property is set to true, it cannot be set to false.
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Successful List of Groups - POST
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/chatter/groups?name=New Chatter Group  (Private Access)&visibility=PrivateAccess&description=Created via API&information=Private Information&isArchived=false&isAutoArchiveDisabled=false&isBroadcast=false&canHaveChatterGuests\t=true"
+      method: POST
+      params:
+        - name: name
+          value: New Chatter Group  (Private Access)
+          type: query
+        - name: visibility
+          value: PrivateAccess
+          type: query
+          description: |-
+            PrivateAccess—Only members of the group can see posts to this group.
+            PublicAccess—All users within the community can see posts to this group.
+            Unlisted—Reserved for future use.
+        - name: description
+          value: Created via API
+          type: query
+        - name: information
+          value: Private Information
+          type: query
+          description: If the group is private, the “Information” section is visible only to members.
+        - name: isArchived
+          value: "false"
+          type: query
+        - name: isAutoArchiveDisabled
+          value: "false"
+          type: query
+          description: true if automatic archiving is turned off for the group, false otherwise. Defaults to false. If true, if there are no posts or comments for 90 days the group is archived.
+        - name: isBroadcast
+          value: "false"
+          type: query
+          description: true if only group owners and managers can create posts in the group, false otherwise.
+        - name: "canHaveChatterGuests\t"
+          value: "true"
+          type: query
+          description: true if this group allows Chatter customers, false otherwise. After this property is set to true, it cannot be set to false.
+    response:
+      status: 201
+      statusText: Created
+      headers:
+        - name: Date
+          value: Wed, 22 Nov 2023 11:29:04 GMT
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-XSS-Protection
+          value: 1; mode=block
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: Content-Type
+          value: application/json;charset=UTF-8
+        - name: Vary
+          value: Accept-Encoding
+        - name: Content-Encoding
+          value: gzip
+        - name: Transfer-Encoding
+          value: chunked
+      body:
+        type: json
+        data: |-
+          {
+              "additionalLabel": "Private With Customers",
+              "announcement": null,
+              "bannerPhoto": {
+                  "bannerPhotoUrl": "https://<my_domain>/profilephoto/0F9/B",
+                  "bannerPhotoVersionId": null,
+                  "url": "/services/data/v58.0/chatter/groups/0F9.../banner-photo"
+              },
+              "canHaveChatterGuests": true,
+              "community": null,
+              "description": "Created via API",
+              "emailToChatterAddress": "0F9...@post.2o-i6mbeaq.eu25.chatter.salesforce.com",
+              "fileCount": 0,
+              "id": "0F9...",
+              "information": {
+                  "text": null,
+                  "title": null
+              },
+              "isArchived": false,
+              "isAutoArchiveDisabled": false,
+              "isBroadcast": false,
+              "lastFeedElementPostDate": "2023-11-22T11:29:05.000Z",
+              "memberCount": 1,
+              "motif": {
+                  "color": "1B96FF",
+                  "largeIconUrl": "/img/icon/groups64.png",
+                  "mediumIconUrl": "/img/icon/groups32.png",
+                  "smallIconUrl": "/img/icon/groups16.png",
+                  "svgIconUrl": null
+              },
+              "myRole": "GroupOwner",
+              "mySubscription": {
+                  "id": "0FB...",
+                  "url": "/services/data/v58.0/chatter/group-memberships/0FB..."
+              },
+              "name": "New Chatter Group  (Private Access)",
+              "owner": {
+                  "additionalLabel": null,
+                  "communityNickname": "User1696423780773910041",
+                  "companyName": "Salesforce",
+                  "displayName": "Name",
+                  "firstName": "Firstname",
+                  "id": "005...",
+                  "isActive": true,
+                  "isInThisCommunity": true,
+                  "lastName": "Name",
+                  "motif": {
+                      "color": "1B96FF",
+                      "largeIconUrl": "/img/icon/profile64.png",
+                      "mediumIconUrl": "/img/icon/profile32.png",
+                      "smallIconUrl": "/img/icon/profile16.png",
+                      "svgIconUrl": null
+                  },
+                  "mySubscription": null,
+                  "name": "Name",
+                  "outOfOffice": {
+                      "message": ""
+                  },
+                  "photo": {
+                      "fullEmailPhotoUrl": "https://<my_domain>/ncsphoto/1wsMlOd3tVC7boygqBO8wMT9KzA0D6tqzpbs-Uw0IogXzXAXaYKJnuWCNQmXymRq?fromEmail=1",
+                      "largePhotoUrl": "https://<my_domain>/profilephoto/729.../F",
+                      "mediumPhotoUrl": "https://<my_domain>/profilephoto/729.../M",
+                      "photoVersionId": "729...",
+                      "smallPhotoUrl": "https://<my_domain>/profilephoto/729.../T",
+                      "standardEmailPhotoUrl": "https://<my_domain>/ncsphoto/1wsMlOd3tVC7boygqBO8wMT9KzA0D6tqzpbs-Uw0Ioi-dtynkoFWsl46as__TDFU?fromEmail=1",
+                      "url": "/services/data/v58.0/connect/user-profiles/005.../photo"
+                  },
+                  "reputation": null,
+                  "title": null,
+                  "type": "User",
+                  "url": "/services/data/v58.0/chatter/users/005...",
+                  "userType": "Internal"
+              },
+              "pendingRequests": 0,
+              "photo": {
+                  "fullEmailPhotoUrl": "https://<my_domain>/img/userprofile/default_group_profile_200_v2.png?fromEmail=1",
+                  "largePhotoUrl": "https://<my_domain>/profilephoto/0F9/F",
+                  "mediumPhotoUrl": "https://<my_domain>/profilephoto/0F9/M",
+                  "photoVersionId": null,
+                  "smallPhotoUrl": "https://<my_domain>/profilephoto/0F9/T",
+                  "standardEmailPhotoUrl": "https://<my_domain>/img/userprofile/default_group_profile_45_v2.png?fromEmail=1",
+                  "url": "/services/data/v58.0/chatter/groups/0F9.../photo"
+              },
+              "type": "CollaborationGroup",
+              "url": "/services/data/v58.0/chatter/groups/0F9...",
+              "visibility": "PrivateAccess"
+          }
+
+docs: |-
+  A list of all the groups in the organization. Get information about groups or create a group.
+
+  https://developer.salesforce.com/docs/atlas.en-us.chatterapi.meta/chatterapi/connect_resources_groups_ListOfGroups.htm

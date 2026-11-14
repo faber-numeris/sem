@@ -1,0 +1,33 @@
+/services/data/v{version}/commerce/pricing/salestransaction/actions/calculate-price:
+  post:
+    tags:
+      - Subscription Management > Pricing
+    summary: Calculate Price (New Sale with Discounts)
+    description: >-
+      Calculate the price of a sales transaction, including a top-level and a line-level discount. The top-level discount specifies 20% off the entire sales transaction, while the line-level discount specifies $10 off the sales transaction item.
+
+
+      In this example, the sales transaction is an order and the sales transaction item is an order item.
+    requestBody:
+      content:
+        '*/*':
+          schema:
+            type: string
+            example: >-
+              "{\n    \"listPricebookId\": \"{{standardPricebook}}\",\n    \"pricingFlow\": \"GET_PRICE_USING_CONTEXT\",\n    \"graph\": {\n        \"graphId\": \"1\",\n        \"records\": [\n            {\n                \"referenceId\": \"ref_sales_txn\",\n                \"record\": {\n                    \"attributes\": {\n                        \"type\": \"SalesTransactionShape\"\n                    },\n                    \"CurrencyIsoCode\": \"USD\"\n                }\n            },\n            {\n                \"referenceId\": \"Item_1_Evergreen\",\n                \"record\": {\n                    \"attributes\": {\n                        \"type\": \"SalesTransactionItemShape\"\n                    },\n                    \"SalesTransactionShapeId\": \"@{ref_sales_txn.Id}\",\n                    \"StartDate\": \"2023-01-01\",\n                    \"ProductId\": \"{{SLA_BronzeProduct}}\",\n                    \"ProductSellingModelId\": \"{{EvergreenMonthlyPSM}}\",\n                    \"Quantity\": 3.0,\n                    \"PricingTransactionType\": \"NewSale\",\n                    \"CurrencyIsoCode\": \"USD\"\n                }\n            },\n            {\n                \"referenceId\": \"Item_2_Termed\",\n                \"record\": {\n                    \"attributes\": {\n                        \"type\": \"SalesTransactionItemShape\"\n                    },\n                    \"SalesTransactionShapeId\": \"@{ref_sales_txn.Id}\",\n                    \"StartDate\": \"2023-01-01\",\n                    \"EndDate\": \"2024-01-01\",\n                    \"ProductId\": \"{{VirtualRouterProduct}}\",\n                    \"ProductSellingModelId\": \"{{TermMonthlyPSM}}\",\n                    \"Quantity\": 100.0,\n                    \"PricingTransactionType\": \"NewSale\",\n                    \"CurrencyIsoCode\": \"USD\"\n                }\n            },\n            {\n                \"referenceId\": \"Order_Level_Discount\",\n                \"record\": {\n                    \"attributes\": {\n                        \"type\": \"PriceAdjustmentGroupShape\"\n                    },\n                    \"SalesTransactionShapeId\": \"@{ref_sales_txn.Id}\",\n                    \"AdjustmentType\": \"AdjustmentPercentage\",\n                    \"AdjustmentValue\": -20,\n                    \"AdjustmentSource\": \"Discretionary\"\n                }\n            },\n            {\n                \"referenceId\": \"Line_Level_Discount\",\n                \"record\": {\n                    \"attributes\": {\n                        \"type\": \"PriceAdjustmentItemShape\"\n                    },\n                    \"SalesTransactionItemShapeId\": \"@{Item_1_Evergreen.Id}\",\n                    \"AdjustmentType\": \"AdjustmentAmount\",\n                    \"AdjustmentValue\": -10,\n                    \"AdjustmentSource\": \"Discretionary\",\n                    \"AdjustmentAmountScope\": \"Unit\"\n                }\n            }                        \n        ]\n    }\n}"
+    parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: Successful response
+        content:
+          application/json: {}

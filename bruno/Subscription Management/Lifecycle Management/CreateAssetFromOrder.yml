@@ -1,0 +1,29 @@
+info:
+  name: CreateAssetFromOrder
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: "{{_endpoint}}/services/data/v{{version}}/actions/standard/createOrUpdateAssetFromOrder"
+  headers:
+    - name: Content-Type
+      value: application/json
+  body:
+    type: json
+    data: |-
+      {
+          "inputs": [
+              {
+                  "orderId": "{{currentOrder}}"
+              }
+          ]
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true

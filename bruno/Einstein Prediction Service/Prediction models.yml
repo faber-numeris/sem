@@ -1,0 +1,138 @@
+info:
+  name: Prediction models
+  type: http
+  seq: 4
+
+http:
+  method: GET
+  url: "{{_endpoint}}/services/data/v{{version}}/smartdatadiscovery/predictionDefinitions/:PREDICTION_DEFINITION_ID/models"
+  params:
+    - name: PREDICTION_DEFINITION_ID
+      value: ""
+      type: path
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Prediction models
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/smartdatadiscovery/predictionDefinitions/1OR5Y0000010ws8WAA/models"
+      method: GET
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: Date
+          value: Thu, 04 Mar 2021 13:48:31 GMT
+        - name: Strict-Transport-Security
+          value: max-age=31536002; includeSubDomains
+        - name: Expect-CT
+          value: max-age=86400, report-uri="https://a.forcesslreports.com/Expect-CT-report/00D5Y000001crJvm"
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-XSS-Protection
+          value: 1; mode=block
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: Content-Type
+          value: application/json;charset=UTF-8
+        - name: Vary
+          value: Accept-Encoding
+        - name: Content-Encoding
+          value: gzip
+        - name: Transfer-Encoding
+          value: chunked
+      body:
+        type: json
+        data: |-
+          {
+              "models": [
+                  {
+                      "createdBy": {
+                          "id": "0055Y00000DWwAIQA1",
+                          "name": "Philippe Ozil",
+                          "profilePhotoUrl": "https://crm-analytics-deorg-dev-ed--c.documentforce.com/profilephoto/005/T"
+                      },
+                      "createdDate": "2021-03-04T13:37:03.000Z",
+                      "fieldMappingList": [
+                          {
+                              "modelField": {
+                                  "label": "Category",
+                                  "name": "Category",
+                                  "type": "Text"
+                              }
+                          },
+                          {
+                              "modelField": {
+                                  "label": "Sales",
+                                  "name": "Sales",
+                                  "type": "Number"
+                              }
+                          },
+                          {
+                              "modelField": {
+                                  "label": "Profit per Order",
+                                  "name": "Profit_per_Order",
+                                  "type": "Number"
+                              }
+                          },
+                          {
+                              "modelField": {
+                                  "label": "Sub-Category",
+                                  "name": "Sub_Category",
+                                  "type": "Text"
+                              }
+                          },
+                          {
+                              "modelField": {
+                                  "label": "Quantity",
+                                  "name": "Quantity",
+                                  "type": "Number"
+                              }
+                          }
+                      ],
+                      "filters": [],
+                      "historyUrl": "/services/data/v51.0/smartdatadiscovery/predictiondefinitions/1OR5Y0000010ws8WAA/models/1Ot5Y0000010wzNSAQ/histories",
+                      "id": "1Ot5Y0000010wzNSAQ",
+                      "isRefreshEnabled": false,
+                      "label": "superstore-orders",
+                      "lastModifiedBy": {
+                          "id": "0055Y00000DWwAIQA1",
+                          "name": "Philippe Ozil",
+                          "profilePhotoUrl": "https://crm-analytics-deorg-dev-ed--c.documentforce.com/profilephoto/005/T"
+                      },
+                      "lastModifiedDate": "2021-03-04T13:37:03.000Z",
+                      "model": {
+                          "id": "1OT5Y0000010zlzWAA"
+                      },
+                      "modelType": "Regression",
+                      "name": "superstore_orders",
+                      "predictionDefinitionUrl": "/services/data/v51.0/smartdatadiscovery/predictiondefinitions/1OR5Y0000010ws8WAA",
+                      "prescribableFields": [
+                          {
+                              "customDefinitions": [],
+                              "field": {
+                                  "label": "Quantity",
+                                  "name": "Quantity",
+                                  "type": "Number"
+                              }
+                          }
+                      ],
+                      "sortOrder": 0,
+                      "status": "Enabled",
+                      "url": "/services/data/v51.0/smartdatadiscovery/predictiondefinitions/1OR5Y0000010ws8WAA/models/1Ot5Y0000010wzNSAQ"
+                  }
+              ],
+              "totalSize": 1,
+              "url": "/services/data/v51.0/smartdatadiscovery/predictiondefinitions/1OR5Y0000010ws8WAA/models"
+          }
+
+docs: Get available prediction definitions.

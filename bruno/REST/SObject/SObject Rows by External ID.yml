@@ -1,0 +1,38 @@
+info:
+  name: SObject Rows by External ID
+  type: http
+  seq: 12
+
+http:
+  method: GET
+  url: "{{_endpoint}}/services/data/v{{version}}/sobjects/:SOBJECT_API_NAME/:FIELD_NAME/:FIELD_VALUE"
+  headers:
+    - name: Content-Type
+      value: application/json
+  params:
+    - name: SOBJECT_API_NAME
+      value: ""
+      type: path
+    - name: FIELD_NAME
+      value: ""
+      type: path
+    - name: FIELD_VALUE
+      value: ""
+      type: path
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+docs: |-
+  Creates new records or updates existing records (upserts records) based on the value of a specified external ID field.
+
+  If the specified value doesn't exist, a new record is created.
+  If a record does exist with that value, the field values specified in the request body are updated.
+  If the value is not unique, the REST API returns a 300 response with the list of matching records.
+
+  HEAD, GET, PATCH, DELETE, POST

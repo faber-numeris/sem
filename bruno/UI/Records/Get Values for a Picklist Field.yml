@@ -1,0 +1,275 @@
+info:
+  name: Get Values for a Picklist Field
+  type: http
+  seq: 5
+
+http:
+  method: GET
+  url: "{{_endpoint}}/services/data/v{{version}}/ui-api/object-info/:SOBJECT_API_NAME/picklist-values/:RECORD_TYPE_ID/:FIELD_API_NAME"
+  params:
+    - name: SOBJECT_API_NAME
+      value: Account
+      type: path
+      description: Object API Name
+    - name: RECORD_TYPE_ID
+      value: 012000000000000AAA
+      type: path
+      description: Record type Id. Use `012000000000000AAA` as default when there are no custom record types.
+    - name: FIELD_API_NAME
+      value: Industry
+      type: path
+      description: Field API Name (optional)
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Get Values for a Picklist Field
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/ui-api/object-info/:SOBJECT_API_NAME/picklist-values/:RECORD_TYPE_ID/:FIELD_API_NAME"
+      method: GET
+      params:
+        - name: SOBJECT_API_NAME
+          value: Account
+          type: path
+          description: Object API Name
+        - name: RECORD_TYPE_ID
+          value: 012000000000000AAA
+          type: path
+          description: Record type Id. Use `012000000000000AAA` as default when there are no custom record types.
+        - name: FIELD_API_NAME
+          value: Industry
+          type: path
+          description: Field API Name
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: Date
+          value: Tue, 04 May 2021 09:32:34 GMT
+        - name: Strict-Transport-Security
+          value: max-age=31536002; includeSubDomains
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: ETag
+          value: '"bee3e6401e143e18332a17639061c5ff--gzip"'
+        - name: Content-Type
+          value: application/json;charset=UTF-8
+        - name: Vary
+          value: Accept-Encoding
+        - name: Content-Encoding
+          value: gzip
+        - name: Transfer-Encoding
+          value: chunked
+      body:
+        type: json
+        data: |-
+          {
+              "controllerValues": {},
+              "defaultValue": null,
+              "eTag": "bee3e6401e143e18332a17639061c5ff",
+              "url": "/services/data/v51.0/ui-api/object-info/Account/picklist-values/012000000000000AAA/Industry",
+              "values": [
+                  {
+                      "attributes": null,
+                      "label": "Agriculture",
+                      "validFor": [],
+                      "value": "Agriculture"
+                  },
+                  {
+                      "attributes": null,
+                      "label": "Apparel",
+                      "validFor": [],
+                      "value": "Apparel"
+                  },
+                  {
+                      "attributes": null,
+                      "label": "Banking",
+                      "validFor": [],
+                      "value": "Banking"
+                  },
+                  {
+                      "attributes": null,
+                      "label": "Biotechnology",
+                      "validFor": [],
+                      "value": "Biotechnology"
+                  },
+                  {
+                      "attributes": null,
+                      "label": "Chemicals",
+                      "validFor": [],
+                      "value": "Chemicals"
+                  },
+                  {
+                      "attributes": null,
+                      "label": "Communications",
+                      "validFor": [],
+                      "value": "Communications"
+                  },
+                  {
+                      "attributes": null,
+                      "label": "Construction",
+                      "validFor": [],
+                      "value": "Construction"
+                  },
+                  {
+                      "attributes": null,
+                      "label": "Consulting",
+                      "validFor": [],
+                      "value": "Consulting"
+                  },
+                  {
+                      "attributes": null,
+                      "label": "Education",
+                      "validFor": [],
+                      "value": "Education"
+                  },
+                  {
+                      "attributes": null,
+                      "label": "Electronics",
+                      "validFor": [],
+                      "value": "Electronics"
+                  },
+                  {
+                      "attributes": null,
+                      "label": "Energy",
+                      "validFor": [],
+                      "value": "Energy"
+                  },
+                  {
+                      "attributes": null,
+                      "label": "Engineering",
+                      "validFor": [],
+                      "value": "Engineering"
+                  },
+                  {
+                      "attributes": null,
+                      "label": "Entertainment",
+                      "validFor": [],
+                      "value": "Entertainment"
+                  },
+                  {
+                      "attributes": null,
+                      "label": "Environmental",
+                      "validFor": [],
+                      "value": "Environmental"
+                  },
+                  {
+                      "attributes": null,
+                      "label": "Finance",
+                      "validFor": [],
+                      "value": "Finance"
+                  },
+                  {
+                      "attributes": null,
+                      "label": "Food &amp; Beverage",
+                      "validFor": [],
+                      "value": "Food &amp; Beverage"
+                  },
+                  {
+                      "attributes": null,
+                      "label": "Government",
+                      "validFor": [],
+                      "value": "Government"
+                  },
+                  {
+                      "attributes": null,
+                      "label": "Healthcare",
+                      "validFor": [],
+                      "value": "Healthcare"
+                  },
+                  {
+                      "attributes": null,
+                      "label": "Hospitality",
+                      "validFor": [],
+                      "value": "Hospitality"
+                  },
+                  {
+                      "attributes": null,
+                      "label": "Insurance",
+                      "validFor": [],
+                      "value": "Insurance"
+                  },
+                  {
+                      "attributes": null,
+                      "label": "Machinery",
+                      "validFor": [],
+                      "value": "Machinery"
+                  },
+                  {
+                      "attributes": null,
+                      "label": "Manufacturing",
+                      "validFor": [],
+                      "value": "Manufacturing"
+                  },
+                  {
+                      "attributes": null,
+                      "label": "Media",
+                      "validFor": [],
+                      "value": "Media"
+                  },
+                  {
+                      "attributes": null,
+                      "label": "Not For Profit",
+                      "validFor": [],
+                      "value": "Not For Profit"
+                  },
+                  {
+                      "attributes": null,
+                      "label": "Recreation",
+                      "validFor": [],
+                      "value": "Recreation"
+                  },
+                  {
+                      "attributes": null,
+                      "label": "Retail",
+                      "validFor": [],
+                      "value": "Retail"
+                  },
+                  {
+                      "attributes": null,
+                      "label": "Shipping",
+                      "validFor": [],
+                      "value": "Shipping"
+                  },
+                  {
+                      "attributes": null,
+                      "label": "Technology",
+                      "validFor": [],
+                      "value": "Technology"
+                  },
+                  {
+                      "attributes": null,
+                      "label": "Telecommunications",
+                      "validFor": [],
+                      "value": "Telecommunications"
+                  },
+                  {
+                      "attributes": null,
+                      "label": "Transportation",
+                      "validFor": [],
+                      "value": "Transportation"
+                  },
+                  {
+                      "attributes": null,
+                      "label": "Utilities",
+                      "validFor": [],
+                      "value": "Utilities"
+                  },
+                  {
+                      "attributes": null,
+                      "label": "Other",
+                      "validFor": [],
+                      "value": "Other"
+                  }
+              ]
+          }
+
+docs: Get metadata about a specific object. The response includes metadata describing fields, child relationships, record type, and theme.

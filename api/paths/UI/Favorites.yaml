@@ -1,0 +1,498 @@
+/services/data/v{version}/ui-api/favorites:
+  post:
+    tags:
+      - UI > Favorites
+    summary: Create a Favorite
+    description: Create a Favorite
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            example:
+              name: Favorite Name
+              sortOrder: 1
+              target: API Name or ID
+              targetType: ListView | ObjectHome | Record | Tab
+    parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '201':
+        description: Created
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Fri, 06 Oct 2023 10:03:31 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Content-Type:
+            schema:
+              type: string
+              example: application/json;charset=UTF-8
+          Vary:
+            schema:
+              type: string
+              example: Accept-Encoding
+          Content-Encoding:
+            schema:
+              type: string
+              example: gzip
+          Transfer-Encoding:
+            schema:
+              type: string
+              example: chunked
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              accessCount: 1
+              iconColor: '5867E8'
+              iconUrl: >-
+                https://pozil-dev-ed.my.salesforce.com/img/icon/t4v35/standard/account_120.png
+              id: 0MV4H0000004qIeWAI
+              lastAccessDate: '2023-10-06T10:03:32.000Z'
+              name: AllAccountsListView
+              objectType: Account
+              sortOrder: 1
+              subtitle: Accounts
+              target: 00B58000002ssinEAA
+              targetType: ListView
+  get:
+    tags:
+      - UI > Favorites
+    summary: Get Favorites
+    description: Get all of a user’s favorites.
+    parameters:
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: OK
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Fri, 06 Oct 2023 10:03:55 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Content-Type:
+            schema:
+              type: string
+              example: application/json;charset=UTF-8
+          Vary:
+            schema:
+              type: string
+              example: Accept-Encoding
+          Content-Encoding:
+            schema:
+              type: string
+              example: gzip
+          Transfer-Encoding:
+            schema:
+              type: string
+              example: chunked
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              favorites:
+                - accessCount: 1
+                  iconColor: '5867E8'
+                  iconUrl: >-
+                    https://pozil-dev-ed.my.salesforce.com/img/icon/t4v35/standard/account_120.png
+                  id: 0MV4H0000004qIeWAI
+                  lastAccessDate: '2023-10-06T10:03:32.000Z'
+                  name: AllAccountsListView
+                  objectType: Account
+                  sortOrder: 1
+                  subtitle: Accounts
+                  target: 00B58000002ssinEAA
+                  targetType: ListView
+/services/data/v{version}/ui-api/favorites/{FAVORITE_ID}:
+  get:
+    tags:
+      - UI > Favorites
+    summary: Get a Favorite
+    description: Get a favorite.
+    parameters:
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: FAVORITE_ID
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The ID of a favorite
+    responses:
+      '200':
+        description: OK
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Fri, 06 Oct 2023 10:04:41 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Content-Type:
+            schema:
+              type: string
+              example: application/json;charset=UTF-8
+          Vary:
+            schema:
+              type: string
+              example: Accept-Encoding
+          Content-Encoding:
+            schema:
+              type: string
+              example: gzip
+          Transfer-Encoding:
+            schema:
+              type: string
+              example: chunked
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              accessCount: 1
+              iconColor: '5867E8'
+              iconUrl: >-
+                https://pozil-dev-ed.my.salesforce.com/img/icon/t4v35/standard/account_120.png
+              id: 0MV4H0000004qIeWAI
+              lastAccessDate: '2023-10-06T10:03:32.000Z'
+              name: AllAccountsListView
+              objectType: Account
+              sortOrder: 1
+              subtitle: Accounts
+              target: 00B58000002ssinEAA
+              targetType: ListView
+  patch:
+    tags:
+      - UI > Favorites
+    summary: Update a Favorite
+    description: Update a Favorite
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            example:
+              name: Red Accounts
+              sortOrder: 1
+    parameters:
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: FAVORITE_ID
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The ID of a favorite
+    responses:
+      '200':
+        description: OK
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Fri, 06 Oct 2023 10:06:33 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Content-Type:
+            schema:
+              type: string
+              example: application/json;charset=UTF-8
+          Transfer-Encoding:
+            schema:
+              type: string
+              example: chunked
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              accessCount: 1
+              iconColor: '5867E8'
+              iconUrl: >-
+                https://pozil-dev-ed.my.salesforce.com/img/icon/t4v35/standard/account_120.png
+              id: 0MV4H0000004qIeWAI
+              lastAccessDate: '2023-10-06T10:03:32.000Z'
+              name: AllAccountsListViewFavoriteRenamed
+              objectType: Account
+              sortOrder: 1
+              subtitle: Accounts
+              target: 00B58000002ssinEAA
+              targetType: ListView
+  delete:
+    tags:
+      - UI > Favorites
+    summary: Delete a Favorite
+    description: Get a favorite.
+    parameters:
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: FAVORITE_ID
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The ID of a favorite
+    responses:
+      '204':
+        description: No Content
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Fri, 06 Oct 2023 10:09:14 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          Content-Security-Policy:
+            schema:
+              type: string
+              example: upgrade-insecure-requests
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+        content:
+          text/plain:
+            schema:
+              type: string
+            example: null
+/services/data/v{version}/ui-api/favorites/batch:
+  put:
+    tags:
+      - UI > Favorites
+    summary: Update a Batch of Favorites
+    description: >-
+      Update all favorites at once. The sort order is updated to the given relative ordering. Any favorites missing from the request body are deleted.
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            example:
+              favorites:
+                - id: 0MVR00000004DhnOAE
+                  name: Q4 Perf
+    parameters:
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: OK
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Fri, 06 Oct 2023 10:07:35 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Content-Type:
+            schema:
+              type: string
+              example: application/json;charset=UTF-8
+          Transfer-Encoding:
+            schema:
+              type: string
+              example: chunked
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              favorites:
+                - accessCount: 1
+                  iconColor: '5867E8'
+                  iconUrl: >-
+                    https://pozil-dev-ed.my.salesforce.com/img/icon/t4v35/standard/account_120.png
+                  id: 0MV4H0000004qIeWAI
+                  lastAccessDate: '2023-10-06T10:03:32.000Z'
+                  name: RenamedAllAcountsListView
+                  objectType: Account
+                  sortOrder: 1
+                  subtitle: Accounts
+                  target: 00B58000002ssinEAA
+                  targetType: ListView
+/services/data/v{version}/ui-api/favorites/{FAVORITE_ID}/usage:
+  patch:
+    tags:
+      - UI > Favorites
+    summary: Update Usage of a Favorite
+    description: >-
+      Update the usage of an individual favorite, for example, the last time and number of times the favorite was clicked.
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            example: ''
+    parameters:
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: FAVORITE_ID
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The ID of a favorite
+    responses:
+      '200':
+        description: OK
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Fri, 06 Oct 2023 10:09:03 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Content-Type:
+            schema:
+              type: string
+              example: application/json;charset=UTF-8
+          Transfer-Encoding:
+            schema:
+              type: string
+              example: chunked
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              accessCount: 2
+              iconColor: '5867E8'
+              iconUrl: >-
+                https://pozil-dev-ed.my.salesforce.com/img/icon/t4v35/standard/account_120.png
+              id: 0MV4H0000004qIeWAI
+              lastAccessDate: '2023-10-06T10:09:03.304Z'
+              name: RenamedAllAcountsListView
+              objectType: Account
+              sortOrder: 1
+              subtitle: Accounts
+              target: 00B58000002ssinEAA
+              targetType: ListView

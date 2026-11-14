@@ -1,0 +1,11 @@
+info:
+  name: Comments
+  type: folder
+  seq: 3
+
+request:
+  auth: inherit
+
+docs:
+  content: Get, edit, and delete comments.
+  type: text/markdown

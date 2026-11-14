@@ -1,0 +1,11 @@
+info:
+  name: Industries
+  type: folder
+  seq: 4
+
+request:
+  auth: inherit
+
+docs:
+  content: "[Industries Common Resources Developer Guide](https://developer.salesforce.com/docs/atlas.en-us.246.0.industries_reference.meta/industries_reference/)"
+  type: text/markdown

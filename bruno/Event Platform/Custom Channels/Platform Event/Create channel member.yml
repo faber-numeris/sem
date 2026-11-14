@@ -1,0 +1,27 @@
+info:
+  name: Create channel member
+  type: http
+  seq: 3
+
+http:
+  method: POST
+  url: "{{_endpoint}}/services/data/v{{version}}/tooling/sobjects/PlatformEventChannelMember"
+  body:
+    type: json
+    data: |-
+      {
+          "FullName": "Carbon_ComparisonChannel_chn_Carbon_Comparison_e",
+          "Metadata": {
+              "eventChannel": "Carbon_ComparisonChannel__chn",
+              "selectedEntity": "Carbon_Comparison__e",
+              "urls": null
+          }
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true

@@ -1,0 +1,132 @@
+/services/data/v{version}/tooling/sobjects/EventRelayConfig/describe:
+  get:
+    tags:
+      - Event Platform > Event Relay Configuration > Event Relay Config
+    summary: Describe event relay
+    parameters:
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: Successful response
+        content:
+          application/json: {}
+/services/data/v{version}/tooling/sobjects/EventRelayConfig:
+  post:
+    tags:
+      - Event Platform > Event Relay Configuration > Event Relay Config
+    summary: Create event relay
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            example:
+              FullName: MyEventRelay
+              Metadata:
+                eventChannel: Carbon_Comparison_Channel__chn
+                destinationResourceName: callout:MyNamedCredential
+                label: My Event Relay
+                relayOption: '{"ReplayRecovery":"LATEST"}'
+    parameters:
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: Successful response
+        content:
+          application/json: {}
+/services/data/v{version}/tooling/sobjects/EventRelayConfig/{EVENT_RELAY_CONFIG_ID}:
+  delete:
+    tags:
+      - Event Platform > Event Relay Configuration > Event Relay Config
+    summary: Delete event relay
+    parameters:
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: EVENT_RELAY_CONFIG_ID
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: Successful response
+        content:
+          application/json: {}
+  get:
+    tags:
+      - Event Platform > Event Relay Configuration > Event Relay Config
+    summary: Get event relay
+    parameters:
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: EVENT_RELAY_CONFIG_ID
+        in: path
+        schema:
+          type: string
+        required: true
+        example: 7k2RM000000008ZYAQ
+    responses:
+      '200':
+        description: Successful response
+        content:
+          application/json: {}
+  patch:
+    tags:
+      - Event Platform > Event Relay Configuration > Event Relay Config
+    summary: Update event relay
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            example:
+              FullName: MyEventRelay
+              Metadata:
+                label: My Event Relay
+                relayOption: '{"ReplayRecovery":"LATEST"}'
+    parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: SOAPAction
+        in: header
+        schema:
+          type: string
+        example: '""'
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+        example: Bearer {{_accessToken}}
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: EVENT_RELAY_CONFIG_ID
+        in: path
+        schema:
+          type: string
+        required: true
+        example: 7k2RM000000008ZYAQ
+    responses:
+      '200':
+        description: Successful response
+        content:
+          application/json: {}

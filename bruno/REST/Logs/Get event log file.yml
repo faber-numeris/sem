@@ -1,0 +1,38 @@
+info:
+  name: Get event log file
+  type: http
+  seq: 2
+
+http:
+  method: GET
+  url: "{{_endpoint}}/services/data/v{{version}}/sobjects/EventLogFile/:id/LogFile"
+  params:
+    - name: id
+      value: ""
+      type: path
+      description: Log event Id
+  auth: inherit
+
+runtime:
+  scripts:
+    - type: after-response
+      code: |-
+        const template = `
+        <script src="https://unpkg.com/csv-visualizer@latest/dist/csv-visualizer.min.js"></script>
+        <script>
+        bru.getData((err, data) => {
+            CsvVisualizer.visualize(data.csvString, document.body, { parserOptions: { skipEmptyLines: true }});
+        });
+        </script>`;
+        const csvString = JSON.stringify(res.getBody());
+        bru.visualize("html", {
+            template: template,
+            data: { csvString }
+        });
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true

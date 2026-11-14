@@ -1,0 +1,120 @@
+info:
+  name: Predict
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: "{{_endpoint}}/services/data/v{{version}}/smartdatadiscovery/predict"
+  body:
+    type: json
+    data: |-
+      {
+          "predictionDefinition": "<PREDICTION_DEFINITION_ID>",
+          "type": "RawData",
+          "columnNames": [
+              "Quantity",
+              "Category",
+              "Sub_Category",
+              "Sales",
+              "Profit_per_Order"
+          ],
+          "rows": [
+              [
+                  "2",
+                  "Furniture",
+                  "Chairs",
+                  "300",
+                  "10"
+              ]
+          ]
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Predict
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/smartdatadiscovery/predict"
+      method: POST
+      body:
+        type: json
+        data: |-
+          {
+              "predictionDefinition": "1OR5Y0000010ws8WAA",
+              "type": "RawData",
+              "columnNames": [
+                  "Quantity",
+                  "Category",
+                  "Sub_Category",
+                  "Sales",
+                  "Profit_per_Order"
+              ],
+              "rows": [
+                  [
+                      "2",
+                      "Furniture",
+                      "Chairs",
+                      "300",
+                      "10"
+                  ]
+              ]
+          }
+    response:
+      status: 201
+      statusText: Created
+      headers:
+        - name: Date
+          value: Thu, 04 Mar 2021 13:53:39 GMT
+        - name: Strict-Transport-Security
+          value: max-age=31536002; includeSubDomains
+        - name: Expect-CT
+          value: max-age=86400, report-uri="https://a.forcesslreports.com/Expect-CT-report/00D5Y000001crJvm"
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-XSS-Protection
+          value: 1; mode=block
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: Content-Type
+          value: application/json;charset=UTF-8
+        - name: Vary
+          value: Accept-Encoding
+        - name: Content-Encoding
+          value: gzip
+        - name: Transfer-Encoding
+          value: chunked
+      body:
+        type: json
+        data: |-
+          {
+              "predictionDefinition": "1OR5Y0000010ws8",
+              "predictions": [
+                  {
+                      "model": {
+                          "id": "1Ot5Y0000010wzNSAQ"
+                      },
+                      "prediction": {
+                          "middleValues": [],
+                          "total": 88.52494255547592
+                      },
+                      "prescriptions": [],
+                      "status": "Success"
+                  }
+              ],
+              "settings": {
+                  "maxMiddleValues": 0,
+                  "maxPrescriptions": 0,
+                  "prescriptionImpactPercentage": 0
+              }
+          }
+
+docs: Get available prediction definitions.

@@ -1,0 +1,61 @@
+/services/data/v{version}/query:
+  get:
+    tags:
+      - Subscription Management > Products
+    summary: Query Eligible Products
+    description: >-
+      This query returns all the products that have a related Product Selling Model Option. To price a product with Subscription Management, the product must have a related Product Selling Model Option.
+
+
+      For more information, see [Set Up Products and Pricing in Subscription Management](https://help.salesforce.com/s/articleView?id=sf.subscription_mgmt_products_and_pricing_setup.htm).
+    parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: q
+        in: query
+        schema:
+          type: string
+        example: "SELECT Product2.Name, ProductSellingModelId, Product2.Id FROM ProductSellingModelOption Group By Product2.Name, Product2.Id, ProductSellingModelId "
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: Successful response
+        content:
+          application/json: {}
+/services/data/v{version}/commerce/catalog-products/actions/get-products:
+  post:
+    tags:
+      - Subscription Management > Products
+    summary: Request Product Information (Bundled Components)
+    description: >-
+      Request information for a single bundle product and all it's bundle components. See [Request Product Information](https://developer.salesforce.com/docs/revenue/subscription-management/references/products?meta=Request+Product+Information).
+    requestBody:
+      content:
+        '*/*':
+          schema:
+            type: string
+            example: >-
+              "{\n  \"productContexts\": [\n    {\n      \"product2Id\": \"{{WorkAnywhereBundleProduct}}\"\n    }\n  ],\n  \"retrievalType\": \"IncludeChildComponents\"\n}"
+    parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: Successful response
+        content:
+          application/json: {}

@@ -1,0 +1,41 @@
+info:
+  name: Account by Id
+  type: graphql
+  seq: 2
+
+graphql:
+  method: POST
+  url: "{{_endpoint}}/services/data/v{{version}}/graphql"
+  headers:
+    - name: X-Chatter-Entity-Encoding
+      value: "false"
+  body:
+    query: |
+      query accountById($id: ID) {
+        uiapi {
+          query {
+            Account(where: { Id: { eq: $id } }) {
+              edges {
+                node {
+                  Id
+                  Name {
+                    value
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    variables: |-
+      {
+          "id": "0014H00002LbR7QQAV"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true

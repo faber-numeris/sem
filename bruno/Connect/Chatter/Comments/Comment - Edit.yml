@@ -1,0 +1,232 @@
+info:
+  name: Comment - Edit
+  type: http
+  seq: 2
+
+http:
+  method: PATCH
+  url: "{{_endpoint}}/services/data/v{{version}}/chatter/comments/:COMMENT_ID"
+  headers:
+    - name: Content-Type
+      value: application/json
+  params:
+    - name: COMMENT_ID
+      value: 0D7...
+      type: path
+  body:
+    type: json
+    data: |-
+      {
+          "body": {
+              "messageSegments": [
+                  {
+                      "type": "Text",
+                      "text": "Editing a comment"
+                  }
+              ]
+          }
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Successful Comment - Edit
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/chatter/comments/:COMMENT_ID"
+      method: PATCH
+      headers:
+        - name: Content-Type
+          value: application/json
+      params:
+        - name: COMMENT_ID
+          value: 0D7...
+          type: path
+      body:
+        type: json
+        data: |-
+          {
+              "body": {
+                  "messageSegments": [
+                      {
+                          "type": "Text",
+                          "text": "Editing a comment"
+                      }
+                  ]
+              }
+          }
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: Date
+          value: Wed, 22 Nov 2023 11:22:36 GMT
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-XSS-Protection
+          value: 1; mode=block
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: Content-Type
+          value: application/json;charset=UTF-8
+        - name: Transfer-Encoding
+          value: chunked
+      body:
+        type: json
+        data: |-
+          {
+              "body": {
+                  "isRichText": false,
+                  "messageSegments": [
+                      {
+                          "text": "Editing a comment",
+                          "type": "Text"
+                      }
+                  ],
+                  "text": "Editing a comment"
+              },
+              "capabilities": {
+                  "edit": {
+                      "isEditRestricted": false,
+                      "isEditableByMeUrl": "/services/data/v58.0/chatter/comments/0D7.../capabilities/edit/is-editable-by-me",
+                      "lastEditedBy": {
+                          "additionalLabel": null,
+                          "communityNickname": "User1696423780773910041",
+                          "companyName": "Salesforce",
+                          "displayName": "Name",
+                          "firstName": "Firstname",
+                          "id": "005...",
+                          "isActive": true,
+                          "isInThisCommunity": true,
+                          "lastName": "Name",
+                          "motif": {
+                              "color": "1B96FF",
+                              "largeIconUrl": "/img/icon/profile64.png",
+                              "mediumIconUrl": "/img/icon/profile32.png",
+                              "smallIconUrl": "/img/icon/profile16.png",
+                              "svgIconUrl": null
+                          },
+                          "mySubscription": null,
+                          "name": "Name",
+                          "outOfOffice": {
+                              "message": ""
+                          },
+                          "photo": {
+                              "fullEmailPhotoUrl": "https://<my_domain>/ncsphoto/1wsMlOd3tVC7boygqBO8wMT9KzA0D6tqzpbs-Uw0IogXzXAXaYKJnuWCNQmXymRq?fromEmail=1",
+                              "largePhotoUrl": "https://<my_domain>/profilephoto/7292o000000oAgZ/F",
+                              "mediumPhotoUrl": "https://<my_domain>/profilephoto/7292o000000oAgZ/M",
+                              "photoVersionId": "729...",
+                              "smallPhotoUrl": "https://<my_domain>/profilephoto/7292o000000oAgZ/T",
+                              "standardEmailPhotoUrl": "https://<my_domain>/ncsphoto/1wsMlOd3tVC7boygqBO8wMT9KzA0D6tqzpbs-Uw0Ioi-dtynkoFWsl46as__TDFU?fromEmail=1",
+                              "url": "/services/data/v58.0/connect/user-profiles/005.../photo"
+                          },
+                          "reputation": null,
+                          "title": null,
+                          "type": "User",
+                          "url": "/services/data/v58.0/chatter/users/005...",
+                          "userType": "Internal"
+                      },
+                      "lastEditedDate": "2023-11-22T11:22:36.000Z",
+                      "latestRevision": 2,
+                      "relativeLastEditedDate": "Just now"
+                  },
+                  "status": {
+                      "feedEntityStatus": "Published",
+                      "isApprovableByMe": true
+                  },
+                  "upDownVote": {
+                      "downVoteCount": 0,
+                      "myVote": "None",
+                      "upVoteCount": 0
+                  },
+                  "verified": {
+                      "isVerifiableByMe": false,
+                      "isVerified": false,
+                      "isVerifiedByAnonymized": null,
+                      "lastVerifiedByUser": null,
+                      "lastVerifiedDate": null
+                  }
+              },
+              "clientInfo": null,
+              "createdDate": "2023-11-22T11:19:50.000Z",
+              "feedElement": {
+                  "id": "0D5...",
+                  "url": "/services/data/v58.0/chatter/feed-elements/0D5..."
+              },
+              "id": "0D7...",
+              "isDeleteRestricted": false,
+              "likes": {
+                  "currentPageToken": null,
+                  "currentPageUrl": "/services/data/v58.0/chatter/comments/0D7.../likes",
+                  "items": [],
+                  "nextPageToken": null,
+                  "nextPageUrl": null,
+                  "previousPageToken": null,
+                  "previousPageUrl": null,
+                  "total": 0
+              },
+              "likesMessage": null,
+              "moderationFlags": null,
+              "myLike": null,
+              "parent": {
+                  "id": "005...",
+                  "url": "/services/data/v58.0/chatter/users/005..."
+              },
+              "relativeCreatedDate": "2m ago",
+              "threadLevel": 0,
+              "threadParentId": null,
+              "type": "TextComment",
+              "url": "/services/data/v58.0/chatter/comments/0D7...",
+              "user": {
+                  "additionalLabel": null,
+                  "communityNickname": "User1696423780773910041",
+                  "companyName": "Salesforce",
+                  "displayName": "Name",
+                  "firstName": "Firstname",
+                  "id": "005...",
+                  "isActive": true,
+                  "isInThisCommunity": true,
+                  "lastName": "Name",
+                  "motif": {
+                      "color": "1B96FF",
+                      "largeIconUrl": "/img/icon/profile64.png",
+                      "mediumIconUrl": "/img/icon/profile32.png",
+                      "smallIconUrl": "/img/icon/profile16.png",
+                      "svgIconUrl": null
+                  },
+                  "mySubscription": null,
+                  "name": "Name",
+                  "outOfOffice": {
+                      "message": ""
+                  },
+                  "photo": {
+                      "fullEmailPhotoUrl": "https://<my_domain>/ncsphoto/1wsMlOd3tVC7boygqBO8wMT9KzA0D6tqzpbs-Uw0IogXzXAXaYKJnuWCNQmXymRq?fromEmail=1",
+                      "largePhotoUrl": "https://<my_domain>/profilephoto/7292o000000oAgZ/F",
+                      "mediumPhotoUrl": "https://<my_domain>/profilephoto/7292o000000oAgZ/M",
+                      "photoVersionId": "729...",
+                      "smallPhotoUrl": "https://<my_domain>/profilephoto/7292o000000oAgZ/T",
+                      "standardEmailPhotoUrl": "https://<my_domain>/ncsphoto/1wsMlOd3tVC7boygqBO8wMT9KzA0D6tqzpbs-Uw0Ioi-dtynkoFWsl46as__TDFU?fromEmail=1",
+                      "url": "/services/data/v58.0/connect/user-profiles/005.../photo"
+                  },
+                  "reputation": null,
+                  "title": null,
+                  "type": "User",
+                  "url": "/services/data/v58.0/chatter/users/005...",
+                  "userType": "Internal"
+              }
+          }
+
+docs: |-
+  Get information about, edit, or delete a comment.
+  To post a comment, use Feed Elements Capability, Comments Items.
+
+  https://developer.salesforce.com/docs/atlas.en-us.chatterapi.meta/chatterapi/connect_resources_comments_specific.htm#connect_resources_comments_specific

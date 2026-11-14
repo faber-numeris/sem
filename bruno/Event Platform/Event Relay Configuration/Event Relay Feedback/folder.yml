@@ -1,0 +1,14 @@
+info:
+  name: Event Relay Feedback
+  type: folder
+  seq: 3
+
+request:
+  auth: inherit
+
+docs:
+  content: |-
+    This folder contains requests for querying the status of event relays using EventRelayFeedback.
+
+    For more information, see [Event Relay](https://desktop.postman.com/?desktopVersion=10.14.2&userId=1220894&teamId=0) in _Salesforce Help_.
+  type: text/markdown

@@ -1,0 +1,77 @@
+info:
+  name: Bulk Check Batch Status
+  type: http
+  seq: 6
+
+http:
+  method: GET
+  url: "{{_endpoint}}/services/async/{{version}}/job/{{_jobId}}/batch"
+  headers:
+    - name: X-SFDC-Session
+      value: "{{_accessToken}}"
+    - name: Accept-Encoding
+      value: gzip
+    - name: Content-Encoding
+      value: gzip
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Successful Bulk Check Batch Status
+    request:
+      url: "{{_endpoint}}/services/async/{{version}}/job/{{_jobId}}/batch"
+      method: GET
+      headers:
+        - name: X-SFDC-Session
+          value: "{{_accessToken}}"
+        - name: Accept-Encoding
+          value: gzip
+        - name: Content-Encoding
+          value: gzip
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: Date
+          value: Thu, 16 Nov 2023 16:19:29 GMT
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-XSS-Protection
+          value: 1; mode=block
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: Content-Type
+          value: application/xml
+        - name: Content-Encoding
+          value: gzip
+        - name: Transfer-Encoding
+          value: chunked
+      body:
+        type: xml
+        data: |-
+          <?xml version="1.0" encoding="UTF-8"?>
+          <batchInfoList
+             xmlns="http://www.force.com/2009/06/asyncapi/dataload">
+              <batchInfo>
+                  <id>751...</id>
+                  <jobId>750...</jobId>
+                  <state>Completed</state>
+                  <createdDate>datetime</createdDate>
+                  <systemModstamp>datetime</systemModstamp>
+                  <numberRecordsProcessed>1</numberRecordsProcessed>
+                  <numberRecordsFailed>0</numberRecordsFailed>
+                  <totalProcessingTime>403</totalProcessingTime>
+                  <apiActiveProcessingTime>225</apiActiveProcessingTime>
+                  <apexProcessingTime>64</apexProcessingTime>
+              </batchInfo>
+          </batchInfoList>

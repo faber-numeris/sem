@@ -1,0 +1,79 @@
+info:
+  name: Record Feed Elements
+  type: http
+  seq: 3
+
+http:
+  method: GET
+  url: "{{_endpoint}}/services/data/v{{version}}/chatter/feeds/record/:RECORD_GROUP_ID/feed-elements"
+  params:
+    - name: RECORD_GROUP_ID
+      value: ""
+      type: path
+  body:
+    type: text
+    data: ""
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Successful Record Feed Elements
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/chatter/feeds/record/:RECORD_GROUP_ID/feed-elements"
+      method: GET
+      params:
+        - name: RECORD_GROUP_ID
+          value: 001...
+          type: path
+      body:
+        type: text
+        data: ""
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: Date
+          value: Wed, 22 Nov 2023 11:05:44 GMT
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-XSS-Protection
+          value: 1; mode=block
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: Content-Type
+          value: application/json;charset=UTF-8
+        - name: Vary
+          value: Accept-Encoding
+        - name: Content-Encoding
+          value: gzip
+        - name: Transfer-Encoding
+          value: chunked
+      body:
+        type: json
+        data: |-
+          {
+              "currentPageToken": null,
+              "currentPageUrl": "/services/data/v58.0/chatter/feeds/record/001.../feed-elements",
+              "elements": [],
+              "isModifiedToken": null,
+              "isModifiedUrl": null,
+              "nextPageToken": null,
+              "nextPageUrl": null,
+              "updatesToken": "2:1700651144000",
+              "updatesUrl": "/services/data/v58.0/chatter/feeds/record/001.../feed-elements?updatedSince=2%3A1700651144000"
+          }
+
+docs: |-
+  Returns the feed elements for all the records the context user is following, or all the feed elements of the specified recordId. Use this resource to search a feed or to get the feed elements for a specific feed, including another user’s feed. To use this resource to get the feed elements for a group, specify the group ID as the recordId.
+
+  https://developer.salesforce.com/docs/atlas.en-us.chatterapi.meta/chatterapi/connect_resource_feeds_record.htm

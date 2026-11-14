@@ -1,0 +1,576 @@
+/services/data/v{version}/connect/fundraising/commitments:
+  post:
+    tags:
+      - Connect > Industries > Fundraising > Commitments
+    summary: Create Pledge Commitments
+    description: "Create pledge gift commitments with related new or matched donors, optional transaction designations, and payment instrument metadata. Supports custom fields for the donor account, gift commitment and gift commitment schedules.\n\n## Required Attributes:\n\n- commitments.amount\n    \n- commitments.type\n    \n- commitments.startDate\n    \n- donor.donorType (\"individual\" or \"organization\")\n    \n- donor.lastName\n    \n- donor.organization\n    \n- paymentinstrument.type\n    \n\nAll other attributes are optional can be left as an empty string or just removed from the request body entirely. The only exceptions to this are:\n\n- CustomFields collections - These cannot be left in the request body as an empty collection or with an empty string for the FieldName.\n    \n\n### Validated Property Formats (an empty string is considered valid)\n\n- DateTime - YYYY-MM-DDTHH:MM:SSZ\n    \n- Date - YYYY-MM-DD\n    \n- Email - a valid formatted email address\n    \n\n#### Other Attributes\n\n- OutreachSource -- This is optional. Be sure to create the OutreachSourceCode record in the system if passing a value\n    \n- Will accept **either** an OutreachSourceCode.id (SalesforceId) or an OutreachSourceCode.Code.\n    \n\n#### Custom fields\n\n- The field_value can be a text string (inc. for a date data-type) or a numeric value (without quotes)\n    \n- Do not include an empty collection or an empty fieldName in the request body"
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            example:
+              processingOptions:
+                donorOptions:
+                  defaultUpdateLogic: update_all
+              commitments:
+                - amount: 150.25
+                  type: pledge
+                  currencyIsoCode: USD
+                  startDate: '2024-07-06'
+                  endDate: '2024-08-06'
+                  campaign:
+                    id: <SFDC_CAMPAIGN_ID>
+                  outreachSourceCode:
+                    id: <SFDC_OUTREACH_SOURCE_CODE_ID>
+                    sourceCode: AnimalEmailCampaign2023
+                  donor:
+                    donorType: individual
+                    id: <SFDC_ACCOUNT_ID>
+                    firstName: Test
+                    lastName: Donor
+                    phone: 510-434-8920
+                    email: test.donor@salesforce.com
+                    address:
+                      - addressType: mailing
+                        street: 123 Main Street
+                        city: Oakland
+                        state: CA
+                        postalCode: '94610'
+                        country: US
+                    accountCustomFields:
+                      - fieldName: <VALID_CUSTOM_FIELD_API_NAME>
+                        fieldValue: string
+                  paymentInstrument:
+                    type: credit card
+                    accountHolderName: test donor
+                    expiryMonth: '10'
+                    expiryYear: '2026'
+                    last4: '4585'
+                    cardBrand: visa
+                    bankName: chase
+                    digitalWalletProvider: apple pay
+                    bankAccountHolderType: primary
+                    bankAccountType: checking
+                    bankAccountNumber: '123456'
+                    bankCode: HBUK
+                    gatewayName: stripe
+                    processorName: test processor
+                    processorPaymentReference: string
+                    gatewayReference: string
+                  designations:
+                    - designationId: <SFDC_GIFT_DESIGNATION_ID>
+                      percent: 10
+                  giftCommitmentCustomFields:
+                    - fieldName: <VALID_CUSTOM_FIELD_API_NAME>
+                      fieldValue: string
+                  giftCommitmentScheduleCustomFields:
+                    - fieldName: <VALID_CUSTOM_FIELD_API_NAME>
+                      fieldValue: string
+    parameters:
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: OK
+        content:
+          text/plain:
+            schema:
+              type: string
+            example: |-
+              {
+                  "successes": 2,
+                  "failures": 0,
+                  "notProcessed": 0,
+                  "details": [
+                      {
+                          "success": true,
+                          "links": {
+                              "giftcommitment": {
+                                  "href": "/services/data/vXX.X/sobjects/sObject/<SFDC_GIFT_COMMITMENT_ID>",
+                                  "id": "<SFDC_GIFT_COMMITMENT_ID>"
+                              },
+                              "giftcommitmentschedule": {
+                                  "href": "/services/data/vXX.X/sobjects/sObject/<SFDC_GIFT_COMMITMENT_SCHEDULE_ID>",
+                                  "id": "<SFDC_GIFT_COMMITMENT_SCHEDULE_ID>"
+                              },
+                              "giftdefaultdesignation": [
+                                  {
+                                      "href": "/services/data/vXX.X/sobjects/sObject/<SFDC_GIFT_DEFAULT_DESIGNATION_ID>",
+                                      "id": "<SFDC_GIFT_DEFAULT_DESIGNATION_ID>"
+                                  }
+                              ],
+                              "account": {
+                                  "href": "/services/data/vXX.X/sobjects/sObject/<SFDC_ACCOUNT_ID>",
+                                  "id": "<SFDC_ACCOUNT_ID>"
+                              }
+                          }
+                      },
+                      {
+                          "success": true,
+                          "links": {
+                              "giftcommitment": {
+                                  "href": "/services/data/vXX.X/sobjects/sObject/<SFDC_GIFT_COMMITMENT_ID>",
+                                  "id": "<SFDC_GIFT_COMMITMENT_ID>"
+                              },
+                              "giftcommitmentschedule": {
+                                  "href": "/services/data/vXX.X/sobjects/sObject/<SFDC_GIFT_COMMITMENT_SCHEDULE_ID>",
+                                  "id": "<SFDC_GIFT_COMMITMENT_SCHEDULE_ID>"
+                              },
+                              "giftdefaultdesignation": [
+                                  {
+                                      "href": "/services/data/vXX.X/sobjects/sObject/<SFDC_GIFT_DEFAULT_DESIGNATION_ID>",
+                                      "id": "<SFDC_GIFT_DEFAULT_DESIGNATION_ID>"
+                                  }
+                              ],
+                              "account": {
+                                  "href": "/services/data/vXX.X/sobjects/sObject/<SFDC_ACCOUNT_ID>",
+                                  "id": "<SFDC_ACCOUNT_ID>"
+                              }
+                          }
+                      }
+                  ]
+              }
+      '201':
+        description: Created
+        headers:
+          Content-Type:
+            schema:
+              type: string
+              example: application/json
+        content:
+          application/json:
+            schema:
+              type: object
+            examples:
+              example-0:
+                summary: Status201-CreateCommitmentSuccess
+                value:
+                  successes: 1
+                  failures: 0
+                  notProcessed: 0
+                  details:
+                    - success: true
+                      links:
+                        giftcommitment:
+                          href: >-
+                            /services/data/vXX.X/sobjects/sObject/<SFDC_GIFT_COMMITMENT_ID>
+                          id: <SFDC_GIFT_COMMITMENT_ID>
+                        giftcommitmentschedule:
+                          href: >-
+                            /services/data/vXX.X/sobjects/sObject/<SFDC_GIFT_COMMITMENT_SCHEDULE_ID>
+                          id: <SFDC_GIFT_COMMITMENT_SCHEDULE_ID>
+                        giftdefaultdesignation:
+                          - href: >-
+                              /services/data/vXX.X/sobjects/sObject/<SFDC_GIFT_DEFAULT_DESIGNATION_ID>
+                            id: <SFDC_GIFT_DEFAULT_DESIGNATION_ID>
+                        account:
+                          href: >-
+                            /services/data/vXX.X/sobjects/sObject/<SFDC_ACCOUNT_ID>
+                          id: <SFDC_ACCOUNT_ID>
+                    - success: true
+                      links:
+                        giftcommitment:
+                          href: >-
+                            /services/data/vXX.X/sobjects/sObject/<SFDC_GIFT_COMMITMENT_ID>
+                          id: <SFDC_GIFT_COMMITMENT_ID>
+                        giftcommitmentschedule:
+                          href: >-
+                            /services/data/vXX.X/sobjects/sObject/<SFDC_GIFT_COMMITMENT_SCHEDULE_ID>
+                          id: <SFDC_GIFT_COMMITMENT_SCHEDULE_ID>
+                        giftdefaultdesignation:
+                          - href: >-
+                              /services/data/vXX.X/sobjects/sObject/<SFDC_GIFT_DEFAULT_DESIGNATION_ID>
+                            id: <SFDC_GIFT_DEFAULT_DESIGNATION_ID>
+                        account:
+                          href: >-
+                            /services/data/vXX.X/sobjects/sObject/<SFDC_ACCOUNT_ID>
+                          id: <SFDC_ACCOUNT_ID>
+              example-1:
+                summary: Status201-CreateCommitmentRequestValidationFailure
+                value:
+                  successes: 0
+                  failures: 1
+                  notProcessed: 0
+                  details:
+                    - success: false
+                      errors:
+                        field: outreachSourceCode.id
+                        message: <invalid id message>
+          text/plain:
+            schema:
+              type: string
+            example: >-
+              // This is a scenario where there is a validation rule on the Gift Commitment Schedule object requiring the amount to be greater than 10.00. One database error occurs for the 5.00 commitment, causing the other two to be rolled back with success of false and no record links.
+
+              {
+
+                  "successes": 0,
+                  "failures": 2,
+                  "notProcessed": 1,
+                  "details": [
+                      {
+                          "success": false,
+                          "errors": {
+                              "message": "Amount must be greater than 10.00"
+                          }
+                      }
+                  ]
+              }
+      '400':
+        description: Bad Request
+        headers:
+          Content-Type:
+            schema:
+              type: string
+              example: text/plain
+        content:
+          text/plain:
+            schema:
+              type: string
+            example: |2-
+                  // Even if the JSON request is valid, this is an example of a 400 error code that will be returned if duplicate matching rules are not active. Any non 200 error code would have a similar response structure.
+                  {
+                      "errorCode": "UNKNOWN_EXCEPTION",
+                      "message": "Provide active duplicate matching rules on Account and Person Account for donor matching. -- industries.fundraisingops.connect.impl.validator.ValidatorUtil.validateMatchingMethod(ValidatorUtil.java:103)"
+                  }
+/services/data/v{version}/connect/fundraising/commitments/{commitmentId}:
+  patch:
+    tags:
+      - Connect > Industries > Fundraising > Commitments
+    summary: Update Commitments
+    description: "Modify the schedule or payment instrument metadata on an existing active gift commitment.\n\n## Required Attributes:\n\n- {commitmentId}\n    \n- amount\n    \n- transactionPeriod (Monthly, Weekly, Yearly, etc.)\n    \n- startDate\n    \n- paymentInstrument.type\n    \n\nAll other attributes are optional can be left as an empty string or just removed from the request body entirely. The only exceptions to this are:\n\n- CustomFields collections - These cannot be left in the request body as an empty collection or with an empty string for the FieldName.\n    \n\n## Validated Property Formats (an empty string is considered valid)\n\n- DateTime - YYYY-MM-DDTHH:MM:SSZ\n    \n- Date - YYYY-MM-DD\n    \n- Email - a valid formatted email address\n    \n\n### Other Attributes\n\n- OutreachSource -- This is optional. Be sure to create the OutreachSourceCode record in the system if passing a value\n    \n- Will accept either an OutreachSourceCode.id (SalesforceId) or an OutreachSourceCode.Code.\n    \n\n### Custom Fields\n\n- The field_value can be a text string (inc. for a date data-type) or a numeric value (without quotes)\n    \n- Do not include an empty collection or an empty fieldName in the request body"
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            example:
+              amount: 150.25
+              transactionPeriod: monthly
+              transactionInterval: 3
+              transactionDay: '5'
+              startDate: '2024-07-06'
+              endDate: '2024-07-06'
+              campaign:
+                id: <CAMPAIGN_ID>
+              outreachSourceCode:
+                id: <SOURCE_CODE_ID>
+                sourceCode: AnimalEmailCampaign2023
+              donor:
+                donorType: individual
+                organizationName: mini cat town
+                firstName: David
+                lastName: Taylor
+                phone: 510-434-8920
+                email: davidtaylor@salesforce.com
+                address:
+                  - addressType: mailing
+                    street: 123 Main Street
+                    city: Oakland
+                    state: CA
+                    postalCode: '94610'
+                    country: US
+                accountCustomFields:
+                  - fieldName: string
+                    fieldValue: string
+              paymentInstrument:
+                type: credit card
+                accountHolderName: david taylor
+                expiryMonth: '10'
+                expiryYear: '2026'
+                last4: '4585'
+                cardBrand: visa
+                bankName: chase
+                digitalWalletProvider: apple pay
+                bankAccountHolderType: primary
+                bankAccountType: checking
+                bankAccountNumber: '123456'
+                bankCode: HBUK
+                gatewayName: stripe
+                processorName: classy
+                processorPaymentReference: string
+                gatewayReference: string
+              giftCommitmentCustomFields:
+                - fieldName: string
+                  fieldValue: string
+              giftCommitmentScheduleCustomFields:
+                - fieldName: string
+                  fieldValue: string
+    parameters:
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: commitmentId
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: OK
+        headers:
+          Content-Type:
+            schema:
+              type: string
+              example: application/json
+        content:
+          application/json:
+            schema:
+              type: object
+            examples:
+              example-0:
+                summary: Status200-UpdateCommitmentSuccess
+                value:
+                  success: true
+                  links:
+                    giftcommitment:
+                      href: >-
+                        /services/data/vXX.X/sobjects/sObject/<SFDC_GIFT_COMMITMENT_ID>
+                      id: <SFDC_GIFT_COMMITMENT_ID>
+                    giftcommitmentschedule:
+                      href: >-
+                        /services/data/vXX.X/sobjects/sObject/<SFDC_GIFT_COMMITMENT_SCHEDULE_ID>
+                      id: <SFDC_GIFT_COMMITMENT_SCHEDULE_ID>
+              example-1:
+                summary: Status200-UpdateCommitmentRequestValidationFailure
+                value:
+                  errors:
+                    - field: donor.id
+                      message: >-
+                        You cant include the donor ID in the request for the Gift Commitment Patch endpoint. Remove the ID from the Donor JSON request and try again.
+                  success: false
+              example-2:
+                summary: Status200-UpdateCommitmentDatabaseFailure
+                value:
+                  errors:
+                    - message: >-
+                        Transaction Period: bad value for restricted picklist field: tomorrow
+                  success: false
+              example-3:
+                summary: Status200-UpdateCommitmentSuccessWithExternalIds
+                value:
+                  success: true
+                  links:
+                    giftcommitment:
+                      href: >-
+                        /services/data/vXX.X/sobjects/sObject/<SFDC_GIFT_COMMITMENT_ID>
+                      id: <SFDC_GIFT_COMMITMENT_ID>
+                    giftcommitmentschedule:
+                      href: >-
+                        /services/data/vXX.X/sobjects/sObject/<SFDC_GIFT_COMMITMENT_SCHEDULE_ID>
+                      id: <SFDC_GIFT_COMMITMENT_SCHEDULE_ID>
+      '400':
+        description: Bad Request
+        headers:
+          Content-Type:
+            schema:
+              type: string
+              example: text/plain
+        content:
+          text/plain:
+            schema:
+              type: string
+            example: |2-
+                  // Even if the JSON request is valid, this is an example of a 400 error code that will be returned if duplicate matching rules are not active. Any non 200 error code would have a similar response structure.
+                  {
+                      "errorCode": "UNKNOWN_EXCEPTION",
+                      "message": "Provide active duplicate matching rules on Account and Person Account for donor matching. -- industries.fundraisingops.connect.impl.validator.ValidatorUtil.validateMatchingMethod(ValidatorUtil.java:103)"
+                  }
+/services/data/v{version}/connect/fundraising/commitments/payment-updates:
+  post:
+    tags:
+      - Connect > Industries > Fundraising > Commitments
+    summary: Update Commitment Payments
+    description: "Update the future payment instrument metadata for active gift commitments.\n\n## Required Attributes:\n\n- giftCommitmentId\n    \n- paymentInstrument.type"
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            example:
+              updates:
+                - giftCommitmentId: <SFDC_GIFT_COMMITMENT_ID>
+                  paymentInstrument:
+                    type: credit card
+                    accountHolderName: test donor 1
+                    expiryMonth: '10'
+                    expiryYear: '2026'
+                    last4: '4585'
+                    cardBrand: visa
+                    bankName: chase
+                    digitalWalletProvider: apple pay
+                    bankAccountHolderType: primary
+                    bankAccountType: checking
+                    bankAccountNumber: '123456'
+                    bankCode: HBUK
+                    gatewayName: stripe
+                    processorName: classy
+                    processorPaymentReference: string
+                    gatewayReference: string
+                - giftCommitmentId: <SFDC_GIFT_COMMITMENT_ID>
+                  paymentInstrument:
+                    type: credit card
+                    accountHolderName: test donor 2
+                    expiryMonth: '10'
+                    expiryYear: '2026'
+                    last4: '4585'
+                    cardBrand: visa
+                    bankName: chase
+                    digitalWalletProvider: apple pay
+                    bankAccountHolderType: primary
+                    bankAccountType: checking
+                    bankAccountNumber: '123456'
+                    bankCode: HBUK
+                    gatewayName: stripe
+                    processorName: test processor
+                    processorPaymentReference: string
+                    gatewayReference: string
+    parameters:
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: OK
+        headers:
+          Content-Type:
+            schema:
+              type: string
+              example: application/json
+        content:
+          application/json:
+            schema:
+              type: object
+            examples:
+              example-0:
+                summary: Status201-UpdateCommitmentSuccess
+                value:
+                  successes: 2
+                  failures: 0
+                  notProcessed: 0
+                  details:
+                    - success: true
+                      links:
+                        giftcommitment:
+                          href: >-
+                            /services/data/vXX.X/sobjects/sObject/<SFDC_GIFT_COMMITMENT_ID>
+                          id: <SFDC_GIFT_COMMITMENT_ID>
+                        paymentinstrument:
+                          href: >-
+                            /services/data/vXX.X/sobjects/sObject/<SFDC_PAYMENT_INSTRUMENT_ID>
+                          id: <SFDC_PAYMENT_INSTRUMENT_ID>
+                    - success: true
+                      links:
+                        giftcommitment:
+                          href: >-
+                            /services/data/vXX.X/sobjects/sObject/<SFDC_GIFT_COMMITMENT_ID>
+                          id: <SFDC_GIFT_COMMITMENT_ID>
+                        paymentinstrument:
+                          href: >-
+                            /services/data/vXX.X/sobjects/sObject/<SFDC_PAYMENT_INSTRUMENT_ID>
+                          id: <SFDC_PAYMENT_INSTRUMENT_ID>
+              example-1:
+                summary: Status201-UpdateCommitmentExternalIds
+                value:
+                  successes: 2
+                  failures: 0
+                  notProcessed: 0
+                  details:
+                    - success: true
+                      links:
+                        giftcommitment:
+                          href: >-
+                            /services/data/vXX.X/sobjects/sObject/<SFDC_GIFT_COMMITMENT_ID>
+                          id: <SFDC_GIFT_COMMITMENT_ID>
+                        paymentinstrument:
+                          href: >-
+                            /services/data/vXX.X/sobjects/sObject/<SFDC_PAYMENT_INSTRUMENT_ID>
+                          id: <SFDC_PAYMENT_INSTRUMENT_ID>
+                    - success: true
+                      links:
+                        giftcommitment:
+                          href: >-
+                            /services/data/vXX.X/sobjects/sObject/<SFDC_GIFT_COMMITMENT_ID>
+                          id: <SFDC_GIFT_COMMITMENT_ID>
+                        paymentinstrument:
+                          href: >-
+                            /services/data/vXX.X/sobjects/sObject/<SFDC_PAYMENT_INSTRUMENT_ID>
+                          id: <SFDC_PAYMENT_INSTRUMENT_ID>
+      '201':
+        description: Created
+        headers:
+          Content-Type:
+            schema:
+              type: string
+              example: application/json
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              successes: 1
+              failures: 1
+              notProcessed: 0
+              details:
+                - success: false
+                  errors:
+                    field: id
+                    message: <invalid id message>
+                - success: true
+                  links:
+                    giftcommitment:
+                      href: >-
+                        /services/data/vXX.X/sobjects/sObject/<SFDC_GIFT_COMMITMENT_ID>
+                      id: <SFDC_GIFT_COMMITMENT_ID>
+                    paymentinstrument:
+                      href: >-
+                        /services/data/vXX.X/sobjects/sObject/<SFDC_PAYMENT_INSTRUMENT_ID>
+                      id: <SFDC_PAYMENT_INSTRUMENT_ID>
+          text/plain:
+            schema:
+              type: string
+            example: >-
+              // This is a scenario where there is a validation rule on the Payment Instrument object requiring that the digitalWalletProvider cannot be "Apple Pay". One database error occurs for the 10.50 cover amount, causing the other two to be rolled back with success of false and no record links.
+
+              {
+
+                "successes": 0,
+                "failures": 1,
+                "notProcessed": 1,
+                "details": [
+                  {
+                      "success": false,
+                      "errors": {
+                          "message": "<validation_rule_error_message>"
+                      }
+                  },
+                  {
+                    "success": false
+                  }
+                ]
+              }
+      '400':
+        description: Bad Request
+        headers:
+          Content-Type:
+            schema:
+              type: string
+              example: text/plain
+        content:
+          text/plain:
+            schema:
+              type: string
+            example: |2-
+                  // Even if the JSON request is valid, this is an example of a 400 error code that will be returned if duplicate matching rules are not active. Any non 200 error code would have a similar response structure.
+                  {
+                      "errorCode": "UNKNOWN_EXCEPTION",
+                      "message": "Provide active duplicate matching rules on Account and Person Account for donor matching. -- industries.fundraisingops.connect.impl.validator.ValidatorUtil.validateMatchingMethod(ValidatorUtil.java:103)"
+                  }

@@ -1,0 +1,157 @@
+info:
+  name: Bulk Create Job
+  type: http
+  seq: 2
+
+http:
+  method: POST
+  url: "{{_endpoint}}/services/async/{{version}}/job"
+  headers:
+    - name: X-SFDC-Session
+      value: "{{_accessToken}}"
+    - name: Content-Type
+      value: application/json
+    - name: charset
+      value: UTF-8
+    - name: Sforce-Disable-Batch-Retry
+      value: "FALSE"
+      disabled: true
+    - name: Sforce-Line-Ending
+      value: CRLF
+      disabled: true
+    - name: Sforce-Enable-PKChunking
+      value: "FALSE"
+      disabled: true
+    - name: chunkSize
+      value: "10000"
+      disabled: true
+    - name: Accept-Encoding
+      value: gzip
+      disabled: true
+    - name: Content-Encoding
+      value: gzip
+      disabled: true
+  body:
+    type: json
+    data: |-
+      {
+          "operation": "insert",
+          "object": "Account",
+          "contentType": "CSV"
+      }
+  auth: inherit
+
+runtime:
+  scripts:
+    - type: after-response
+      code: |-
+        const context = bru.getEnvName() ? { set: (k, v) => bru.setEnvVar(k, v), get: (k) => bru.getEnvVar(k) } : { set: (k, v) => bru.setVar(k, v), get: (k) => bru.getVar(k) };
+
+        const contentType = res.getHeader("Content-Type");
+        if (contentType.indexOf("xml") !== -1) {
+            const jsonData = xml2Json(JSON.stringify(res.getBody()));
+            context.set("_jobId", jsonData['jobInfo']['id']);    
+        }
+        else if (contentType.indexOf("json") !== -1) {
+            const jsonData = res.getBody();
+            context.set("_jobId", jsonData.id);
+        }
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Successful Bulk Create Job
+    request:
+      url: "{{_endpoint}}/services/async/{{version}}/job"
+      method: POST
+      headers:
+        - name: X-SFDC-Session
+          value: "{{_accessToken}}"
+        - name: Content-Type
+          value: application/json
+        - name: charset
+          value: UTF-8
+        - name: Sforce-Disable-Batch-Retry
+          value: "FALSE"
+          disabled: true
+        - name: Sforce-Line-Ending
+          value: CRLF
+          disabled: true
+        - name: Sforce-Enable-PKChunking
+          value: "FALSE"
+          disabled: true
+        - name: chunkSize
+          value: "10000"
+          disabled: true
+        - name: Accept-Encoding
+          value: gzip
+          disabled: true
+        - name: Content-Encoding
+          value: gzip
+          disabled: true
+      body:
+        type: json
+        data: |-
+          {
+            "operation" : "insert",
+            "object" : "Account",
+            "contentType" : "CSV"
+          }
+    response:
+      status: 201
+      statusText: Created
+      headers:
+        - name: Date
+          value: Thu, 16 Nov 2023 16:07:11 GMT
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-XSS-Protection
+          value: 1; mode=block
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: Location
+          value: /services/async/58.0/job/7502o00000kjNCsAAM
+        - name: Content-Type
+          value: application/json
+        - name: Content-Encoding
+          value: gzip
+        - name: Transfer-Encoding
+          value: chunked
+      body:
+        type: json
+        data: |-
+          {
+              "apexProcessingTime": 0,
+              "apiActiveProcessingTime": 0,
+              "apiVersion": 58,
+              "assignmentRuleId": null,
+              "concurrencyMode": "Parallel",
+              "contentType": "CSV",
+              "createdById": "005...",
+              "createdDate": "<date_time>",
+              "externalIdFieldName": null,
+              "fastPathEnabled": false,
+              "id": "750...",
+              "numberBatchesCompleted": 0,
+              "numberBatchesFailed": 0,
+              "numberBatchesInProgress": 0,
+              "numberBatchesQueued": 0,
+              "numberBatchesTotal": 0,
+              "numberRecordsFailed": 0,
+              "numberRecordsProcessed": 0,
+              "numberRetries": 0,
+              "object": "<Object>",
+              "operation": "insert",
+              "state": "Open",
+              "systemModstamp": "<date_time>",
+              "totalProcessingTime": 0
+          }

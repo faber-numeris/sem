@@ -1,0 +1,131 @@
+/services/data/v{version}/sobjects/{SOBJECT_API_NAME}/listviews:
+  get:
+    tags:
+      - REST > List Views
+    summary: List Views
+    description: >-
+      Returns the list of list views for the specified sObject, including the ID and other basic information about each list view. You can also get basic information for a specific list view by ID.
+    parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: SOBJECT_API_NAME
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: Successful response
+        content:
+          application/json: {}
+/services/data/v{version}/sobjects/{SOBJECT_API_NAME}/listviews/{QUERY_LOCATOR}/describe:
+  get:
+    tags:
+      - REST > List Views
+    summary: List View Describe
+    description: >-
+      Returns detailed information about a list view, including the ID, the columns, and the SOQL query.
+    parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: SOBJECT_API_NAME
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: QUERY_LOCATOR
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: Successful response
+        content:
+          application/json: {}
+/services/data/v{version}/sobjects/{SOBJECT_API_NAME}/listviews/{LIST_VIEW_ID}/results:
+  get:
+    tags:
+      - REST > List Views
+    summary: List View Results
+    description: >-
+      Returns detailed information about a list view, including the ID, the columns, and the SOQL query.
+    parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: SOBJECT_API_NAME
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: LIST_VIEW_ID
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: Successful response
+        content:
+          application/json: {}
+/services/data/v{version}/sobjects/{SOBJECT_API_NAME}/listviews/recent:
+  get:
+    tags:
+      - REST > List Views
+    summary: Recently Viewed Items
+    description: >-
+      Gets the most recently accessed items that were viewed or referenced by the current user. Salesforce stores information about record views in the interface and uses it to generate a list of recently viewed and referenced records, such as in the sidebar and for the auto-complete options in search.
+
+
+      This resource only accesses most recently used item information. If you want to modify the list of recently viewed items, you’ll need to update recently viewed information directly by using a SOQL Query with a FOR VIEW or FOR REFERENCE clause.
+
+      https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/resources_recent_items.htm
+    parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: limit
+        in: query
+        schema:
+          type: string
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: SOBJECT_API_NAME
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: Successful response
+        content:
+          application/json: {}

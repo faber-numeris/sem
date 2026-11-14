@@ -1,0 +1,31 @@
+info:
+  name: Initiate Cancellation
+  type: http
+  seq: 2
+
+http:
+  method: POST
+  url: "{{_endpoint}}/services/data/v{{version}}/asset-management/assets/collection/actions/initiate-cancellation"
+  headers:
+    - name: Content-Type
+      value: application/json
+  body:
+    type: json
+    data: |-
+      {
+        "assetIds": {
+          "assetIdArray": [
+            "{{assetID}}"
+          ]
+        },
+        "cancellationDate": "2023-08-21T00:00:00",
+        "cancellationOutputType": "order"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true

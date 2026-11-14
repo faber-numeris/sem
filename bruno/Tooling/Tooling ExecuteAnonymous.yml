@@ -1,0 +1,82 @@
+info:
+  name: Tooling ExecuteAnonymous
+  type: http
+  seq: 3
+
+http:
+  method: GET
+  url: "{{_endpoint}}/services/data/v{{version}}/tooling/executeAnonymous/?anonymousBody=System.Debug('awesome');"
+  headers:
+    - name: Content-Type
+      value: application/json
+      disabled: true
+  params:
+    - name: anonymousBody
+      value: System.Debug('awesome');
+      type: query
+  body:
+    type: text
+    data: ""
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Tooling ExecuteAnonymous
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/tooling/executeAnonymous/?anonymousBody=System.Debug('awesome');"
+      method: GET
+      headers:
+        - name: Content-Type
+          value: application/json
+          disabled: true
+      params:
+        - name: anonymousBody
+          value: System.Debug('awesome');
+          type: query
+      body:
+        type: text
+        data: ""
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: Date
+          value: Mon, 11 Dec 2023 09:21:01 GMT
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: Sforce-Limit-Info
+          value: api-usage=10/15000
+        - name: Content-Type
+          value: application/json;charset=UTF-8
+        - name: Vary
+          value: Accept-Encoding
+        - name: Content-Encoding
+          value: gzip
+        - name: Transfer-Encoding
+          value: chunked
+      body:
+        type: json
+        data: |-
+          {
+              "line": -1,
+              "column": -1,
+              "compiled": true,
+              "success": true,
+              "compileProblem": null,
+              "exceptionStackTrace": null,
+              "exceptionMessage": null
+          }
+
+docs: Executes Apex code anonymously. Available from API version 29.0 or later.

@@ -1,0 +1,223 @@
+info:
+  name: Tabs
+  type: http
+  seq: 21
+
+http:
+  method: GET
+  url: "{{_endpoint}}/services/data/v{{version}}/tabs"
+  headers:
+    - name: Content-Type
+      value: application/json
+  body:
+    type: json
+    data: ""
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Tabs
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/tabs"
+      method: GET
+      headers:
+        - name: Content-Type
+          value: application/json
+      body:
+        type: json
+        data: ""
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: Date
+          value: Wed, 27 Sep 2023 15:29:05 GMT
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-XSS-Protection
+          value: 1; mode=block
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: Sforce-Limit-Info
+          value: api-usage=6/15000
+        - name: Content-Type
+          value: application/json;charset=UTF-8
+        - name: Vary
+          value: Accept-Encoding
+        - name: Content-Encoding
+          value: gzip
+        - name: Transfer-Encoding
+          value: chunked
+      body:
+        type: json
+        data: |-
+          [
+              {
+                  "colors": [
+                      {
+                          "color": "5867E8",
+                          "context": "primary",
+                          "theme": "theme4"
+                      },
+                      {
+                          "color": "236FBD",
+                          "context": "primary",
+                          "theme": "theme3"
+                      }
+                  ],
+                  "custom": false,
+                  "iconUrl": "https://nto-df17-demo-dev-ed.my.salesforce.com/img/icon/accounts32.png",
+                  "icons": [
+                      {
+                          "contentType": "image/png",
+                          "height": 32,
+                          "theme": "theme3",
+                          "url": "https://nto-df17-demo-dev-ed.my.salesforce.com/img/icon/accounts32.png",
+                          "width": 32
+                      },
+                      {
+                          "contentType": "image/png",
+                          "height": 16,
+                          "theme": "theme3",
+                          "url": "https://nto-df17-demo-dev-ed.my.salesforce.com/img/icon/accounts16.png",
+                          "width": 16
+                      },
+                      {
+                          "contentType": "image/svg+xml",
+                          "height": 0,
+                          "theme": "theme4",
+                          "url": "https://nto-df17-demo-dev-ed.my.salesforce.com/img/icon/t4v35/standard/account.svg",
+                          "width": 0
+                      },
+                      {
+                          "contentType": "image/png",
+                          "height": 60,
+                          "theme": "theme4",
+                          "url": "https://nto-df17-demo-dev-ed.my.salesforce.com/img/icon/t4v35/standard/account_60.png",
+                          "width": 60
+                      },
+                      {
+                          "contentType": "image/png",
+                          "height": 120,
+                          "theme": "theme4",
+                          "url": "https://nto-df17-demo-dev-ed.my.salesforce.com/img/icon/t4v35/standard/account_120.png",
+                          "width": 120
+                      }
+                  ],
+                  "label": "Accounts",
+                  "miniIconUrl": "https://nto-df17-demo-dev-ed.my.salesforce.com/img/icon/accounts16.png",
+                  "name": "standard-Account",
+                  "sobjectName": "Account",
+                  "url": "https://nto-df17-demo-dev-ed.my.salesforce.com/001/o"
+              },
+              {
+                  "colors": [
+                      {
+                          "color": "056764",
+                          "context": "primary",
+                          "theme": "theme4"
+                      },
+                      {
+                          "color": "056764",
+                          "context": "primary",
+                          "theme": "theme3"
+                      }
+                  ],
+                  "custom": false,
+                  "iconUrl": "https://nto-df17-demo-dev-ed.my.salesforce.com/img/icon/wrench32.png",
+                  "icons": [
+                      {
+                          "contentType": "image/png",
+                          "height": 32,
+                          "theme": "theme3",
+                          "url": "https://nto-df17-demo-dev-ed.my.salesforce.com/img/icon/wrench32.png",
+                          "width": 32
+                      },
+                      {
+                          "contentType": "image/png",
+                          "height": 16,
+                          "theme": "theme3",
+                          "url": "https://nto-df17-demo-dev-ed.my.salesforce.com/img/icon/wrench16.png",
+                          "width": 16
+                      }
+                  ],
+                  "label": "Active Scratch Orgs",
+                  "miniIconUrl": "https://nto-df17-demo-dev-ed.my.salesforce.com/img/icon/wrench16.png",
+                  "name": "standard-ActiveScratchOrg",
+                  "sobjectName": "ActiveScratchOrg",
+                  "url": "https://nto-df17-demo-dev-ed.my.salesforce.com/2AS/o"
+              },
+              {
+                  "colors": [
+                      {
+                          "color": "06A59A",
+                          "context": "primary",
+                          "theme": "theme4"
+                      },
+                      {
+                          "color": "A55647",
+                          "context": "primary",
+                          "theme": "theme3"
+                      }
+                  ],
+                  "custom": false,
+                  "iconUrl": "https://nto-df17-demo-dev-ed.my.salesforce.com/img/icon/reports32.png",
+                  "icons": [
+                      {
+                          "contentType": "image/png",
+                          "height": 32,
+                          "theme": "theme3",
+                          "url": "https://nto-df17-demo-dev-ed.my.salesforce.com/img/icon/reports32.png",
+                          "width": 32
+                      },
+                      {
+                          "contentType": "image/png",
+                          "height": 16,
+                          "theme": "theme3",
+                          "url": "https://nto-df17-demo-dev-ed.my.salesforce.com/img/icon/reports16.png",
+                          "width": 16
+                      },
+                      {
+                          "contentType": "image/svg+xml",
+                          "height": 0,
+                          "theme": "theme4",
+                          "url": "https://nto-df17-demo-dev-ed.my.salesforce.com/img/icon/t4v35/standard/report.svg",
+                          "width": 0
+                      },
+                      {
+                          "contentType": "image/png",
+                          "height": 60,
+                          "theme": "theme4",
+                          "url": "https://nto-df17-demo-dev-ed.my.salesforce.com/img/icon/t4v35/standard/report_60.png",
+                          "width": 60
+                      },
+                      {
+                          "contentType": "image/png",
+                          "height": 120,
+                          "theme": "theme4",
+                          "url": "https://nto-df17-demo-dev-ed.my.salesforce.com/img/icon/t4v35/standard/report_120.png",
+                          "width": 120
+                      }
+                  ],
+                  "label": "Reports",
+                  "miniIconUrl": "https://nto-df17-demo-dev-ed.my.salesforce.com/img/icon/reports16.png",
+                  "name": "standard-report",
+                  "sobjectName": "Report",
+                  "url": "https://nto-df17-demo-dev-ed.my.salesforce.com/00O/o"
+              }
+          ]
+
+docs: |-
+  f a survey field can be translated or is already translated into a particular language, you can add or change the translated value of the survey field.
+
+  https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/request_survey_translate_add_change.htm

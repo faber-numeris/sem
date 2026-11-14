@@ -1,0 +1,61 @@
+/services/data/v{version}/chatter/subscriptions/{SUBSCRIPTION_ID}:
+  delete:
+    tags:
+      - Connect > Chatter
+    summary: Delete Subscription
+    description: >-
+      Information about the specified subscription. Also used to delete a subscription, for example, to unfollow a record or a topic.
+
+      A subscription ID is returned as part of the response body for follower and following resources, for example, /records/recordId/followers. In addition, subscriptions IDs are also returned in many summary response bodies, such as group summary or user summary.
+
+
+      https://developer.salesforce.com/docs/atlas.en-us.chatterapi.meta/chatterapi/connect_resources_subscriptions.htm
+    parameters:
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: SUBSCRIPTION_ID
+        in: path
+        schema:
+          type: string
+        required: true
+        example: 0E8...
+    responses:
+      '204':
+        description: No Content
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Wed, 22 Nov 2023 11:34:47 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-XSS-Protection:
+            schema:
+              type: string
+              example: 1; mode=block
+          Content-Security-Policy:
+            schema:
+              type: string
+              example: upgrade-insecure-requests
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+        content:
+          text/plain:
+            schema:
+              type: string
+            example: null

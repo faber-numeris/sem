@@ -1,0 +1,73 @@
+info:
+  name: News Feed Elements
+  type: http
+  seq: 1
+
+http:
+  method: GET
+  url: "{{_endpoint}}/services/data/v{{version}}/chatter/feeds/news/me/feed-elements"
+  body:
+    type: text
+    data: ""
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Successful News Feed Elements
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/chatter/feeds/news/me/feed-elements"
+      method: GET
+      body:
+        type: text
+        data: ""
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: Date
+          value: Wed, 22 Nov 2023 11:04:02 GMT
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-XSS-Protection
+          value: 1; mode=block
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: Content-Type
+          value: application/json;charset=UTF-8
+        - name: Vary
+          value: Accept-Encoding
+        - name: Content-Encoding
+          value: gzip
+        - name: Transfer-Encoding
+          value: chunked
+      body:
+        type: json
+        data: |-
+          {
+              "currentPageToken": null,
+              "currentPageUrl": "/services/data/v58.0/chatter/feeds/news/005.../feed-elements",
+              "elements": [],
+              "isModifiedToken": null,
+              "isModifiedUrl": null,
+              "nextPageToken": null,
+              "nextPageUrl": null,
+              "updatesToken": "2:1700651042000",
+              "updatesUrl": "/services/data/v58.0/chatter/feeds/news/005.../feed-elements?updatedSince=2%3A1700651042000"
+          }
+
+docs: |-
+  All feed elements from all groups the context user either owns or is a member of, as well as all files, records, and users the context user follows. Use this resource to get information about feed elements and to post feed elements.
+
+  For information about posting a feed element, see Feed Elements, Post and Search.
+
+  https://developer.salesforce.com/docs/atlas.en-us.chatterapi.meta/chatterapi/connect_resource_feeds_news.htm#cc_news_feed_elements

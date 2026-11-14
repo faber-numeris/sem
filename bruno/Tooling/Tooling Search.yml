@@ -1,0 +1,263 @@
+info:
+  name: Tooling Search
+  type: http
+  seq: 7
+
+http:
+  method: GET
+  url: "{{_endpoint}}/services/data/v{{version}}/tooling/search?q="
+  headers:
+    - name: Content-Type
+      value: application/json
+  params:
+    - name: q
+      value: ""
+      type: query
+      description: SOSL search statement
+  body:
+    type: json
+    data: |-
+      [
+          {
+              "className": "YourClassName",
+              "testMethods": [
+                  "testMethod1",
+                  "testMethod2",
+                  "testMethod3"
+              ]
+          },
+          {
+              "maxFailedTests": "2"
+          }
+      ]
+
+      or
+
+      [
+          {
+              "classId": "01pD0000000Fhy9IAC",
+              "testMethods": [
+                  "testMethod1",
+                  "testMethod2",
+                  "testMethod3"
+              ]
+          },
+          {
+              "maxFailedTests": "2"
+          }
+      ]
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Tooling Search
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/tooling/search?q=FIND {test*} IN ALL FIELDS RETURNING ApexClass (Name)"
+      method: GET
+      headers:
+        - name: Content-Type
+          value: application/json
+      params:
+        - name: q
+          value: FIND {test*} IN ALL FIELDS RETURNING ApexClass (Name)
+          type: query
+          description: SOSL_Search_Statement
+      body:
+        type: json
+        data: |-
+          [
+              {
+                  "className": "YourClassName",
+                  "testMethods": [
+                      "testMethod1",
+                      "testMethod2",
+                      "testMethod3"
+                  ]
+              },
+              {
+                  "maxFailedTests": "2"
+              }
+          ]
+
+          or
+
+          [
+              {
+                  "classId": "01pD0000000Fhy9IAC",
+                  "testMethods": [
+                      "testMethod1",
+                      "testMethod2",
+                      "testMethod3"
+                  ]
+              },
+              {
+                  "maxFailedTests": "2"
+              }
+          ]
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: Date
+          value: Mon, 11 Dec 2023 10:34:10 GMT
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: Sforce-Limit-Info
+          value: api-usage=294/15000
+        - name: queryId
+          value: -mxbcxdoqukvy
+        - name: Content-Type
+          value: application/json;charset=UTF-8
+        - name: Vary
+          value: Accept-Encoding
+        - name: Content-Encoding
+          value: gzip
+        - name: Transfer-Encoding
+          value: chunked
+      body:
+        type: json
+        data: |-
+          {
+              "searchRecords": [
+                  {
+                      "attributes": {
+                          "type": "ApexClass",
+                          "url": "/services/data/v59.0/tooling/sobjects/ApexClass/01p580000090wqcAAA"
+                      },
+                      "Name": "LightningSelfRegisterController"
+                  },
+                  {
+                      "attributes": {
+                          "type": "ApexClass",
+                          "url": "/services/data/v59.0/tooling/sobjects/ApexClass/01p580000090wqhAAA"
+                      },
+                      "Name": "LightningSelfRegisterControllerTest"
+                  },
+                  {
+                      "attributes": {
+                          "type": "ApexClass",
+                          "url": "/services/data/v59.0/tooling/sobjects/ApexClass/01p580000090wq9AAA"
+                      },
+                      "Name": "SiteRegisterControllerTest"
+                  },
+                  {
+                      "attributes": {
+                          "type": "ApexClass",
+                          "url": "/services/data/v59.0/tooling/sobjects/ApexClass/01p4H00000A0zYxQAJ"
+                      },
+                      "Name": "PrepareSandboxTest"
+                  },
+                  {
+                      "attributes": {
+                          "type": "ApexClass",
+                          "url": "/services/data/v59.0/tooling/sobjects/ApexClass/01p580000090wqTAAQ"
+                      },
+                      "Name": "CommunitiesSelfRegControllerTest"
+                  },
+                  {
+                      "attributes": {
+                          "type": "ApexClass",
+                          "url": "/services/data/v59.0/tooling/sobjects/ApexClass/01p4H000009aIwvQAE"
+                      },
+                      "Name": "MicrobatchSelfRegControllerTest"
+                  },
+                  {
+                      "attributes": {
+                          "type": "ApexClass",
+                          "url": "/services/data/v59.0/tooling/sobjects/ApexClass/01p4H000009PEFIQA4"
+                      },
+                      "Name": "PrepareSandbox"
+                  },
+                  {
+                      "attributes": {
+                          "type": "ApexClass",
+                          "url": "/services/data/v59.0/tooling/sobjects/ApexClass/01p580000090wqRAAQ"
+                      },
+                      "Name": "CommunitiesLandingControllerTest"
+                  },
+                  {
+                      "attributes": {
+                          "type": "ApexClass",
+                          "url": "/services/data/v59.0/tooling/sobjects/ApexClass/01p580000090wqFAAQ"
+                      },
+                      "Name": "MyProfilePageControllerTest"
+                  },
+                  {
+                      "attributes": {
+                          "type": "ApexClass",
+                          "url": "/services/data/v59.0/tooling/sobjects/ApexClass/01p580000090wqDAAQ"
+                      },
+                      "Name": "ForgotPasswordControllerTest"
+                  },
+                  {
+                      "attributes": {
+                          "type": "ApexClass",
+                          "url": "/services/data/v59.0/tooling/sobjects/ApexClass/01p580000090wq7AAA"
+                      },
+                      "Name": "SiteLoginControllerTest"
+                  },
+                  {
+                      "attributes": {
+                          "type": "ApexClass",
+                          "url": "/services/data/v59.0/tooling/sobjects/ApexClass/01p4H00000ANdnqQAD"
+                      },
+                      "Name": "AccountTriggerHelperTest"
+                  },
+                  {
+                      "attributes": {
+                          "type": "ApexClass",
+                          "url": "/services/data/v59.0/tooling/sobjects/ApexClass/01p580000090wqgAAA"
+                      },
+                      "Name": "LightningForgotPasswordControllerTest"
+                  },
+                  {
+                      "attributes": {
+                          "type": "ApexClass",
+                          "url": "/services/data/v59.0/tooling/sobjects/ApexClass/01p580000090wqfAAA"
+                      },
+                      "Name": "LightningLoginFormControllerTest"
+                  },
+                  {
+                      "attributes": {
+                          "type": "ApexClass",
+                          "url": "/services/data/v59.0/tooling/sobjects/ApexClass/01p580000090wqeAAA"
+                      },
+                      "Name": "LightningLoginFormController"
+                  },
+                  {
+                      "attributes": {
+                          "type": "ApexClass",
+                          "url": "/services/data/v59.0/tooling/sobjects/ApexClass/01p580000090wqVAAQ"
+                      },
+                      "Name": "CommunitiesSelfRegConfirmControllerTest"
+                  },
+                  {
+                      "attributes": {
+                          "type": "ApexClass",
+                          "url": "/services/data/v59.0/tooling/sobjects/ApexClass/01p580000090wqPAAQ"
+                      },
+                      "Name": "CommunitiesLoginControllerTest"
+                  },
+                  {
+                      "attributes": {
+                          "type": "ApexClass",
+                          "url": "/services/data/v59.0/tooling/sobjects/ApexClass/01p580000090wqBAAQ"
+                      },
+                      "Name": "ChangePasswordControllerTest"
+                  }
+              ]
+          }
+
+docs: Runs one or more methods within one or more Apex classes, using the asynchronous test execution mechanism. In the request body, you can specify test class names and IDs, suite names and IDs, the maximum number of failed tests to allow, and the test level, as comma-separated lists or as an array. You can also indicate whether to opt out of collecting code coverage information during the test run (available in API version 43.0 and later).

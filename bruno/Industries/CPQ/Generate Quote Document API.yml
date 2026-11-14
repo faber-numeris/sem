@@ -1,0 +1,43 @@
+info:
+  name: Generate Quote Document API
+  type: http
+  seq: 4
+
+http:
+  method: POST
+  url: "{{_endpoint}}/services/apexrest/SBQQ/ServiceRouter?loader=QuoteDocumentAPI.SaveProposal"
+  headers:
+    - name: Content-Type
+      value: application/json
+  params:
+    - name: loader
+      value: QuoteDocumentAPI.SaveProposal
+      type: query
+  body:
+    type: json
+    data: |-
+      {
+          "saver": "SBQQ.QuoteDocumentAPI.Save",
+          "model": {
+              "name": "test",
+              "quoteId": "<SFDC_ID>",
+              "templateId": "<SFDC_ID>",
+              "outputFormat": "PDF",
+              "language": "en_US",
+              "paperSize": "Default"
+          }
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+docs: |-
+  Creates and saves a CPQ quote document.
+  Available in: Salesforce CPQ Winter ’19 and later
+
+  https://developer.salesforce.com/docs/atlas.en-us.cpq_dev_api.meta/cpq_dev_api/cpq_api_generate_proposal.htm

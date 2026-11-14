@@ -1,0 +1,29 @@
+info:
+  name: 23 Bulk Ingest Upload Data
+  type: http
+  seq: 23
+
+http:
+  method: PUT
+  url: "{{_endpoint}}/services/data/v{{version}}/jobs/ingest/{{ingestJobId}}/batches"
+  headers:
+    - name: Content-Type
+      value: text/csv
+  body:
+    type: text
+    data: |-
+      Name,Industry
+      Bulk Corp One,Manufacturing
+      ,MissingNameRow
+
+runtime:
+  scripts:
+    - type: tests
+      code: |-
+        test("Uploads CSV batch with 201", function() {
+          expect(res.getStatus()).to.equal(201);
+        });
+
+settings:
+  encodeUrl: true
+  timeout: 0

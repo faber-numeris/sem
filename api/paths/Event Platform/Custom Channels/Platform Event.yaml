@@ -1,0 +1,392 @@
+/services/data/v{version}/tooling/sobjects/PlatformEventChannel:
+  post:
+    tags:
+      - Event Platform > Custom Channels > Platform Event
+    summary: Create channel
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            example:
+              FullName: Carbon_Comparison_Channel__chn
+              Metadata:
+                channelType: event
+                label: Carbon Comparison Channel
+                urls: null
+    parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: SOAPAction
+        in: header
+        schema:
+          type: string
+        example: '""'
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+        example: Bearer {{_accessToken}}
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: Successful response
+        content:
+          application/json: {}
+/services/data/v{version}/tooling/sobjects/PlatformEventChannel/{PLATFORM_EVENT_CHANNEL_ID}:
+  patch:
+    tags:
+      - Event Platform > Custom Channels > Platform Event
+    summary: Update channel
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            example:
+              FullName: Carbon_Comparison_Channel__chn
+              Metadata:
+                channelType: event
+                label: Carbon Comparison Channel 2
+                urls: null
+    parameters:
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: PLATFORM_EVENT_CHANNEL_ID
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: Successful response
+        content:
+          application/json: {}
+  get:
+    tags:
+      - Event Platform > Custom Channels
+    summary: Get event channel
+    parameters:
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: PLATFORM_EVENT_CHANNEL_ID
+        in: path
+        schema:
+          type: string
+        required: true
+        example: 0YL4H0000004C93WAE
+    responses:
+      '200':
+        description: OK
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Mon, 03 Jul 2023 13:15:59 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Sforce-Limit-Info:
+            schema:
+              type: string
+              example: api-usage=7/15000
+          Last-Modified:
+            schema:
+              type: string
+              example: Mon, 11 Jan 2021 19:33:54 GMT
+          Content-Type:
+            schema:
+              type: string
+              example: application/json;charset=UTF-8
+          Vary:
+            schema:
+              type: string
+              example: Accept-Encoding
+          Content-Encoding:
+            schema:
+              type: string
+              example: gzip
+          Transfer-Encoding:
+            schema:
+              type: string
+              example: chunked
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              attributes:
+                type: PlatformEventChannel
+                url: >-
+                  /services/data/v58.0/tooling/sobjects/PlatformEventChannel/0YL4H0000004C93WAE
+              Id: 0YL4H0000004C93WAE
+              IsDeleted: false
+              DeveloperName: HREvents
+              Language: en_US
+              MasterLabel: Custom Channel for the HR App
+              NamespacePrefix: null
+              ManageableState: unmanaged
+              CreatedDate: 2021-01-11T19:33:54.000+0000
+              CreatedById: 00558000000yFyDAAU
+              LastModifiedDate: 2021-01-11T19:33:54.000+0000
+              LastModifiedById: 00558000000yFyDAAU
+              SystemModstamp: 2021-01-11T19:33:54.000+0000
+              ChannelType: data
+              FullName: HREvents__chn
+              Metadata:
+                channelType: data
+                label: Custom Channel for the HR App
+                urls: null
+  delete:
+    tags:
+      - Event Platform > Custom Channels
+    summary: Delete event channel
+    parameters:
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: PLATFORM_EVENT_CHANNEL_ID
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '204':
+        description: No Content
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Wed, 06 Dec 2023 16:56:00 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          Content-Security-Policy:
+            schema:
+              type: string
+              example: upgrade-insecure-requests
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Sforce-Limit-Info:
+            schema:
+              type: string
+              example: api-usage=303/15000
+        content:
+          text/plain:
+            schema:
+              type: string
+            example: null
+/services/data/v{version}/tooling/sobjects/PlatformEventChannelMember/{PLATFORM_EVENT_CHANNEL_MEMBER_ID}:
+  patch:
+    tags:
+      - Event Platform > Custom Channels > Platform Event
+    summary: Add filter expression in channel member
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            example:
+              FullName: MyChannelMember
+              Metadata:
+                eventChannel: MyChannel__chn
+                filterExpression: Text__c='Some value'
+                selectedEntity: Custom_Event__e
+                urls: null
+    parameters:
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: PLATFORM_EVENT_CHANNEL_MEMBER_ID
+        in: path
+        schema:
+          type: string
+        required: true
+        example: 0v8RM0000004Rr5YAE
+    responses:
+      '200':
+        description: Successful response
+        content:
+          application/json: {}
+  get:
+    tags:
+      - Event Platform > Custom Channels
+    summary: Get channel member
+    parameters:
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: PLATFORM_EVENT_CHANNEL_MEMBER_ID
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: OK
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Mon, 03 Jul 2023 13:17:20 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Sforce-Limit-Info:
+            schema:
+              type: string
+              example: api-usage=9/15000
+          Last-Modified:
+            schema:
+              type: string
+              example: Fri, 30 Dec 2022 15:10:39 GMT
+          Content-Type:
+            schema:
+              type: string
+              example: application/json;charset=UTF-8
+          Vary:
+            schema:
+              type: string
+              example: Accept-Encoding
+          Content-Encoding:
+            schema:
+              type: string
+              example: gzip
+          Transfer-Encoding:
+            schema:
+              type: string
+              example: chunked
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              attributes:
+                type: PlatformEventChannelMember
+                url: >-
+                  /services/data/v58.0/tooling/sobjects/PlatformEventChannelMember/0v84H000000PAvIQAW
+              Id: 0v84H000000PAvIQAW
+              IsDeleted: false
+              DeveloperName: ChangeEvents_ContactChangeEvent
+              Language: en_US
+              MasterLabel: ContactChangeEvent
+              NamespacePrefix: null
+              ManageableState: unmanaged
+              CreatedDate: 2022-12-30T15:10:39.000+0000
+              CreatedById: 00558000000yFyDAAU
+              LastModifiedDate: 2022-12-30T15:10:39.000+0000
+              LastModifiedById: 00558000000yFyDAAU
+              SystemModstamp: 2022-12-30T15:10:39.000+0000
+              FullName: ChangeEvents_ContactChangeEvent
+              Metadata:
+                enrichedFields: []
+                eventChannel: ChangeEvents
+                filterExpression: null
+                selectedEntity: ContactChangeEvent
+                urls: null
+              EventChannel: ChangeEvents
+              SelectedEntity: ContactChangeEvent
+              FilterExpression: null
+  delete:
+    tags:
+      - Event Platform > Custom Channels
+    summary: Delete channel member
+    parameters:
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: PLATFORM_EVENT_CHANNEL_MEMBER_ID
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: Successful response
+        content:
+          application/json: {}
+/services/data/v{version}/tooling/sobjects/PlatformEventChannelMember:
+  post:
+    tags:
+      - Event Platform > Custom Channels > Platform Event
+    summary: Create channel member
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            example:
+              FullName: Carbon_ComparisonChannel_chn_Carbon_Comparison_e
+              Metadata:
+                eventChannel: Carbon_ComparisonChannel__chn
+                selectedEntity: Carbon_Comparison__e
+                urls: null
+    parameters:
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: Successful response
+        content:
+          application/json: {}

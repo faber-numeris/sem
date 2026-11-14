@@ -1,0 +1,345 @@
+info:
+  name: Update Gift Transaction Payments
+  type: http
+  seq: 2
+
+http:
+  method: POST
+  url: "{{_endpoint}}/services/data/v{{version}}/connect/fundraising/transactions/payment-updates"
+  body:
+    type: json
+    data: |-
+      {
+        "updates": [
+          {
+            "giftTransactionId": "<SFDC_GIFT_TRANSACTION_ID>",
+            "transactionStatus": "Paid",
+            "processorReference": "string",
+            "gatewayReference": "string",
+            "lastGatewayResponseCode": "invalid_cvc",
+            "lastGatewayErrorMessage": "The card’s security code is invalid. Check the card’s security code or use a different card.",
+            "lastGatewayProcessedDateTime": "2023-07-06T21:57:51Z",
+            "processorTransactionFee": 0.5,
+            "gatewayTransactionFee": 0.25,
+            "donorCoverAmount": 10.5
+          },
+          {
+            "giftTransactionId": "<SFDC_GIFT_TRANSACTION_ID>",
+            "transactionStatus": "Paid",
+            "processorReference": "string",
+            "gatewayReference": "string",
+            "lastGatewayResponseCode": "invalid_cvc",
+            "lastGatewayErrorMessage": "The card’s security code is invalid. Check the card’s security code or use a different card.",
+            "lastGatewayProcessedDateTime": "2023-07-06T21:57:51Z",
+            "processorTransactionFee": 1.00,
+            "gatewayTransactionFee": 0.45,
+            "donorCoverAmount": 20.00
+          }
+        ]
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Status201-UpdateTransactionPaymentSuccess
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/connect/fundraising/transactions/payment-updates"
+      method: POST
+      body:
+        type: json
+        data: |-
+          {
+            "updates": [
+              {
+                "giftTransactionId": "<SFDC_GIFT_TRANSACTION_ID>",
+                "transactionStatus": "Paid",
+                "processorReference": "string",
+                "gatewayReference": "string",
+                "lastGatewayResponseCode": "invalid_cvc",
+                "lastGatewayErrorMessage": "The card’s security code is invalid. Check the card’s security code or use a different card.",
+                "lastGatewayProcessedDateTime": "2023-07-06T21:57:51Z",
+                "processorTransactionFee": 0.5,
+                "gatewayTransactionFee": 0.25,
+                "donorCoverAmount": 10.5
+              },
+              {
+                "giftTransactionId": "<SFDC_GIFT_TRANSACTION_ID>",
+                "transactionStatus": "Paid",
+                "processorReference": "string",
+                "gatewayReference": "string",
+                "lastGatewayResponseCode": "invalid_cvc",
+                "lastGatewayErrorMessage": "The card’s security code is invalid. Check the card’s security code or use a different card.",
+                "lastGatewayProcessedDateTime": "2023-07-06T21:57:51Z",
+                "processorTransactionFee": 1.00,
+                "gatewayTransactionFee": 0.45,
+                "donorCoverAmount": 20.00
+              }
+            ]
+          }
+    response:
+      status: 201
+      statusText: Created
+      headers:
+        - name: Content-Type
+          value: application/json
+      body:
+        type: json
+        data: |-
+          {
+              "successes": 2,
+              "failures": 0,
+              "notProcessed": 0,
+              "details": [
+                  {
+                      "success": true,
+                      "links": {
+                          "gifttransaction": {
+                              "href": "/services/data/vXX.X/sobjects/sObject/<SFDC_GIFT_TRANSACTION_ID>",
+                              "id": "<SFDC_GIFT_TRANSACTION_ID>"
+                          }
+                      }
+                  },
+                  {
+                      "success": true,
+                      "links": {
+                          "gifttransaction": {
+                              "href": "/services/data/vXX.X/sobjects/sObject/<SFDC_GIFT_TRANSACTION_ID>",
+                              "id": "<SFDC_GIFT_TRANSACTION_ID>"
+                          }
+                      }
+                  }
+              ]
+          }
+  - name: Status201-UpdateTransactionPaymentRequestValidationFailed
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/connect/fundraising/transactions/payment-updates"
+      method: POST
+      body:
+        type: json
+        data: |-
+          {
+            "updates": [
+              {
+                "giftTransactionId": "INVALID GIFT TRANSACTION ID",
+                "transactionStatus": "Paid",
+                "processorReference": "string",
+                "gatewayReference": "string",
+                "lastGatewayResponseCode": "invalid_cvc",
+                "lastGatewayErrorMessage": "The card’s security code is invalid. Check the card’s security code or use a different card.",
+                "lastGatewayProcessedDateTime": "2023-07-06T21:57:51Z",
+                "processorTransactionFee": 0.5,
+                "gatewayTransactionFee": 0.25,
+                "donorCoverAmount": 10.5
+              },
+              {
+                "giftTransactionId": "<SFDC_GIFT_TRANSACTION_ID>",
+                "transactionStatus": "Paid",
+                "processorReference": "string",
+                "gatewayReference": "string",
+                "lastGatewayResponseCode": "invalid_cvc",
+                "lastGatewayErrorMessage": "The card’s security code is invalid. Check the card’s security code or use a different card.",
+                "lastGatewayProcessedDateTime": "2023-07-06T21:57:51Z",
+                "processorTransactionFee": 1.00,
+                "gatewayTransactionFee": 0.45,
+                "donorCoverAmount": 20.00
+              }
+            ]
+          }
+    response:
+      status: 201
+      statusText: Created
+      headers:
+        - name: Content-Type
+          value: application/json
+      body:
+        type: json
+        data: |-
+          {
+              "successes": 1,
+              "failures": 1,
+              "notProcessed": 0,
+              "details": [
+                  {
+                      "success": false,
+                      "errors": {
+                          "field": "id",
+                          "message": "<invalid id message>"
+                      }
+                  },
+                  {
+                      "success": true,
+                      "links": {
+                          "gifttransaction": {
+                              "href": "/services/data/vXX.X/sobjects/sObject/<SFDC_GIFT_TRANSACTION_ID>",
+                              "id": "<SFDC_GIFT_TRANSACTION_ID>"
+                          }
+                      }
+                  }
+              ]
+          }
+  - name: Status201-UpdateTransactionPaymentDatabaseFailure
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/connect/fundraising/transactions/payment-updates"
+      method: POST
+      body:
+        type: json
+        data: |-
+          {
+            "updates": [
+              {
+                "giftTransactionId": "<SFDC_GIFT_TRANSACTION_ID>",
+                "transactionStatus": "Invalid Transaction Status",
+                "processorReference": "string",
+                "gatewayReference": "string",
+                "lastGatewayResponseCode": "invalid_cvc",
+                "lastGatewayErrorMessage": "The card’s security code is invalid. Check the card’s security code or use a different card.",
+                "lastGatewayProcessedDateTime": "2023-07-06T21:57:51Z",
+                "processorTransactionFee": 0.5,
+                "gatewayTransactionFee": 0.25,
+                "donorCoverAmount": 10.5
+              },
+              {
+                "giftTransactionId": "<SFDC_GIFT_TRANSACTION_ID>",
+                "transactionStatus": "Paid",
+                "processorReference": "string",
+                "gatewayReference": "string",
+                "lastGatewayResponseCode": "invalid_cvc",
+                "lastGatewayErrorMessage": "The card’s security code is invalid. Check the card’s security code or use a different card.",
+                "lastGatewayProcessedDateTime": "2023-07-06T21:57:51Z",
+                "processorTransactionFee": 1.00,
+                "gatewayTransactionFee": 0.45,
+                "donorCoverAmount": 20.00
+              }
+            ]
+          }
+    response:
+      status: 201
+      statusText: Created
+      headers:
+        - name: Content-Type
+          value: application/json
+      body:
+        type: json
+        data: |-
+          // This is a scenario where there is a validation rule on the Gift Transaction object requiring the donor cover amount to be less than 10.00. One database error occurs for the 10.50 cover amount, causing the other two to be rolled back with success of false and no record links.
+          {
+              "successes": 0,
+              "failures": 1,
+              "notProcessed": 1,
+              "details": [
+                  {
+                      "success": false,
+                      "errors": {
+                          "message": "Donor cover amount must be less than 10.00"
+                      }
+                  },
+                  {
+                      "success": false
+                  }
+              ]
+          }
+  - name: Status201-UpdateTransactionPaymentWithExternalIds
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/connect/fundraising/transactions/payment-updates"
+      method: POST
+      body:
+        type: json
+        data: |-
+          {
+            "updates": [
+              {
+                "giftTransaction": {
+                  "externalId": {
+                      "fieldName": "<EXTERNAL_ID_FIELD_NAME>",
+                      "fieldValue": "<EXTERNAL_ID_FIELD_VALUE>"
+                  }
+                },
+                "transactionStatus": "Paid",
+                "processorReference": "string",
+                "gatewayReference": "string",
+                "lastGatewayResponseCode": "invalid_cvc",
+                "lastGatewayErrorMessage": "The card’s security code is invalid. Check the card’s security code or use a different card.",
+                "lastGatewayProcessedDateTime": "2023-07-06T21:57:51Z",
+                "processorTransactionFee": 0.5,
+                "gatewayTransactionFee": 0.25,
+                "donorCoverAmount": 10.5
+              }
+            ]
+          }
+    response:
+      status: 400
+      statusText: Bad Request
+      headers:
+        - name: Content-Type
+          value: application/json
+      body:
+        type: json
+        data: |-
+          {
+              "successes": 1,
+              "failures": 0,
+              "notProcessed": 0,
+              "details": [
+                  {
+                      "success": true,
+                      "links": {
+                          "gifttransaction": {
+                              "href": "/services/data/vXX.X/sobjects/sObject/<SFDC_GIFT_TRANSACTION_ID>",
+                              "id": "<SFDC_GIFT_TRANSACTION_ID>"
+                          }
+                      }
+                  }
+              ]
+          }
+  - name: Status400-BadRequestError
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/connect/fundraising/transactions/payment-updates"
+      method: POST
+      body:
+        type: json
+        data: |-
+          {
+            "updates": [
+              {
+                "giftTransactionId": "<SFDC_GIFT_TRANSACTION_ID>",
+                "transactionStatus": "Paid",
+                "processorReference": "string",
+                "gatewayReference": "string",
+                "lastGatewayResponseCode": "invalid_cvc",
+                "lastGatewayErrorMessage": "The card’s security code is invalid. Check the card’s security code or use a different card.",
+                "lastGatewayProcessedDateTime": "2023-07-06T21:57:51Z",
+                "processorTransactionFee": 0.5,
+                "gatewayTransactionFee": 0.25,
+                "donorCoverAmount": 10.5
+              }
+            ]
+          }
+    response:
+      status: 400
+      statusText: Bad Request
+      headers:
+        - name: Content-Type
+          value: application/json
+      body:
+        type: json
+        data: |-
+          // Even if the JSON request is valid, this is an example of a 400 error code that will be returned if duplicate matching rules are not active. Any non 200 error code would have a similar response structure.
+          {
+              "errorCode": "UNKNOWN_EXCEPTION",
+              "message": "Provide active duplicate matching rules on Account and Person Account for donor matching. -- industries.fundraisingops.connect.impl.validator.ValidatorUtil.validateMatchingMethod(ValidatorUtil.java:103)"
+          }
+
+docs: |-
+  Update the gateway and processor metadata for gift transactions.
+
+  ## Required Attributes:
+
+  - giftTransactionId
+      
+  - transactionStatus

@@ -1,0 +1,32 @@
+info:
+  name: Validate Quote API
+  type: http
+  seq: 4
+
+http:
+  method: PATCH
+  url: "{{_endpoint}}/services/apexrest/SBQQ/ServiceRouter?loader=QuoteAPI.QuoteValidator"
+  headers:
+    - name: Content-Type
+      value: application/json
+  params:
+    - name: loader
+      value: QuoteAPI.QuoteValidator
+      type: query
+  body:
+    type: json
+    data: ""
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+docs: |-
+  Validate a CPQ quote and return any validation errors.
+  Available in: Salesforce CPQ Winter ’19 and later
+
+  https://developer.salesforce.com/docs/atlas.en-us.cpq_dev_api.meta/cpq_dev_api/cpq_api_validate_quote.htm

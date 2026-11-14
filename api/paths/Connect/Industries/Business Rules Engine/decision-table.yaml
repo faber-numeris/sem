@@ -1,0 +1,743 @@
+/services/data/v{version}/connect/business-rules/decision-table/definitions:
+  post:
+    tags:
+      - Connect > Industries > Business Rules Engine > decision-table
+    summary: Create Table
+    description: "# Decision Table Definitions (POST)\n\nCreate a decision table definition. A decision table definition contains all the details required to create a decision table.Resource\n\n```\n/connect/business-rules/decision-table/definitions\n\n ```\n\nResource Example\n\n```\nhttps://yourInstance.salesforce.com/services/data/v59.0/connect/business-rules/decision-table/definitions\n\n ```\n\nAvailable version\n\n58.0\n\nRequires Chatter\n\nNo\n\nHTTP methods\n\nPOST\n\nJSON example for a single object source\n\n```\n{\n   \"setupName\":\"Product Qualificiation eligibility\",\n   \"fullName\":\"ProductQualificationEligibility\",\n   \"description\":\"Eligiblity of Products using Qualification Rules\",\n   \"usageType\":\"ProductEligibility\",\n   \"sourceType\":\"SingleSobject\",\n   \"sourceObject\":\"AccountFeed\",\n   \"status\":\"Draft\",\n   \"decisionResultPolicy\":\"UniqueValues\",\n   \"collectOperator\":\"Count\",\n   \"conditionType\":\"Any\",\n   \"conditionCriteria\":\"1 OR 2 OR 3\",\n   \"parameters\":[\n      {\n         \"fieldName\":\"IsDeleted\",\n         \"usage\":\"INPUT\",\n         \"operator\":\"Equals\",\n         \"sequence\":\"1\"\n      },\n      {\n         \"fieldName\":\"Id\",\n         \"usage\":\"INPUT\",\n         \"operator\":\"Equals\",\n         \"sequence\":\"2\"\n      },\n      {\n         \"fieldName\":\"Title\",\n         \"usage\":\"INPUT\",\n         \"operator\":\"Equals\",\n         \"sequence\":\"3\"\n      },\n      {\n         \"fieldName\":\"CreatedById\",\n         \"usage\":\"OUTPUT\"\n      }\n   ]\n}\n\n ```\n\nJSON example for a multi-object source\n\n```\n{\n   \"setupName\":\"Jumbo Pricing Definition\",\n   \"fullName\":\"JumboPricingDefinition\",\n   \"description\":\"Join all the DT definitions into one jumbo pricing definition\",\n   \"usageType\":\"ProductEligibility\",\n   \"type\":\"LowVolume\",\n   \"sourceType\":\"MultipleSobjects\",\n   \"sourceObject\":\"AccountFeed\",\n   \"status\":\"Draft\",\n   \"decisionResultPolicy\":\"UniqueValues\",\n   \"collectOperator\":\"Count\",\n   \"sourceconditionLogic\":\"1 AND 2 AND 3\",\n   \"conditionType\":\"Any\",\n   \"conditionCriteria\":\"1 OR 2 OR 3 OR 4 OR 5\",\n   \"parameters\":[\n      {\n         \"fieldName\":\"IsDeleted\",\n         \"usage\":\"INPUT\",\n         \"operator\":\"Equals\",\n         \"sequence\":\"1\",\n         \"columnMapping\":\"IsDeleted\"\n      },\n      {\n         \"fieldName\":\"Id\",\n         \"usage\":\"INPUT\",\n         \"operator\":\"Equals\",\n         \"sequence\":\"2\",\n         \"columnMapping\":\"Id\"\n      },\n      {\n         \"fieldName\":\"Title\",\n         \"usage\":\"INPUT\",\n         \"operator\":\"Equals\",\n         \"sequence\":\"3\",\n         \"columnMapping\":\"Title\"\n      },\n      {\n         \"fieldName\":\"OldvalNumber\",\n         \"usage\":\"INPUT\",\n         \"operator\":\"Equals\",\n         \"sequence\":\"4\",\n         \"columnMapping\":\"AccountHistory.OldvalNumber\"\n      },\n      {\n         \"fieldName\":\"OldvalString\",\n         \"usage\":\"INPUT\",\n         \"operator\":\"Equals\",\n         \"sequence\":\"5\",\n         \"columnMapping\":\"AccountHistory.OldvalString\"\n      },\n      {\n         \"fieldName\":\"CreatedById\",\n         \"usage\":\"OUTPUT\",\n         \"columnMapping\":\"CreatedById\"\n      },\n      {\n         \"fieldName\":\"NewvalNumber\",\n         \"usage\":\"OUTPUT\",\n         \"columnMapping\":\"AccountHistory.NewvalNumber\"\n      },\n      {\n         \"fieldName\":\"NewvalString\",\n         \"usage\":\"OUTPUT\",\n         \"columnMapping\":\"AccountHistory.NewvalString\"\n      }\n   ]\n   \"sourceCriteria\":[\n      {\n         \"sourceFieldName\":\"OldvalString\",\n         \"value\":\"5\",\n         \"operator\":\"Equals\",\n         \"valueType\":\"Parameter\",\n         \"sequenceNumber\":\"1\"\n      }\n   ]\n}\n\n ```\n\nRequest body for POSTProperties\n\n| Name | Type | Description | Required or Optional | Available Version |\n| --- | --- | --- | --- | --- |\n| collectOperator | String | Operator to apply a filter to outputs. Possible values are:  <br>  <br>\\- Count  <br>  <br>\\- Maximum  <br>  <br>\\- Minimum  <br>  <br>\\- None  <br>  <br>\\- Sum | Optional | 58.0 |\n| conditionCriteria | String | Custom logic applied on the decision table columns to decide how the input fields are processed. | Optional  <br>  <br>Required when the condition type is Custom. | 58.0 |\n| conditionType | String | Condition logic for input fields. Possible values are:  <br>  <br>\\- All  <br>  <br>\\- Any  <br>  <br>\\- Custom | Optional | 58.0 |\n| description | String | Description of the decision table. | Optional | 58.0 |\n| decisionResultPolicy | String | Results policy to filter results of the decision table. Possible values are:  <br>  <br>\\- AnyValue  <br>  <br>\\- CollectOperator  <br>  <br>\\- FirstMatch  <br>  <br>\\- OutputOrder  <br>  <br>\\- Priority  <br>  <br>\\- RuleOrder  <br>  <br>\\- UniqueValues | Optional |  |\n| fullName | String | Unique name of the rule definition. | Required | 58.0 |\n| isSetCollectOperator | Boolean | For internal use only.  <br>  <br>Indicates whether the collectOperator is enabled (true) or not (false). | Optional | 58.0 |\n| isSetConditionCriteria | Boolean | For internal use only.  <br>  <br>Indicates whether the conditionCriteria field is enabled (true) or not (false). | Optional | 58.0 |\n| isSetConditionType | Boolean | For internal use only.  <br>  <br>Indicates whether the conditionType field is enabled (true) or not (false). | Optional | 58.0 |\n| isSetDescription | Boolean | For internal use only.  <br>  <br>Indicates whether the description field is enabled (true) or not (false). | Optional | 58.0 |\n| isSetDecisionResultPolicy | Boolean | For internal use only.  <br>  <br>Indicates whether the DecisionResultPolicy field is enabled (true) or not (false). | Optional | 58.0 |\n| isSetFullName | Boolean | For internal use only.  <br>  <br>Indicates whether the FullName field is enabled (true) or not (false). | Optional | 58.0 |\n| isSetParameters | Boolean | For internal use only. Indicates whether the parameters field is enabled (true) or not (false). | Optional | 58.0 |\n| isSetSetupName | Boolean | For internal use only.  <br>  <br>Indicates whether the setupName field is enabled (true) or not (false). | Optional | 58.0 |\n| isSetSourceconditionLogic | Boolean | For internal use only.  <br>  <br>Indicates whether the sourceConditionLogic field is enabled (true) or not (false). | Optional | 58.0 |\n| isSetSourceCriteria | Boolean | For internal use only.  <br>  <br>Indicates whether the sourceCriteria field is enabled (true) or not (false). | Optional | 58.0 |\n| isSetSourceObject | Boolean | For internal use only.  <br>  <br>Indicates whether the sourceObject field is enabled (true) or not (false). | Optional | 58.0 |\n| isSetSourceType | Boolean | For internal use only.  <br>  <br>Indicates whether the sourceType is enabled (true) or not (false). | Optional | 58.0 |\n| isSetType | Boolean | For internal use only.  <br>  <br>Indicates whether the type field is enabled (true) or not (false). | Optional | 58.0 |\n| isSetUsageType | Boolean | For internal use only.  <br>  <br>Indicates whether the UsageType field is enabled (true) or not (false). | Optional | 58.0 |\n| parameters | [Decision Table Parameter Input](https://developer.salesforce.com/docs/atlas.en-us.industries_reference.meta/industries_reference/connect_requests_decision_table_parameter_input.htm)\\[\\] | Array of input and output fields for the decision table. | Optional | 58.0 |\n| setupName | String | Name of the decision table. | Required | 58.0 |\n| sourceconditionLogic | String | Custom logic to filter the decision table rows. | Optional | 58.0 |\n| sourceCriteria | [Decision Table Source Criteria Input](https://developer.salesforce.com/docs/atlas.en-us.industries_reference.meta/industries_reference/connect_requests_decision_table_source_criteria_input.htm)\\[\\] | Output array representation of source filters for the decision table rows, such as, fieldName, operators, valueType, and more. | Optional | 58.0 |\n| sourceObject | String | Object containing business rules for the decision table to read. | Required | 58.0 |\n| sourceType | String | Type of source to obtain decision table data. Possible values are:  <br>  <br>\\- CsvUpload  <br>  <br>\\- MultipleSobjects  <br>  <br>\\- SingleSobject | Required | 58.0 |\n| status | String | Status of the decision table. Possible values are:  <br>  <br>\\- ActivationInProgress  <br>  <br>\\- ActivationInProgress  <br>  <br>\\- Draft  <br>  <br>\\- Inactive | Required | 58.0 |\n| type | String | Type of the decision table. Possible values are:  <br>  <br>\\- HighVolume  <br>  <br>\\- LowVolume | Optional | 58.0 |\n| usageType | String | Process type that uses the decision table. Possible values are:  <br>  <br>\\- Pricing  <br>  <br>\\- ProductEligibility | Optional | 58.0 |\n\nResponse body for POST\n\n[Decision Table Output](https://developer.salesforce.com/docs/atlas.en-us.industries_reference.meta/industries_reference/connect_responses_decision_table_output.htm)\n\n# Decision Table Output\n\nOutput representation of the decision table details.JSON example for GET, POST, and PATCH\n\n```\n{\n   \"code\":\"200\",\n   \"decisionTable\":{\n      \"collectOperator\":\"Count\",\n      \"conditionCriteria\":\"1 OR 2 OR 3\",\n      \"conditionType\":\"Any\",\n      \"decisionResultPolicy\":\"UniqueValues\",\n      \"description\":\"Eligiblity of Products using Qualification Rules\",\n      \"id\":\"0lDxx00000000BJ\",\n      \"parameters\":[\n         {\n            \"fieldName\":\"IsDeleted\",\n            \"isGroupByField\":false,\n            \"isPriority\":false,\n            \"operator\":\"Equals\",\n            \"sequence\":1,\n            \"usage\":\"Input\"\n         },\n         {\n            \"fieldName\":\"CreatedById\",\n            \"isGroupByField\":false,\n            \"isPriority\":false,\n            \"usage\":\"Output\"\n         },\n         {\n            \"fieldName\":\"Title\",\n            \"isGroupByField\":false,\n            \"isPriority\":false,\n            \"operator\":\"Equals\",\n            \"sequence\":3,\n            \"usage\":\"Input\"\n         },\n         {\n            \"fieldName\":\"Id\",\n            \"isGroupByField\":false,\n            \"isPriority\":false,\n            \"operator\":\"Equals\",\n            \"sequence\":2,\n            \"usage\":\"Input\"\n         }\n      ],\n      \"setupName\":\"Product Qualificiation eligibility3\",\n      \"sourceCriteria\":[\n         \n      ],\n      \"sourceObject\":\"AccountFeed\",\n      \"sourceType\":\"SingleSobject\",\n      \"sourceconditionLogic\":\"1 AND 2 AND 3\",\n      \"status\":\"Draft\"\n   },\n   \"isSuccess\":true,\n   \"message\":\"\"\n}\n\n ```\n\nJSON example for DELETE\n\n```\n{\n   \"code\":\"200\",\n   \"isSuccess\":true,\n   \"message\":\"\"\n}\n\n ```\n\n| Property Name | Type | Description | Filter Group and Version | Available Version |\n| --- | --- | --- | --- | --- |\n| code | String | Response code from the API request. | Small, 58.0 | 58.0 |\n| decisionTable | [Decision Table Definition Output](https://developer.salesforce.com/docs/atlas.en-us.industries_reference.meta/industries_reference/connect_responses_decision_table_definition_output.htm) | Details of the decision table definition associated with the decision table. | Small, 58.0 | 58.0 |\n| isSuccess | Boolean | Indicates whether the API request is successful (true) or not (false). | Small, 58.0 | 58.0 |\n| message | String | Error message when the API request fails. | Small, 58.0 | 58.0 |"
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            example:
+              setupName: Product Qualificiation eligibility
+              fullName: ProductQualificationEligibility
+              description: Eligiblity of Products using Qualification Rules
+              sourceObject: AccountFeed
+              status: Draft
+              conditionType: Any
+              conditionCriteria: 1 OR 2 OR 3
+              parameters:
+                - fieldName: IsDeleted
+                  usage: INPUT
+                  operator: Equals
+                  sequence: '1'
+                - fieldName: Id
+                  usage: INPUT
+                  operator: Equals
+                  sequence: '2'
+                - fieldName: Title
+                  usage: INPUT
+                  operator: Equals
+                  sequence: '3'
+                - fieldName: CreatedById
+                  usage: OUTPUT
+    parameters:
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '201':
+        description: Created
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Tue, 19 Sep 2023 12:41:36 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-XSS-Protection:
+            schema:
+              type: string
+              example: 1; mode=block
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Content-Type:
+            schema:
+              type: string
+              example: application/json;charset=UTF-8
+          Vary:
+            schema:
+              type: string
+              example: Accept-Encoding
+          Content-Encoding:
+            schema:
+              type: string
+              example: gzip
+          Transfer-Encoding:
+            schema:
+              type: string
+              example: chunked
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              code: '200'
+              decisionTable:
+                id: 0lDHo0000008Pnt
+                parameters: []
+                sourceCriteria: []
+              isSuccess: true
+              message: ''
+/services/data/v{version}/connect/business-rules/decision-table/definitions/{decisionTableId}:
+  get:
+    tags:
+      - Connect > Industries > Business Rules Engine > decision-table
+    summary: Get Table
+    description: "# Decision Table Definitions ( GET)\n\nGet details of a decision table definition.\n\nResource\n\n```\n/connect/business-rules/decision-table/definitions/${decisionTableId}\n\n ```\n\nResource Example\n\n```\nhttps://yourInstance.salesforce.com/services/data/v59.0/connect/business-rules/decision-table/definitions/0lDxx00000002Ur\n\n ```\n\nAvailable version\n\n58.0\n\nRequires Chatter\n\nNo\n\nHTTP methods\n\nGET\n\nResponse body for GET\n\n[Decision Table Output](https://developer.salesforce.com/docs/atlas.en-us.industries_reference.meta/industries_reference/connect_responses_decision_table_output.htm)\n\n# Decision Table Output\n\nOutput representation of the decision table details.JSON example for GET, POST, and PATCH\n\n```\n{\n   \"code\":\"200\",\n   \"decisionTable\":{\n      \"collectOperator\":\"Count\",\n      \"conditionCriteria\":\"1 OR 2 OR 3\",\n      \"conditionType\":\"Any\",\n      \"decisionResultPolicy\":\"UniqueValues\",\n      \"description\":\"Eligiblity of Products using Qualification Rules\",\n      \"id\":\"0lDxx00000000BJ\",\n      \"parameters\":[\n         {\n            \"fieldName\":\"IsDeleted\",\n            \"isGroupByField\":false,\n            \"isPriority\":false,\n            \"operator\":\"Equals\",\n            \"sequence\":1,\n            \"usage\":\"Input\"\n         },\n         {\n            \"fieldName\":\"CreatedById\",\n            \"isGroupByField\":false,\n            \"isPriority\":false,\n            \"usage\":\"Output\"\n         },\n         {\n            \"fieldName\":\"Title\",\n            \"isGroupByField\":false,\n            \"isPriority\":false,\n            \"operator\":\"Equals\",\n            \"sequence\":3,\n            \"usage\":\"Input\"\n         },\n         {\n            \"fieldName\":\"Id\",\n            \"isGroupByField\":false,\n            \"isPriority\":false,\n            \"operator\":\"Equals\",\n            \"sequence\":2,\n            \"usage\":\"Input\"\n         }\n      ],\n      \"setupName\":\"Product Qualificiation eligibility3\",\n      \"sourceCriteria\":[\n         \n      ],\n      \"sourceObject\":\"AccountFeed\",\n      \"sourceType\":\"SingleSobject\",\n      \"sourceconditionLogic\":\"1 AND 2 AND 3\",\n      \"status\":\"Draft\"\n   },\n   \"isSuccess\":true,\n   \"message\":\"\"\n}\n\n ```\n\nJSON example for DELETE\n\n```\n{\n   \"code\":\"200\",\n   \"isSuccess\":true,\n   \"message\":\"\"\n}\n\n ```\n\n| Property Name | Type | Description | Filter Group and Version | Available Version |\n| --- | --- | --- | --- | --- |\n| code | String | Response code from the API request. | Small, 58.0 | 58.0 |\n| decisionTable | [Decision Table Definition Output](https://developer.salesforce.com/docs/atlas.en-us.industries_reference.meta/industries_reference/connect_responses_decision_table_definition_output.htm) | Details of the decision table definition associated with the decision table. | Small, 58.0 | 58.0 |\n| isSuccess | Boolean | Indicates whether the API request is successful (true) or not (false). | Small, 58.0 | 58.0 |\n| message | String | Error message when the API request fails. | Small, 58.0 | 58.0 |"
+    parameters:
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: decisionTableId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: Decision Table Id
+        example: 0lDHo0000008Po3
+    responses:
+      '200':
+        description: OK
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Tue, 19 Sep 2023 13:05:06 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-XSS-Protection:
+            schema:
+              type: string
+              example: 1; mode=block
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Content-Type:
+            schema:
+              type: string
+              example: application/json;charset=UTF-8
+          Vary:
+            schema:
+              type: string
+              example: Accept-Encoding
+          Content-Encoding:
+            schema:
+              type: string
+              example: gzip
+          Transfer-Encoding:
+            schema:
+              type: string
+              example: chunked
+        content:
+          application/json:
+            schema:
+              type: object
+            examples:
+              example-0:
+                summary: Status200-Success
+                value:
+                  code: '200'
+                  decisionTable:
+                    conditionCriteria: 1 OR 2 OR 3
+                    conditionType: Any
+                    description: Eligiblity of Products using Qualification Rules
+                    id: 0lDHo0000008Pnt
+                    parameters:
+                      - fieldName: IsDeleted
+                        isGroupByField: false
+                        operator: Equals
+                        sequence: 1
+                        usage: Input
+                      - fieldName: CreatedById
+                        isGroupByField: false
+                        usage: Output
+                      - fieldName: Title
+                        isGroupByField: false
+                        operator: Equals
+                        sequence: 3
+                        usage: Input
+                      - fieldName: Id
+                        isGroupByField: false
+                        operator: Equals
+                        sequence: 2
+                        usage: Input
+                    setupName: Product Qualificiation eligibility
+                    sourceCriteria: []
+                    sourceObject: AccountFeed
+                    status: Active
+                  isSuccess: true
+                  message: ''
+              example-1:
+                summary: Status200-Success
+                value:
+                  code: '200'
+                  decisionTable:
+                    conditionCriteria: 1 OR 2 OR 3
+                    conditionType: Any
+                    description: Eligiblity of Products using Qualification Rules
+                    id: 0lDHo0000008Po3
+                    parameters:
+                      - fieldName: IsDeleted
+                        isGroupByField: false
+                        operator: Equals
+                        sequence: 1
+                        usage: Input
+                      - fieldName: CreatedById
+                        isGroupByField: false
+                        usage: Output
+                      - fieldName: Title
+                        isGroupByField: false
+                        operator: Equals
+                        sequence: 3
+                        usage: Input
+                      - fieldName: Id
+                        isGroupByField: false
+                        operator: Equals
+                        sequence: 2
+                        usage: Input
+                    setupName: Product Qualificiation eligibility
+                    sourceCriteria: []
+                    sourceObject: AccountFeed
+                    status: Draft
+                  isSuccess: true
+                  message: ''
+      '400':
+        description: Bad Request
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Tue, 19 Sep 2023 13:20:33 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-XSS-Protection:
+            schema:
+              type: string
+              example: 1; mode=block
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Content-Type:
+            schema:
+              type: string
+              example: application/json;charset=UTF-8
+          Transfer-Encoding:
+            schema:
+              type: string
+              example: chunked
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              - errorCode: INVALID_ID_FIELD
+                message: >-
+                  We couldn’t find a record with that ID. Specify a valid decisionTableId and try again.
+  delete:
+    tags:
+      - Connect > Industries > Business Rules Engine > decision-table
+    summary: Delete Table
+    description: "# Decision Table Definitions ( DELETE)\n\nDelete a decision table definition associated with a decision table.\n\nResource\n\n```\n/connect/business-rules/decision-table/definitions/${decisionTableId}\n\n ```\n\nResource Example\n\n```\nhttps://yourInstance.salesforce.com/services/data/v59.0/connect/business-rules/decision-table/definitions/0lDxx00000002Ur\n\n ```\n\nAvailable version\n\n58.0\n\nRequires Chatter\n\nNo\n\nHTTP methods\n\nDELETE\n\nResponse body for DELETE\n\n[Decision Table Output](https://developer.salesforce.com/docs/atlas.en-us.industries_reference.meta/industries_reference/connect_responses_decision_table_output.htm)\n\n# Decision Table Output\n\nOutput representation of the decision table details.JSON example for GET, POST, and PATCH\n\n```\n{\n   \"code\":\"200\",\n   \"decisionTable\":{\n      \"collectOperator\":\"Count\",\n      \"conditionCriteria\":\"1 OR 2 OR 3\",\n      \"conditionType\":\"Any\",\n      \"decisionResultPolicy\":\"UniqueValues\",\n      \"description\":\"Eligiblity of Products using Qualification Rules\",\n      \"id\":\"0lDxx00000000BJ\",\n      \"parameters\":[\n         {\n            \"fieldName\":\"IsDeleted\",\n            \"isGroupByField\":false,\n            \"isPriority\":false,\n            \"operator\":\"Equals\",\n            \"sequence\":1,\n            \"usage\":\"Input\"\n         },\n         {\n            \"fieldName\":\"CreatedById\",\n            \"isGroupByField\":false,\n            \"isPriority\":false,\n            \"usage\":\"Output\"\n         },\n         {\n            \"fieldName\":\"Title\",\n            \"isGroupByField\":false,\n            \"isPriority\":false,\n            \"operator\":\"Equals\",\n            \"sequence\":3,\n            \"usage\":\"Input\"\n         },\n         {\n            \"fieldName\":\"Id\",\n            \"isGroupByField\":false,\n            \"isPriority\":false,\n            \"operator\":\"Equals\",\n            \"sequence\":2,\n            \"usage\":\"Input\"\n         }\n      ],\n      \"setupName\":\"Product Qualificiation eligibility3\",\n      \"sourceCriteria\":[\n         \n      ],\n      \"sourceObject\":\"AccountFeed\",\n      \"sourceType\":\"SingleSobject\",\n      \"sourceconditionLogic\":\"1 AND 2 AND 3\",\n      \"status\":\"Draft\"\n   },\n   \"isSuccess\":true,\n   \"message\":\"\"\n}\n\n ```\n\nJSON example for DELETE\n\n```\n{\n   \"code\":\"200\",\n   \"isSuccess\":true,\n   \"message\":\"\"\n}\n\n ```\n\n| Property Name | Type | Description | Filter Group and Version | Available Version |\n| --- | --- | --- | --- | --- |\n| code | String | Response code from the API request. | Small, 58.0 | 58.0 |\n| decisionTable | [Decision Table Definition Output](https://developer.salesforce.com/docs/atlas.en-us.industries_reference.meta/industries_reference/connect_responses_decision_table_definition_output.htm) | Details of the decision table definition associated with the decision table. | Small, 58.0 | 58.0 |\n| isSuccess | Boolean | Indicates whether the API request is successful (true) or not (false). | Small, 58.0 | 58.0 |\n| message | String | Error message when the API request fails. | Small, 58.0 | 58.0 |"
+    parameters:
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: decisionTableId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: Decision Table Id
+        example: 0lDHo0000008Pny
+    responses:
+      '204':
+        description: No Content
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Tue, 19 Sep 2023 13:36:22 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-XSS-Protection:
+            schema:
+              type: string
+              example: 1; mode=block
+          Content-Security-Policy:
+            schema:
+              type: string
+              example: upgrade-insecure-requests
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+        content:
+          text/plain:
+            schema:
+              type: string
+            example: null
+  patch:
+    tags:
+      - Connect > Industries > Business Rules Engine > decision-table
+    summary: Update Table
+    description: "# Decision Table Definitions ( DELETE)\n\nDelete a decision table definition associated with a decision table.\n\nResource\n\n```\n/connect/business-rules/decision-table/definitions/${decisionTableId}\n\n ```\n\nResource Example\n\n```\nhttps://yourInstance.salesforce.com/services/data/v59.0/connect/business-rules/decision-table/definitions/0lDxx00000002Ur\n\n ```\n\nAvailable version\n\n58.0\n\nRequires Chatter\n\nNo\n\nHTTP methods\n\nDELETE\n\nResponse body for DELETE\n\n[Decision Table Output](https://developer.salesforce.com/docs/atlas.en-us.industries_reference.meta/industries_reference/connect_responses_decision_table_output.htm)\n\n# Decision Table Output\n\nOutput representation of the decision table details.JSON example for GET, POST, and PATCH\n\n```\n{\n   \"code\":\"200\",\n   \"decisionTable\":{\n      \"collectOperator\":\"Count\",\n      \"conditionCriteria\":\"1 OR 2 OR 3\",\n      \"conditionType\":\"Any\",\n      \"decisionResultPolicy\":\"UniqueValues\",\n      \"description\":\"Eligiblity of Products using Qualification Rules\",\n      \"id\":\"0lDxx00000000BJ\",\n      \"parameters\":[\n         {\n            \"fieldName\":\"IsDeleted\",\n            \"isGroupByField\":false,\n            \"isPriority\":false,\n            \"operator\":\"Equals\",\n            \"sequence\":1,\n            \"usage\":\"Input\"\n         },\n         {\n            \"fieldName\":\"CreatedById\",\n            \"isGroupByField\":false,\n            \"isPriority\":false,\n            \"usage\":\"Output\"\n         },\n         {\n            \"fieldName\":\"Title\",\n            \"isGroupByField\":false,\n            \"isPriority\":false,\n            \"operator\":\"Equals\",\n            \"sequence\":3,\n            \"usage\":\"Input\"\n         },\n         {\n            \"fieldName\":\"Id\",\n            \"isGroupByField\":false,\n            \"isPriority\":false,\n            \"operator\":\"Equals\",\n            \"sequence\":2,\n            \"usage\":\"Input\"\n         }\n      ],\n      \"setupName\":\"Product Qualificiation eligibility3\",\n      \"sourceCriteria\":[\n         \n      ],\n      \"sourceObject\":\"AccountFeed\",\n      \"sourceType\":\"SingleSobject\",\n      \"sourceconditionLogic\":\"1 AND 2 AND 3\",\n      \"status\":\"Draft\"\n   },\n   \"isSuccess\":true,\n   \"message\":\"\"\n}\n\n ```\n\nJSON example for DELETE\n\n```\n{\n   \"code\":\"200\",\n   \"isSuccess\":true,\n   \"message\":\"\"\n}\n\n ```\n\n| Property Name | Type | Description | Filter Group and Version | Available Version |\n| --- | --- | --- | --- | --- |\n| code | String | Response code from the API request. | Small, 58.0 | 58.0 |\n| decisionTable | [Decision Table Definition Output](https://developer.salesforce.com/docs/atlas.en-us.industries_reference.meta/industries_reference/connect_responses_decision_table_definition_output.htm) | Details of the decision table definition associated with the decision table. | Small, 58.0 | 58.0 |\n| isSuccess | Boolean | Indicates whether the API request is successful (true) or not (false). | Small, 58.0 | 58.0 |\n| message | String | Error message when the API request fails. | Small, 58.0 | 58.0 |"
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            example:
+              setupName: Product Qualificiation eligibility
+              fullName: ProductQualificationEligibility
+              description: Eligiblity of Products using Qualification Rules
+              usageType: ProductEligibility
+              sourceType: SingleSobject
+              sourceObject: AccountFeed
+              status: Draft
+              decisionResultPolicy: UniqueValues
+              collectOperator: Count
+              conditionType: Any
+              conditionCriteria: 1 OR 2 OR 3
+              parameters:
+                - fieldName: IsDeleted
+                  usage: INPUT
+                  operator: Equals
+                  sequence: '1'
+                - fieldName: Id
+                  usage: INPUT
+                  operator: Equals
+                  sequence: '2'
+                - fieldName: Title
+                  usage: INPUT
+                  operator: Equals
+                  sequence: '3'
+                - fieldName: CreatedById
+                  usage: OUTPUT
+    parameters:
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: decisionTableId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: Decision Table Id
+        example: 0lDHo0000008Po3
+    responses:
+      '200':
+        description: OK
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Tue, 19 Sep 2023 14:02:00 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-XSS-Protection:
+            schema:
+              type: string
+              example: 1; mode=block
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Content-Type:
+            schema:
+              type: string
+              example: application/json;charset=UTF-8
+          Transfer-Encoding:
+            schema:
+              type: string
+              example: chunked
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              code: '200'
+              isSuccess: true
+              message: ''
+/services/data/v{version}/connect/business-rules/decision-table/{decisionTableId}:
+  post:
+    tags:
+      - Connect > Industries > Business Rules Engine > decision-table
+    summary: Lookup Table
+    description: >-
+      # Decision Table (Lookup Table)
+
+
+      Performs a lookup on a decision table.Resource
+
+
+      ```
+
+      /connect/business-rules/decision-table/${decisionTableId}
+
+
+       ```
+
+      Resource Example
+
+
+      ```
+
+      https://yourInstance.salesforce.com/services/data/v55.0/connect
+
+      /decision-table/0lDB0000000TNQzMAO
+
+
+       ```
+
+      Available version
+
+
+      55.0
+
+
+      Requires Chatter
+
+
+      No
+
+
+      HTTP methods
+
+
+      POST
+
+
+      Request body for POST
+
+
+      JSON example
+
+
+      ```
+
+      {
+
+         "conditions" : {
+            "conditionsList" : [
+               {
+                  "fieldName": "state__c",
+                  "value": "MH"
+               },
+               {
+                  "fieldName": "validity__c",
+                  "value": 30
+               }
+            ]
+         }
+      }
+
+
+       ```
+
+      Properties
+
+
+      | Name | Type | Description | Required or Optional | Available Version |
+
+      | --- | --- | --- | --- | --- |
+
+      | conditions | [Decision Table Condition](https://developer.salesforce.com/docs/atlas.en-us.industries_reference.meta/industries_reference/connect_requests_decision_table_condition.htm)\[\] | The list of decision table conditions on which the decision table executes and provides outcomes. | Required | 55.0 |
+
+      | datasetLinkName | String | The API name of the dataset link provided as an input for the decision table execution. | Optional | 55.0 |
+
+
+      Response body for POST
+
+
+      [Decision Table Outcome](https://developer.salesforce.com/docs/atlas.en-us.industries_reference.meta/industries_reference/connect_responses_decision_table_outcome.htm)
+
+
+      # Decision Table Outcome
+
+
+      Output representation of the decision table execution.JSON example
+
+
+      ```
+
+      {
+
+        "errorCode" : null,
+        "errorMessage" : null,
+        "outcomeList" : [ {
+          "values" : {
+            "amount__c" : "399",
+            "Name" : "MH 005"
+          }
+        }, {
+          "values" : {
+            "amount__c" : "499",
+            "Name" : "MH 006"
+          }
+        }, {
+          "values" : {
+            "amount__c" : "379",
+            "Name" : "MH 007"
+          }
+        }, {
+          "values" : {
+            "amount__c" : "1498",
+            "Name" : "MH 008"
+          }
+        }, {
+          "values" : {
+            "amount__c" : "98",
+            "Name" : "MH 009"
+          }
+        }, {
+          "values" : {
+            "amount__c" : "251",
+            "Name" : "MH 010"
+          }
+        } ],
+        "outcomeType" : "Multiple Matches",
+        "successStatus" : true
+      }
+
+
+       ```
+
+      | Property Name | Type | Description | Filter Group and Version | Available Version |
+
+      | --- | --- | --- | --- | --- |
+
+      | errorCode | Integer | The error code if transaction fails for any reason. | Small, 55.0 | 55.0 |
+
+      | errorMessage | String | The error message if transaction fails for any reason. | Small, 55.0 | 55.0 |
+
+      | outcomeList | [Decision Table Outcome Item](https://developer.salesforce.com/docs/atlas.en-us.industries_reference.meta/industries_reference/connect_responses_decision_table_outcome_item.htm)\[\] | Outcome list that stores two or more outcomes provided by the decision table. | Small, 55.0 | 55.0 |
+
+      | outcomeType | String | The outcome type after the request is successful. | Small, 55.0 | 55.0 |
+
+      | successStatus | Boolean | Indicates the status of the decision table execution. | Small, 55.0 | 55.0 |
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            example:
+              conditions:
+                conditionsList:
+                  - fieldName: IsDeleted
+                    value: true
+    parameters:
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: decisionTableId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: Decision Table Id
+        example: 0lDHo0000008Pnt
+    responses:
+      '201':
+        description: Created
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Tue, 19 Sep 2023 13:22:05 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-XSS-Protection:
+            schema:
+              type: string
+              example: 1; mode=block
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Content-Type:
+            schema:
+              type: string
+              example: application/json;charset=UTF-8
+          Vary:
+            schema:
+              type: string
+              example: Accept-Encoding
+          Content-Encoding:
+            schema:
+              type: string
+              example: gzip
+          Transfer-Encoding:
+            schema:
+              type: string
+              example: chunked
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              errorCode: null
+              errorMessage: null
+              outcomeList: []
+              outcomeType: No Match
+              successStatus: true
+      '400':
+        description: Bad Request
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Tue, 19 Sep 2023 12:16:33 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-XSS-Protection:
+            schema:
+              type: string
+              example: 1; mode=block
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Content-Type:
+            schema:
+              type: string
+              example: application/json;charset=UTF-8
+          Transfer-Encoding:
+            schema:
+              type: string
+              example: chunked
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              - errorCode: INVALID_ID_FIELD
+                message: 'Invalid identifier: 0lIHo000000LFC6MAO'
+      '500':
+        description: Server Error
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Tue, 19 Sep 2023 12:31:01 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-XSS-Protection:
+            schema:
+              type: string
+              example: 1; mode=block
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Content-Type:
+            schema:
+              type: string
+              example: application/json;charset=UTF-8
+          Transfer-Encoding:
+            schema:
+              type: string
+              example: chunked
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              - message: >-
+                  An unexpected error occurred. Please include this ErrorId if you contact support: 1716762391-743375 (1633993601)
+                errorCode: UNKNOWN_EXCEPTION

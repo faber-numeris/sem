@@ -1,0 +1,39 @@
+/services/Soap/c/{version}:
+  post:
+    tags:
+      - SOAP
+    summary: SOAP undelete
+    description: Undeletes records from the Recycle Bin.
+    requestBody:
+      content:
+        '*/*':
+          schema:
+            type: string
+            example: >-
+              "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:urn=\"urn:enterprise.soap.sforce.com\">\n  <soapenv:Header>\n     <urn:SessionHeader>\n        <urn:sessionId>{{_accessToken}}</urn:sessionId>\n     </urn:SessionHeader>\n  </soapenv:Header>\n  <soapenv:Body>\n     <urn:undelete>\n        <urn:ids></urn:ids>\n     </urn:undelete>\n  </soapenv:Body>\n</soapenv:Envelope>"
+    parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: text/xml; charset=UTF-8
+      - name: Accept
+        in: header
+        schema:
+          type: string
+        example: text/xml
+      - name: SOAPAction
+        in: header
+        schema:
+          type: string
+        example: undelete
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: Successful response
+        content:
+          application/json: {}

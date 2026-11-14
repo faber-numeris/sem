@@ -1,0 +1,76 @@
+info:
+  name: Get Job Info Query
+  type: http
+  seq: 1
+
+http:
+  method: GET
+  url: "{{_endpoint}}/services/data/v{{version}}/jobs/query/{{_jobId}}"
+  headers:
+    - name: Content-Type
+      value: application/json
+      disabled: true
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Successful Get Job Info Query
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/jobs/query/{{_jobId}}"
+      method: GET
+      headers:
+        - name: Content-Type
+          value: application/json
+          disabled: true
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: Date
+          value: Fri, 17 Nov 2023 16:13:43 GMT
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-XSS-Protection
+          value: 1; mode=block
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: Sforce-Limit-Info
+          value: api-usage=2/15000
+        - name: Content-Type
+          value: application/json;charset=UTF-8
+        - name: Vary
+          value: Accept-Encoding
+        - name: Content-Encoding
+          value: gzip
+        - name: Transfer-Encoding
+          value: chunked
+      body:
+        type: json
+        data: |-
+          {
+              "id": "750...",
+              "operation": "insert",
+              "object": "Account",
+              "createdById": "005...",
+              "createdDate": "<datetime>",
+              "systemModstamp": "<datetime>",
+              "state": "Open",
+              "concurrencyMode": "Parallel",
+              "contentType": "CSV",
+              "apiVersion": 58,
+              "jobType": "Classic",
+              "retries": 0,
+              "totalProcessingTime": 0,
+              "apiActiveProcessingTime": 0,
+              "apexProcessingTime": 0
+          }

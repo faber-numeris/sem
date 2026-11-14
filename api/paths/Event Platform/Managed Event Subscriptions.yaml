@@ -1,0 +1,115 @@
+/services/data/v{version}/tooling/sobjects/ManagedEventSubscription:
+  post:
+    tags:
+      - Event Platform > Managed Event Subscriptions
+    summary: Create managed event subscription
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            example:
+              FullName: Managed_Sub_OpportunityChangeEvent
+              Metadata:
+                label: Managed Sub OpportunityChangeEvent
+                topicName: /data/OpportunityChangeEvent
+                defaultReplay: LATEST
+                state: RUN
+                errorRecoveryReplay: LATEST
+    parameters:
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: Successful response
+        content:
+          application/json: {}
+/services/data/v{version}/tooling/sobjects/ManagedEventSubscription/{managedEventSubscriptionId}:
+  get:
+    tags:
+      - Event Platform > Managed Event Subscriptions
+    summary: Get managed event subscription by ID
+    parameters:
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: managedEventSubscriptionId
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: Successful response
+        content:
+          application/json: {}
+  patch:
+    tags:
+      - Event Platform > Managed Event Subscriptions
+    summary: Update managed event subscription
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            example:
+              FullName: Managed_Sub_OpportunityChangeEvent
+              Metadata:
+                state: STOP
+    parameters:
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: managedEventSubscriptionId
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: Successful response
+        content:
+          application/json: {}
+  delete:
+    tags:
+      - Event Platform > Managed Event Subscriptions
+    summary: Delete managed event subscription
+    parameters:
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: managedEventSubscriptionId
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: Successful response
+        content:
+          application/json: {}
+/services/data/v{version}/tooling/sobjects/ManagedEventSubscription/describe:
+  get:
+    tags:
+      - Event Platform > Managed Event Subscriptions
+    summary: Describe managed event subscription
+    parameters:
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: Successful response
+        content:
+          application/json: {}

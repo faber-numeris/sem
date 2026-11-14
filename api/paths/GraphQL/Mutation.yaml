@@ -1,0 +1,84 @@
+/services/data/v{version}/graphql:
+  post:
+    tags:
+      - GraphQL > Mutation
+    summary: Update Account
+    requestBody:
+      content: {}
+    parameters:
+      - name: X-Chatter-Entity-Encoding
+        in: header
+        schema:
+          type: boolean
+        example: 'false'
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: OK
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Wed, 25 Sep 2024 10:18:33 GMT
+          Content-Type:
+            schema:
+              type: string
+              example: application/json;charset=UTF-8
+          Transfer-Encoding:
+            schema:
+              type: string
+              example: chunked
+          Connection:
+            schema:
+              type: string
+              example: keep-alive
+          Sforce-Limit-Info:
+            schema:
+              type: string
+              example: api-usage=21/15000
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Vary:
+            schema:
+              type: string
+              example: Accept-Encoding
+          Content-Encoding:
+            schema:
+              type: string
+              example: gzip
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Server:
+            schema:
+              type: string
+              example: sfdcedge
+          X-SFDC-Request-Id:
+            schema:
+              type: string
+              example: d775c889db46c3df564d9650265dc948
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              data:
+                uiapi:
+                  AccountUpdate:
+                    success: true
+              errors: []

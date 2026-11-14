@@ -1,0 +1,23 @@
+info:
+  name: Get managed event subscription by ID
+  type: http
+  seq: 2
+
+http:
+  method: GET
+  url: "{{_endpoint}}/services/data/v{{version}}/tooling/sobjects/ManagedEventSubscription/:managedEventSubscriptionId"
+  params:
+    - name: managedEventSubscriptionId
+      value: ""
+      type: path
+  body:
+    type: json
+    data: ""
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true

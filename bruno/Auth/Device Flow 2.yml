@@ -1,0 +1,99 @@
+info:
+  name: Device Flow 2
+  type: http
+  seq: 11
+
+http:
+  method: POST
+  url: "{{url}}{{site}}/services/oauth2/token"
+  body:
+    type: multipart-form
+    data:
+      - name: grant_type
+        type: text
+        value: device
+      - name: client_id
+        type: text
+        value: "{{clientId}}"
+      - name: format
+        type: text
+        value: json
+      - name: code
+        type: text
+        value: "{{_deviceCode}}"
+
+runtime:
+  scripts:
+    - type: after-response
+      code: |-
+        const jsonData = res.getBody();
+        const context = bru.getEnvName() ? { set: (k, v) => bru.setEnvVar(k, v), get: (k) => bru.getEnvVar(k) } : { set: (k, v) => bru.setVar(k, v), get: (k) => bru.getVar(k) };
+        context.set("_refreshToken", jsonData.refresh_token);
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Successful Device Flow 2
+    request:
+      url: "{{url}}{{site}}/services/oauth2/token"
+      method: POST
+      body:
+        type: multipart-form
+        data:
+          - name: grant_type
+            type: text
+            value: device
+          - name: client_id
+            type: text
+            value: "{{clientId}}"
+          - name: format
+            type: text
+            value: json
+          - name: code
+            type: text
+            value: M01WRzlWZS4yd3FVVnhfYWxmS2xQUmdzMHlZM3ozUnZHelJIQXVFZzl5dlpubWRfR05LcGtybVNEODBTTDg1Z0lsWG1hR29WUFZ5ZWtkaFZWZnJVdzs4NS4yMjIuMTM0LjQ7MTcwMDE0ODU3OTk1NjsxMlpIR01aSA
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: Date
+          value: Thu, 16 Nov 2023 15:32:28 GMT
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-XSS-Protection
+          value: 1; mode=block
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: Expires
+          value: Thu, 01 Jan 1970 00:00:00 GMT
+        - name: Content-Type
+          value: application/json;charset=UTF-8
+        - name: Vary
+          value: Accept-Encoding
+        - name: Content-Encoding
+          value: gzip
+        - name: Transfer-Encoding
+          value: chunked
+      body:
+        type: json
+        data: |-
+          {
+              "access_token": "<access_token>",
+              "refresh_token": "<refresh_token>",
+              "signature": "DD9WZJyeKtTaY9QumwdCdGoSSTsCVpWegA0Rahzf5e8=",
+              "scope": "<scope_list>",
+              "id_token": "<id_token>",
+              "instance_url": "https://<my_domain>",
+              "id": "https://login.salesforce.com/id/00D.../005...",
+              "token_type": "Bearer",
+              "issued_at": "<timestamp>"
+          }

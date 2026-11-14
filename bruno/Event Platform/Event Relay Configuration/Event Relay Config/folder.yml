@@ -1,0 +1,14 @@
+info:
+  name: Event Relay Config
+  type: folder
+  seq: 2
+
+request:
+  auth: inherit
+
+docs:
+  content: |-
+    This folder contains requests for creating and manipulating event relays.
+
+    For more information, see [Event Relay](https://desktop.postman.com/?desktopVersion=10.14.2&userId=1220894&teamId=0) in _Salesforce Help_.
+  type: text/markdown

@@ -1,0 +1,102 @@
+info:
+  name: Named Query APIs
+  type: http
+  seq: 23
+
+http:
+  method: GET
+  url: "{{_endpoint}}/services/data/v{{version}}/named/query/:NQ_API_NAME"
+  params:
+    - name: NQ_API_NAME
+      value: ""
+      type: path
+      description: The name of the Named Query API you want to call.
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Named Query
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/named/query/:NQ_API_NAME?maxrecords=3&industry=Energy"
+      method: GET
+      params:
+        - name: maxrecords
+          value: "3"
+          type: query
+          description: Maximum number of records returned by the query (all parameters defined as part of the named query metadata)
+        - name: industry
+          value: Energy
+          type: query
+          description: A value to filter on the Account.Industry field (all parameters defined as part of the named query metadata)
+        - name: NQ_API_NAME
+          value: GetAccountsFromIndustry
+          type: path
+          description: The name of the Named Query API you want to call
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: Date
+          value: Wed, 22 Apr 2026 12:02:03 GMT
+        - name: Vary
+          value: Accept-Encoding
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: Sforce-Limit-Info
+          value: api-usage=2/15000
+        - name: Content-Type
+          value: application/json;charset=UTF-8
+        - name: Content-Encoding
+          value: gzip
+        - name: Transfer-Encoding
+          value: chunked
+      body:
+        type: json
+        data: |-
+          {
+              "totalSize": 3,
+              "done": true,
+              "records": [
+                  {
+                      "attributes": {
+                          "type": "Account",
+                          "url": "/services/data/v66.0/sobjects/Account/00158000006QBOpAAO"
+                      },
+                      "Id": "00158000006QBOpAAO",
+                      "Name": "United Oil & Gas, Singapore"
+                  },
+                  {
+                      "attributes": {
+                          "type": "Account",
+                          "url": "/services/data/v66.0/sobjects/Account/00158000006QBOoAAO"
+                      },
+                      "Id": "00158000006QBOoAAO",
+                      "Name": "United Oil & Gas, Belgium"
+                  },
+                  {
+                      "attributes": {
+                          "type": "Account",
+                          "url": "/services/data/v66.0/sobjects/Account/00158000006QBOlAAO"
+                      },
+                      "Id": "00158000006QBOlAAO",
+                      "Name": "United Oil & Gas Corp."
+                  }
+              ]
+          }
+
+docs: |-
+  Use Named Query APIs to create custom Salesforce Object Query Language (SOQL) queries that you can expose in REST API calls.
+
+  Follow [these instructions](https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/resources_named_query_setup.htm) to create your first Named Query API and call it in Postman with this request template.

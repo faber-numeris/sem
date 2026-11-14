@@ -1,0 +1,258 @@
+/services/data/v{version}/actions/custom/runExpressionSet/{expressionSetAPIName}:
+  post:
+    tags:
+      - REST > Actions > custom > Business Rules Engine Invocable Actions
+    summary: runExpressionSet
+    description: "# Expression Set Actions\n\nInvoke an active expression set. An expression set is a user-defined rule that accepts an input and returns the output based on the configured function.\n\nThe configured function of an expression set can be a simple decision matrix lookup, a calculation based on a mathematical formula, a condition, or another expression set.\n\nThese actions are available in API version 55.0 and later.\n\n## Supported REST HTTP Methods\n\nURI/services/data/v55.0/actions/custom/runExpressionSet/{ApiName}\n\n> `Note` \n  \n> `The API name of an expression set is unique within your Salesforce instance.` \n  \n\nFormats\n\nJSON\n\nHTTP Methods\n\nPOST\n\nAuthentication\n\nAuthorization: Bearer token\n\n## Inputs\n\nVary depending on the selected expression set.\n\n## Outputs\n\nVary depending on the inputs of the selected expression set.\n\n## Usage\n\nThis section has the sample request and response for invoking an expression set that does the following:\n\n1. Find the tax percentage and the premium corresponding to specific age and salary using a decision matrix lookup.\n    \n2. Check the age criterion to calculate the total tax.\n    \n3. Calculate the total tax to be paid based on the age group, salary, and the tax percentage.\n    \n\nSample request\n\nHere’s an example POST request that has the inputs, such as, age and salary:\n\n```\n{\n   \"inputs\":[\n      {\n         \"Age\":\"25.00\",\n         \"Salary\":\"50000.00\"\n      }\n   ]\n}\n\n ```\n\nSample response\n\nHere’s an example response that has the premium and tax values based on the inputs provided in the example request:\n\n```\n[\n   {\n      \"actionName\":\"TaxPremiumES\",\n      \"errors\":null,\n      \"isSuccess\":true,\n      \"outputValues\":{\n         \"TaxPremium__Premium\":1000,\n         \"TaxPremium__Tax\":10,\n         \"TaxToBePaid\":1050,\n         \"condition_output__2\":\"false\",\n         \"condition_output__1\":\"true\"\n      }\n   }\n]\n\n ```"
+    requestBody:
+      content:
+        '*/*':
+          schema:
+            type: string
+            example: '"{\n    \"inputs\": [\n        {}\n    ]\n}"'
+    parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: expressionSetAPIName
+        in: path
+        schema:
+          type: string
+        required: true
+        description: >-
+          The API name of an expression set is unique within your Salesforce instance.
+        example: myExpressionSet
+    responses:
+      '200':
+        description: OK
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Thu, 07 Sep 2023 09:08:00 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-XSS-Protection:
+            schema:
+              type: string
+              example: 1; mode=block
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Sforce-Limit-Info:
+            schema:
+              type: string
+              example: api-usage=5/15000
+          Content-Type:
+            schema:
+              type: string
+              example: application/json;charset=UTF-8
+          Vary:
+            schema:
+              type: string
+              example: Accept-Encoding
+          Content-Encoding:
+            schema:
+              type: string
+              example: gzip
+          Transfer-Encoding:
+            schema:
+              type: string
+              example: chunked
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              - actionName: myExpressionSet
+                errors: null
+                isSuccess: true
+                outputValues:
+                  output: 1
+                version: 1
+      '400':
+        description: Bad Request
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Thu, 07 Sep 2023 09:04:01 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-XSS-Protection:
+            schema:
+              type: string
+              example: 1; mode=block
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Sforce-Limit-Info:
+            schema:
+              type: string
+              example: api-usage=1/15000
+          Content-Type:
+            schema:
+              type: string
+              example: application/json;charset=UTF-8
+          Transfer-Encoding:
+            schema:
+              type: string
+              example: chunked
+        content:
+          application/json:
+            schema:
+              type: object
+            examples:
+              example-0:
+                summary: Status400-EmptyExpressionSetAPIName
+                value:
+                  - actionName: ':expressionSetAPIName'
+                    errors:
+                      - statusCode: MISSING_RECORD
+                        message: 'Action name not found: :expressionSetAPIName'
+                        fields: []
+                    isSuccess: false
+                    outputValues: null
+                    version: 1
+              example-1:
+                summary: Status400-ExpressionNotFound
+                value:
+                  - actionName: ghfgh
+                    errors:
+                      - statusCode: MISSING_RECORD
+                        message: 'Action name not found: ghfgh'
+                        fields: []
+                    isSuccess: false
+                    outputValues: null
+                    version: 1
+              example-2:
+                summary: Status500-EmptyBody
+                value:
+                  - message: >-
+                      The HTTP entity body is required, but this request has no entity body.
+                    errorCode: JSON_PARSER_ERROR
+              example-3:
+                summary: Status400-InvalidBody
+                value:
+                  - errorCode: BAD_REQUEST
+                    message: Invalid Request Body
+/services/data/v{version}/actions/custom/runDecisionMatrix/{UniqueName}:
+  post:
+    tags:
+      - REST > Actions > custom > Business Rules Engine Invocable Actions
+    summary: runDecisionMatrix
+    description: "# Decision Matrix Actions\n\nInvoke a decision matrix in a flow with the Decision Matrix Actions. A decision matrix is a user-defined table where you can look up an output based on the inputs you provide.\n\nFor example, you can look up a candidate’s eligibility to avail medical insurance in a decision matrix based on the candidate’s age and gender.\n\nThese actions are available in API version 55.0 and later.\n\n## Supported REST HTTP Methods\n\nURI/services/data/v55.0/actions/custom/runDecisionMatrix/{UniqueName}\n\nNote\n\nThe value of UniqueName is the unique identifier of the record, which is sourced from the name of a decision matrix.\n\nFormatsJSONHTTP MethodsPOSTAuthenticationAuthorization: Bearer token\n\n## Inputs\n\nVary depending on the selected decision matrix.\n\n## Outputs\n\nVary depending on the inputs of the selected decision matrix.\n\n## Usage\n\nSample Request\n\nHere’s an example POST request that has the inputs, such as, age and state:\n\n```\n{\n   \"inputs\":[\n      {\n         \"age\":\"25\",\n         \"state\":\"NY\"\n      },\n      {\n         \"age\":\"25\",\n         \"state\":\"CA\"\n      },\n      {\n         \"age\":\"\",\n         \"state\":\"WA\"\n      }\n   ]\n}\n\n ```\n\nSample Response\n\nHere’s an example response that has the premium and tax values based on the inputs provided in the example request.\n\n```\n[\n   {\n      \"actionName\":\"premiumTaxLookup\",\n      \"errors\":null,\n      \"isSuccess\":true,\n      \"outputValues\":{\n         \"premium\":2400.0,\n         \"tax\":200.0\n      }\n   },\n   {\n      \"actionName\":\"premiumTaxLookup\",\n      \"errors\":null,\n      \"isSuccess\":true,\n      \"outputValues\":{\n         \"premium\":2400.0,\n         \"tax\":200.0\n      }\n   },\n   {\n      \"actionName\":\"premiumTaxLookup\",\n      \"errors\":[\n         {\n            \"statusCode\":\"REQUIRED_FIELD_MISSING\",\n            \"message\":\"Missing required input parameter: age\",\n            \"fields\":[\n            ]\n         }\n      ],\n      \"isSuccess\":false,\n      \"outputValues\":null\n   }\n]\n\n ```"
+    requestBody:
+      content:
+        '*/*':
+          schema:
+            type: string
+            example: >-
+              "{\n   \"inputs\":[\n      {\n         \"myColumnInput\":\"One\"\n      }\n   ]\n}\n"
+    parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: version
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: UniqueName
+        in: path
+        schema:
+          type: string
+        required: true
+        description: >-
+          The value of UniqueName is the unique identifier of the record, which is sourced from the name of a decision matrix.
+        example: myDecisionMatrix
+    responses:
+      '200':
+        description: OK
+        headers:
+          Date:
+            schema:
+              type: string
+              example: Thu, 07 Sep 2023 13:00:30 GMT
+          Strict-Transport-Security:
+            schema:
+              type: string
+              example: max-age=63072000; includeSubDomains
+          X-Content-Type-Options:
+            schema:
+              type: string
+              example: nosniff
+          X-XSS-Protection:
+            schema:
+              type: string
+              example: 1; mode=block
+          X-Robots-Tag:
+            schema:
+              type: string
+              example: none
+          Cache-Control:
+            schema:
+              type: string
+              example: no-cache,must-revalidate,max-age=0,no-store,private
+          Sforce-Limit-Info:
+            schema:
+              type: string
+              example: api-usage=15/15000
+          Content-Type:
+            schema:
+              type: string
+              example: application/json;charset=UTF-8
+          Vary:
+            schema:
+              type: string
+              example: Accept-Encoding
+          Content-Encoding:
+            schema:
+              type: string
+              example: gzip
+          Transfer-Encoding:
+            schema:
+              type: string
+              example: chunked
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              - actionName: myDecisionMatrix
+                errors: null
+                isSuccess: true
+                outputValues:
+                  myColumnOutput: '1'
+                version: 1

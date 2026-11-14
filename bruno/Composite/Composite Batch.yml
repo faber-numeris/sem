@@ -1,0 +1,136 @@
+info:
+  name: Composite Batch
+  type: http
+  seq: 3
+
+http:
+  method: POST
+  url: "{{_endpoint}}/services/data/v{{version}}/composite/batch"
+  headers:
+    - name: Content-Type
+      value: application/json
+  body:
+    type: json
+    data: |-
+      {
+          "haltOnError": true,
+          "batchRequests": [
+              {
+                  "method": "GET",
+                  "url": "v{{version}}/query/?q=SELECT+Id,+Name+FROM+Account LIMIT 2"
+              },
+              {
+                  "method": "GET",
+                  "url": "v{{version}}/query/?q=SELECT+Id,+Name+FROM+Opportunity LIMIT 2"
+              }
+          ]
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Successful Composite Batch
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/composite/batch"
+      method: POST
+      headers:
+        - name: Content-Type
+          value: application/json
+      body:
+        type: json
+        data: |-
+          {
+              "haltOnError": true,
+              "batchRequests": [
+                  {
+                      "method": "GET",
+                      "url": "v{{version}}/query/?q=SELECT+Id,+Name+FROM+Account LIMIT 2"
+                  },
+                  {
+                      "method": "GET",
+                      "url": "v{{version}}/query/?q=SELECT+Id,+Name+FROM+Opportunity LIMIT 2"
+                  }
+              ]
+          }
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: Date
+          value: Mon, 20 Nov 2023 15:19:46 GMT
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-XSS-Protection
+          value: 1; mode=block
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: Sforce-Limit-Info
+          value: api-usage=34/15000
+        - name: Content-Type
+          value: application/json;charset=UTF-8
+        - name: Vary
+          value: Accept-Encoding
+        - name: Content-Encoding
+          value: gzip
+        - name: Transfer-Encoding
+          value: chunked
+      body:
+        type: json
+        data: |-
+          {
+              "hasErrors": false,
+              "results": [
+                  {
+                      "statusCode": 200,
+                      "result": {
+                          "totalSize": 2,
+                          "done": true,
+                          "records": [
+                              {
+                                  "attributes": {
+                                      "type": "Account",
+                                      "url": "/services/data/v58.0/sobjects/Account/001..."
+                                  },
+                                  "Id": "001...",
+                                  "Name": "Sample Account"
+                              },
+                              ...
+                          ]
+                      }
+                  },
+                  {
+                      "statusCode": 200,
+                      "result": {
+                          "totalSize": 2,
+                          "done": true,
+                          "records": [
+                              {
+                                  "attributes": {
+                                      "type": "Opportunity",
+                                      "url": "/services/data/v58.0/sobjects/Opportunity/006..."
+                                  },
+                                  "Id": "006...",
+                                  "Name": "Edge Emergency Generator"
+                              },
+                              ...
+                          ]
+                      }
+                  }
+              ]
+          }
+
+docs: |-
+  Executes up to 25 subrequests in a single request. The response bodies and HTTP statuses of the subrequests in the batch are returned in a single response body. Each subrequest counts against rate limits.
+  The requests in a batch are called subrequests. All subrequests are executed in the context of the same user. Subrequests are independent, and you can’t pass information between them. Subrequests execute serially in their order in the request body. When a subrequest executes successfully, it commits its data. Commits are reflected in the output of later subrequests. If a subrequest fails, commits made by previous subrequests are not rolled back. If a batch request doesn’t complete within 10 minutes, the batch times out and the remaining subrequests aren’t executed.
+
+  https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/resources_composite_batch.htm

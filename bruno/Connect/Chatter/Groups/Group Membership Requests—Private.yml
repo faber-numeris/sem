@@ -1,0 +1,119 @@
+info:
+  name: Group Membership Requests—Private
+  type: http
+  seq: 7
+
+http:
+  method: PATCH
+  url: "{{_endpoint}}/services/data/v{{version}}/chatter/group-membership-requests/:CHATTER_GROUP_REQUEST_ID?status=Accepted&responseMessage=Welcome to the group!"
+  params:
+    - name: status
+      value: Accepted
+      type: query
+    - name: responseMessage
+      value: Welcome to the group!
+      type: query
+    - name: CHATTER_GROUP_REQUEST_ID
+      value: ""
+      type: path
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
+
+examples:
+  - name: Successful Group Membership Requests—Private
+    request:
+      url: "{{_endpoint}}/services/data/v{{version}}/chatter/group-membership-requests/:CHATTER_GROUP_REQUEST_ID?status=Accepted&responseMessage=Welcome to the group!"
+      method: PATCH
+      params:
+        - name: status
+          value: Accepted
+          type: query
+        - name: responseMessage
+          value: Welcome to the group!
+          type: query
+        - name: CHATTER_GROUP_REQUEST_ID
+          value: 0I5...
+          type: path
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: Date
+          value: Wed, 22 Nov 2023 11:50:19 GMT
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-XSS-Protection
+          value: 1; mode=block
+        - name: X-Robots-Tag
+          value: none
+        - name: Cache-Control
+          value: no-cache,must-revalidate,max-age=0,no-store,private
+        - name: Content-Type
+          value: application/json;charset=UTF-8
+        - name: Transfer-Encoding
+          value: chunked
+      body:
+        type: json
+        data: |-
+          {
+              "createdDate": "2023-11-22T11:46:32.000Z",
+              "id": "0I5...",
+              "lastUpdateDate": "2023-11-22T11:50:19.000Z",
+              "requestedGroup": {
+                  "id": "0F9...",
+                  "url": "/services/data/v58.0/chatter/groups/0F9..."
+              },
+              "responseMessage": null,
+              "status": "Accepted",
+              "url": "/services/data/v58.0/chatter/group-membership-requests/0I5...",
+              "user": {
+                  "additionalLabel": null,
+                  "communityNickname": "User1700653511864742682",
+                  "companyName": null,
+                  "displayName": "User Sample",
+                  "firstName": "User",
+                  "id": "005...",
+                  "isActive": true,
+                  "isInThisCommunity": true,
+                  "lastName": "Sample",
+                  "motif": {
+                      "color": "1B96FF",
+                      "largeIconUrl": "/img/icon/profile64.png",
+                      "mediumIconUrl": "/img/icon/profile32.png",
+                      "smallIconUrl": "/img/icon/profile16.png",
+                      "svgIconUrl": null
+                  },
+                  "mySubscription": null,
+                  "name": "User Sample",
+                  "outOfOffice": {
+                      "message": ""
+                  },
+                  "photo": {
+                      "fullEmailPhotoUrl": "https://<my_domain>/img/userprofile/default_profile_200_v2.png?fromEmail=1",
+                      "largePhotoUrl": "https://<my_domain>/profilephoto/005/F",
+                      "mediumPhotoUrl": "https://<my_domain>/profilephoto/005/M",
+                      "photoVersionId": null,
+                      "smallPhotoUrl": "https://<my_domain>/profilephoto/005/T",
+                      "standardEmailPhotoUrl": "https://<my_domain>/img/userprofile/default_profile_45_v2.png?fromEmail=1",
+                      "url": "/services/data/v58.0/connect/user-profiles/005.../photo"
+                  },
+                  "reputation": null,
+                  "title": null,
+                  "type": "User",
+                  "url": "/services/data/v58.0/chatter/users/005...",
+                  "userType": "Internal"
+              }
+          }
+
+docs: |-
+  Update the status of a request by a user to join a private group or get information about a request to join a private group.
+
+  https://developer.salesforce.com/docs/atlas.en-us.chatterapi.meta/chatterapi/connect_resources_group_membership_requests.htm?search_text=group-membership-requests
