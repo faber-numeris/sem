@@ -19,7 +19,7 @@ WORKDIR /var/app
 COPY --from=builder /app/application /var/app/application
 COPY config.yaml /var/app/config.yaml
 
-ENV CONFIG_FILE=/var/app/config.yaml
+ENV CONFIG_FILE=/var/app/config.
 
 EXPOSE 8080
 

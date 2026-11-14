@@ -41,3 +41,5 @@ Thumbs.db
 # Temporary / debug
 tmp/
 __debug_bin*
+
+salesforce-postman-collection.json

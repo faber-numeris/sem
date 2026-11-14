@@ -12,6 +12,9 @@ This project strictly follows the **Hexagonal Architecture (Ports and Adapters)*
 
 ```text
 .
+├── .github/
+│   └── workflows/
+│       └── docker-publish.yml                   # CI/CD: tests & publishes image to ghcr.io/faber-numeris/sem
 ├── api/                                         # Generated OpenAPI types & server interfaces (DO NOT EDIT)
 ├── bruno/                                       # Bruno OpenCollection API catalog & Integration Tests
 │   ├── environments/
