@@ -4,19 +4,67 @@
 package queryorgpostmanrunner
 
 import (
+	"bytes"
+	"context"
+	"encoding/json"
+	"errors"
 	"fmt"
+	"io"
 	"net/http"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/oapi-codegen/runtime"
 )
 
+// APIVersion defines model for APIVersion.
+type APIVersion struct {
+	Label   string `json:"label"`
+	Url     string `json:"url"`
+	Version string `json:"version"`
+}
+
+// SalesforceError Salesforce REST error payload.
+type SalesforceError = []SalesforceErrorItem
+
+// SalesforceErrorItem defines model for SalesforceErrorItem.
+type SalesforceErrorItem struct {
+	ErrorCode string   `json:"errorCode"`
+	Fields    []string `json:"fields"`
+	Message   string   `json:"message"`
+}
+
+// UserInfoResponse OpenID Connect UserInfo response.
+type UserInfoResponse struct {
+	Active            bool              `json:"active"`
+	Email             string            `json:"email"`
+	EmailVerified     bool              `json:"email_verified"`
+	FamilyName        string            `json:"family_name"`
+	GivenName         string            `json:"given_name"`
+	Language          string            `json:"language"`
+	Locale            string            `json:"locale"`
+	Name              string            `json:"name"`
+	Nickname          string            `json:"nickname"`
+	OrganizationId    string            `json:"organization_id"`
+	Photos            map[string]string `json:"photos"`
+	Picture           string            `json:"picture"`
+	PreferredUsername string            `json:"preferred_username"`
+	Profile           string            `json:"profile"`
+	Sub               string            `json:"sub"`
+	UpdatedAt         string            `json:"updated_at"`
+	Urls              map[string]string `json:"urls"`
+	UserId            string            `json:"user_id"`
+	UserType          string            `json:"user_type"`
+	UtcOffset         int               `json:"utcOffset"`
+	Zoneinfo          string            `json:"zoneinfo"`
+}
+
 // PostServicesDataVVersionCommercePaymentsPaymentMethodsJSONBody defines parameters for PostServicesDataVVersionCommercePaymentsPaymentMethods.
 type PostServicesDataVVersionCommercePaymentsPaymentMethodsJSONBody = map[string]interface{}
 
 // GetServicesOauth2UserinfoParams defines parameters for GetServicesOauth2Userinfo.
 type GetServicesOauth2UserinfoParams struct {
-	ContentType *string `json:"Content-Type,omitempty"`
+	// Authorization Bearer access token.
+	Authorization *string `json:"Authorization,omitempty"`
 }
 
 // PostServicesDataVVersionCommercePaymentsPaymentMethodsJSONRequestBody defines body for PostServicesDataVVersionCommercePaymentsPaymentMethods for application/json ContentType.
@@ -117,22 +165,22 @@ func (siw *ServerInterfaceWrapper) GetServicesOauth2Userinfo(w http.ResponseWrit
 
 	headers := r.Header
 
-	// ------------- Optional header parameter "Content-Type" -------------
-	if valueList, found := headers[http.CanonicalHeaderKey("Content-Type")]; found {
-		var ContentType string
+	// ------------- Optional header parameter "Authorization" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Authorization")]; found {
+		var Authorization string
 		n := len(valueList)
 		if n != 1 {
-			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Content-Type", Count: n})
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Authorization", Count: n})
 			return
 		}
 
-		err = runtime.BindStyledParameterWithOptions("simple", "Content-Type", valueList[0], &ContentType, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""})
+		err = runtime.BindStyledParameterWithOptions("simple", "Authorization", valueList[0], &Authorization, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""})
 		if err != nil {
-			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Content-Type", Err: err})
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Authorization", Err: err})
 			return
 		}
 
-		params.ContentType = &ContentType
+		params.Authorization = &Authorization
 
 	}
 
@@ -261,14 +309,310 @@ func HandlerWithOptions(si ServerInterface, options ChiServerOptions) http.Handl
 	}
 
 	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/services/oauth2/userinfo", wrapper.GetServicesOauth2Userinfo)
+	})
+	r.Group(func(r chi.Router) {
 		r.Get(options.BaseURL+"/services/data", wrapper.GetServicesData)
 	})
 	r.Group(func(r chi.Router) {
 		r.Post(options.BaseURL+"/services/data/v{version}/commerce/payments/payment-methods", wrapper.PostServicesDataVVersionCommercePaymentsPaymentMethods)
 	})
-	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/services/oauth2/userinfo", wrapper.GetServicesOauth2Userinfo)
-	})
 
 	return r
+}
+
+type GetServicesDataRequestObject struct {
+}
+
+type GetServicesDataResponseObject interface {
+	VisitGetServicesDataResponse(w http.ResponseWriter) error
+}
+
+type GetServicesData200ResponseHeaders struct {
+	ContentType *string
+}
+
+type GetServicesData200JSONResponse struct {
+	Body    []APIVersion
+	Headers GetServicesData200ResponseHeaders
+}
+
+func (response GetServicesData200JSONResponse) VisitGetServicesDataResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response.Body); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	if response.Headers.ContentType != nil {
+		w.Header().Set("Content-Type", fmt.Sprint(*response.Headers.ContentType))
+	}
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type PostServicesDataVVersionCommercePaymentsPaymentMethodsRequestObject struct {
+	Version string `json:"version"`
+	Body    *PostServicesDataVVersionCommercePaymentsPaymentMethodsJSONRequestBody
+}
+
+type PostServicesDataVVersionCommercePaymentsPaymentMethodsResponseObject interface {
+	VisitPostServicesDataVVersionCommercePaymentsPaymentMethodsResponse(w http.ResponseWriter) error
+}
+
+type PostServicesDataVVersionCommercePaymentsPaymentMethods200JSONResponse map[string]interface{}
+
+func (response PostServicesDataVVersionCommercePaymentsPaymentMethods200JSONResponse) VisitPostServicesDataVVersionCommercePaymentsPaymentMethodsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetServicesOauth2UserinfoRequestObject struct {
+	Params GetServicesOauth2UserinfoParams
+}
+
+type GetServicesOauth2UserinfoResponseObject interface {
+	VisitGetServicesOauth2UserinfoResponse(w http.ResponseWriter) error
+}
+
+type GetServicesOauth2Userinfo200ResponseHeaders struct {
+	ContentType *string
+}
+
+type GetServicesOauth2Userinfo200JSONResponse struct {
+	Body    UserInfoResponse
+	Headers GetServicesOauth2Userinfo200ResponseHeaders
+}
+
+func (response GetServicesOauth2Userinfo200JSONResponse) VisitGetServicesOauth2UserinfoResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response.Body); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	if response.Headers.ContentType != nil {
+		w.Header().Set("Content-Type", fmt.Sprint(*response.Headers.ContentType))
+	}
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetServicesOauth2Userinfo400ResponseHeaders struct {
+	ContentType *string
+}
+
+type GetServicesOauth2Userinfo400JSONResponse struct {
+	Body    SalesforceError
+	Headers GetServicesOauth2Userinfo400ResponseHeaders
+}
+
+func (response GetServicesOauth2Userinfo400JSONResponse) VisitGetServicesOauth2UserinfoResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response.Body); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	if response.Headers.ContentType != nil {
+		w.Header().Set("Content-Type", fmt.Sprint(*response.Headers.ContentType))
+	}
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetServicesOauth2Userinfo401ResponseHeaders struct {
+	ContentType *string
+}
+
+type GetServicesOauth2Userinfo401JSONResponse struct {
+	Body    SalesforceError
+	Headers GetServicesOauth2Userinfo401ResponseHeaders
+}
+
+func (response GetServicesOauth2Userinfo401JSONResponse) VisitGetServicesOauth2UserinfoResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response.Body); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	if response.Headers.ContentType != nil {
+		w.Header().Set("Content-Type", fmt.Sprint(*response.Headers.ContentType))
+	}
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetServicesOauth2Userinfo404ResponseHeaders struct {
+	ContentType *string
+}
+
+type GetServicesOauth2Userinfo404JSONResponse struct {
+	Body    SalesforceError
+	Headers GetServicesOauth2Userinfo404ResponseHeaders
+}
+
+func (response GetServicesOauth2Userinfo404JSONResponse) VisitGetServicesOauth2UserinfoResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response.Body); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	if response.Headers.ContentType != nil {
+		w.Header().Set("Content-Type", fmt.Sprint(*response.Headers.ContentType))
+	}
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+// StrictServerInterface represents all server handlers.
+type StrictServerInterface interface {
+	// GetServicesData Get Latest Release Version
+	// (GET /services/data)
+	GetServicesData(ctx context.Context, request GetServicesDataRequestObject) (GetServicesDataResponseObject, error)
+	// PostServicesDataVVersionCommercePaymentsPaymentMethods Create Payment Method
+	// (POST /services/data/v{version}/commerce/payments/payment-methods)
+	PostServicesDataVVersionCommercePaymentsPaymentMethods(ctx context.Context, request PostServicesDataVVersionCommercePaymentsPaymentMethodsRequestObject) (PostServicesDataVVersionCommercePaymentsPaymentMethodsResponseObject, error)
+	// GetServicesOauth2Userinfo User Info
+	// (GET /services/oauth2/userinfo)
+	GetServicesOauth2Userinfo(ctx context.Context, request GetServicesOauth2UserinfoRequestObject) (GetServicesOauth2UserinfoResponseObject, error)
+}
+
+type StrictHandlerFunc func(ctx context.Context, w http.ResponseWriter, r *http.Request, request any) (any, error)
+type StrictMiddlewareFunc func(f StrictHandlerFunc, operationID string) StrictHandlerFunc
+
+type StrictHTTPServerOptions struct {
+	RequestErrorHandlerFunc  func(w http.ResponseWriter, r *http.Request, err error)
+	ResponseErrorHandlerFunc func(w http.ResponseWriter, r *http.Request, err error)
+}
+
+func NewStrictHandler(ssi StrictServerInterface, middlewares []StrictMiddlewareFunc) ServerInterface {
+	return &strictHandler{ssi: ssi, middlewares: middlewares, options: StrictHTTPServerOptions{
+		RequestErrorHandlerFunc: func(w http.ResponseWriter, r *http.Request, err error) {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+		},
+		ResponseErrorHandlerFunc: func(w http.ResponseWriter, r *http.Request, err error) {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+		},
+	}}
+}
+
+func NewStrictHandlerWithOptions(ssi StrictServerInterface, middlewares []StrictMiddlewareFunc, options StrictHTTPServerOptions) ServerInterface {
+	if options.RequestErrorHandlerFunc == nil {
+		options.RequestErrorHandlerFunc = func(w http.ResponseWriter, r *http.Request, err error) {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+		}
+	}
+	if options.ResponseErrorHandlerFunc == nil {
+		options.ResponseErrorHandlerFunc = func(w http.ResponseWriter, r *http.Request, err error) {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+		}
+	}
+	return &strictHandler{ssi: ssi, middlewares: middlewares, options: options}
+}
+
+type strictHandler struct {
+	ssi         StrictServerInterface
+	middlewares []StrictMiddlewareFunc
+	options     StrictHTTPServerOptions
+}
+
+// GetServicesData operation middleware
+func (sh *strictHandler) GetServicesData(w http.ResponseWriter, r *http.Request) {
+	var request GetServicesDataRequestObject
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.GetServicesData(ctx, request.(GetServicesDataRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "GetServicesData")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(GetServicesDataResponseObject); ok {
+		if err := validResponse.VisitGetServicesDataResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// PostServicesDataVVersionCommercePaymentsPaymentMethods operation middleware
+func (sh *strictHandler) PostServicesDataVVersionCommercePaymentsPaymentMethods(w http.ResponseWriter, r *http.Request, version string) {
+	var request PostServicesDataVVersionCommercePaymentsPaymentMethodsRequestObject
+
+	request.Version = version
+
+	var body PostServicesDataVVersionCommercePaymentsPaymentMethodsJSONRequestBody
+	if err := runtime.BindJSONBody(r, &body); err != nil {
+		if !errors.Is(err, io.EOF) {
+			sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+			return
+		}
+	} else {
+		request.Body = &body
+	}
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.PostServicesDataVVersionCommercePaymentsPaymentMethods(ctx, request.(PostServicesDataVVersionCommercePaymentsPaymentMethodsRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "PostServicesDataVVersionCommercePaymentsPaymentMethods")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(PostServicesDataVVersionCommercePaymentsPaymentMethodsResponseObject); ok {
+		if err := validResponse.VisitPostServicesDataVVersionCommercePaymentsPaymentMethodsResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// GetServicesOauth2Userinfo operation middleware
+func (sh *strictHandler) GetServicesOauth2Userinfo(w http.ResponseWriter, r *http.Request, params GetServicesOauth2UserinfoParams) {
+	var request GetServicesOauth2UserinfoRequestObject
+
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.GetServicesOauth2Userinfo(ctx, request.(GetServicesOauth2UserinfoRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "GetServicesOauth2Userinfo")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(GetServicesOauth2UserinfoResponseObject); ok {
+		if err := validResponse.VisitGetServicesOauth2UserinfoResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
 }

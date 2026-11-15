@@ -221,10 +221,10 @@ func HandlerWithOptions(si ServerInterface, options ChiServerOptions) http.Handl
 	}
 
 	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/services/data/v{version}/sobjects/EventRelayFeedback/describe", wrapper.GetServicesDataVVersionSobjectsEventRelayFeedbackDescribe)
+		r.Get(options.BaseURL+"/services/data/v{version}/sobjects/EventRelayFeedback/{EVENT_RELAY_FEEDBACK_ID}", wrapper.GetServicesDataVVersionSobjectsEventRelayFeedbackEVENTRELAYFEEDBACKID)
 	})
 	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/services/data/v{version}/sobjects/EventRelayFeedback/{EVENT_RELAY_FEEDBACK_ID}", wrapper.GetServicesDataVVersionSobjectsEventRelayFeedbackEVENTRELAYFEEDBACKID)
+		r.Get(options.BaseURL+"/services/data/v{version}/sobjects/EventRelayFeedback/describe", wrapper.GetServicesDataVVersionSobjectsEventRelayFeedbackDescribe)
 	})
 
 	return r

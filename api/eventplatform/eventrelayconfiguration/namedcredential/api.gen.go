@@ -321,9 +321,6 @@ func HandlerWithOptions(si ServerInterface, options ChiServerOptions) http.Handl
 	}
 
 	r.Group(func(r chi.Router) {
-		r.Post(options.BaseURL+"/services/data/v{version}/tooling/sobjects/NamedCredential", wrapper.PostServicesDataVVersionToolingSobjectsNamedCredential)
-	})
-	r.Group(func(r chi.Router) {
 		r.Delete(options.BaseURL+"/services/data/v{version}/tooling/sobjects/NamedCredential/{NAMED_CREDENTIAL_ID}", wrapper.DeleteServicesDataVVersionToolingSobjectsNamedCredentialNAMEDCREDENTIALID)
 	})
 	r.Group(func(r chi.Router) {
@@ -331,6 +328,9 @@ func HandlerWithOptions(si ServerInterface, options ChiServerOptions) http.Handl
 	})
 	r.Group(func(r chi.Router) {
 		r.Patch(options.BaseURL+"/services/data/v{version}/tooling/sobjects/NamedCredential/{NAMED_CREDENTIAL_ID}", wrapper.PatchServicesDataVVersionToolingSobjectsNamedCredentialNAMEDCREDENTIALID)
+	})
+	r.Group(func(r chi.Router) {
+		r.Post(options.BaseURL+"/services/data/v{version}/tooling/sobjects/NamedCredential", wrapper.PostServicesDataVVersionToolingSobjectsNamedCredential)
 	})
 
 	return r

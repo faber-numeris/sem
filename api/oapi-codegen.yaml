@@ -6,3 +6,13 @@ output: api/api.gen.go
 generate:
   chi-server: true
   models: true
+  strict-server: true
+# Strict handlers are only generated for packages whose operations have typed
+# request/response schemas. The remaining packages keep the non-strict chi
+# handler: strict generation of their still-untyped `{}` responses would emit
+# invalid Go (a method on an interface response type). The split tool uses this
+# list to override strict-server per generated package.
+strict-server-packages:
+  - auth
+  - auth/headlessidentityapidemo
+  - subscriptionmanagement/queryorgpostmanrunner

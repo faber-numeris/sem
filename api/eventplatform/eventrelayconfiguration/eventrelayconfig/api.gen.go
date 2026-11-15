@@ -425,10 +425,10 @@ func HandlerWithOptions(si ServerInterface, options ChiServerOptions) http.Handl
 	}
 
 	r.Group(func(r chi.Router) {
-		r.Post(options.BaseURL+"/services/data/v{version}/tooling/sobjects/EventRelayConfig", wrapper.PostServicesDataVVersionToolingSobjectsEventRelayConfig)
+		r.Get(options.BaseURL+"/services/data/v{version}/tooling/sobjects/EventRelayConfig/describe", wrapper.GetServicesDataVVersionToolingSobjectsEventRelayConfigDescribe)
 	})
 	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/services/data/v{version}/tooling/sobjects/EventRelayConfig/describe", wrapper.GetServicesDataVVersionToolingSobjectsEventRelayConfigDescribe)
+		r.Post(options.BaseURL+"/services/data/v{version}/tooling/sobjects/EventRelayConfig", wrapper.PostServicesDataVVersionToolingSobjectsEventRelayConfig)
 	})
 	r.Group(func(r chi.Router) {
 		r.Delete(options.BaseURL+"/services/data/v{version}/tooling/sobjects/EventRelayConfig/{EVENT_RELAY_CONFIG_ID}", wrapper.DeleteServicesDataVVersionToolingSobjectsEventRelayConfigEVENTRELAYCONFIGID)

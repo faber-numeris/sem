@@ -619,6 +619,9 @@ func HandlerWithOptions(si ServerInterface, options ChiServerOptions) http.Handl
 		r.Post(options.BaseURL+"/services/data/v{version}/jobs/ingest", wrapper.PostServicesDataVVersionJobsIngest)
 	})
 	r.Group(func(r chi.Router) {
+		r.Put(options.BaseURL+"/services/data/v{version}/jobs/ingest/{_jobId}/batches", wrapper.PutServicesDataVVersionJobsIngestJobIdBatches)
+	})
+	r.Group(func(r chi.Router) {
 		r.Delete(options.BaseURL+"/services/data/v{version}/jobs/ingest/{_jobId}", wrapper.DeleteServicesDataVVersionJobsIngestJobId)
 	})
 	r.Group(func(r chi.Router) {
@@ -628,13 +631,10 @@ func HandlerWithOptions(si ServerInterface, options ChiServerOptions) http.Handl
 		r.Patch(options.BaseURL+"/services/data/v{version}/jobs/ingest/{_jobId}", wrapper.PatchServicesDataVVersionJobsIngestJobId)
 	})
 	r.Group(func(r chi.Router) {
-		r.Put(options.BaseURL+"/services/data/v{version}/jobs/ingest/{_jobId}/batches", wrapper.PutServicesDataVVersionJobsIngestJobIdBatches)
+		r.Get(options.BaseURL+"/services/data/v{version}/jobs/ingest/{_jobId}/successfulResults", wrapper.GetServicesDataVVersionJobsIngestJobIdSuccessfulResults)
 	})
 	r.Group(func(r chi.Router) {
 		r.Get(options.BaseURL+"/services/data/v{version}/jobs/ingest/{_jobId}/failedResults", wrapper.GetServicesDataVVersionJobsIngestJobIdFailedResults)
-	})
-	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/services/data/v{version}/jobs/ingest/{_jobId}/successfulResults", wrapper.GetServicesDataVVersionJobsIngestJobIdSuccessfulResults)
 	})
 	r.Group(func(r chi.Router) {
 		r.Get(options.BaseURL+"/services/data/v{version}/jobs/ingest/{_jobId}/unprocessedrecords", wrapper.GetServicesDataVVersionJobsIngestJobIdUnprocessedrecords)

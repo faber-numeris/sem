@@ -3,171 +3,77 @@
     tags:
       - Auth
     summary: Refresh Token
+    security:
+      - basicAuth: []
+      - noauthAuth: []
     requestBody:
+      required: true
       content:
         application/x-www-form-urlencoded:
           schema:
-            type: object
-            properties:
-              grant_type:
-                type: string
-                example: refresh_token
-              client_id:
-                type: string
-                example: '{{clientId}}'
-              client_secret:
-                type: string
-                example: '{{clientSecret}}'
-              refresh_token:
-                type: string
-                example: '{{_refreshToken}}'
-    security:
-      - noauthAuth: []
-    parameters:
-      - name: Content-Type
-        in: header
-        schema:
-          type: string
-        example: application/x-www-form-urlencoded
+            $ref: '#/components/schemas/TokenRequest'
+        application/json:
+          schema:
+            $ref: '#/components/schemas/TokenRequest'
     responses:
       '200':
-        description: OK
+        description: Access token issued.
         headers:
-          Date:
-            schema:
-              type: string
-              example: Thu, 16 Nov 2023 15:34:45 GMT
-          Strict-Transport-Security:
-            schema:
-              type: string
-              example: max-age=63072000; includeSubDomains
-          X-Content-Type-Options:
-            schema:
-              type: string
-              example: nosniff
-          X-XSS-Protection:
-            schema:
-              type: string
-              example: 1; mode=block
-          X-Robots-Tag:
-            schema:
-              type: string
-              example: none
-          Cache-Control:
-            schema:
-              type: string
-              example: no-cache,must-revalidate,max-age=0,no-store,private
-          Expires:
-            schema:
-              type: string
-              example: Thu, 01 Jan 1970 00:00:00 GMT
           Content-Type:
             schema:
               type: string
-              example: application/json;charset=UTF-8
-          Vary:
-            schema:
-              type: string
-              example: Accept-Encoding
-          Content-Encoding:
-            schema:
-              type: string
-              example: gzip
-          Transfer-Encoding:
-            schema:
-              type: string
-              example: chunked
+            example: application/json; charset=UTF-8
         content:
           application/json:
             schema:
-              type: object
-            example:
-              access_token: <access_token>
-              signature: <signature>
-              scope: <scope list>
-              id_token: <id_token
-              instance_url: https://<my_domain>
-              id: https://login.salesforce.com/id/00D.../005...
-              token_type: Bearer
-              issued_at: <timestamp>
+              $ref: '#/components/schemas/TokenResponse'
+      '400':
+        description: The token request was rejected.
+        headers:
+          Content-Type:
+            schema:
+              type: string
+            example: application/json; charset=UTF-8
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OAuthError'
 /services/oauth2/revoke:
   post:
     tags:
       - Auth
     summary: Revoke Token
+    security:
+      - basicAuth: []
+      - noauthAuth: []
+    parameters:
+      - name: token
+        in: query
+        description: >-
+          Token to revoke. It may also be supplied in the form body; when both are
+          present the query value wins.
+        schema:
+          type: string
     requestBody:
+      required: false
       content:
         application/x-www-form-urlencoded:
           schema:
-            type: object
-            properties:
-              token:
-                type: string
-                description: >-
-                  If an access token is included, Salesforce invalidates it and revokes the token. If a refresh token is included, Salesforce revokes it and any associated access tokens.
-                example: '{{_accessToken}}'
-    security:
-      - noauthAuth: []
-    parameters:
-      - name: Content-Type
-        in: header
-        schema:
-          type: string
-        example: application/x-www-form-urlencoded
+            $ref: '#/components/schemas/RevokeTokenRequest'
     responses:
       '200':
-        description: OK
+        description: Token revoked, or the token was already invalid.
+      '400':
+        description: Token missing or invalid.
         headers:
-          Date:
+          Content-Type:
             schema:
               type: string
-              example: Thu, 16 Nov 2023 15:53:04 GMT
-          Strict-Transport-Security:
-            schema:
-              type: string
-              example: max-age=63072000; includeSubDomains
-          X-Content-Type-Options:
-            schema:
-              type: string
-              example: nosniff
-          X-XSS-Protection:
-            schema:
-              type: string
-              example: 1; mode=block
-          Content-Security-Policy:
-            schema:
-              type: string
-              example: upgrade-insecure-requests
-          X-Robots-Tag:
-            schema:
-              type: string
-              example: none
-          Cache-Control:
-            schema:
-              type: string
-              example: no-cache,must-revalidate,max-age=0,no-store,private
-          Set-Cookie:
-            schema:
-              type: string
-              example: >-
-                unifiedsearchgt=; path=/; expires=Thu, 01-Jan-1970 00:00:00 GMT; Max-Age=0; secure
-          Vary:
-            schema:
-              type: string
-              example: Accept-Encoding
-          Content-Encoding:
-            schema:
-              type: string
-              example: gzip
-          Transfer-Encoding:
-            schema:
-              type: string
-              example: chunked
+            example: application/json; charset=UTF-8
         content:
-          text/plain:
+          application/json:
             schema:
-              type: string
-            example: null
+              $ref: '#/components/schemas/OAuthError'
 /.well-known/openid-configuration:
   get:
     tags:
@@ -404,97 +310,44 @@
     tags:
       - Auth
     summary: OpenID Connect Token Introspection Endpoint
+    security:
+      - basicAuth: []
+      - noauthAuth: []
+    parameters:
+      - name: token
+        in: query
+        schema:
+          type: string
+      - name: token_type_hint
+        in: query
+        schema:
+          type: string
+      - name: client_id
+        in: query
+        schema:
+          type: string
+      - name: client_secret
+        in: query
+        schema:
+          type: string
     requestBody:
+      required: false
       content:
         application/x-www-form-urlencoded:
           schema:
-            type: object
-            properties:
-              token:
-                type: string
-                example: '{{_accessToken}}'
-              token_type_hint:
-                type: string
-                example: access_token
-              client_id:
-                type: string
-                example: '{{clientId}}'
-              client_secret:
-                type: string
-                example: '{{clientSecret}}'
-    security:
-      - noauthAuth: []
-    parameters:
-      - name: Content-Type
-        in: header
-        schema:
-          type: string
-        example: application/x-www-form-urlencoded
-      - name: Accept
-        in: header
-        schema:
-          type: string
-        example: application/json
+            $ref: '#/components/schemas/IntrospectRequest'
     responses:
       '200':
-        description: OK
+        description: Introspection result.
         headers:
-          Date:
-            schema:
-              type: string
-              example: Thu, 16 Nov 2023 15:54:42 GMT
-          Strict-Transport-Security:
-            schema:
-              type: string
-              example: max-age=63072000; includeSubDomains
-          X-Content-Type-Options:
-            schema:
-              type: string
-              example: nosniff
-          X-XSS-Protection:
-            schema:
-              type: string
-              example: 1; mode=block
-          X-Robots-Tag:
-            schema:
-              type: string
-              example: none
-          Cache-Control:
-            schema:
-              type: string
-              example: no-cache,must-revalidate,max-age=0,no-store,private
           Content-Type:
             schema:
               type: string
-              example: text/plain
-          Vary:
-            schema:
-              type: string
-              example: Accept-Encoding
-          Content-Encoding:
-            schema:
-              type: string
-              example: gzip
-          Transfer-Encoding:
-            schema:
-              type: string
-              example: chunked
+            example: application/json; charset=UTF-8
         content:
-          text/plain:
+          application/json:
             schema:
-              type: string
-            example: |-
-              {
-                  "active": true,
-                  "scope": "<scope_list>",
-                  "client_id": "<client_id>",
-                  "username": "<username>",
-                  "sub": "https://login.salesforce.com/id/00D.../005...",
-                  "token_type": "access_token",
-                  "exp": <timestamp>,
-                  "iat": <timestamp>,
-                  "nbf": <timestamp>
-              }
+              $ref: '#/components/schemas/IntrospectResponse'
 /services/oauth2/register:
   post:
     tags:

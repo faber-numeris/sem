@@ -321,6 +321,9 @@ func HandlerWithOptions(si ServerInterface, options ChiServerOptions) http.Handl
 	}
 
 	r.Group(func(r chi.Router) {
+		r.Post(options.BaseURL+"/services/data/v{version}/einstein/prompt-templates/{PROMPT_TEMPLATE_API_NAME}/generations", wrapper.PostServicesDataVVersionEinsteinPromptTemplatesPROMPTTEMPLATEAPINAMEGenerations)
+	})
+	r.Group(func(r chi.Router) {
 		r.Post(options.BaseURL+"/services/data/v{version}/einstein/ai-evaluations/runs", wrapper.PostServicesDataVVersionEinsteinAiEvaluationsRuns)
 	})
 	r.Group(func(r chi.Router) {
@@ -328,9 +331,6 @@ func HandlerWithOptions(si ServerInterface, options ChiServerOptions) http.Handl
 	})
 	r.Group(func(r chi.Router) {
 		r.Get(options.BaseURL+"/services/data/v{version}/einstein/ai-evaluations/runs/{runId}/results", wrapper.GetServicesDataVVersionEinsteinAiEvaluationsRunsRunIdResults)
-	})
-	r.Group(func(r chi.Router) {
-		r.Post(options.BaseURL+"/services/data/v{version}/einstein/prompt-templates/{PROMPT_TEMPLATE_API_NAME}/generations", wrapper.PostServicesDataVVersionEinsteinPromptTemplatesPROMPTTEMPLATEAPINAMEGenerations)
 	})
 
 	return r

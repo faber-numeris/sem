@@ -359,9 +359,6 @@ func HandlerWithOptions(si ServerInterface, options ChiServerOptions) http.Handl
 		r.Post(options.BaseURL+"/services/data/v{version}/tooling/sobjects/ManagedEventSubscription", wrapper.PostServicesDataVVersionToolingSobjectsManagedEventSubscription)
 	})
 	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/services/data/v{version}/tooling/sobjects/ManagedEventSubscription/describe", wrapper.GetServicesDataVVersionToolingSobjectsManagedEventSubscriptionDescribe)
-	})
-	r.Group(func(r chi.Router) {
 		r.Delete(options.BaseURL+"/services/data/v{version}/tooling/sobjects/ManagedEventSubscription/{managedEventSubscriptionId}", wrapper.DeleteServicesDataVVersionToolingSobjectsManagedEventSubscriptionManagedEventSubscriptionId)
 	})
 	r.Group(func(r chi.Router) {
@@ -369,6 +366,9 @@ func HandlerWithOptions(si ServerInterface, options ChiServerOptions) http.Handl
 	})
 	r.Group(func(r chi.Router) {
 		r.Patch(options.BaseURL+"/services/data/v{version}/tooling/sobjects/ManagedEventSubscription/{managedEventSubscriptionId}", wrapper.PatchServicesDataVVersionToolingSobjectsManagedEventSubscriptionManagedEventSubscriptionId)
+	})
+	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/services/data/v{version}/tooling/sobjects/ManagedEventSubscription/describe", wrapper.GetServicesDataVVersionToolingSobjectsManagedEventSubscriptionDescribe)
 	})
 
 	return r

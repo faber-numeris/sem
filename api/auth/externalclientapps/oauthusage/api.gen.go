@@ -663,12 +663,6 @@ func HandlerWithOptions(si ServerInterface, options ChiServerOptions) http.Handl
 		r.Get(options.BaseURL+"/services/data/v{version}/apps/oauth/usage", wrapper.GetServicesDataVVersionAppsOauthUsage)
 	})
 	r.Group(func(r chi.Router) {
-		r.Delete(options.BaseURL+"/services/data/v{version}/apps/oauth/usage/tokens/{_tokenId}", wrapper.DeleteServicesDataVVersionAppsOauthUsageTokensTokenId)
-	})
-	r.Group(func(r chi.Router) {
-		r.Delete(options.BaseURL+"/services/data/v{version}/apps/oauth/usage/{_appId}/tokens", wrapper.DeleteServicesDataVVersionAppsOauthUsageAppIdTokens)
-	})
-	r.Group(func(r chi.Router) {
 		r.Get(options.BaseURL+"/services/data/v{version}/apps/oauth/usage/{_appId}/users", wrapper.GetServicesDataVVersionAppsOauthUsageAppIdUsers)
 	})
 	r.Group(func(r chi.Router) {
@@ -676,6 +670,12 @@ func HandlerWithOptions(si ServerInterface, options ChiServerOptions) http.Handl
 	})
 	r.Group(func(r chi.Router) {
 		r.Get(options.BaseURL+"/services/data/v{version}/apps/oauth/usage/{_appId}/{_userId}/tokens", wrapper.GetServicesDataVVersionAppsOauthUsageAppIdUserIdTokens)
+	})
+	r.Group(func(r chi.Router) {
+		r.Delete(options.BaseURL+"/services/data/v{version}/apps/oauth/usage/{_appId}/tokens", wrapper.DeleteServicesDataVVersionAppsOauthUsageAppIdTokens)
+	})
+	r.Group(func(r chi.Router) {
+		r.Delete(options.BaseURL+"/services/data/v{version}/apps/oauth/usage/tokens/{_tokenId}", wrapper.DeleteServicesDataVVersionAppsOauthUsageTokensTokenId)
 	})
 
 	return r

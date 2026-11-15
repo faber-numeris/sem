@@ -285,10 +285,10 @@ func HandlerWithOptions(si ServerInterface, options ChiServerOptions) http.Handl
 	}
 
 	r.Group(func(r chi.Router) {
-		r.Post(options.BaseURL+"/services/data/v{version}/commerce/catalog-products/actions/get-products", wrapper.PostServicesDataVVersionCommerceCatalogProductsActionsGetProducts)
+		r.Get(options.BaseURL+"/services/data/v{version}/query", wrapper.GetServicesDataVVersionQuery)
 	})
 	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/services/data/v{version}/query", wrapper.GetServicesDataVVersionQuery)
+		r.Post(options.BaseURL+"/services/data/v{version}/commerce/catalog-products/actions/get-products", wrapper.PostServicesDataVVersionCommerceCatalogProductsActionsGetProducts)
 	})
 
 	return r

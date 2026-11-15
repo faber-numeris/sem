@@ -5,9 +5,6 @@
     summary: Registration - Initialize
     description: >-
       Submits the registration data to the init/registration endpoint and returns a request identifier. At the same time, an OTP is sent out to the end users via email or sms. Registration data is passed in the request body, and is formatted with JSON, with 5 keys: `userdata`, `customdata`, `password`, `recaptcha`, and `verificationmethod`. The first two keys are JSON structures, and the last 3 keys are strings.
-
-
-      This request returns JSON, and includes an identifier (request identifier).
     requestBody:
       content:
         application/json:
@@ -35,7 +32,9 @@
       '200':
         description: Successful response
         content:
-          application/json: {}
+          application/json:
+            schema:
+              type: object
 /services/oauth2/authorize:
   post:
     tags:
@@ -43,9 +42,6 @@
     summary: Passwordless Login - Authorize
     description: >-
       After you send your passwordless login data to initialize, this request allows you to process that login data, and as a part of this request you also verify the users email or sms number. The request itself is a authorization call for the Code and Credential flow. It includes 3 specific headers: `Auth-Request-Type` which is set to `passwordless-login`, `Auth-Verification-Type` which is set to email or sms, and an Authorization Basic header, which is the base64 encoded result of `identifier:otp` where `identifier` is the value returned in your initialize call, and `otp` is the value sent to the end user via email or sms.
-
-
-      The response from this API is the Auth Code, which is then exchanged for the Access Token.
     requestBody:
       content:
         application/x-www-form-urlencoded:
@@ -89,7 +85,9 @@
       '200':
         description: Successful response
         content:
-          application/json: {}
+          application/json:
+            schema:
+              type: object
   get:
     tags:
       - Auth
@@ -117,64 +115,43 @@
         schema:
           type: string
         example: full refresh_token
+      - name: state
+        in: query
+        schema:
+          type: string
     responses:
-      '200':
-        description: OK
+      '302':
+        description: Redirect to the client redirect URI with the authorization code or access token.
         headers:
-          Strict-Transport-Security:
+          Location:
             schema:
               type: string
-              example: max-age=63072000; includeSubDomains
-          X-Content-Type-Options:
-            schema:
-              type: string
-              example: nosniff
-          X-XSS-Protection:
-            schema:
-              type: string
-              example: 1; mode=block
-          Content-Security-Policy:
-            schema:
-              type: string
-              example: upgrade-insecure-requests
-          X-Robots-Tag:
-            schema:
-              type: string
-              example: none
-          Cache-Control:
-            schema:
-              type: string
-              example: must-revalidate,no-cache,no-store
           Content-Type:
             schema:
               type: string
-              example: text/html; charset=UTF-8
-          Vary:
-            schema:
-              type: string
-              example: Accept-Encoding
-          Content-Encoding:
-            schema:
-              type: string
-              example: gzip
-          Connection:
-            schema:
-              type: string
-              example: close
+            example: application/json; charset=UTF-8
         content:
-          text/plain:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthorizeResponse'
+      '400':
+        description: The authorization request was rejected.
+        headers:
+          Content-Type:
             schema:
               type: string
-            example: "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">\n<html>\n\n<head>\n\t<meta HTTP-EQUIV=\"PRAGMA\" CONTENT=\"NO-CACHE\">\n\n\n\n\n\n\t<script>\n\t\tfunction redirectOnLoad() {\nif (this.SfdcApp && this.SfdcApp.projectOneNavigator) { SfdcApp.projectOneNavigator.handleRedirect('<my-domain>?ec=302&startURL=%2Fsetup%2Fsecur%2FRemoteAccessAuthorizationPage.apexp%3Fsource%3D<token>'); }  else \nif (window.location.replace){ \nwindow.location.replace('<my-domain>?ec=302&startURL=%2Fsetup%2Fsecur%2FRemoteAccessAuthorizationPage.apexp%3Fsource%3D<token>');\n} else {\nwindow.location.href ='<my-domain>?ec=302&startURL=%2Fsetup%2Fsecur%2FRemoteAccessAuthorizationPage.apexp%3Fsource%3D<token>';\n} \n} \nredirectOnLoad();\n\t</script>\n\n</head>\n\n\n</html>\n\n\n\n\n\n<!-- Body events -->\n<script type=\"text/javascript\">\n\tfunction bodyOnLoad(){if(window.PreferenceBits){window.PreferenceBits.prototype.csrfToken=\"null\";};}function bodyOnBeforeUnload(){}function bodyOnFocus(){}function bodyOnUnload(){}\n</script>\n\n</body>\n\n</html>\n\n\n<!--\n...................................................................................................\n...................................................................................................\n...................................................................................................\n...................................................................................................\n-->"
+            example: application/json; charset=UTF-8
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OAuthError'
 /services/auth/headless/forgot_password:
   post:
     tags:
       - Auth > Headless Identity API Demo
     summary: Forgot Password - Change Password
     description: >-
-      Forgot Password/Change Password is a two step process:
-
-      In the first step you pass a username and recaptcha token into the endpoint. Salesforce then sends an OPT to the end user. In the second step you collect that OTP from the end user, confirming that they do own the email associated to the user, and the new password. This call is the second step in that process.
+      Forgot Password/Change Password is a two step process: In the first step you pass a username and recaptcha token into the endpoint. Salesforce then sends an OPT to the end user. In the second step you collect that OTP from the end user, confirming that they do own the email associated to the user, and the new password. This call is the second step in that process.
     requestBody:
       content:
         application/json:
@@ -190,7 +167,9 @@
       '200':
         description: Successful response
         content:
-          application/json: {}
+          application/json:
+            schema:
+              type: object
 /services/auth/headless/init/passwordless/login:
   post:
     tags:
@@ -198,9 +177,6 @@
     summary: Passwordless Login - Initialize
     description: >-
       Submits the passwordless login data to the init/passwordless/login endpoint and returns a request identifier. At the same time, an OTP is sent out to the end users via email or sms. Passwordless login data is passed in the request body, and is formatted with JSON, with 3 keys: `username`, `recaptcha`, and `verificationmethod`. All 3 keys are strings.
-
-
-      This request returns JSON, and includes an identifier (request identifier).
     requestBody:
       content:
         application/json:
@@ -216,4 +192,6 @@
       '200':
         description: Successful response
         content:
-          application/json: {}
+          application/json:
+            schema:
+              type: object

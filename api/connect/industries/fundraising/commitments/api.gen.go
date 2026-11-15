@@ -277,10 +277,10 @@ func HandlerWithOptions(si ServerInterface, options ChiServerOptions) http.Handl
 		r.Post(options.BaseURL+"/services/data/v{version}/connect/fundraising/commitments", wrapper.PostServicesDataVVersionConnectFundraisingCommitments)
 	})
 	r.Group(func(r chi.Router) {
-		r.Post(options.BaseURL+"/services/data/v{version}/connect/fundraising/commitments/payment-updates", wrapper.PostServicesDataVVersionConnectFundraisingCommitmentsPaymentUpdates)
+		r.Patch(options.BaseURL+"/services/data/v{version}/connect/fundraising/commitments/{commitmentId}", wrapper.PatchServicesDataVVersionConnectFundraisingCommitmentsCommitmentId)
 	})
 	r.Group(func(r chi.Router) {
-		r.Patch(options.BaseURL+"/services/data/v{version}/connect/fundraising/commitments/{commitmentId}", wrapper.PatchServicesDataVVersionConnectFundraisingCommitmentsCommitmentId)
+		r.Post(options.BaseURL+"/services/data/v{version}/connect/fundraising/commitments/payment-updates", wrapper.PostServicesDataVVersionConnectFundraisingCommitmentsPaymentUpdates)
 	})
 
 	return r

@@ -288,10 +288,10 @@ func HandlerWithOptions(si ServerInterface, options ChiServerOptions) http.Handl
 	}
 
 	r.Group(func(r chi.Router) {
-		r.Post(options.BaseURL+"/services/data/v{version}/actions/custom/runDecisionMatrix/{UniqueName}", wrapper.PostServicesDataVVersionActionsCustomRunDecisionMatrixUniqueName)
+		r.Post(options.BaseURL+"/services/data/v{version}/actions/custom/runExpressionSet/{expressionSetAPIName}", wrapper.PostServicesDataVVersionActionsCustomRunExpressionSetExpressionSetAPIName)
 	})
 	r.Group(func(r chi.Router) {
-		r.Post(options.BaseURL+"/services/data/v{version}/actions/custom/runExpressionSet/{expressionSetAPIName}", wrapper.PostServicesDataVVersionActionsCustomRunExpressionSetExpressionSetAPIName)
+		r.Post(options.BaseURL+"/services/data/v{version}/actions/custom/runDecisionMatrix/{UniqueName}", wrapper.PostServicesDataVVersionActionsCustomRunDecisionMatrixUniqueName)
 	})
 
 	return r

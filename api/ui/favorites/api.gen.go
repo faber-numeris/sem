@@ -482,9 +482,6 @@ func HandlerWithOptions(si ServerInterface, options ChiServerOptions) http.Handl
 		r.Post(options.BaseURL+"/services/data/v{version}/ui-api/favorites", wrapper.PostServicesDataVVersionUiApiFavorites)
 	})
 	r.Group(func(r chi.Router) {
-		r.Put(options.BaseURL+"/services/data/v{version}/ui-api/favorites/batch", wrapper.PutServicesDataVVersionUiApiFavoritesBatch)
-	})
-	r.Group(func(r chi.Router) {
 		r.Delete(options.BaseURL+"/services/data/v{version}/ui-api/favorites/{FAVORITE_ID}", wrapper.DeleteServicesDataVVersionUiApiFavoritesFAVORITEID)
 	})
 	r.Group(func(r chi.Router) {
@@ -492,6 +489,9 @@ func HandlerWithOptions(si ServerInterface, options ChiServerOptions) http.Handl
 	})
 	r.Group(func(r chi.Router) {
 		r.Patch(options.BaseURL+"/services/data/v{version}/ui-api/favorites/{FAVORITE_ID}", wrapper.PatchServicesDataVVersionUiApiFavoritesFAVORITEID)
+	})
+	r.Group(func(r chi.Router) {
+		r.Put(options.BaseURL+"/services/data/v{version}/ui-api/favorites/batch", wrapper.PutServicesDataVVersionUiApiFavoritesBatch)
 	})
 	r.Group(func(r chi.Router) {
 		r.Patch(options.BaseURL+"/services/data/v{version}/ui-api/favorites/{FAVORITE_ID}/usage", wrapper.PatchServicesDataVVersionUiApiFavoritesFAVORITEIDUsage)

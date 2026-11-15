@@ -9,10 +9,6 @@ import (
 	"github.com/go-chi/chi/v5"
 )
 
-func (h *Handler) HandleListVersions(w http.ResponseWriter, _ *http.Request) {
-	writeJSON(w, http.StatusOK, h.svc.ListVersions())
-}
-
 func (h *Handler) HandleListResources(w http.ResponseWriter, r *http.Request) {
 	version := chi.URLParam(r, "version")
 	res, err := h.svc.ListResources(version)

@@ -439,13 +439,7 @@ func HandlerWithOptions(si ServerInterface, options ChiServerOptions) http.Handl
 	}
 
 	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/services/data/v{version}/ui-api/list-info/{LIST_VIEW_ID}", wrapper.GetServicesDataVVersionUiApiListInfoLISTVIEWID)
-	})
-	r.Group(func(r chi.Router) {
 		r.Get(options.BaseURL+"/services/data/v{version}/ui-api/list-info/{SOBJECT_API_NAME}", wrapper.GetServicesDataVVersionUiApiListInfoSOBJECTAPINAME)
-	})
-	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/services/data/v{version}/ui-api/list-info/{SOBJECT_API_NAME}/{LIST_VIEW_API_NAME}", wrapper.GetServicesDataVVersionUiApiListInfoSOBJECTAPINAMELISTVIEWAPINAME)
 	})
 	r.Group(func(r chi.Router) {
 		r.Get(options.BaseURL+"/services/data/v{version}/ui-api/list-records/{LIST_VIEW_ID}", wrapper.GetServicesDataVVersionUiApiListRecordsLISTVIEWID)
@@ -455,6 +449,12 @@ func HandlerWithOptions(si ServerInterface, options ChiServerOptions) http.Handl
 	})
 	r.Group(func(r chi.Router) {
 		r.Post(options.BaseURL+"/services/data/v{version}/ui-api/list-records/{SOBJECT_API_NAME}/{LIST_VIEW_API_NAME}", wrapper.PostServicesDataVVersionUiApiListRecordsSOBJECTAPINAMELISTVIEWAPINAME)
+	})
+	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/services/data/v{version}/ui-api/list-info/{LIST_VIEW_ID}", wrapper.GetServicesDataVVersionUiApiListInfoLISTVIEWID)
+	})
+	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/services/data/v{version}/ui-api/list-info/{SOBJECT_API_NAME}/{LIST_VIEW_API_NAME}", wrapper.GetServicesDataVVersionUiApiListInfoSOBJECTAPINAMELISTVIEWAPINAME)
 	})
 
 	return r

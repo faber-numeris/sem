@@ -2257,25 +2257,10 @@ func HandlerWithOptions(si ServerInterface, options ChiServerOptions) http.Handl
 	}
 
 	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/services/data/v54.0/sobjects/ContentVersion/0681k0000020wLFAAY/VersionData", wrapper.GetServicesDataV540SobjectsContentVersion0681k0000020wLFAAYVersionData)
-	})
-	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/services/data/v{version}/compactLayouts", wrapper.GetServicesDataVVersionCompactLayouts)
-	})
-	r.Group(func(r chi.Router) {
 		r.Get(options.BaseURL+"/services/data/v{version}/sobjects", wrapper.GetServicesDataVVersionSobjects)
 	})
 	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/services/data/v{version}/sobjects/Global/describe/layouts", wrapper.GetServicesDataVVersionSobjectsGlobalDescribeLayouts)
-	})
-	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/services/data/v{version}/sobjects/PlatformAction", wrapper.GetServicesDataVVersionSobjectsPlatformAction)
-	})
-	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/services/data/v{version}/sobjects/SelfServiceUser/{USER_ID}/password", wrapper.GetServicesDataVVersionSobjectsSelfServiceUserUSERIDPassword)
-	})
-	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/services/data/v{version}/sobjects/User/{USER_ID}/password", wrapper.GetServicesDataVVersionSobjectsUserUSERIDPassword)
+		r.Get(options.BaseURL+"/services/data/v54.0/sobjects/ContentVersion/0681k0000020wLFAAY/VersionData", wrapper.GetServicesDataV540SobjectsContentVersion0681k0000020wLFAAYVersionData)
 	})
 	r.Group(func(r chi.Router) {
 		r.Get(options.BaseURL+"/services/data/v{version}/sobjects/{SOBJECT_API_NAME}", wrapper.GetServicesDataVVersionSobjectsSOBJECTAPINAME)
@@ -2284,37 +2269,16 @@ func HandlerWithOptions(si ServerInterface, options ChiServerOptions) http.Handl
 		r.Post(options.BaseURL+"/services/data/v{version}/sobjects/{SOBJECT_API_NAME}", wrapper.PostServicesDataVVersionSobjectsSOBJECTAPINAME)
 	})
 	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/services/data/v{version}/sobjects/{SOBJECT_API_NAME}/deleted", wrapper.GetServicesDataVVersionSobjectsSOBJECTAPINAMEDeleted)
-	})
-	r.Group(func(r chi.Router) {
 		r.Get(options.BaseURL+"/services/data/v{version}/sobjects/{SOBJECT_API_NAME}/describe", wrapper.GetServicesDataVVersionSobjectsSOBJECTAPINAMEDescribe)
 	})
 	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/services/data/v{version}/sobjects/{SOBJECT_API_NAME}/describe/approvalLayouts/{APPROVAL_PROCESS_NAME}", wrapper.GetServicesDataVVersionSobjectsSOBJECTAPINAMEDescribeApprovalLayoutsAPPROVALPROCESSNAME)
-	})
-	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/services/data/v{version}/sobjects/{SOBJECT_API_NAME}/describe/describe/compactLayouts", wrapper.GetServicesDataVVersionSobjectsSOBJECTAPINAMEDescribeDescribeCompactLayouts)
-	})
-	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/services/data/v{version}/sobjects/{SOBJECT_API_NAME}/describe/layouts", wrapper.GetServicesDataVVersionSobjectsSOBJECTAPINAMEDescribeLayouts)
-	})
-	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/services/data/v{version}/sobjects/{SOBJECT_API_NAME}/describe/layouts/{RECORD_TYPE_ID}", wrapper.GetServicesDataVVersionSobjectsSOBJECTAPINAMEDescribeLayoutsRECORDTYPEID)
-	})
-	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/services/data/v{version}/sobjects/{SOBJECT_API_NAME}/describe/namedLayouts/{LAYOUT_NAME}", wrapper.GetServicesDataVVersionSobjectsSOBJECTAPINAMEDescribeNamedLayoutsLAYOUTNAME)
-	})
-	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/services/data/v{version}/sobjects/{SOBJECT_API_NAME}/quickActions", wrapper.GetServicesDataVVersionSobjectsSOBJECTAPINAMEQuickActions)
-	})
-	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/services/data/v{version}/sobjects/{SOBJECT_API_NAME}/suggestedArticles", wrapper.GetServicesDataVVersionSobjectsSOBJECTAPINAMESuggestedArticles)
+		r.Get(options.BaseURL+"/services/data/v{version}/sobjects/{SOBJECT_API_NAME}/deleted", wrapper.GetServicesDataVVersionSobjectsSOBJECTAPINAMEDeleted)
 	})
 	r.Group(func(r chi.Router) {
 		r.Get(options.BaseURL+"/services/data/v{version}/sobjects/{SOBJECT_API_NAME}/updated", wrapper.GetServicesDataVVersionSobjectsSOBJECTAPINAMEUpdated)
 	})
 	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/services/data/v{version}/sobjects/{SOBJECT_API_NAME}/{FIELD_NAME}/{FIELD_VALUE}", wrapper.GetServicesDataVVersionSobjectsSOBJECTAPINAMEFIELDNAMEFIELDVALUE)
+		r.Get(options.BaseURL+"/services/data/v{version}/sobjects/{SOBJECT_API_NAME}/describe/namedLayouts/{LAYOUT_NAME}", wrapper.GetServicesDataVVersionSobjectsSOBJECTAPINAMEDescribeNamedLayoutsLAYOUTNAME)
 	})
 	r.Group(func(r chi.Router) {
 		r.Delete(options.BaseURL+"/services/data/v{version}/sobjects/{SOBJECT_API_NAME}/{RECORD_ID}", wrapper.DeleteServicesDataVVersionSobjectsSOBJECTAPINAMERECORDID)
@@ -2326,13 +2290,49 @@ func HandlerWithOptions(si ServerInterface, options ChiServerOptions) http.Handl
 		r.Patch(options.BaseURL+"/services/data/v{version}/sobjects/{SOBJECT_API_NAME}/{RECORD_ID}", wrapper.PatchServicesDataVVersionSobjectsSOBJECTAPINAMERECORDID)
 	})
 	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/services/data/v{version}/sobjects/{SOBJECT_API_NAME}/{RECORD_ID}/richTextImageFields/{FIELD_NAME}/{CONTENT_REFERENCE_ID}", wrapper.GetServicesDataVVersionSobjectsSOBJECTAPINAMERECORDIDRichTextImageFieldsFIELDNAMECONTENTREFERENCEID)
+		r.Get(options.BaseURL+"/services/data/v{version}/sobjects/{SOBJECT_API_NAME}/{FIELD_NAME}/{FIELD_VALUE}", wrapper.GetServicesDataVVersionSobjectsSOBJECTAPINAMEFIELDNAMEFIELDVALUE)
 	})
 	r.Group(func(r chi.Router) {
 		r.Get(options.BaseURL+"/services/data/v{version}/sobjects/{SOBJECT_API_NAME}/{RECORD_ID}/{BLOB_FIELD}", wrapper.GetServicesDataVVersionSobjectsSOBJECTAPINAMERECORDIDBLOBFIELD)
 	})
 	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/services/data/v{version}/sobjects/{SOBJECT_API_NAME}/describe/approvalLayouts/{APPROVAL_PROCESS_NAME}", wrapper.GetServicesDataVVersionSobjectsSOBJECTAPINAMEDescribeApprovalLayoutsAPPROVALPROCESSNAME)
+	})
+	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/services/data/v{version}/sobjects/{SOBJECT_API_NAME}/describe/describe/compactLayouts", wrapper.GetServicesDataVVersionSobjectsSOBJECTAPINAMEDescribeDescribeCompactLayouts)
+	})
+	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/services/data/v{version}/sobjects/Global/describe/layouts", wrapper.GetServicesDataVVersionSobjectsGlobalDescribeLayouts)
+	})
+	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/services/data/v{version}/sobjects/{SOBJECT_API_NAME}/describe/layouts", wrapper.GetServicesDataVVersionSobjectsSOBJECTAPINAMEDescribeLayouts)
+	})
+	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/services/data/v{version}/sobjects/{SOBJECT_API_NAME}/describe/layouts/{RECORD_TYPE_ID}", wrapper.GetServicesDataVVersionSobjectsSOBJECTAPINAMEDescribeLayoutsRECORDTYPEID)
+	})
+	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/services/data/v{version}/sobjects/PlatformAction", wrapper.GetServicesDataVVersionSobjectsPlatformAction)
+	})
+	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/services/data/v{version}/sobjects/{SOBJECT_API_NAME}/quickActions", wrapper.GetServicesDataVVersionSobjectsSOBJECTAPINAMEQuickActions)
+	})
+	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/services/data/v{version}/sobjects/{SOBJECT_API_NAME}/{RECORD_ID}/richTextImageFields/{FIELD_NAME}/{CONTENT_REFERENCE_ID}", wrapper.GetServicesDataVVersionSobjectsSOBJECTAPINAMERECORDIDRichTextImageFieldsFIELDNAMECONTENTREFERENCEID)
+	})
+	r.Group(func(r chi.Router) {
 		r.Get(options.BaseURL+"/services/data/v{version}/sobjects/{SOBJECT_API_NAME}/{RECORD_ID}/{RELATIONSHIP_FIELD_NAME}", wrapper.GetServicesDataVVersionSobjectsSOBJECTAPINAMERECORDIDRELATIONSHIPFIELDNAME)
+	})
+	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/services/data/v{version}/sobjects/{SOBJECT_API_NAME}/suggestedArticles", wrapper.GetServicesDataVVersionSobjectsSOBJECTAPINAMESuggestedArticles)
+	})
+	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/services/data/v{version}/sobjects/User/{USER_ID}/password", wrapper.GetServicesDataVVersionSobjectsUserUSERIDPassword)
+	})
+	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/services/data/v{version}/sobjects/SelfServiceUser/{USER_ID}/password", wrapper.GetServicesDataVVersionSobjectsSelfServiceUserUSERIDPassword)
+	})
+	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/services/data/v{version}/compactLayouts", wrapper.GetServicesDataVVersionCompactLayouts)
 	})
 
 	return r

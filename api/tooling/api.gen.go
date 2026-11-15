@@ -809,13 +809,13 @@ func HandlerWithOptions(si ServerInterface, options ChiServerOptions) http.Handl
 	}
 
 	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/services/data/v{version}/tooling/query", wrapper.GetServicesDataVVersionToolingQuery)
+	})
+	r.Group(func(r chi.Router) {
 		r.Get(options.BaseURL+"/services/data/v{version}/tooling/completions", wrapper.GetServicesDataVVersionToolingCompletions)
 	})
 	r.Group(func(r chi.Router) {
 		r.Get(options.BaseURL+"/services/data/v{version}/tooling/executeAnonymous", wrapper.GetServicesDataVVersionToolingExecuteAnonymous)
-	})
-	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/services/data/v{version}/tooling/query", wrapper.GetServicesDataVVersionToolingQuery)
 	})
 	r.Group(func(r chi.Router) {
 		r.Post(options.BaseURL+"/services/data/v{version}/tooling/runTestsAsynchronous", wrapper.PostServicesDataVVersionToolingRunTestsAsynchronous)

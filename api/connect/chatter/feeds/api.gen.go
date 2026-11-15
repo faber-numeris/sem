@@ -268,10 +268,10 @@ func HandlerWithOptions(si ServerInterface, options ChiServerOptions) http.Handl
 		r.Get(options.BaseURL+"/services/data/v{version}/chatter/feeds/news/me/feed-elements", wrapper.GetServicesDataVVersionChatterFeedsNewsMeFeedElements)
 	})
 	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/services/data/v{version}/chatter/feeds/record/{RECORD_GROUP_ID}/feed-elements", wrapper.GetServicesDataVVersionChatterFeedsRecordRECORDGROUPIDFeedElements)
+		r.Get(options.BaseURL+"/services/data/v{version}/chatter/feeds/user-profile/{USER_ID}/feed-elements", wrapper.GetServicesDataVVersionChatterFeedsUserProfileUSERIDFeedElements)
 	})
 	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/services/data/v{version}/chatter/feeds/user-profile/{USER_ID}/feed-elements", wrapper.GetServicesDataVVersionChatterFeedsUserProfileUSERIDFeedElements)
+		r.Get(options.BaseURL+"/services/data/v{version}/chatter/feeds/record/{RECORD_GROUP_ID}/feed-elements", wrapper.GetServicesDataVVersionChatterFeedsRecordRECORDGROUPIDFeedElements)
 	})
 
 	return r

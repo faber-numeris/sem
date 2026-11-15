@@ -581,9 +581,6 @@ func HandlerWithOptions(si ServerInterface, options ChiServerOptions) http.Handl
 		r.Patch(options.BaseURL+"/services/data/v{version}/tooling/sobjects/PlatformEventChannel/{PLATFORM_EVENT_CHANNEL_ID}", wrapper.PatchServicesDataVVersionToolingSobjectsPlatformEventChannelPLATFORMEVENTCHANNELID)
 	})
 	r.Group(func(r chi.Router) {
-		r.Post(options.BaseURL+"/services/data/v{version}/tooling/sobjects/PlatformEventChannelMember", wrapper.PostServicesDataVVersionToolingSobjectsPlatformEventChannelMember)
-	})
-	r.Group(func(r chi.Router) {
 		r.Delete(options.BaseURL+"/services/data/v{version}/tooling/sobjects/PlatformEventChannelMember/{PLATFORM_EVENT_CHANNEL_MEMBER_ID}", wrapper.DeleteServicesDataVVersionToolingSobjectsPlatformEventChannelMemberPLATFORMEVENTCHANNELMEMBERID)
 	})
 	r.Group(func(r chi.Router) {
@@ -591,6 +588,9 @@ func HandlerWithOptions(si ServerInterface, options ChiServerOptions) http.Handl
 	})
 	r.Group(func(r chi.Router) {
 		r.Patch(options.BaseURL+"/services/data/v{version}/tooling/sobjects/PlatformEventChannelMember/{PLATFORM_EVENT_CHANNEL_MEMBER_ID}", wrapper.PatchServicesDataVVersionToolingSobjectsPlatformEventChannelMemberPLATFORMEVENTCHANNELMEMBERID)
+	})
+	r.Group(func(r chi.Router) {
+		r.Post(options.BaseURL+"/services/data/v{version}/tooling/sobjects/PlatformEventChannelMember", wrapper.PostServicesDataVVersionToolingSobjectsPlatformEventChannelMember)
 	})
 
 	return r

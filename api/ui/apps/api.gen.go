@@ -527,13 +527,13 @@ func HandlerWithOptions(si ServerInterface, options ChiServerOptions) http.Handl
 		r.Get(options.BaseURL+"/services/data/v{version}/ui-api/apps", wrapper.GetServicesDataVVersionUiApiApps)
 	})
 	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/services/data/v{version}/ui-api/apps/selected", wrapper.GetServicesDataVVersionUiApiAppsSelected)
-	})
-	r.Group(func(r chi.Router) {
 		r.Get(options.BaseURL+"/services/data/v{version}/ui-api/apps/{APP_ID}", wrapper.GetServicesDataVVersionUiApiAppsAPPID)
 	})
 	r.Group(func(r chi.Router) {
 		r.Patch(options.BaseURL+"/services/data/v{version}/ui-api/apps/{APP_ID}", wrapper.PatchServicesDataVVersionUiApiAppsAPPID)
+	})
+	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/services/data/v{version}/ui-api/apps/selected", wrapper.GetServicesDataVVersionUiApiAppsSelected)
 	})
 	r.Group(func(r chi.Router) {
 		r.Get(options.BaseURL+"/services/data/v{version}/ui-api/apps/{APP_ID}/user-nav-items", wrapper.GetServicesDataVVersionUiApiAppsAPPIDUserNavItems)

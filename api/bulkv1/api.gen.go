@@ -1000,7 +1000,7 @@ func HandlerWithOptions(si ServerInterface, options ChiServerOptions) http.Handl
 		r.Post(options.BaseURL+"/services/async/{version}/job", wrapper.PostServicesAsyncVersionJob)
 	})
 	r.Group(func(r chi.Router) {
-		r.Post(options.BaseURL+"/services/async/{version}/job/{_jobId}", wrapper.PostServicesAsyncVersionJobJobId)
+		r.Post(options.BaseURL+"/services/async/{version}/job/{_jobId}/spec", wrapper.PostServicesAsyncVersionJobJobIdSpec)
 	})
 	r.Group(func(r chi.Router) {
 		r.Get(options.BaseURL+"/services/async/{version}/job/{_jobId}/batch", wrapper.GetServicesAsyncVersionJobJobIdBatch)
@@ -1009,13 +1009,13 @@ func HandlerWithOptions(si ServerInterface, options ChiServerOptions) http.Handl
 		r.Post(options.BaseURL+"/services/async/{version}/job/{_jobId}/batch", wrapper.PostServicesAsyncVersionJobJobIdBatch)
 	})
 	r.Group(func(r chi.Router) {
+		r.Post(options.BaseURL+"/services/async/{version}/job/{_jobId}", wrapper.PostServicesAsyncVersionJobJobId)
+	})
+	r.Group(func(r chi.Router) {
 		r.Get(options.BaseURL+"/services/async/{version}/job/{_jobId}/batch/{_batchId}/result", wrapper.GetServicesAsyncVersionJobJobIdBatchBatchIdResult)
 	})
 	r.Group(func(r chi.Router) {
 		r.Get(options.BaseURL+"/services/async/{version}/job/{_jobId}/batch/{_batchId}/result/{batchResultId}", wrapper.GetServicesAsyncVersionJobJobIdBatchBatchIdResultBatchResultId)
-	})
-	r.Group(func(r chi.Router) {
-		r.Post(options.BaseURL+"/services/async/{version}/job/{_jobId}/spec", wrapper.PostServicesAsyncVersionJobJobIdSpec)
 	})
 
 	return r

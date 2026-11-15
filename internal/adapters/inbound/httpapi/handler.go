@@ -2,12 +2,13 @@ package httpapi
 
 import (
 	"encoding/json"
-	"errors"
 	"net/http"
 	"strings"
 
 	"github.com/faber-numeris/sem/api"
-	"github.com/faber-numeris/sem/internal/core/domain"
+	"github.com/faber-numeris/sem/api/auth"
+	"github.com/faber-numeris/sem/api/auth/headlessidentityapidemo"
+	"github.com/faber-numeris/sem/api/subscriptionmanagement/queryorgpostmanrunner"
 	"github.com/faber-numeris/sem/internal/ports/inbound"
 	"github.com/go-chi/chi/v5"
 )
@@ -49,9 +50,25 @@ func StripTrailingSlashMiddleware(next http.Handler) http.Handler {
 func NewRouter(svc inbound.EmulatorService, pingFn func() bool) chi.Router {
 	r := chi.NewRouter()
 	r.Use(StripTrailingSlashMiddleware)
+	r.Use(RequestContextMiddleware)
 
 	h := NewHandler(svc, pingFn)
+	sh := &strictHandler{svc: svc}
 	h.RegisterRoutes(r)
+
+	auth.HandlerWithOptions(auth.NewStrictHandlerWithOptions(sh, nil, auth.StrictHTTPServerOptions{
+		RequestErrorHandlerFunc:  strictRequestErrorHandler,
+		ResponseErrorHandlerFunc: strictResponseErrorHandler,
+	}), auth.ChiServerOptions{BaseRouter: r})
+	headlessidentityapidemo.HandlerWithOptions(headlessidentityapidemo.NewStrictHandlerWithOptions(sh, nil, headlessidentityapidemo.StrictHTTPServerOptions{
+		RequestErrorHandlerFunc:  strictRequestErrorHandler,
+		ResponseErrorHandlerFunc: strictResponseErrorHandler,
+	}), headlessidentityapidemo.ChiServerOptions{BaseRouter: r})
+	queryorgpostmanrunner.HandlerWithOptions(queryorgpostmanrunner.NewStrictHandlerWithOptions(sh, nil, queryorgpostmanrunner.StrictHTTPServerOptions{
+		RequestErrorHandlerFunc:  strictRequestErrorHandler,
+		ResponseErrorHandlerFunc: strictResponseErrorHandler,
+	}), queryorgpostmanrunner.ChiServerOptions{BaseRouter: r})
+
 	h.router = r
 	return r
 }
@@ -61,16 +78,10 @@ func (h *Handler) RegisterRoutes(r chi.Router) {
 	r.Get("/health", h.HandleHealth)
 	r.Get("/ready", h.HandleReady)
 
-	// 1. OAuth 2.0 & Authentication Endpoints
-	r.Post("/services/oauth2/token", h.HandleToken)
-	r.Get("/services/oauth2/authorize", h.HandleAuthorize)
-	r.Post("/services/oauth2/revoke", h.HandleRevoke)
-	r.Post("/services/oauth2/introspect", h.HandleIntrospect)
-	r.Get("/services/oauth2/userinfo", h.HandleUserInfo)
-	r.Post("/services/oauth2/userinfo", h.HandleUserInfo)
+	// OAuth 2.0 & authentication routes are mounted from the generated strict
+	// handlers in NewRouter.
 
 	// 2. REST API Core Endpoints (CRUD & Metadata)
-	r.Get("/services/data", h.HandleListVersions)
 	r.Get("/services/data/v{version}", h.HandleListResources)
 	r.Get("/services/data/v{version}/limits", h.HandleGetLimits)
 	r.Get("/services/data/v{version}/sobjects", h.HandleDescribeGlobal)
@@ -136,27 +147,7 @@ func writeJSON(w http.ResponseWriter, status int, payload any) {
 }
 
 func writeSFError(w http.ResponseWriter, err error) {
-	status := http.StatusBadRequest
-	errCode := "INVALID_REQUEST"
-
-	switch {
-	case errors.Is(err, domain.ErrNotFound), errors.Is(err, domain.ErrInvalidVersion), errors.Is(err, domain.ErrUnsupportedSObject):
-		status = http.StatusNotFound
-		errCode = "NOT_FOUND"
-	case errors.Is(err, domain.ErrRequiredFieldMissing):
-		status = http.StatusBadRequest
-		errCode = "REQUIRED_FIELD_MISSING"
-	case errors.Is(err, domain.ErrMalformedQuery):
-		status = http.StatusBadRequest
-		errCode = "MALFORMED_QUERY"
-	case errors.Is(err, domain.ErrMalformedSearch):
-		status = http.StatusBadRequest
-		errCode = "MALFORMED_SEARCH"
-	case errors.Is(err, domain.ErrInvalidToken), errors.Is(err, domain.ErrInvalidClient), errors.Is(err, domain.ErrInvalidGrant):
-		status = http.StatusUnauthorized
-		errCode = "INVALID_SESSION_ID"
-	}
-
+	status, errCode := salesforceErrorStatus(err)
 	writeJSON(w, status, []map[string]any{
 		{
 			"message":   err.Error(),

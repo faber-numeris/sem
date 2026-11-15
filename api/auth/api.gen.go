@@ -4,37 +4,127 @@
 package auth
 
 import (
+	"bytes"
+	"context"
+	"encoding/json"
+	"errors"
 	"fmt"
+	"io"
 	"net/http"
+	"strings"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/oapi-codegen/runtime"
 )
+
+// Defines values for TokenRequestGrantType.
+const (
+	AuthorizationCode                    TokenRequestGrantType = "authorization_code"
+	ClientCredentials                    TokenRequestGrantType = "client_credentials"
+	Password                             TokenRequestGrantType = "password"
+	RefreshToken                         TokenRequestGrantType = "refresh_token"
+	UrnIetfParamsOauthGrantTypeJwtBearer TokenRequestGrantType = "urn:ietf:params:oauth:grant-type:jwt-bearer"
+)
+
+// Valid indicates whether the value is a known member of the TokenRequestGrantType enum.
+func (e TokenRequestGrantType) Valid() bool {
+	switch e {
+	case AuthorizationCode:
+		return true
+	case ClientCredentials:
+		return true
+	case Password:
+		return true
+	case RefreshToken:
+		return true
+	case UrnIetfParamsOauthGrantTypeJwtBearer:
+		return true
+	default:
+		return false
+	}
+}
+
+// IntrospectRequest defines model for IntrospectRequest.
+type IntrospectRequest struct {
+	ClientId      *string `form:"client_id" json:"client_id,omitempty"`
+	ClientSecret  *string `form:"client_secret" json:"client_secret,omitempty"`
+	Token         *string `form:"token" json:"token,omitempty"`
+	TokenTypeHint *string `form:"token_type_hint" json:"token_type_hint,omitempty"`
+}
+
+// IntrospectResponse defines model for IntrospectResponse.
+type IntrospectResponse struct {
+	Active    bool    `json:"active"`
+	ClientId  *string `json:"client_id,omitempty"`
+	Exp       *int64  `json:"exp,omitempty"`
+	Iat       *int64  `json:"iat,omitempty"`
+	Scope     *string `json:"scope,omitempty"`
+	Sub       *string `json:"sub,omitempty"`
+	TokenType *string `json:"token_type,omitempty"`
+	Username  *string `json:"username,omitempty"`
+}
+
+// OAuthError OAuth 2.0 error response.
+type OAuthError struct {
+	// Error Example: invalid_grant
+	Error            string  `json:"error"`
+	ErrorDescription *string `json:"error_description,omitempty"`
+}
+
+// RevokeTokenRequest defines model for RevokeTokenRequest.
+type RevokeTokenRequest struct {
+	Token *string `form:"token" json:"token,omitempty"`
+}
+
+// TokenRequest OAuth 2.0 token endpoint request. Fields may be sent as a form body or as JSON.
+type TokenRequest struct {
+	// Assertion JWT assertion for the jwt-bearer grant.
+	Assertion    *string                `form:"assertion" json:"assertion,omitempty"`
+	ClientId     *string                `form:"client_id" json:"client_id,omitempty"`
+	ClientSecret *string                `form:"client_secret" json:"client_secret,omitempty"`
+	Code         *string                `form:"code" json:"code,omitempty"`
+	GrantType    *TokenRequestGrantType `form:"grant_type" json:"grant_type,omitempty"`
+	Password     *string                `form:"password" json:"password,omitempty"`
+	RedirectUri  *string                `form:"redirect_uri" json:"redirect_uri,omitempty"`
+	RefreshToken *string                `form:"refresh_token" json:"refresh_token,omitempty"`
+	Scope        *string                `form:"scope" json:"scope,omitempty"`
+	Username     *string                `form:"username" json:"username,omitempty"`
+}
+
+// TokenRequestGrantType defines model for TokenRequest.GrantType.
+type TokenRequestGrantType string
+
+// TokenResponse OAuth 2.0 access token response.
+type TokenResponse struct {
+	AccessToken string `json:"access_token"`
+	Id          string `json:"id"`
+	InstanceUrl string `json:"instance_url"`
+
+	// IssuedAt Issue time in milliseconds since the epoch, serialized as a string.
+	//
+	// Example: 1700000000000
+	IssuedAt string `json:"issued_at"`
+
+	// RefreshToken Omitted when the grant does not issue a refresh token.
+	RefreshToken *string `json:"refresh_token,omitempty"`
+	Scope        string  `json:"scope"`
+	Signature    string  `json:"signature"`
+
+	// TokenType Example: Bearer
+	TokenType string `json:"token_type"`
+}
 
 // GetIdOrgIdUserIdParams defines parameters for GetIdOrgIdUserId.
 type GetIdOrgIdUserIdParams struct {
 	ContentType *string `json:"Content-Type,omitempty"`
 }
 
-// PostServicesOauth2IntrospectFormdataBody defines parameters for PostServicesOauth2Introspect.
-type PostServicesOauth2IntrospectFormdataBody struct {
-	// ClientId Example: {{clientId}}
-	ClientId *string `form:"client_id,omitempty" json:"client_id,omitempty"`
-
-	// ClientSecret Example: {{clientSecret}}
-	ClientSecret *string `form:"client_secret,omitempty" json:"client_secret,omitempty"`
-
-	// Token Example: {{_accessToken}}
-	Token *string `form:"token,omitempty" json:"token,omitempty"`
-
-	// TokenTypeHint Example: access_token
-	TokenTypeHint *string `form:"token_type_hint,omitempty" json:"token_type_hint,omitempty"`
-}
-
 // PostServicesOauth2IntrospectParams defines parameters for PostServicesOauth2Introspect.
 type PostServicesOauth2IntrospectParams struct {
-	ContentType *string `json:"Content-Type,omitempty"`
-	Accept      *string `json:"Accept,omitempty"`
+	Token         *string `form:"token,omitempty" json:"token,omitempty"`
+	TokenTypeHint *string `form:"token_type_hint,omitempty" json:"token_type_hint,omitempty"`
+	ClientId      *string `form:"client_id,omitempty" json:"client_id,omitempty"`
+	ClientSecret  *string `form:"client_secret,omitempty" json:"client_secret,omitempty"`
 }
 
 // PostServicesOauth2RegisterParams defines parameters for PostServicesOauth2Register.
@@ -44,47 +134,23 @@ type PostServicesOauth2RegisterParams struct {
 	Authorization *string `json:"Authorization,omitempty"`
 }
 
-// PostServicesOauth2RevokeFormdataBody defines parameters for PostServicesOauth2Revoke.
-type PostServicesOauth2RevokeFormdataBody struct {
-	// Token If an access token is included, Salesforce invalidates it and revokes the token. If a refresh token is included, Salesforce revokes it and any associated access tokens.
-	//
-	// Example: {{_accessToken}}
+// PostServicesOauth2RevokeParams defines parameters for PostServicesOauth2Revoke.
+type PostServicesOauth2RevokeParams struct {
+	// Token Token to revoke. It may also be supplied in the form body; when both are present the query value wins.
 	Token *string `form:"token,omitempty" json:"token,omitempty"`
 }
 
-// PostServicesOauth2RevokeParams defines parameters for PostServicesOauth2Revoke.
-type PostServicesOauth2RevokeParams struct {
-	ContentType *string `json:"Content-Type,omitempty"`
-}
-
-// PostServicesOauth2TokenFormdataBody defines parameters for PostServicesOauth2Token.
-type PostServicesOauth2TokenFormdataBody struct {
-	// ClientId Example: {{clientId}}
-	ClientId *string `form:"client_id,omitempty" json:"client_id,omitempty"`
-
-	// ClientSecret Example: {{clientSecret}}
-	ClientSecret *string `form:"client_secret,omitempty" json:"client_secret,omitempty"`
-
-	// GrantType Example: refresh_token
-	GrantType *string `form:"grant_type,omitempty" json:"grant_type,omitempty"`
-
-	// RefreshToken Example: {{_refreshToken}}
-	RefreshToken *string `form:"refresh_token,omitempty" json:"refresh_token,omitempty"`
-}
-
-// PostServicesOauth2TokenParams defines parameters for PostServicesOauth2Token.
-type PostServicesOauth2TokenParams struct {
-	ContentType *string `json:"Content-Type,omitempty"`
-}
-
 // PostServicesOauth2IntrospectFormdataRequestBody defines body for PostServicesOauth2Introspect for application/x-www-form-urlencoded ContentType.
-type PostServicesOauth2IntrospectFormdataRequestBody PostServicesOauth2IntrospectFormdataBody
+type PostServicesOauth2IntrospectFormdataRequestBody = IntrospectRequest
 
 // PostServicesOauth2RevokeFormdataRequestBody defines body for PostServicesOauth2Revoke for application/x-www-form-urlencoded ContentType.
-type PostServicesOauth2RevokeFormdataRequestBody PostServicesOauth2RevokeFormdataBody
+type PostServicesOauth2RevokeFormdataRequestBody = RevokeTokenRequest
+
+// PostServicesOauth2TokenJSONRequestBody defines body for PostServicesOauth2Token for application/json ContentType.
+type PostServicesOauth2TokenJSONRequestBody = TokenRequest
 
 // PostServicesOauth2TokenFormdataRequestBody defines body for PostServicesOauth2Token for application/x-www-form-urlencoded ContentType.
-type PostServicesOauth2TokenFormdataRequestBody PostServicesOauth2TokenFormdataBody
+type PostServicesOauth2TokenFormdataRequestBody = TokenRequest
 
 // ServerInterface represents all server handlers.
 type ServerInterface interface {
@@ -111,7 +177,7 @@ type ServerInterface interface {
 	PostServicesOauth2Revoke(w http.ResponseWriter, r *http.Request, params PostServicesOauth2RevokeParams)
 	// PostServicesOauth2Token Refresh Token
 	// (POST /services/oauth2/token)
-	PostServicesOauth2Token(w http.ResponseWriter, r *http.Request, params PostServicesOauth2TokenParams)
+	PostServicesOauth2Token(w http.ResponseWriter, r *http.Request)
 }
 
 // Unimplemented server implementation that returns http.StatusNotImplemented for each endpoint.
@@ -162,7 +228,7 @@ func (_ Unimplemented) PostServicesOauth2Revoke(w http.ResponseWriter, r *http.R
 
 // PostServicesOauth2Token Refresh Token
 // (POST /services/oauth2/token)
-func (_ Unimplemented) PostServicesOauth2Token(w http.ResponseWriter, r *http.Request, params PostServicesOauth2TokenParams) {
+func (_ Unimplemented) PostServicesOauth2Token(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusNotImplemented)
 }
 
@@ -285,44 +351,56 @@ func (siw *ServerInterfaceWrapper) PostServicesOauth2Introspect(w http.ResponseW
 	// Parameter object where we will unmarshal all parameters from the context
 	var params PostServicesOauth2IntrospectParams
 
-	headers := r.Header
+	// ------------- Optional query parameter "token" -------------
 
-	// ------------- Optional header parameter "Content-Type" -------------
-	if valueList, found := headers[http.CanonicalHeaderKey("Content-Type")]; found {
-		var ContentType string
-		n := len(valueList)
-		if n != 1 {
-			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Content-Type", Count: n})
-			return
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "token", r.URL.Query(), &params.Token, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "token"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "token", Err: err})
 		}
-
-		err = runtime.BindStyledParameterWithOptions("simple", "Content-Type", valueList[0], &ContentType, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""})
-		if err != nil {
-			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Content-Type", Err: err})
-			return
-		}
-
-		params.ContentType = &ContentType
-
+		return
 	}
 
-	// ------------- Optional header parameter "Accept" -------------
-	if valueList, found := headers[http.CanonicalHeaderKey("Accept")]; found {
-		var Accept string
-		n := len(valueList)
-		if n != 1 {
-			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Accept", Count: n})
-			return
+	// ------------- Optional query parameter "token_type_hint" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "token_type_hint", r.URL.Query(), &params.TokenTypeHint, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "token_type_hint"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "token_type_hint", Err: err})
 		}
+		return
+	}
 
-		err = runtime.BindStyledParameterWithOptions("simple", "Accept", valueList[0], &Accept, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""})
-		if err != nil {
-			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Accept", Err: err})
-			return
+	// ------------- Optional query parameter "client_id" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "client_id", r.URL.Query(), &params.ClientId, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "client_id"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "client_id", Err: err})
 		}
+		return
+	}
 
-		params.Accept = &Accept
+	// ------------- Optional query parameter "client_secret" -------------
 
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "client_secret", r.URL.Query(), &params.ClientSecret, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "client_secret"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "client_secret", Err: err})
+		}
+		return
 	}
 
 	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -424,25 +502,17 @@ func (siw *ServerInterfaceWrapper) PostServicesOauth2Revoke(w http.ResponseWrite
 	// Parameter object where we will unmarshal all parameters from the context
 	var params PostServicesOauth2RevokeParams
 
-	headers := r.Header
+	// ------------- Optional query parameter "token" -------------
 
-	// ------------- Optional header parameter "Content-Type" -------------
-	if valueList, found := headers[http.CanonicalHeaderKey("Content-Type")]; found {
-		var ContentType string
-		n := len(valueList)
-		if n != 1 {
-			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Content-Type", Count: n})
-			return
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "token", r.URL.Query(), &params.Token, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "token"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "token", Err: err})
 		}
-
-		err = runtime.BindStyledParameterWithOptions("simple", "Content-Type", valueList[0], &ContentType, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""})
-		if err != nil {
-			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Content-Type", Err: err})
-			return
-		}
-
-		params.ContentType = &ContentType
-
+		return
 	}
 
 	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -459,35 +529,8 @@ func (siw *ServerInterfaceWrapper) PostServicesOauth2Revoke(w http.ResponseWrite
 // PostServicesOauth2Token operation middleware
 func (siw *ServerInterfaceWrapper) PostServicesOauth2Token(w http.ResponseWriter, r *http.Request) {
 
-	var err error
-	_ = err
-
-	// Parameter object where we will unmarshal all parameters from the context
-	var params PostServicesOauth2TokenParams
-
-	headers := r.Header
-
-	// ------------- Optional header parameter "Content-Type" -------------
-	if valueList, found := headers[http.CanonicalHeaderKey("Content-Type")]; found {
-		var ContentType string
-		n := len(valueList)
-		if n != 1 {
-			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Content-Type", Count: n})
-			return
-		}
-
-		err = runtime.BindStyledParameterWithOptions("simple", "Content-Type", valueList[0], &ContentType, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""})
-		if err != nil {
-			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Content-Type", Err: err})
-			return
-		}
-
-		params.ContentType = &ContentType
-
-	}
-
 	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.PostServicesOauth2Token(w, r, params)
+		siw.Handler.PostServicesOauth2Token(w, r)
 	}))
 
 	for _, middleware := range siw.HandlerMiddlewares {
@@ -611,16 +654,16 @@ func HandlerWithOptions(si ServerInterface, options ChiServerOptions) http.Handl
 	}
 
 	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/.well-known/auth-configuration", wrapper.GetWellKnownAuthConfiguration)
+		r.Post(options.BaseURL+"/services/oauth2/token", wrapper.PostServicesOauth2Token)
+	})
+	r.Group(func(r chi.Router) {
+		r.Post(options.BaseURL+"/services/oauth2/revoke", wrapper.PostServicesOauth2Revoke)
 	})
 	r.Group(func(r chi.Router) {
 		r.Get(options.BaseURL+"/.well-known/openid-configuration", wrapper.GetWellKnownOpenidConfiguration)
 	})
 	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/id/keys", wrapper.GetIdKeys)
-	})
-	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/id/{_orgId}/{_userId}", wrapper.GetIdOrgIdUserId)
+		r.Get(options.BaseURL+"/.well-known/auth-configuration", wrapper.GetWellKnownAuthConfiguration)
 	})
 	r.Group(func(r chi.Router) {
 		r.Post(options.BaseURL+"/services/oauth2/introspect", wrapper.PostServicesOauth2Introspect)
@@ -629,11 +672,833 @@ func HandlerWithOptions(si ServerInterface, options ChiServerOptions) http.Handl
 		r.Post(options.BaseURL+"/services/oauth2/register", wrapper.PostServicesOauth2Register)
 	})
 	r.Group(func(r chi.Router) {
-		r.Post(options.BaseURL+"/services/oauth2/revoke", wrapper.PostServicesOauth2Revoke)
+		r.Get(options.BaseURL+"/id/keys", wrapper.GetIdKeys)
 	})
 	r.Group(func(r chi.Router) {
-		r.Post(options.BaseURL+"/services/oauth2/token", wrapper.PostServicesOauth2Token)
+		r.Get(options.BaseURL+"/id/{_orgId}/{_userId}", wrapper.GetIdOrgIdUserId)
 	})
 
 	return r
+}
+
+type GetWellKnownAuthConfigurationRequestObject struct {
+}
+
+type GetWellKnownAuthConfigurationResponseObject interface {
+	VisitGetWellKnownAuthConfigurationResponse(w http.ResponseWriter) error
+}
+
+type GetWellKnownAuthConfiguration200ResponseHeaders struct {
+	AccessControlAllowCredentials *bool
+	AccessControlAllowMethods     *string
+	AccessControlAllowOrigin      *string
+	CacheControl                  *string
+	ContentEncoding               *string
+	ContentType                   *string
+	Date                          *string
+	StrictTransportSecurity       *string
+	TransferEncoding              *string
+	Vary                          *string
+	XContentTypeOptions           *string
+	XRobotsTag                    *string
+	XXSSProtection                *string
+}
+
+type GetWellKnownAuthConfiguration200JSONResponse struct {
+	Body    map[string]interface{}
+	Headers GetWellKnownAuthConfiguration200ResponseHeaders
+}
+
+func (response GetWellKnownAuthConfiguration200JSONResponse) VisitGetWellKnownAuthConfigurationResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response.Body); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	if response.Headers.AccessControlAllowCredentials != nil {
+		w.Header().Set("Access-Control-Allow-Credentials", fmt.Sprint(*response.Headers.AccessControlAllowCredentials))
+	}
+	if response.Headers.AccessControlAllowMethods != nil {
+		w.Header().Set("Access-Control-Allow-Methods", fmt.Sprint(*response.Headers.AccessControlAllowMethods))
+	}
+	if response.Headers.AccessControlAllowOrigin != nil {
+		w.Header().Set("Access-Control-Allow-Origin", fmt.Sprint(*response.Headers.AccessControlAllowOrigin))
+	}
+	if response.Headers.CacheControl != nil {
+		w.Header().Set("Cache-Control", fmt.Sprint(*response.Headers.CacheControl))
+	}
+	if response.Headers.ContentEncoding != nil {
+		w.Header().Set("Content-Encoding", fmt.Sprint(*response.Headers.ContentEncoding))
+	}
+	if response.Headers.ContentType != nil {
+		w.Header().Set("Content-Type", fmt.Sprint(*response.Headers.ContentType))
+	}
+	if response.Headers.Date != nil {
+		w.Header().Set("Date", fmt.Sprint(*response.Headers.Date))
+	}
+	if response.Headers.StrictTransportSecurity != nil {
+		w.Header().Set("Strict-Transport-Security", fmt.Sprint(*response.Headers.StrictTransportSecurity))
+	}
+	if response.Headers.TransferEncoding != nil {
+		w.Header().Set("Transfer-Encoding", fmt.Sprint(*response.Headers.TransferEncoding))
+	}
+	if response.Headers.Vary != nil {
+		w.Header().Set("Vary", fmt.Sprint(*response.Headers.Vary))
+	}
+	if response.Headers.XContentTypeOptions != nil {
+		w.Header().Set("X-Content-Type-Options", fmt.Sprint(*response.Headers.XContentTypeOptions))
+	}
+	if response.Headers.XRobotsTag != nil {
+		w.Header().Set("X-Robots-Tag", fmt.Sprint(*response.Headers.XRobotsTag))
+	}
+	if response.Headers.XXSSProtection != nil {
+		w.Header().Set("X-XSS-Protection", fmt.Sprint(*response.Headers.XXSSProtection))
+	}
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetWellKnownOpenidConfigurationRequestObject struct {
+}
+
+type GetWellKnownOpenidConfigurationResponseObject interface {
+	VisitGetWellKnownOpenidConfigurationResponse(w http.ResponseWriter) error
+}
+
+type GetWellKnownOpenidConfiguration200ResponseHeaders struct {
+	AccessControlAllowCredentials *bool
+	AccessControlAllowOrigin      *string
+	CacheControl                  *string
+	ContentEncoding               *string
+	ContentType                   *string
+	Date                          *string
+	StrictTransportSecurity       *string
+	TransferEncoding              *string
+	Vary                          *string
+	XContentTypeOptions           *string
+	XRobotsTag                    *string
+	XXSSProtection                *string
+}
+
+type GetWellKnownOpenidConfiguration200JSONResponse struct {
+	Body    map[string]interface{}
+	Headers GetWellKnownOpenidConfiguration200ResponseHeaders
+}
+
+func (response GetWellKnownOpenidConfiguration200JSONResponse) VisitGetWellKnownOpenidConfigurationResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response.Body); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	if response.Headers.AccessControlAllowCredentials != nil {
+		w.Header().Set("Access-Control-Allow-Credentials", fmt.Sprint(*response.Headers.AccessControlAllowCredentials))
+	}
+	if response.Headers.AccessControlAllowOrigin != nil {
+		w.Header().Set("Access-Control-Allow-Origin", fmt.Sprint(*response.Headers.AccessControlAllowOrigin))
+	}
+	if response.Headers.CacheControl != nil {
+		w.Header().Set("Cache-Control", fmt.Sprint(*response.Headers.CacheControl))
+	}
+	if response.Headers.ContentEncoding != nil {
+		w.Header().Set("Content-Encoding", fmt.Sprint(*response.Headers.ContentEncoding))
+	}
+	if response.Headers.ContentType != nil {
+		w.Header().Set("Content-Type", fmt.Sprint(*response.Headers.ContentType))
+	}
+	if response.Headers.Date != nil {
+		w.Header().Set("Date", fmt.Sprint(*response.Headers.Date))
+	}
+	if response.Headers.StrictTransportSecurity != nil {
+		w.Header().Set("Strict-Transport-Security", fmt.Sprint(*response.Headers.StrictTransportSecurity))
+	}
+	if response.Headers.TransferEncoding != nil {
+		w.Header().Set("Transfer-Encoding", fmt.Sprint(*response.Headers.TransferEncoding))
+	}
+	if response.Headers.Vary != nil {
+		w.Header().Set("Vary", fmt.Sprint(*response.Headers.Vary))
+	}
+	if response.Headers.XContentTypeOptions != nil {
+		w.Header().Set("X-Content-Type-Options", fmt.Sprint(*response.Headers.XContentTypeOptions))
+	}
+	if response.Headers.XRobotsTag != nil {
+		w.Header().Set("X-Robots-Tag", fmt.Sprint(*response.Headers.XRobotsTag))
+	}
+	if response.Headers.XXSSProtection != nil {
+		w.Header().Set("X-XSS-Protection", fmt.Sprint(*response.Headers.XXSSProtection))
+	}
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetIdKeysRequestObject struct {
+}
+
+type GetIdKeysResponseObject interface {
+	VisitGetIdKeysResponse(w http.ResponseWriter) error
+}
+
+type GetIdKeys200ResponseHeaders struct {
+	AccessControlAllowCredentials *bool
+	AccessControlAllowOrigin      *string
+	CacheControl                  *string
+	ContentEncoding               *string
+	ContentType                   *string
+	Date                          *string
+	Expires                       *string
+	StrictTransportSecurity       *string
+	TransferEncoding              *string
+	Vary                          *string
+	XContentTypeOptions           *string
+	XRobotsTag                    *string
+	XXSSProtection                *string
+}
+
+type GetIdKeys200JSONResponse struct {
+	Body    map[string]interface{}
+	Headers GetIdKeys200ResponseHeaders
+}
+
+func (response GetIdKeys200JSONResponse) VisitGetIdKeysResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response.Body); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	if response.Headers.AccessControlAllowCredentials != nil {
+		w.Header().Set("Access-Control-Allow-Credentials", fmt.Sprint(*response.Headers.AccessControlAllowCredentials))
+	}
+	if response.Headers.AccessControlAllowOrigin != nil {
+		w.Header().Set("Access-Control-Allow-Origin", fmt.Sprint(*response.Headers.AccessControlAllowOrigin))
+	}
+	if response.Headers.CacheControl != nil {
+		w.Header().Set("Cache-Control", fmt.Sprint(*response.Headers.CacheControl))
+	}
+	if response.Headers.ContentEncoding != nil {
+		w.Header().Set("Content-Encoding", fmt.Sprint(*response.Headers.ContentEncoding))
+	}
+	if response.Headers.ContentType != nil {
+		w.Header().Set("Content-Type", fmt.Sprint(*response.Headers.ContentType))
+	}
+	if response.Headers.Date != nil {
+		w.Header().Set("Date", fmt.Sprint(*response.Headers.Date))
+	}
+	if response.Headers.Expires != nil {
+		w.Header().Set("Expires", fmt.Sprint(*response.Headers.Expires))
+	}
+	if response.Headers.StrictTransportSecurity != nil {
+		w.Header().Set("Strict-Transport-Security", fmt.Sprint(*response.Headers.StrictTransportSecurity))
+	}
+	if response.Headers.TransferEncoding != nil {
+		w.Header().Set("Transfer-Encoding", fmt.Sprint(*response.Headers.TransferEncoding))
+	}
+	if response.Headers.Vary != nil {
+		w.Header().Set("Vary", fmt.Sprint(*response.Headers.Vary))
+	}
+	if response.Headers.XContentTypeOptions != nil {
+		w.Header().Set("X-Content-Type-Options", fmt.Sprint(*response.Headers.XContentTypeOptions))
+	}
+	if response.Headers.XRobotsTag != nil {
+		w.Header().Set("X-Robots-Tag", fmt.Sprint(*response.Headers.XRobotsTag))
+	}
+	if response.Headers.XXSSProtection != nil {
+		w.Header().Set("X-XSS-Protection", fmt.Sprint(*response.Headers.XXSSProtection))
+	}
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetIdOrgIdUserIdRequestObject struct {
+	UnderscoreOrgId  string `json:"_orgId"`
+	UnderscoreUserId string `json:"_userId"`
+	Params           GetIdOrgIdUserIdParams
+}
+
+type GetIdOrgIdUserIdResponseObject interface {
+	VisitGetIdOrgIdUserIdResponse(w http.ResponseWriter) error
+}
+
+type GetIdOrgIdUserId200ResponseHeaders struct {
+	CacheControl            *string
+	ContentEncoding         *string
+	ContentType             *string
+	Date                    *string
+	StrictTransportSecurity *string
+	TransferEncoding        *string
+	Vary                    *string
+	XContentTypeOptions     *string
+	XRobotsTag              *string
+	XXSSProtection          *string
+}
+
+type GetIdOrgIdUserId200JSONResponse struct {
+	Body    map[string]interface{}
+	Headers GetIdOrgIdUserId200ResponseHeaders
+}
+
+func (response GetIdOrgIdUserId200JSONResponse) VisitGetIdOrgIdUserIdResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response.Body); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	if response.Headers.CacheControl != nil {
+		w.Header().Set("Cache-Control", fmt.Sprint(*response.Headers.CacheControl))
+	}
+	if response.Headers.ContentEncoding != nil {
+		w.Header().Set("Content-Encoding", fmt.Sprint(*response.Headers.ContentEncoding))
+	}
+	if response.Headers.ContentType != nil {
+		w.Header().Set("Content-Type", fmt.Sprint(*response.Headers.ContentType))
+	}
+	if response.Headers.Date != nil {
+		w.Header().Set("Date", fmt.Sprint(*response.Headers.Date))
+	}
+	if response.Headers.StrictTransportSecurity != nil {
+		w.Header().Set("Strict-Transport-Security", fmt.Sprint(*response.Headers.StrictTransportSecurity))
+	}
+	if response.Headers.TransferEncoding != nil {
+		w.Header().Set("Transfer-Encoding", fmt.Sprint(*response.Headers.TransferEncoding))
+	}
+	if response.Headers.Vary != nil {
+		w.Header().Set("Vary", fmt.Sprint(*response.Headers.Vary))
+	}
+	if response.Headers.XContentTypeOptions != nil {
+		w.Header().Set("X-Content-Type-Options", fmt.Sprint(*response.Headers.XContentTypeOptions))
+	}
+	if response.Headers.XRobotsTag != nil {
+		w.Header().Set("X-Robots-Tag", fmt.Sprint(*response.Headers.XRobotsTag))
+	}
+	if response.Headers.XXSSProtection != nil {
+		w.Header().Set("X-XSS-Protection", fmt.Sprint(*response.Headers.XXSSProtection))
+	}
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type PostServicesOauth2IntrospectRequestObject struct {
+	Params PostServicesOauth2IntrospectParams
+	Body   *PostServicesOauth2IntrospectFormdataRequestBody
+}
+
+type PostServicesOauth2IntrospectResponseObject interface {
+	VisitPostServicesOauth2IntrospectResponse(w http.ResponseWriter) error
+}
+
+type PostServicesOauth2Introspect200ResponseHeaders struct {
+	ContentType *string
+}
+
+type PostServicesOauth2Introspect200JSONResponse struct {
+	Body    IntrospectResponse
+	Headers PostServicesOauth2Introspect200ResponseHeaders
+}
+
+func (response PostServicesOauth2Introspect200JSONResponse) VisitPostServicesOauth2IntrospectResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response.Body); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	if response.Headers.ContentType != nil {
+		w.Header().Set("Content-Type", fmt.Sprint(*response.Headers.ContentType))
+	}
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type PostServicesOauth2RegisterRequestObject struct {
+	Params      PostServicesOauth2RegisterParams
+	ContentType string
+	Body        io.Reader
+}
+
+type PostServicesOauth2RegisterResponseObject interface {
+	VisitPostServicesOauth2RegisterResponse(w http.ResponseWriter) error
+}
+
+type PostServicesOauth2Register201ResponseHeaders struct {
+	CacheControl            *string
+	ContentEncoding         *string
+	ContentType             *string
+	Date                    *string
+	Expires                 *string
+	StrictTransportSecurity *string
+	TransferEncoding        *string
+	Vary                    *string
+	XContentTypeOptions     *string
+	XRobotsTag              *string
+	XXSSProtection          *string
+}
+
+type PostServicesOauth2Register201TextResponse struct {
+	Body    string
+	Headers PostServicesOauth2Register201ResponseHeaders
+}
+
+func (response PostServicesOauth2Register201TextResponse) VisitPostServicesOauth2RegisterResponse(w http.ResponseWriter) error {
+
+	w.Header().Set("Content-Type", "text/plain")
+	if response.Headers.CacheControl != nil {
+		w.Header().Set("Cache-Control", fmt.Sprint(*response.Headers.CacheControl))
+	}
+	if response.Headers.ContentEncoding != nil {
+		w.Header().Set("Content-Encoding", fmt.Sprint(*response.Headers.ContentEncoding))
+	}
+	if response.Headers.ContentType != nil {
+		w.Header().Set("Content-Type", fmt.Sprint(*response.Headers.ContentType))
+	}
+	if response.Headers.Date != nil {
+		w.Header().Set("Date", fmt.Sprint(*response.Headers.Date))
+	}
+	if response.Headers.Expires != nil {
+		w.Header().Set("Expires", fmt.Sprint(*response.Headers.Expires))
+	}
+	if response.Headers.StrictTransportSecurity != nil {
+		w.Header().Set("Strict-Transport-Security", fmt.Sprint(*response.Headers.StrictTransportSecurity))
+	}
+	if response.Headers.TransferEncoding != nil {
+		w.Header().Set("Transfer-Encoding", fmt.Sprint(*response.Headers.TransferEncoding))
+	}
+	if response.Headers.Vary != nil {
+		w.Header().Set("Vary", fmt.Sprint(*response.Headers.Vary))
+	}
+	if response.Headers.XContentTypeOptions != nil {
+		w.Header().Set("X-Content-Type-Options", fmt.Sprint(*response.Headers.XContentTypeOptions))
+	}
+	if response.Headers.XRobotsTag != nil {
+		w.Header().Set("X-Robots-Tag", fmt.Sprint(*response.Headers.XRobotsTag))
+	}
+	if response.Headers.XXSSProtection != nil {
+		w.Header().Set("X-XSS-Protection", fmt.Sprint(*response.Headers.XXSSProtection))
+	}
+	w.WriteHeader(201)
+
+	_, err := w.Write([]byte(fmt.Sprint(response.Body)))
+	return err
+}
+
+type PostServicesOauth2RevokeRequestObject struct {
+	Params PostServicesOauth2RevokeParams
+	Body   *PostServicesOauth2RevokeFormdataRequestBody
+}
+
+type PostServicesOauth2RevokeResponseObject interface {
+	VisitPostServicesOauth2RevokeResponse(w http.ResponseWriter) error
+}
+
+type PostServicesOauth2Revoke200Response struct {
+}
+
+func (response PostServicesOauth2Revoke200Response) VisitPostServicesOauth2RevokeResponse(w http.ResponseWriter) error {
+	w.WriteHeader(200)
+	return nil
+}
+
+type PostServicesOauth2Revoke400ResponseHeaders struct {
+	ContentType *string
+}
+
+type PostServicesOauth2Revoke400JSONResponse struct {
+	Body    OAuthError
+	Headers PostServicesOauth2Revoke400ResponseHeaders
+}
+
+func (response PostServicesOauth2Revoke400JSONResponse) VisitPostServicesOauth2RevokeResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response.Body); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	if response.Headers.ContentType != nil {
+		w.Header().Set("Content-Type", fmt.Sprint(*response.Headers.ContentType))
+	}
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type PostServicesOauth2TokenRequestObject struct {
+	JSONBody     *PostServicesOauth2TokenJSONRequestBody
+	FormdataBody *PostServicesOauth2TokenFormdataRequestBody
+}
+
+type PostServicesOauth2TokenResponseObject interface {
+	VisitPostServicesOauth2TokenResponse(w http.ResponseWriter) error
+}
+
+type PostServicesOauth2Token200ResponseHeaders struct {
+	ContentType *string
+}
+
+type PostServicesOauth2Token200JSONResponse struct {
+	Body    TokenResponse
+	Headers PostServicesOauth2Token200ResponseHeaders
+}
+
+func (response PostServicesOauth2Token200JSONResponse) VisitPostServicesOauth2TokenResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response.Body); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	if response.Headers.ContentType != nil {
+		w.Header().Set("Content-Type", fmt.Sprint(*response.Headers.ContentType))
+	}
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type PostServicesOauth2Token400ResponseHeaders struct {
+	ContentType *string
+}
+
+type PostServicesOauth2Token400JSONResponse struct {
+	Body    OAuthError
+	Headers PostServicesOauth2Token400ResponseHeaders
+}
+
+func (response PostServicesOauth2Token400JSONResponse) VisitPostServicesOauth2TokenResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response.Body); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	if response.Headers.ContentType != nil {
+		w.Header().Set("Content-Type", fmt.Sprint(*response.Headers.ContentType))
+	}
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+// StrictServerInterface represents all server handlers.
+type StrictServerInterface interface {
+	// GetWellKnownAuthConfiguration Authentication Configuration Endpoint
+	// (GET /.well-known/auth-configuration)
+	GetWellKnownAuthConfiguration(ctx context.Context, request GetWellKnownAuthConfigurationRequestObject) (GetWellKnownAuthConfigurationResponseObject, error)
+	// GetWellKnownOpenidConfiguration OpenID Connect Discovery Endpoint
+	// (GET /.well-known/openid-configuration)
+	GetWellKnownOpenidConfiguration(ctx context.Context, request GetWellKnownOpenidConfigurationRequestObject) (GetWellKnownOpenidConfigurationResponseObject, error)
+	// GetIdKeys Salesforce Keys
+	// (GET /id/keys)
+	GetIdKeys(ctx context.Context, request GetIdKeysRequestObject) (GetIdKeysResponseObject, error)
+	// GetIdOrgIdUserId ID Token
+	// (GET /id/{_orgId}/{_userId})
+	GetIdOrgIdUserId(ctx context.Context, request GetIdOrgIdUserIdRequestObject) (GetIdOrgIdUserIdResponseObject, error)
+	// PostServicesOauth2Introspect OpenID Connect Token Introspection Endpoint
+	// (POST /services/oauth2/introspect)
+	PostServicesOauth2Introspect(ctx context.Context, request PostServicesOauth2IntrospectRequestObject) (PostServicesOauth2IntrospectResponseObject, error)
+	// PostServicesOauth2Register OpenID Connect Dynamic Client Registration Endpoint
+	// (POST /services/oauth2/register)
+	PostServicesOauth2Register(ctx context.Context, request PostServicesOauth2RegisterRequestObject) (PostServicesOauth2RegisterResponseObject, error)
+	// PostServicesOauth2Revoke Revoke Token
+	// (POST /services/oauth2/revoke)
+	PostServicesOauth2Revoke(ctx context.Context, request PostServicesOauth2RevokeRequestObject) (PostServicesOauth2RevokeResponseObject, error)
+	// PostServicesOauth2Token Refresh Token
+	// (POST /services/oauth2/token)
+	PostServicesOauth2Token(ctx context.Context, request PostServicesOauth2TokenRequestObject) (PostServicesOauth2TokenResponseObject, error)
+}
+
+type StrictHandlerFunc func(ctx context.Context, w http.ResponseWriter, r *http.Request, request any) (any, error)
+type StrictMiddlewareFunc func(f StrictHandlerFunc, operationID string) StrictHandlerFunc
+
+type StrictHTTPServerOptions struct {
+	RequestErrorHandlerFunc  func(w http.ResponseWriter, r *http.Request, err error)
+	ResponseErrorHandlerFunc func(w http.ResponseWriter, r *http.Request, err error)
+}
+
+func NewStrictHandler(ssi StrictServerInterface, middlewares []StrictMiddlewareFunc) ServerInterface {
+	return &strictHandler{ssi: ssi, middlewares: middlewares, options: StrictHTTPServerOptions{
+		RequestErrorHandlerFunc: func(w http.ResponseWriter, r *http.Request, err error) {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+		},
+		ResponseErrorHandlerFunc: func(w http.ResponseWriter, r *http.Request, err error) {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+		},
+	}}
+}
+
+func NewStrictHandlerWithOptions(ssi StrictServerInterface, middlewares []StrictMiddlewareFunc, options StrictHTTPServerOptions) ServerInterface {
+	if options.RequestErrorHandlerFunc == nil {
+		options.RequestErrorHandlerFunc = func(w http.ResponseWriter, r *http.Request, err error) {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+		}
+	}
+	if options.ResponseErrorHandlerFunc == nil {
+		options.ResponseErrorHandlerFunc = func(w http.ResponseWriter, r *http.Request, err error) {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+		}
+	}
+	return &strictHandler{ssi: ssi, middlewares: middlewares, options: options}
+}
+
+type strictHandler struct {
+	ssi         StrictServerInterface
+	middlewares []StrictMiddlewareFunc
+	options     StrictHTTPServerOptions
+}
+
+// GetWellKnownAuthConfiguration operation middleware
+func (sh *strictHandler) GetWellKnownAuthConfiguration(w http.ResponseWriter, r *http.Request) {
+	var request GetWellKnownAuthConfigurationRequestObject
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.GetWellKnownAuthConfiguration(ctx, request.(GetWellKnownAuthConfigurationRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "GetWellKnownAuthConfiguration")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(GetWellKnownAuthConfigurationResponseObject); ok {
+		if err := validResponse.VisitGetWellKnownAuthConfigurationResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// GetWellKnownOpenidConfiguration operation middleware
+func (sh *strictHandler) GetWellKnownOpenidConfiguration(w http.ResponseWriter, r *http.Request) {
+	var request GetWellKnownOpenidConfigurationRequestObject
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.GetWellKnownOpenidConfiguration(ctx, request.(GetWellKnownOpenidConfigurationRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "GetWellKnownOpenidConfiguration")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(GetWellKnownOpenidConfigurationResponseObject); ok {
+		if err := validResponse.VisitGetWellKnownOpenidConfigurationResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// GetIdKeys operation middleware
+func (sh *strictHandler) GetIdKeys(w http.ResponseWriter, r *http.Request) {
+	var request GetIdKeysRequestObject
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.GetIdKeys(ctx, request.(GetIdKeysRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "GetIdKeys")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(GetIdKeysResponseObject); ok {
+		if err := validResponse.VisitGetIdKeysResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// GetIdOrgIdUserId operation middleware
+func (sh *strictHandler) GetIdOrgIdUserId(w http.ResponseWriter, r *http.Request, underscoreOrgId string, underscoreUserId string, params GetIdOrgIdUserIdParams) {
+	var request GetIdOrgIdUserIdRequestObject
+
+	request.UnderscoreOrgId = underscoreOrgId
+	request.UnderscoreUserId = underscoreUserId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.GetIdOrgIdUserId(ctx, request.(GetIdOrgIdUserIdRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "GetIdOrgIdUserId")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(GetIdOrgIdUserIdResponseObject); ok {
+		if err := validResponse.VisitGetIdOrgIdUserIdResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// PostServicesOauth2Introspect operation middleware
+func (sh *strictHandler) PostServicesOauth2Introspect(w http.ResponseWriter, r *http.Request, params PostServicesOauth2IntrospectParams) {
+	var request PostServicesOauth2IntrospectRequestObject
+
+	request.Params = params
+
+	if err := r.ParseForm(); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode formdata: %w", err))
+		return
+	}
+	var body PostServicesOauth2IntrospectFormdataRequestBody
+	if err := runtime.BindForm(&body, r.Form, nil, nil); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't bind formdata: %w", err))
+		return
+	}
+	request.Body = &body
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.PostServicesOauth2Introspect(ctx, request.(PostServicesOauth2IntrospectRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "PostServicesOauth2Introspect")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(PostServicesOauth2IntrospectResponseObject); ok {
+		if err := validResponse.VisitPostServicesOauth2IntrospectResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// PostServicesOauth2Register operation middleware
+func (sh *strictHandler) PostServicesOauth2Register(w http.ResponseWriter, r *http.Request, params PostServicesOauth2RegisterParams) {
+	var request PostServicesOauth2RegisterRequestObject
+
+	request.Params = params
+	request.ContentType = r.Header.Get("Content-Type")
+
+	request.Body = r.Body
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.PostServicesOauth2Register(ctx, request.(PostServicesOauth2RegisterRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "PostServicesOauth2Register")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(PostServicesOauth2RegisterResponseObject); ok {
+		if err := validResponse.VisitPostServicesOauth2RegisterResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// PostServicesOauth2Revoke operation middleware
+func (sh *strictHandler) PostServicesOauth2Revoke(w http.ResponseWriter, r *http.Request, params PostServicesOauth2RevokeParams) {
+	var request PostServicesOauth2RevokeRequestObject
+
+	request.Params = params
+
+	if err := r.ParseForm(); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode formdata: %w", err))
+		return
+	}
+	var body PostServicesOauth2RevokeFormdataRequestBody
+	if err := runtime.BindForm(&body, r.Form, nil, nil); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't bind formdata: %w", err))
+		return
+	}
+	request.Body = &body
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.PostServicesOauth2Revoke(ctx, request.(PostServicesOauth2RevokeRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "PostServicesOauth2Revoke")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(PostServicesOauth2RevokeResponseObject); ok {
+		if err := validResponse.VisitPostServicesOauth2RevokeResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// PostServicesOauth2Token operation middleware
+func (sh *strictHandler) PostServicesOauth2Token(w http.ResponseWriter, r *http.Request) {
+	var request PostServicesOauth2TokenRequestObject
+
+	if strings.HasPrefix(r.Header.Get("Content-Type"), "application/json") {
+
+		var body PostServicesOauth2TokenJSONRequestBody
+		if err := runtime.BindJSONBody(r, &body); err != nil {
+			sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+			return
+		}
+		request.JSONBody = &body
+
+	}
+	if strings.HasPrefix(r.Header.Get("Content-Type"), "application/x-www-form-urlencoded") {
+		if err := r.ParseForm(); err != nil {
+			sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode formdata: %w", err))
+			return
+		}
+		var body PostServicesOauth2TokenFormdataRequestBody
+		if err := runtime.BindForm(&body, r.Form, nil, nil); err != nil {
+			sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't bind formdata: %w", err))
+			return
+		}
+		request.FormdataBody = &body
+	}
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.PostServicesOauth2Token(ctx, request.(PostServicesOauth2TokenRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "PostServicesOauth2Token")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(PostServicesOauth2TokenResponseObject); ok {
+		if err := validResponse.VisitPostServicesOauth2TokenResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
 }

@@ -4,13 +4,32 @@
 package headlessidentityapidemo
 
 import (
+	"bytes"
+	"context"
+	"encoding/json"
 	"errors"
 	"fmt"
+	"io"
 	"net/http"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/oapi-codegen/runtime"
 )
+
+// AuthorizeResponse Authorization response. The code/token is also placed in the Location header.
+type AuthorizeResponse struct {
+	AccessToken string `json:"access_token"`
+	Code        string `json:"code"`
+	RedirectUri string `json:"redirect_uri"`
+	State       string `json:"state"`
+}
+
+// OAuthError OAuth 2.0 error response.
+type OAuthError struct {
+	// Error Example: invalid_grant
+	Error            string  `json:"error"`
+	ErrorDescription *string `json:"error_description,omitempty"`
+}
 
 // PostServicesAuthHeadlessForgotPasswordJSONBody defines parameters for PostServicesAuthHeadlessForgotPassword.
 type PostServicesAuthHeadlessForgotPasswordJSONBody = map[string]interface{}
@@ -27,6 +46,7 @@ type GetServicesOauth2AuthorizeParams struct {
 	ClientId     *string `form:"client_id,omitempty" json:"client_id,omitempty"`
 	RedirectUri  *string `form:"redirect_uri,omitempty" json:"redirect_uri,omitempty"`
 	Scope        *string `form:"scope,omitempty" json:"scope,omitempty"`
+	State        *string `form:"state,omitempty" json:"state,omitempty"`
 }
 
 // PostServicesOauth2AuthorizeFormdataBody defines parameters for PostServicesOauth2Authorize.
@@ -229,6 +249,19 @@ func (siw *ServerInterfaceWrapper) GetServicesOauth2Authorize(w http.ResponseWri
 			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "scope"})
 		} else {
 			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "scope", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "state" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "state", r.URL.Query(), &params.State, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "state"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "state", Err: err})
 		}
 		return
 	}
@@ -437,12 +470,6 @@ func HandlerWithOptions(si ServerInterface, options ChiServerOptions) http.Handl
 	}
 
 	r.Group(func(r chi.Router) {
-		r.Post(options.BaseURL+"/services/auth/headless/forgot_password", wrapper.PostServicesAuthHeadlessForgotPassword)
-	})
-	r.Group(func(r chi.Router) {
-		r.Post(options.BaseURL+"/services/auth/headless/init/passwordless/login", wrapper.PostServicesAuthHeadlessInitPasswordlessLogin)
-	})
-	r.Group(func(r chi.Router) {
 		r.Post(options.BaseURL+"/services/auth/headless/init/registration", wrapper.PostServicesAuthHeadlessInitRegistration)
 	})
 	r.Group(func(r chi.Router) {
@@ -451,6 +478,384 @@ func HandlerWithOptions(si ServerInterface, options ChiServerOptions) http.Handl
 	r.Group(func(r chi.Router) {
 		r.Post(options.BaseURL+"/services/oauth2/authorize", wrapper.PostServicesOauth2Authorize)
 	})
+	r.Group(func(r chi.Router) {
+		r.Post(options.BaseURL+"/services/auth/headless/forgot_password", wrapper.PostServicesAuthHeadlessForgotPassword)
+	})
+	r.Group(func(r chi.Router) {
+		r.Post(options.BaseURL+"/services/auth/headless/init/passwordless/login", wrapper.PostServicesAuthHeadlessInitPasswordlessLogin)
+	})
 
 	return r
+}
+
+type PostServicesAuthHeadlessForgotPasswordRequestObject struct {
+	Body *PostServicesAuthHeadlessForgotPasswordJSONRequestBody
+}
+
+type PostServicesAuthHeadlessForgotPasswordResponseObject interface {
+	VisitPostServicesAuthHeadlessForgotPasswordResponse(w http.ResponseWriter) error
+}
+
+type PostServicesAuthHeadlessForgotPassword200JSONResponse map[string]interface{}
+
+func (response PostServicesAuthHeadlessForgotPassword200JSONResponse) VisitPostServicesAuthHeadlessForgotPasswordResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type PostServicesAuthHeadlessInitPasswordlessLoginRequestObject struct {
+	Body *PostServicesAuthHeadlessInitPasswordlessLoginJSONRequestBody
+}
+
+type PostServicesAuthHeadlessInitPasswordlessLoginResponseObject interface {
+	VisitPostServicesAuthHeadlessInitPasswordlessLoginResponse(w http.ResponseWriter) error
+}
+
+type PostServicesAuthHeadlessInitPasswordlessLogin200JSONResponse map[string]interface{}
+
+func (response PostServicesAuthHeadlessInitPasswordlessLogin200JSONResponse) VisitPostServicesAuthHeadlessInitPasswordlessLoginResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type PostServicesAuthHeadlessInitRegistrationRequestObject struct {
+	Body *PostServicesAuthHeadlessInitRegistrationJSONRequestBody
+}
+
+type PostServicesAuthHeadlessInitRegistrationResponseObject interface {
+	VisitPostServicesAuthHeadlessInitRegistrationResponse(w http.ResponseWriter) error
+}
+
+type PostServicesAuthHeadlessInitRegistration200JSONResponse map[string]interface{}
+
+func (response PostServicesAuthHeadlessInitRegistration200JSONResponse) VisitPostServicesAuthHeadlessInitRegistrationResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetServicesOauth2AuthorizeRequestObject struct {
+	Params GetServicesOauth2AuthorizeParams
+}
+
+type GetServicesOauth2AuthorizeResponseObject interface {
+	VisitGetServicesOauth2AuthorizeResponse(w http.ResponseWriter) error
+}
+
+type GetServicesOauth2Authorize302ResponseHeaders struct {
+	ContentType *string
+	Location    *string
+}
+
+type GetServicesOauth2Authorize302JSONResponse struct {
+	Body    AuthorizeResponse
+	Headers GetServicesOauth2Authorize302ResponseHeaders
+}
+
+func (response GetServicesOauth2Authorize302JSONResponse) VisitGetServicesOauth2AuthorizeResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response.Body); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	if response.Headers.ContentType != nil {
+		w.Header().Set("Content-Type", fmt.Sprint(*response.Headers.ContentType))
+	}
+	if response.Headers.Location != nil {
+		w.Header().Set("Location", fmt.Sprint(*response.Headers.Location))
+	}
+	w.WriteHeader(302)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetServicesOauth2Authorize400ResponseHeaders struct {
+	ContentType *string
+}
+
+type GetServicesOauth2Authorize400JSONResponse struct {
+	Body    OAuthError
+	Headers GetServicesOauth2Authorize400ResponseHeaders
+}
+
+func (response GetServicesOauth2Authorize400JSONResponse) VisitGetServicesOauth2AuthorizeResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response.Body); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	if response.Headers.ContentType != nil {
+		w.Header().Set("Content-Type", fmt.Sprint(*response.Headers.ContentType))
+	}
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type PostServicesOauth2AuthorizeRequestObject struct {
+	Params PostServicesOauth2AuthorizeParams
+	Body   *PostServicesOauth2AuthorizeFormdataRequestBody
+}
+
+type PostServicesOauth2AuthorizeResponseObject interface {
+	VisitPostServicesOauth2AuthorizeResponse(w http.ResponseWriter) error
+}
+
+type PostServicesOauth2Authorize200JSONResponse map[string]interface{}
+
+func (response PostServicesOauth2Authorize200JSONResponse) VisitPostServicesOauth2AuthorizeResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+// StrictServerInterface represents all server handlers.
+type StrictServerInterface interface {
+	// PostServicesAuthHeadlessForgotPassword Forgot Password - Change Password
+	// (POST /services/auth/headless/forgot_password)
+	PostServicesAuthHeadlessForgotPassword(ctx context.Context, request PostServicesAuthHeadlessForgotPasswordRequestObject) (PostServicesAuthHeadlessForgotPasswordResponseObject, error)
+	// PostServicesAuthHeadlessInitPasswordlessLogin Passwordless Login - Initialize
+	// (POST /services/auth/headless/init/passwordless/login)
+	PostServicesAuthHeadlessInitPasswordlessLogin(ctx context.Context, request PostServicesAuthHeadlessInitPasswordlessLoginRequestObject) (PostServicesAuthHeadlessInitPasswordlessLoginResponseObject, error)
+	// PostServicesAuthHeadlessInitRegistration Registration - Initialize
+	// (POST /services/auth/headless/init/registration)
+	PostServicesAuthHeadlessInitRegistration(ctx context.Context, request PostServicesAuthHeadlessInitRegistrationRequestObject) (PostServicesAuthHeadlessInitRegistrationResponseObject, error)
+	// GetServicesOauth2Authorize Web Server Flow 1
+	// (GET /services/oauth2/authorize)
+	GetServicesOauth2Authorize(ctx context.Context, request GetServicesOauth2AuthorizeRequestObject) (GetServicesOauth2AuthorizeResponseObject, error)
+	// PostServicesOauth2Authorize Passwordless Login - Authorize
+	// (POST /services/oauth2/authorize)
+	PostServicesOauth2Authorize(ctx context.Context, request PostServicesOauth2AuthorizeRequestObject) (PostServicesOauth2AuthorizeResponseObject, error)
+}
+
+type StrictHandlerFunc func(ctx context.Context, w http.ResponseWriter, r *http.Request, request any) (any, error)
+type StrictMiddlewareFunc func(f StrictHandlerFunc, operationID string) StrictHandlerFunc
+
+type StrictHTTPServerOptions struct {
+	RequestErrorHandlerFunc  func(w http.ResponseWriter, r *http.Request, err error)
+	ResponseErrorHandlerFunc func(w http.ResponseWriter, r *http.Request, err error)
+}
+
+func NewStrictHandler(ssi StrictServerInterface, middlewares []StrictMiddlewareFunc) ServerInterface {
+	return &strictHandler{ssi: ssi, middlewares: middlewares, options: StrictHTTPServerOptions{
+		RequestErrorHandlerFunc: func(w http.ResponseWriter, r *http.Request, err error) {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+		},
+		ResponseErrorHandlerFunc: func(w http.ResponseWriter, r *http.Request, err error) {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+		},
+	}}
+}
+
+func NewStrictHandlerWithOptions(ssi StrictServerInterface, middlewares []StrictMiddlewareFunc, options StrictHTTPServerOptions) ServerInterface {
+	if options.RequestErrorHandlerFunc == nil {
+		options.RequestErrorHandlerFunc = func(w http.ResponseWriter, r *http.Request, err error) {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+		}
+	}
+	if options.ResponseErrorHandlerFunc == nil {
+		options.ResponseErrorHandlerFunc = func(w http.ResponseWriter, r *http.Request, err error) {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+		}
+	}
+	return &strictHandler{ssi: ssi, middlewares: middlewares, options: options}
+}
+
+type strictHandler struct {
+	ssi         StrictServerInterface
+	middlewares []StrictMiddlewareFunc
+	options     StrictHTTPServerOptions
+}
+
+// PostServicesAuthHeadlessForgotPassword operation middleware
+func (sh *strictHandler) PostServicesAuthHeadlessForgotPassword(w http.ResponseWriter, r *http.Request) {
+	var request PostServicesAuthHeadlessForgotPasswordRequestObject
+
+	var body PostServicesAuthHeadlessForgotPasswordJSONRequestBody
+	if err := runtime.BindJSONBody(r, &body); err != nil {
+		if !errors.Is(err, io.EOF) {
+			sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+			return
+		}
+	} else {
+		request.Body = &body
+	}
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.PostServicesAuthHeadlessForgotPassword(ctx, request.(PostServicesAuthHeadlessForgotPasswordRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "PostServicesAuthHeadlessForgotPassword")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(PostServicesAuthHeadlessForgotPasswordResponseObject); ok {
+		if err := validResponse.VisitPostServicesAuthHeadlessForgotPasswordResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// PostServicesAuthHeadlessInitPasswordlessLogin operation middleware
+func (sh *strictHandler) PostServicesAuthHeadlessInitPasswordlessLogin(w http.ResponseWriter, r *http.Request) {
+	var request PostServicesAuthHeadlessInitPasswordlessLoginRequestObject
+
+	var body PostServicesAuthHeadlessInitPasswordlessLoginJSONRequestBody
+	if err := runtime.BindJSONBody(r, &body); err != nil {
+		if !errors.Is(err, io.EOF) {
+			sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+			return
+		}
+	} else {
+		request.Body = &body
+	}
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.PostServicesAuthHeadlessInitPasswordlessLogin(ctx, request.(PostServicesAuthHeadlessInitPasswordlessLoginRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "PostServicesAuthHeadlessInitPasswordlessLogin")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(PostServicesAuthHeadlessInitPasswordlessLoginResponseObject); ok {
+		if err := validResponse.VisitPostServicesAuthHeadlessInitPasswordlessLoginResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// PostServicesAuthHeadlessInitRegistration operation middleware
+func (sh *strictHandler) PostServicesAuthHeadlessInitRegistration(w http.ResponseWriter, r *http.Request) {
+	var request PostServicesAuthHeadlessInitRegistrationRequestObject
+
+	var body PostServicesAuthHeadlessInitRegistrationJSONRequestBody
+	if err := runtime.BindJSONBody(r, &body); err != nil {
+		if !errors.Is(err, io.EOF) {
+			sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+			return
+		}
+	} else {
+		request.Body = &body
+	}
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.PostServicesAuthHeadlessInitRegistration(ctx, request.(PostServicesAuthHeadlessInitRegistrationRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "PostServicesAuthHeadlessInitRegistration")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(PostServicesAuthHeadlessInitRegistrationResponseObject); ok {
+		if err := validResponse.VisitPostServicesAuthHeadlessInitRegistrationResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// GetServicesOauth2Authorize operation middleware
+func (sh *strictHandler) GetServicesOauth2Authorize(w http.ResponseWriter, r *http.Request, params GetServicesOauth2AuthorizeParams) {
+	var request GetServicesOauth2AuthorizeRequestObject
+
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.GetServicesOauth2Authorize(ctx, request.(GetServicesOauth2AuthorizeRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "GetServicesOauth2Authorize")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(GetServicesOauth2AuthorizeResponseObject); ok {
+		if err := validResponse.VisitGetServicesOauth2AuthorizeResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// PostServicesOauth2Authorize operation middleware
+func (sh *strictHandler) PostServicesOauth2Authorize(w http.ResponseWriter, r *http.Request, params PostServicesOauth2AuthorizeParams) {
+	var request PostServicesOauth2AuthorizeRequestObject
+
+	request.Params = params
+
+	if err := r.ParseForm(); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode formdata: %w", err))
+		return
+	}
+	var body PostServicesOauth2AuthorizeFormdataRequestBody
+	if err := runtime.BindForm(&body, r.Form, nil, nil); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't bind formdata: %w", err))
+		return
+	}
+	request.Body = &body
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.PostServicesOauth2Authorize(ctx, request.(PostServicesOauth2AuthorizeRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "PostServicesOauth2Authorize")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(PostServicesOauth2AuthorizeResponseObject); ok {
+		if err := validResponse.VisitPostServicesOauth2AuthorizeResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
 }

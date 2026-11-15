@@ -337,10 +337,10 @@ func HandlerWithOptions(si ServerInterface, options ChiServerOptions) http.Handl
 		r.Get(options.BaseURL+"/services/data/v{version}/scheduling", wrapper.GetServicesDataVVersionScheduling)
 	})
 	r.Group(func(r chi.Router) {
-		r.Post(options.BaseURL+"/services/data/v{version}/scheduling/getAppointmentCandidates", wrapper.PostServicesDataVVersionSchedulingGetAppointmentCandidates)
+		r.Post(options.BaseURL+"/services/data/v{version}/scheduling/getAppointmentSlots", wrapper.PostServicesDataVVersionSchedulingGetAppointmentSlots)
 	})
 	r.Group(func(r chi.Router) {
-		r.Post(options.BaseURL+"/services/data/v{version}/scheduling/getAppointmentSlots", wrapper.PostServicesDataVVersionSchedulingGetAppointmentSlots)
+		r.Post(options.BaseURL+"/services/data/v{version}/scheduling/getAppointmentCandidates", wrapper.PostServicesDataVVersionSchedulingGetAppointmentCandidates)
 	})
 
 	return r

@@ -470,13 +470,13 @@ func HandlerWithOptions(si ServerInterface, options ChiServerOptions) http.Handl
 		r.Get(options.BaseURL+"/services/data/v{version}/sobjects/{SOBJECT_API_NAME}/listviews", wrapper.GetServicesDataVVersionSobjectsSOBJECTAPINAMEListviews)
 	})
 	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/services/data/v{version}/sobjects/{SOBJECT_API_NAME}/listviews/recent", wrapper.GetServicesDataVVersionSobjectsSOBJECTAPINAMEListviewsRecent)
+		r.Get(options.BaseURL+"/services/data/v{version}/sobjects/{SOBJECT_API_NAME}/listviews/{QUERY_LOCATOR}/describe", wrapper.GetServicesDataVVersionSobjectsSOBJECTAPINAMEListviewsQUERYLOCATORDescribe)
 	})
 	r.Group(func(r chi.Router) {
 		r.Get(options.BaseURL+"/services/data/v{version}/sobjects/{SOBJECT_API_NAME}/listviews/{LIST_VIEW_ID}/results", wrapper.GetServicesDataVVersionSobjectsSOBJECTAPINAMEListviewsLISTVIEWIDResults)
 	})
 	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/services/data/v{version}/sobjects/{SOBJECT_API_NAME}/listviews/{QUERY_LOCATOR}/describe", wrapper.GetServicesDataVVersionSobjectsSOBJECTAPINAMEListviewsQUERYLOCATORDescribe)
+		r.Get(options.BaseURL+"/services/data/v{version}/sobjects/{SOBJECT_API_NAME}/listviews/recent", wrapper.GetServicesDataVVersionSobjectsSOBJECTAPINAMEListviewsRecent)
 	})
 
 	return r

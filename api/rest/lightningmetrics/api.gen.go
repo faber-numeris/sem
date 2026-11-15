@@ -462,19 +462,19 @@ func HandlerWithOptions(si ServerInterface, options ChiServerOptions) http.Handl
 	}
 
 	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/services/data/v{version}/sobjects/LightningExitByPageMetrics", wrapper.GetServicesDataVVersionSobjectsLightningExitByPageMetrics)
-	})
-	r.Group(func(r chi.Router) {
 		r.Get(options.BaseURL+"/services/data/v{version}/sobjects/LightningToggleMetrics", wrapper.GetServicesDataVVersionSobjectsLightningToggleMetrics)
-	})
-	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/services/data/v{version}/sobjects/LightningUsageByAppTypeMetrics", wrapper.GetServicesDataVVersionSobjectsLightningUsageByAppTypeMetrics)
 	})
 	r.Group(func(r chi.Router) {
 		r.Get(options.BaseURL+"/services/data/v{version}/sobjects/LightningUsageByBrowserMetrics", wrapper.GetServicesDataVVersionSobjectsLightningUsageByBrowserMetrics)
 	})
 	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/services/data/v{version}/sobjects/LightningUsageByAppTypeMetrics", wrapper.GetServicesDataVVersionSobjectsLightningUsageByAppTypeMetrics)
+	})
+	r.Group(func(r chi.Router) {
 		r.Get(options.BaseURL+"/services/data/v{version}/sobjects/LightningUsageByFlexiPageMetrics", wrapper.GetServicesDataVVersionSobjectsLightningUsageByFlexiPageMetrics)
+	})
+	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/services/data/v{version}/sobjects/LightningExitByPageMetrics", wrapper.GetServicesDataVVersionSobjectsLightningExitByPageMetrics)
 	})
 
 	return r

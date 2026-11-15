@@ -655,13 +655,16 @@ func HandlerWithOptions(si ServerInterface, options ChiServerOptions) http.Handl
 	}
 
 	r.Group(func(r chi.Router) {
-		r.Patch(options.BaseURL+"/services/data/v{version}/chatter/group-membership-requests/{CHATTER_GROUP_REQUEST_ID}", wrapper.PatchServicesDataVVersionChatterGroupMembershipRequestsCHATTERGROUPREQUESTID)
-	})
-	r.Group(func(r chi.Router) {
 		r.Get(options.BaseURL+"/services/data/v{version}/chatter/groups", wrapper.GetServicesDataVVersionChatterGroups)
 	})
 	r.Group(func(r chi.Router) {
 		r.Post(options.BaseURL+"/services/data/v{version}/chatter/groups", wrapper.PostServicesDataVVersionChatterGroups)
+	})
+	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/services/data/v{version}/chatter/groups/{GROUP_ID}/members/requests", wrapper.GetServicesDataVVersionChatterGroupsGROUPIDMembersRequests)
+	})
+	r.Group(func(r chi.Router) {
+		r.Post(options.BaseURL+"/services/data/v{version}/chatter/groups/{GROUP_ID}/members/requests", wrapper.PostServicesDataVVersionChatterGroupsGROUPIDMembersRequests)
 	})
 	r.Group(func(r chi.Router) {
 		r.Post(options.BaseURL+"/services/data/v{version}/chatter/groups/group/{GROUP_ID}/invite", wrapper.PostServicesDataVVersionChatterGroupsGroupGROUPIDInvite)
@@ -670,10 +673,7 @@ func HandlerWithOptions(si ServerInterface, options ChiServerOptions) http.Handl
 		r.Post(options.BaseURL+"/services/data/v{version}/chatter/groups/{GROUP_ID}/members", wrapper.PostServicesDataVVersionChatterGroupsGROUPIDMembers)
 	})
 	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/services/data/v{version}/chatter/groups/{GROUP_ID}/members/requests", wrapper.GetServicesDataVVersionChatterGroupsGROUPIDMembersRequests)
-	})
-	r.Group(func(r chi.Router) {
-		r.Post(options.BaseURL+"/services/data/v{version}/chatter/groups/{GROUP_ID}/members/requests", wrapper.PostServicesDataVVersionChatterGroupsGROUPIDMembersRequests)
+		r.Patch(options.BaseURL+"/services/data/v{version}/chatter/group-membership-requests/{CHATTER_GROUP_REQUEST_ID}", wrapper.PatchServicesDataVVersionChatterGroupMembershipRequestsCHATTERGROUPREQUESTID)
 	})
 
 	return r
