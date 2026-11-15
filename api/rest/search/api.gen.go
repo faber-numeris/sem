@@ -706,22 +706,22 @@ func HandlerWithOptions(si ServerInterface, options ChiServerOptions) http.Handl
 	}
 
 	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/services/data/v{version}/parameterizedSearch", wrapper.GetServicesDataVVersionParameterizedSearch)
-	})
-	r.Group(func(r chi.Router) {
 		r.Get(options.BaseURL+"/services/data/v{version}/search", wrapper.GetServicesDataVVersionSearch)
-	})
-	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/services/data/v{version}/search/layout", wrapper.GetServicesDataVVersionSearchLayout)
 	})
 	r.Group(func(r chi.Router) {
 		r.Get(options.BaseURL+"/services/data/v{version}/search/scopeOrder", wrapper.GetServicesDataVVersionSearchScopeOrder)
 	})
 	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/services/data/v{version}/search/suggestSearchQueries", wrapper.GetServicesDataVVersionSearchSuggestSearchQueries)
+		r.Get(options.BaseURL+"/services/data/v{version}/search/layout", wrapper.GetServicesDataVVersionSearchLayout)
 	})
 	r.Group(func(r chi.Router) {
 		r.Get(options.BaseURL+"/services/data/v{version}/search/suggestions", wrapper.GetServicesDataVVersionSearchSuggestions)
+	})
+	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/services/data/v{version}/search/suggestSearchQueries", wrapper.GetServicesDataVVersionSearchSuggestSearchQueries)
+	})
+	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/services/data/v{version}/parameterizedSearch", wrapper.GetServicesDataVVersionParameterizedSearch)
 	})
 	r.Group(func(r chi.Router) {
 		r.Get(options.BaseURL+"/services/data/v{version}/sobjects/relevantItems", wrapper.GetServicesDataVVersionSobjectsRelevantItems)

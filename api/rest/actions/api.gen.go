@@ -407,13 +407,13 @@ func HandlerWithOptions(si ServerInterface, options ChiServerOptions) http.Handl
 	}
 
 	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/services/data/v{version}/actions/standard", wrapper.GetServicesDataVVersionActionsStandard)
+	})
+	r.Group(func(r chi.Router) {
 		r.Get(options.BaseURL+"/services/data/v{version}/actions/custom", wrapper.GetServicesDataVVersionActionsCustom)
 	})
 	r.Group(func(r chi.Router) {
 		r.Post(options.BaseURL+"/services/data/v{version}/actions/custom/flow/{flowApiName}", wrapper.PostServicesDataVVersionActionsCustomFlowFlowApiName)
-	})
-	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/services/data/v{version}/actions/standard", wrapper.GetServicesDataVVersionActionsStandard)
 	})
 	r.Group(func(r chi.Router) {
 		r.Get(options.BaseURL+"/services/data/v{version}/quickActions", wrapper.GetServicesDataVVersionQuickActions)

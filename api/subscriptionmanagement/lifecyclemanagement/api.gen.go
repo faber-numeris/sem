@@ -401,13 +401,13 @@ func HandlerWithOptions(si ServerInterface, options ChiServerOptions) http.Handl
 		r.Post(options.BaseURL+"/services/data/v{version}/actions/standard/createOrUpdateAssetFromOrder", wrapper.PostServicesDataVVersionActionsStandardCreateOrUpdateAssetFromOrder)
 	})
 	r.Group(func(r chi.Router) {
-		r.Post(options.BaseURL+"/services/data/v{version}/asset-management/assets/collection/actions/initiate-amend-quantity", wrapper.PostServicesDataVVersionAssetManagementAssetsCollectionActionsInitiateAmendQuantity)
-	})
-	r.Group(func(r chi.Router) {
 		r.Post(options.BaseURL+"/services/data/v{version}/asset-management/assets/collection/actions/initiate-cancellation", wrapper.PostServicesDataVVersionAssetManagementAssetsCollectionActionsInitiateCancellation)
 	})
 	r.Group(func(r chi.Router) {
 		r.Post(options.BaseURL+"/services/data/v{version}/asset-management/assets/collection/actions/initiate-renewal", wrapper.PostServicesDataVVersionAssetManagementAssetsCollectionActionsInitiateRenewal)
+	})
+	r.Group(func(r chi.Router) {
+		r.Post(options.BaseURL+"/services/data/v{version}/asset-management/assets/collection/actions/initiate-amend-quantity", wrapper.PostServicesDataVVersionAssetManagementAssetsCollectionActionsInitiateAmendQuantity)
 	})
 
 	return r

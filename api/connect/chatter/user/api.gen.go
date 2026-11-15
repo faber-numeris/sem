@@ -371,6 +371,9 @@ func HandlerWithOptions(si ServerInterface, options ChiServerOptions) http.Handl
 	}
 
 	r.Group(func(r chi.Router) {
+		r.Post(options.BaseURL+"/services/data/v{version}/connect/user-profiles/me/photo", wrapper.PostServicesDataVVersionConnectUserProfilesMePhoto)
+	})
+	r.Group(func(r chi.Router) {
 		r.Post(options.BaseURL+"/services/data/v{version}/chatter/users/me/messages", wrapper.PostServicesDataVVersionChatterUsersMeMessages)
 	})
 	r.Group(func(r chi.Router) {
@@ -378,9 +381,6 @@ func HandlerWithOptions(si ServerInterface, options ChiServerOptions) http.Handl
 	})
 	r.Group(func(r chi.Router) {
 		r.Post(options.BaseURL+"/services/data/v{version}/chatter/users/{USER_ID}/following", wrapper.PostServicesDataVVersionChatterUsersUSERIDFollowing)
-	})
-	r.Group(func(r chi.Router) {
-		r.Post(options.BaseURL+"/services/data/v{version}/connect/user-profiles/me/photo", wrapper.PostServicesDataVVersionConnectUserProfilesMePhoto)
 	})
 
 	return r

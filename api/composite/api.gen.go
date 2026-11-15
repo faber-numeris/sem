@@ -747,10 +747,13 @@ func HandlerWithOptions(si ServerInterface, options ChiServerOptions) http.Handl
 	}
 
 	r.Group(func(r chi.Router) {
+		r.Post(options.BaseURL+"/services/data/v{version}/composite/graph", wrapper.PostServicesDataVVersionCompositeGraph)
+	})
+	r.Group(func(r chi.Router) {
 		r.Post(options.BaseURL+"/services/data/v{version}/composite/batch", wrapper.PostServicesDataVVersionCompositeBatch)
 	})
 	r.Group(func(r chi.Router) {
-		r.Post(options.BaseURL+"/services/data/v{version}/composite/graph", wrapper.PostServicesDataVVersionCompositeGraph)
+		r.Post(options.BaseURL+"/services/data/v{version}/composite/tree/{SOBJECT_API_NAME}", wrapper.PostServicesDataVVersionCompositeTreeSOBJECTAPINAME)
 	})
 	r.Group(func(r chi.Router) {
 		r.Delete(options.BaseURL+"/services/data/v{version}/composite/sobjects", wrapper.DeleteServicesDataVVersionCompositeSobjects)
@@ -766,9 +769,6 @@ func HandlerWithOptions(si ServerInterface, options ChiServerOptions) http.Handl
 	})
 	r.Group(func(r chi.Router) {
 		r.Patch(options.BaseURL+"/services/data/v{version}/composite/sobjects/{SOBJECT_API_NAME}/{FIELD_NAME}", wrapper.PatchServicesDataVVersionCompositeSobjectsSOBJECTAPINAMEFIELDNAME)
-	})
-	r.Group(func(r chi.Router) {
-		r.Post(options.BaseURL+"/services/data/v{version}/composite/tree/{SOBJECT_API_NAME}", wrapper.PostServicesDataVVersionCompositeTreeSOBJECTAPINAME)
 	})
 
 	return r

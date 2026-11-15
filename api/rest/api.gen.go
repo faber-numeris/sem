@@ -871,31 +871,31 @@ func HandlerWithOptions(si ServerInterface, options ChiServerOptions) http.Handl
 		r.Get(options.BaseURL+"/services/data/v{version}", wrapper.GetServicesDataVVersion)
 	})
 	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/services/data/v{version}/limits", wrapper.GetServicesDataVVersionLimits)
+	})
+	r.Group(func(r chi.Router) {
 		r.Get(options.BaseURL+"/services/data/v{version}/appMenu", wrapper.GetServicesDataVVersionAppMenu)
 	})
 	r.Group(func(r chi.Router) {
 		r.Get(options.BaseURL+"/services/data/v{version}/consent/action/action", wrapper.GetServicesDataVVersionConsentActionAction)
 	})
 	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/services/data/v{version}/limits", wrapper.GetServicesDataVVersionLimits)
-	})
-	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/services/data/v{version}/limits/recordCount", wrapper.GetServicesDataVVersionLimitsRecordCount)
-	})
-	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/services/data/v{version}/named/query/{NQ_API_NAME}", wrapper.GetServicesDataVVersionNamedQueryNQAPINAME)
+		r.Get(options.BaseURL+"/services/data/v{version}/sobjects/OpportunityLineItem/{OPPORTUNITY_LINE_ITEM_ID}/OpportunityLineItemSchedules", wrapper.GetServicesDataVVersionSobjectsOpportunityLineItemOPPORTUNITYLINEITEMIDOpportunityLineItemSchedules)
 	})
 	r.Group(func(r chi.Router) {
 		r.Get(options.BaseURL+"/services/data/v{version}/queryAll", wrapper.GetServicesDataVVersionQueryAll)
 	})
 	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/services/data/v{version}/sobjects/OpportunityLineItem/{OPPORTUNITY_LINE_ITEM_ID}/OpportunityLineItemSchedules", wrapper.GetServicesDataVVersionSobjectsOpportunityLineItemOPPORTUNITYLINEITEMIDOpportunityLineItemSchedules)
+		r.Get(options.BaseURL+"/services/data/v{version}/limits/recordCount", wrapper.GetServicesDataVVersionLimitsRecordCount)
 	})
 	r.Group(func(r chi.Router) {
 		r.Get(options.BaseURL+"/services/data/v{version}/tabs", wrapper.GetServicesDataVVersionTabs)
 	})
 	r.Group(func(r chi.Router) {
 		r.Get(options.BaseURL+"/services/data/v{version}/theme", wrapper.GetServicesDataVVersionTheme)
+	})
+	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/services/data/v{version}/named/query/{NQ_API_NAME}", wrapper.GetServicesDataVVersionNamedQueryNQAPINAME)
 	})
 
 	return r

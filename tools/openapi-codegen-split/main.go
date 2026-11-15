@@ -87,7 +87,7 @@ func run(codegen, configPath, pathsDir, specPath string) error {
 	if err != nil {
 		return err
 	}
-	groups, err := groupPaths(doc, pathsDir)
+	groups, err := groupPaths(filepath.Dir(specPath), doc, pathsDir)
 	if err != nil {
 		return fmt.Errorf("%s: %w", specPath, err)
 	}
@@ -123,7 +123,7 @@ func run(codegen, configPath, pathsDir, specPath string) error {
 
 // groupPaths groups the `$ref`ed path items of the main document by paths file,
 // in order of first appearance.
-func groupPaths(doc *yaml.Node, pathsDir string) ([]*group, error) {
+func groupPaths(specDir string, doc *yaml.Node, pathsDir string) ([]*group, error) {
 	paths := mappingValue(doc, "paths")
 	if paths == nil || paths.Kind != yaml.MappingNode {
 		return nil, fmt.Errorf("no paths")
@@ -154,10 +154,50 @@ func groupPaths(doc *yaml.Node, pathsDir string) ([]*group, error) {
 			byFile[file] = g
 			groups = append(groups, g)
 		}
+		item, err = resolvePathRef(specDir, item)
+		if err != nil {
+			return nil, fmt.Errorf("path %s: %w", key.Value, err)
+		}
 		g.paths.Content = append(g.paths.Content, key, item)
 	}
 	assignPackages(groups)
 	return groups, nil
+}
+
+// resolvePathRef inlines the path item referenced by a root paths entry. Path
+// files are loaded as separate documents by oapi-codegen, so a `$ref` inside a
+// path file would resolve against that file instead of the root document. The
+// generated sub-spec carries the root components, so inlining the path item
+// lets shared component refs resolve at the sub-spec root.
+func resolvePathRef(specDir string, ref *yaml.Node) (*yaml.Node, error) {
+	target := scalar(ref, "$ref")
+	if target == "" {
+		return ref, nil
+	}
+	file, pointer, _ := strings.Cut(target, "#")
+	unescaped, err := url.PathUnescape(file)
+	if err != nil {
+		return nil, fmt.Errorf("%s: %w", target, err)
+	}
+	doc, err := readYAML(filepath.Join(specDir, filepath.FromSlash(path.Clean(unescaped))))
+	if err != nil {
+		return nil, err
+	}
+	node := doc
+	for _, seg := range strings.Split(strings.TrimPrefix(pointer, "/"), "/") {
+		if seg == "" {
+			continue
+		}
+		seg, err = url.PathUnescape(seg)
+		if err != nil {
+			return nil, fmt.Errorf("%s: %w", target, err)
+		}
+		seg = strings.ReplaceAll(strings.ReplaceAll(seg, "~1", "/"), "~0", "~")
+		if node = mappingValue(node, seg); node == nil {
+			return nil, fmt.Errorf("%s: %q not found", target, seg)
+		}
+	}
+	return node, nil
 }
 
 // assignPackages sets the package path of every group. Each folder maps to
@@ -222,7 +262,13 @@ func generate(codegen string, config, doc *yaml.Node, specPath string, groups []
 		}
 		defer os.Remove(subSpec)
 		subConfig := filepath.Join(tmpDir, fmt.Sprintf("config-%d.yaml", i))
-		if err := writeYAML(subConfig, withScalars(config, "package", g.segs[len(g.segs)-1], "output", g.outFile)); err != nil {
+		groupConfig := config
+		if strictPackages, ok := stringList(config, "strict-server-packages"); ok {
+			groupConfig = withStrictServer(groupConfig, contains(strictPackages, path.Join(g.segs...)))
+		}
+		groupConfig = withScalars(groupConfig, "package", g.segs[len(g.segs)-1], "output", g.outFile)
+		groupConfig = withoutScalar(groupConfig, "strict-server-packages")
+		if err := writeYAML(subConfig, groupConfig); err != nil {
 			return err
 		}
 		if err := os.MkdirAll(filepath.Dir(g.outFile), 0o755); err != nil {
@@ -480,6 +526,79 @@ func withScalars(mapping *yaml.Node, kv ...string) *yaml.Node {
 		}
 	}
 	return out
+}
+
+// withoutScalar returns a copy of a mapping without the given key.
+func withoutScalar(mapping *yaml.Node, key string) *yaml.Node {
+	out := &yaml.Node{Kind: yaml.MappingNode}
+	for i := 0; i+1 < len(mapping.Content); i += 2 {
+		if mapping.Content[i].Value != key {
+			out.Content = append(out.Content, mapping.Content[i], mapping.Content[i+1])
+		}
+	}
+	return out
+}
+
+// withStrictServer returns a copy of a mapping whose generate.strict-server is
+// set to enabled. It is used to only generate strict handlers for packages with
+// typed responses.
+func withStrictServer(mapping *yaml.Node, enabled bool) *yaml.Node {
+	out := &yaml.Node{Kind: yaml.MappingNode, Content: append([]*yaml.Node(nil), mapping.Content...)}
+	value := "false"
+	if enabled {
+		value = "true"
+	}
+	strict := &yaml.Node{Kind: yaml.ScalarNode, Tag: "!!bool", Value: value}
+	for i := 0; i+1 < len(out.Content); i += 2 {
+		if out.Content[i].Value != "generate" {
+			continue
+		}
+		generate := &yaml.Node{Kind: yaml.MappingNode, Content: append([]*yaml.Node(nil), out.Content[i+1].Content...)}
+		replaced := false
+		for j := 0; j+1 < len(generate.Content); j += 2 {
+			if generate.Content[j].Value == "strict-server" {
+				generate.Content[j+1], replaced = strict, true
+			}
+		}
+		if !replaced {
+			generate.Content = append(generate.Content, &yaml.Node{Kind: yaml.ScalarNode, Value: "strict-server"}, strict)
+		}
+		out.Content[i+1] = generate
+		return out
+	}
+	out.Content = append(out.Content, &yaml.Node{Kind: yaml.ScalarNode, Value: "generate"},
+		&yaml.Node{Kind: yaml.MappingNode, Content: []*yaml.Node{
+			{Kind: yaml.ScalarNode, Value: "strict-server"}, strict,
+		}})
+	return out
+}
+
+// stringList returns the scalar values of a sequence mapping value. The second
+// result reports whether the key is present.
+func stringList(mapping *yaml.Node, key string) ([]string, bool) {
+	value := mappingValue(mapping, key)
+	if value == nil {
+		return nil, false
+	}
+	if value.Kind != yaml.SequenceNode {
+		return nil, true
+	}
+	out := make([]string, 0, len(value.Content))
+	for _, item := range value.Content {
+		if item.Kind == yaml.ScalarNode {
+			out = append(out, item.Value)
+		}
+	}
+	return out, true
+}
+
+func contains(values []string, want string) bool {
+	for _, value := range values {
+		if value == want {
+			return true
+		}
+	}
+	return false
 }
 
 func readYAML(file string) (*yaml.Node, error) {

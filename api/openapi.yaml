@@ -16,6 +16,276 @@ components:
     oauth2Auth:
       type: http
       scheme: oauth2
+    basicAuth:
+      type: http
+      scheme: basic
+      description: OAuth 2.0 client authentication using HTTP Basic (client_id/client_secret).
+  schemas:
+    OAuthError:
+      type: object
+      description: OAuth 2.0 error response.
+      required:
+        - error
+      properties:
+        error:
+          type: string
+          example: invalid_grant
+        error_description:
+          type: string
+    TokenRequest:
+      type: object
+      description: OAuth 2.0 token endpoint request. Fields may be sent as a form body or as JSON.
+      properties:
+        grant_type:
+          type: string
+          enum:
+            - authorization_code
+            - client_credentials
+            - password
+            - refresh_token
+            - urn:ietf:params:oauth:grant-type:jwt-bearer
+          x-oapi-codegen-extra-tags:
+            form: grant_type
+        client_id:
+          type: string
+          x-oapi-codegen-extra-tags:
+            form: client_id
+        client_secret:
+          type: string
+          x-oapi-codegen-extra-tags:
+            form: client_secret
+        username:
+          type: string
+          x-oapi-codegen-extra-tags:
+            form: username
+        password:
+          type: string
+          x-oapi-codegen-extra-tags:
+            form: password
+        code:
+          type: string
+          x-oapi-codegen-extra-tags:
+            form: code
+        redirect_uri:
+          type: string
+          x-oapi-codegen-extra-tags:
+            form: redirect_uri
+        refresh_token:
+          type: string
+          x-oapi-codegen-extra-tags:
+            form: refresh_token
+        assertion:
+          type: string
+          description: JWT assertion for the jwt-bearer grant.
+          x-oapi-codegen-extra-tags:
+            form: assertion
+        scope:
+          type: string
+          x-oapi-codegen-extra-tags:
+            form: scope
+    TokenResponse:
+      type: object
+      description: OAuth 2.0 access token response.
+      required:
+        - access_token
+        - instance_url
+        - id
+        - token_type
+        - issued_at
+        - signature
+        - scope
+      properties:
+        access_token:
+          type: string
+        instance_url:
+          type: string
+        id:
+          type: string
+        token_type:
+          type: string
+          example: Bearer
+        issued_at:
+          type: string
+          description: Issue time in milliseconds since the epoch, serialized as a string.
+          example: '1700000000000'
+        signature:
+          type: string
+        scope:
+          type: string
+        refresh_token:
+          type: string
+          description: Omitted when the grant does not issue a refresh token.
+    RevokeTokenRequest:
+      type: object
+      properties:
+        token:
+          type: string
+          x-oapi-codegen-extra-tags:
+            form: token
+    IntrospectRequest:
+      type: object
+      properties:
+        token:
+          type: string
+          x-oapi-codegen-extra-tags:
+            form: token
+        token_type_hint:
+          type: string
+          x-oapi-codegen-extra-tags:
+            form: token_type_hint
+        client_id:
+          type: string
+          x-oapi-codegen-extra-tags:
+            form: client_id
+        client_secret:
+          type: string
+          x-oapi-codegen-extra-tags:
+            form: client_secret
+    IntrospectResponse:
+      type: object
+      required:
+        - active
+      properties:
+        active:
+          type: boolean
+        scope:
+          type: string
+        client_id:
+          type: string
+        username:
+          type: string
+        token_type:
+          type: string
+        exp:
+          type: integer
+          format: int64
+        iat:
+          type: integer
+          format: int64
+        sub:
+          type: string
+    AuthorizeResponse:
+      type: object
+      description: Authorization response. The code/token is also placed in the Location header.
+      required:
+        - code
+        - access_token
+        - redirect_uri
+        - state
+      properties:
+        code:
+          type: string
+        access_token:
+          type: string
+        redirect_uri:
+          type: string
+        state:
+          type: string
+    UserInfoResponse:
+      type: object
+      description: OpenID Connect UserInfo response.
+      required:
+        - sub
+        - user_id
+        - organization_id
+        - preferred_username
+        - nickname
+        - name
+        - email
+        - email_verified
+        - given_name
+        - family_name
+        - zoneinfo
+        - photos
+        - profile
+        - picture
+        - urls
+        - active
+        - user_type
+        - language
+        - locale
+        - utcOffset
+        - updated_at
+      properties:
+        sub:
+          type: string
+        user_id:
+          type: string
+        organization_id:
+          type: string
+        preferred_username:
+          type: string
+        nickname:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
+        email_verified:
+          type: boolean
+        given_name:
+          type: string
+        family_name:
+          type: string
+        zoneinfo:
+          type: string
+        photos:
+          type: object
+          additionalProperties:
+            type: string
+        profile:
+          type: string
+        picture:
+          type: string
+        urls:
+          type: object
+          additionalProperties:
+            type: string
+        active:
+          type: boolean
+        user_type:
+          type: string
+        language:
+          type: string
+        locale:
+          type: string
+        utcOffset:
+          type: integer
+        updated_at:
+          type: string
+    APIVersion:
+      type: object
+      required:
+        - label
+        - url
+        - version
+      properties:
+        label:
+          type: string
+        url:
+          type: string
+        version:
+          type: string
+    SalesforceError:
+      type: array
+      description: Salesforce REST error payload.
+      items:
+        $ref: '#/components/schemas/SalesforceErrorItem'
+    SalesforceErrorItem:
+      type: object
+      required:
+        - message
+        - errorCode
+        - fields
+      properties:
+        message:
+          type: string
+        errorCode:
+          type: string
+        fields:
+          type: array
+          items:
+            type: string
 security:
   - oauth2Auth: []
 tags:

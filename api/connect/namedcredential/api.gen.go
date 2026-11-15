@@ -754,6 +754,12 @@ func HandlerWithOptions(si ServerInterface, options ChiServerOptions) http.Handl
 		r.Post(options.BaseURL+"/services/data/v{version}/named-credentials/external-credentials", wrapper.PostServicesDataVVersionNamedCredentialsExternalCredentials)
 	})
 	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/services/data/v{version}/named-credentials/named-credential-setup", wrapper.GetServicesDataVVersionNamedCredentialsNamedCredentialSetup)
+	})
+	r.Group(func(r chi.Router) {
+		r.Post(options.BaseURL+"/services/data/v{version}/named-credentials/named-credential-setup", wrapper.PostServicesDataVVersionNamedCredentialsNamedCredentialSetup)
+	})
+	r.Group(func(r chi.Router) {
 		r.Delete(options.BaseURL+"/services/data/v{version}/named-credentials/external-credentials/{DEVELOPER_NAME}", wrapper.DeleteServicesDataVVersionNamedCredentialsExternalCredentialsDEVELOPERNAME)
 	})
 	r.Group(func(r chi.Router) {
@@ -761,12 +767,6 @@ func HandlerWithOptions(si ServerInterface, options ChiServerOptions) http.Handl
 	})
 	r.Group(func(r chi.Router) {
 		r.Put(options.BaseURL+"/services/data/v{version}/named-credentials/external-credentials/{DEVELOPER_NAME}", wrapper.PutServicesDataVVersionNamedCredentialsExternalCredentialsDEVELOPERNAME)
-	})
-	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/services/data/v{version}/named-credentials/named-credential-setup", wrapper.GetServicesDataVVersionNamedCredentialsNamedCredentialSetup)
-	})
-	r.Group(func(r chi.Router) {
-		r.Post(options.BaseURL+"/services/data/v{version}/named-credentials/named-credential-setup", wrapper.PostServicesDataVVersionNamedCredentialsNamedCredentialSetup)
 	})
 	r.Group(func(r chi.Router) {
 		r.Get(options.BaseURL+"/services/data/v{version}/named-credentials/named-credential-setup/{DEVELOPER_NAME}", wrapper.GetServicesDataVVersionNamedCredentialsNamedCredentialSetupDEVELOPERNAME)

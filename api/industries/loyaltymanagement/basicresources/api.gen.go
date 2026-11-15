@@ -702,31 +702,31 @@ func HandlerWithOptions(si ServerInterface, options ChiServerOptions) http.Handl
 	}
 
 	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/services/data/v{version}/connect/loyalty/member/{memberId}/memberbenefits", wrapper.GetServicesDataVVersionConnectLoyaltyMemberMemberIdMemberbenefits)
-	})
-	r.Group(func(r chi.Router) {
-		r.Post(options.BaseURL+"/services/data/v{version}/connect/loyalty/programs/{loyaltyProgramName}/transaction-history", wrapper.PostServicesDataVVersionConnectLoyaltyProgramsLoyaltyProgramNameTransactionHistory)
-	})
-	r.Group(func(r chi.Router) {
-		r.Post(options.BaseURL+"/services/data/v{version}/connect/realtime/loyalty/programs/{loyaltyProgramName}", wrapper.PostServicesDataVVersionConnectRealtimeLoyaltyProgramsLoyaltyProgramName)
-	})
-	r.Group(func(r chi.Router) {
 		r.Post(options.BaseURL+"/services/data/v{version}/loyalty-programs/{loyaltyProgramName}/corporate-member-enrollments", wrapper.PostServicesDataVVersionLoyaltyProgramsLoyaltyProgramNameCorporateMemberEnrollments)
 	})
 	r.Group(func(r chi.Router) {
 		r.Post(options.BaseURL+"/services/data/v{version}/loyalty-programs/{loyaltyProgramName}/individual-member-enrollments", wrapper.PostServicesDataVVersionLoyaltyProgramsLoyaltyProgramNameIndividualMemberEnrollments)
 	})
 	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/services/data/v{version}/connect/loyalty/member/{memberId}/memberbenefits", wrapper.GetServicesDataVVersionConnectLoyaltyMemberMemberIdMemberbenefits)
+	})
+	r.Group(func(r chi.Router) {
 		r.Get(options.BaseURL+"/services/data/v{version}/loyalty-programs/{loyaltyProgramName}/members", wrapper.GetServicesDataVVersionLoyaltyProgramsLoyaltyProgramNameMembers)
+	})
+	r.Group(func(r chi.Router) {
+		r.Post(options.BaseURL+"/services/data/v{version}/loyalty/programs/{loyaltyProgramName}/members/{membershipNumber}/vouchers/{voucherCode}/redeem", wrapper.PostServicesDataVVersionLoyaltyProgramsLoyaltyProgramNameMembersMembershipNumberVouchersVoucherCodeRedeem)
+	})
+	r.Group(func(r chi.Router) {
+		r.Post(options.BaseURL+"/services/data/v{version}/connect/loyalty/programs/{loyaltyProgramName}/transaction-history", wrapper.PostServicesDataVVersionConnectLoyaltyProgramsLoyaltyProgramNameTransactionHistory)
 	})
 	r.Group(func(r chi.Router) {
 		r.Get(options.BaseURL+"/services/data/v{version}/loyalty/programs/{loyaltyProgramName}/members/{membershipNumber}/transaction-ledger-summary", wrapper.GetServicesDataVVersionLoyaltyProgramsLoyaltyProgramNameMembersMembershipNumberTransactionLedgerSummary)
 	})
 	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/services/data/v{version}/loyalty/programs/{loyaltyProgramName}/members/{membershipNumber}/vouchers", wrapper.GetServicesDataVVersionLoyaltyProgramsLoyaltyProgramNameMembersMembershipNumberVouchers)
+		r.Post(options.BaseURL+"/services/data/v{version}/connect/realtime/loyalty/programs/{loyaltyProgramName}", wrapper.PostServicesDataVVersionConnectRealtimeLoyaltyProgramsLoyaltyProgramName)
 	})
 	r.Group(func(r chi.Router) {
-		r.Post(options.BaseURL+"/services/data/v{version}/loyalty/programs/{loyaltyProgramName}/members/{membershipNumber}/vouchers/{voucherCode}/redeem", wrapper.PostServicesDataVVersionLoyaltyProgramsLoyaltyProgramNameMembersMembershipNumberVouchersVoucherCodeRedeem)
+		r.Get(options.BaseURL+"/services/data/v{version}/loyalty/programs/{loyaltyProgramName}/members/{membershipNumber}/vouchers", wrapper.GetServicesDataVVersionLoyaltyProgramsLoyaltyProgramNameMembersMembershipNumberVouchers)
 	})
 
 	return r

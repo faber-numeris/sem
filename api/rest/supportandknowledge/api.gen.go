@@ -577,7 +577,7 @@ func HandlerWithOptions(si ServerInterface, options ChiServerOptions) http.Handl
 	}
 
 	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/services/data/v{version}/knowledgeManagement/settings", wrapper.GetServicesDataVVersionKnowledgeManagementSettings)
+		r.Get(options.BaseURL+"/services/data/v{version}/support/embeddedservice/configuration/{EMBEDDED_SERVICE_CONFIG_DEVELOPERNAME}", wrapper.GetServicesDataVVersionSupportEmbeddedserviceConfigurationEMBEDDEDSERVICECONFIGDEVELOPERNAME)
 	})
 	r.Group(func(r chi.Router) {
 		r.Get(options.BaseURL+"/services/data/v{version}/support/dataCategoryGroups", wrapper.GetServicesDataVVersionSupportDataCategoryGroups)
@@ -586,13 +586,13 @@ func HandlerWithOptions(si ServerInterface, options ChiServerOptions) http.Handl
 		r.Get(options.BaseURL+"/services/data/v{version}/support/dataCategoryGroups/{GROUP}/dataCategories/{CATEGORY}", wrapper.GetServicesDataVVersionSupportDataCategoryGroupsGROUPDataCategoriesCATEGORY)
 	})
 	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/services/data/v{version}/support/embeddedservice/configuration/{EMBEDDED_SERVICE_CONFIG_DEVELOPERNAME}", wrapper.GetServicesDataVVersionSupportEmbeddedserviceConfigurationEMBEDDEDSERVICECONFIGDEVELOPERNAME)
-	})
-	r.Group(func(r chi.Router) {
 		r.Get(options.BaseURL+"/services/data/v{version}/support/knowledgeArticles", wrapper.GetServicesDataVVersionSupportKnowledgeArticles)
 	})
 	r.Group(func(r chi.Router) {
 		r.Get(options.BaseURL+"/services/data/v{version}/support/knowledgeArticles/{ARTICLE_ID}", wrapper.GetServicesDataVVersionSupportKnowledgeArticlesARTICLEID)
+	})
+	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/services/data/v{version}/knowledgeManagement/settings", wrapper.GetServicesDataVVersionKnowledgeManagementSettings)
 	})
 
 	return r

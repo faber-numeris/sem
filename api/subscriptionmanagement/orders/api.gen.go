@@ -247,10 +247,10 @@ func HandlerWithOptions(si ServerInterface, options ChiServerOptions) http.Handl
 	}
 
 	r.Group(func(r chi.Router) {
-		r.Post(options.BaseURL+"/services/data/v{version}/actions/standard/createOrderFromQuote", wrapper.PostServicesDataVVersionActionsStandardCreateOrderFromQuote)
+		r.Post(options.BaseURL+"/services/data/v{version}/composite", wrapper.PostServicesDataVVersionComposite)
 	})
 	r.Group(func(r chi.Router) {
-		r.Post(options.BaseURL+"/services/data/v{version}/composite", wrapper.PostServicesDataVVersionComposite)
+		r.Post(options.BaseURL+"/services/data/v{version}/actions/standard/createOrderFromQuote", wrapper.PostServicesDataVVersionActionsStandardCreateOrderFromQuote)
 	})
 
 	return r

@@ -4,16 +4,56 @@
       - Subscription Management > Query Org [Postman Runner]
     summary: User Info
     parameters:
-      - name: Content-Type
+      - name: Authorization
         in: header
+        description: Bearer access token.
         schema:
           type: string
-        example: application/json
     responses:
       '200':
         description: Successful response
+        headers:
+          Content-Type:
+            schema:
+              type: string
+            example: application/json; charset=UTF-8
         content:
-          application/json: {}
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserInfoResponse'
+      '400':
+        description: The user info request could not be processed.
+        headers:
+          Content-Type:
+            schema:
+              type: string
+            example: application/json; charset=UTF-8
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SalesforceError'
+      '401':
+        description: The access token is missing, invalid, or expired.
+        headers:
+          Content-Type:
+            schema:
+              type: string
+            example: application/json; charset=UTF-8
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SalesforceError'
+      '404':
+        description: The requested user was not found.
+        headers:
+          Content-Type:
+            schema:
+              type: string
+            example: application/json; charset=UTF-8
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SalesforceError'
 /services/data:
   get:
     tags:
@@ -22,8 +62,17 @@
     responses:
       '200':
         description: Successful response
+        headers:
+          Content-Type:
+            schema:
+              type: string
+            example: application/json; charset=UTF-8
         content:
-          application/json: {}
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/APIVersion'
 /services/data/v{version}/commerce/payments/payment-methods:
   post:
     tags:
@@ -63,4 +112,6 @@
       '200':
         description: Successful response
         content:
-          application/json: {}
+          application/json:
+            schema:
+              type: object

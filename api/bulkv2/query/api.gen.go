@@ -681,12 +681,6 @@ func HandlerWithOptions(si ServerInterface, options ChiServerOptions) http.Handl
 	}
 
 	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/services/data/v{version}/jobs/query", wrapper.GetServicesDataVVersionJobsQuery)
-	})
-	r.Group(func(r chi.Router) {
-		r.Post(options.BaseURL+"/services/data/v{version}/jobs/query", wrapper.PostServicesDataVVersionJobsQuery)
-	})
-	r.Group(func(r chi.Router) {
 		r.Delete(options.BaseURL+"/services/data/v{version}/jobs/query/{_jobId}", wrapper.DeleteServicesDataVVersionJobsQueryJobId)
 	})
 	r.Group(func(r chi.Router) {
@@ -696,10 +690,16 @@ func HandlerWithOptions(si ServerInterface, options ChiServerOptions) http.Handl
 		r.Patch(options.BaseURL+"/services/data/v{version}/jobs/query/{_jobId}", wrapper.PatchServicesDataVVersionJobsQueryJobId)
 	})
 	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/services/data/v{version}/jobs/query/{_jobId}/resultPages", wrapper.GetServicesDataVVersionJobsQueryJobIdResultPages)
+		r.Get(options.BaseURL+"/services/data/v{version}/jobs/query/{_jobId}/results", wrapper.GetServicesDataVVersionJobsQueryJobIdResults)
 	})
 	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/services/data/v{version}/jobs/query/{_jobId}/results", wrapper.GetServicesDataVVersionJobsQueryJobIdResults)
+		r.Get(options.BaseURL+"/services/data/v{version}/jobs/query", wrapper.GetServicesDataVVersionJobsQuery)
+	})
+	r.Group(func(r chi.Router) {
+		r.Post(options.BaseURL+"/services/data/v{version}/jobs/query", wrapper.PostServicesDataVVersionJobsQuery)
+	})
+	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/services/data/v{version}/jobs/query/{_jobId}/resultPages", wrapper.GetServicesDataVVersionJobsQueryJobIdResultPages)
 	})
 
 	return r

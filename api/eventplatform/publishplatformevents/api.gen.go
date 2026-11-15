@@ -316,10 +316,10 @@ func HandlerWithOptions(si ServerInterface, options ChiServerOptions) http.Handl
 	}
 
 	r.Group(func(r chi.Router) {
-		r.Post(options.BaseURL+"/services/Soap/u/{version}", wrapper.PostServicesSoapUVersion)
+		r.Post(options.BaseURL+"/services/data/v{version}/sobjects/{EventApiName}", wrapper.PostServicesDataVVersionSobjectsEventApiName)
 	})
 	r.Group(func(r chi.Router) {
-		r.Post(options.BaseURL+"/services/data/v{version}/sobjects/{EventApiName}", wrapper.PostServicesDataVVersionSobjectsEventApiName)
+		r.Post(options.BaseURL+"/services/Soap/u/{version}", wrapper.PostServicesSoapUVersion)
 	})
 
 	return r

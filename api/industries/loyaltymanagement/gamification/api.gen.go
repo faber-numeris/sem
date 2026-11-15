@@ -230,10 +230,10 @@ func HandlerWithOptions(si ServerInterface, options ChiServerOptions) http.Handl
 	}
 
 	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/services/data/v{version}/game/gameparticipantreward/{gameParticipantRewardId}/game-reward", wrapper.GetServicesDataVVersionGameGameparticipantrewardGameParticipantRewardIdGameReward)
+		r.Get(options.BaseURL+"/services/data/v{version}/game/participant/{participantId}/games", wrapper.GetServicesDataVVersionGameParticipantParticipantIdGames)
 	})
 	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/services/data/v{version}/game/participant/{participantId}/games", wrapper.GetServicesDataVVersionGameParticipantParticipantIdGames)
+		r.Get(options.BaseURL+"/services/data/v{version}/game/gameparticipantreward/{gameParticipantRewardId}/game-reward", wrapper.GetServicesDataVVersionGameGameparticipantrewardGameParticipantRewardIdGameReward)
 	})
 
 	return r

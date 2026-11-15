@@ -679,19 +679,31 @@ func HandlerWithOptions(si ServerInterface, options ChiServerOptions) http.Handl
 	}
 
 	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/services/data/v{version}/ui-api/actions/flexipage/{FLEXIPAGE_NAMES}", wrapper.GetServicesDataVVersionUiApiActionsFlexipageFLEXIPAGENAMES)
-	})
-	r.Group(func(r chi.Router) {
 		r.Get(options.BaseURL+"/services/data/v{version}/ui-api/actions/global", wrapper.GetServicesDataVVersionUiApiActionsGlobal)
 	})
 	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/services/data/v{version}/ui-api/actions/list-view-chart/{SOBJECT_API_NAME}", wrapper.GetServicesDataVVersionUiApiActionsListViewChartSOBJECTAPINAME)
+		r.Get(options.BaseURL+"/services/data/v{version}/ui-api/actions/record/{RECORD_IDS}", wrapper.GetServicesDataVVersionUiApiActionsRecordRECORDIDS)
+	})
+	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/services/data/v{version}/ui-api/actions/record/{RECORD_ID}/record-edit", wrapper.GetServicesDataVVersionUiApiActionsRecordRECORDIDRecordEdit)
+	})
+	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/services/data/v{version}/ui-api/actions/record/{RECORD_ID}/related-list/{RELATED_LIST_IDS}", wrapper.GetServicesDataVVersionUiApiActionsRecordRECORDIDRelatedListRELATEDLISTIDS)
+	})
+	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/services/data/v{version}/ui-api/actions/record/{RECORD_ID}/related-list-record/{RELATED_LIST_RECORD_IDS}", wrapper.GetServicesDataVVersionUiApiActionsRecordRECORDIDRelatedListRecordRELATEDLISTRECORDIDS)
+	})
+	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/services/data/v{version}/ui-api/actions/list-view/{LIST_VIEW_IDS}", wrapper.GetServicesDataVVersionUiApiActionsListViewLISTVIEWIDS)
 	})
 	r.Group(func(r chi.Router) {
 		r.Get(options.BaseURL+"/services/data/v{version}/ui-api/actions/list-view-record/{RECORD_IDS}", wrapper.GetServicesDataVVersionUiApiActionsListViewRecordRECORDIDS)
 	})
 	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/services/data/v{version}/ui-api/actions/list-view/{LIST_VIEW_IDS}", wrapper.GetServicesDataVVersionUiApiActionsListViewLISTVIEWIDS)
+		r.Get(options.BaseURL+"/services/data/v{version}/ui-api/actions/list-view-chart/{SOBJECT_API_NAME}", wrapper.GetServicesDataVVersionUiApiActionsListViewChartSOBJECTAPINAME)
+	})
+	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/services/data/v{version}/ui-api/actions/flexipage/{FLEXIPAGE_NAMES}", wrapper.GetServicesDataVVersionUiApiActionsFlexipageFLEXIPAGENAMES)
 	})
 	r.Group(func(r chi.Router) {
 		r.Get(options.BaseURL+"/services/data/v{version}/ui-api/actions/lookup/{SOBJECT_API_NAMES}", wrapper.GetServicesDataVVersionUiApiActionsLookupSOBJECTAPINAMES)
@@ -701,18 +713,6 @@ func HandlerWithOptions(si ServerInterface, options ChiServerOptions) http.Handl
 	})
 	r.Group(func(r chi.Router) {
 		r.Get(options.BaseURL+"/services/data/v{version}/ui-api/actions/photo/{RECORD_IDS}", wrapper.GetServicesDataVVersionUiApiActionsPhotoRECORDIDS)
-	})
-	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/services/data/v{version}/ui-api/actions/record/{RECORD_IDS}", wrapper.GetServicesDataVVersionUiApiActionsRecordRECORDIDS)
-	})
-	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/services/data/v{version}/ui-api/actions/record/{RECORD_ID}/record-edit", wrapper.GetServicesDataVVersionUiApiActionsRecordRECORDIDRecordEdit)
-	})
-	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/services/data/v{version}/ui-api/actions/record/{RECORD_ID}/related-list-record/{RELATED_LIST_RECORD_IDS}", wrapper.GetServicesDataVVersionUiApiActionsRecordRECORDIDRelatedListRecordRELATEDLISTRECORDIDS)
-	})
-	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/services/data/v{version}/ui-api/actions/record/{RECORD_ID}/related-list/{RELATED_LIST_IDS}", wrapper.GetServicesDataVVersionUiApiActionsRecordRECORDIDRelatedListRELATEDLISTIDS)
 	})
 
 	return r

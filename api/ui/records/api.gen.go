@@ -949,13 +949,10 @@ func HandlerWithOptions(si ServerInterface, options ChiServerOptions) http.Handl
 	}
 
 	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/services/data/v{version}/ui-api/record-ui/{RECORD_IDS}", wrapper.GetServicesDataVVersionUiApiRecordUiRECORDIDS)
+	})
+	r.Group(func(r chi.Router) {
 		r.Get(options.BaseURL+"/services/data/v{version}/ui-api/layout/{SOBJECT_API_NAME}", wrapper.GetServicesDataVVersionUiApiLayoutSOBJECTAPINAME)
-	})
-	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/services/data/v{version}/ui-api/lookups/{SOBJECT_API_NAME}/{FIELD_API_NAME}", wrapper.GetServicesDataVVersionUiApiLookupsSOBJECTAPINAMEFIELDAPINAME)
-	})
-	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/services/data/v{version}/ui-api/lookups/{SOBJECT_API_NAME}/{FIELD_API_NAME}/{TARGET_API_NAME}", wrapper.GetServicesDataVVersionUiApiLookupsSOBJECTAPINAMEFIELDAPINAMETARGETAPINAME)
 	})
 	r.Group(func(r chi.Router) {
 		r.Get(options.BaseURL+"/services/data/v{version}/ui-api/object-info", wrapper.GetServicesDataVVersionUiApiObjectInfo)
@@ -964,25 +961,13 @@ func HandlerWithOptions(si ServerInterface, options ChiServerOptions) http.Handl
 		r.Get(options.BaseURL+"/services/data/v{version}/ui-api/object-info/{SOBJECT_API_NAME}", wrapper.GetServicesDataVVersionUiApiObjectInfoSOBJECTAPINAME)
 	})
 	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/services/data/v{version}/ui-api/object-info/{SOBJECT_API_NAME}/picklist-values/{RECORD_TYPE_ID}", wrapper.GetServicesDataVVersionUiApiObjectInfoSOBJECTAPINAMEPicklistValuesRECORDTYPEID)
-	})
-	r.Group(func(r chi.Router) {
 		r.Get(options.BaseURL+"/services/data/v{version}/ui-api/object-info/{SOBJECT_API_NAME}/picklist-values/{RECORD_TYPE_ID}/{FIELD_API_NAME}", wrapper.GetServicesDataVVersionUiApiObjectInfoSOBJECTAPINAMEPicklistValuesRECORDTYPEIDFIELDAPINAME)
 	})
 	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/services/data/v{version}/ui-api/record-defaults/clone/{RECORD_ID}", wrapper.GetServicesDataVVersionUiApiRecordDefaultsCloneRECORDID)
+		r.Get(options.BaseURL+"/services/data/v{version}/ui-api/object-info/{SOBJECT_API_NAME}/picklist-values/{RECORD_TYPE_ID}", wrapper.GetServicesDataVVersionUiApiObjectInfoSOBJECTAPINAMEPicklistValuesRECORDTYPEID)
 	})
 	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/services/data/v{version}/ui-api/record-defaults/create/{SOBJECT_API_NAME}", wrapper.GetServicesDataVVersionUiApiRecordDefaultsCreateSOBJECTAPINAME)
-	})
-	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/services/data/v{version}/ui-api/record-ui/{RECORD_IDS}", wrapper.GetServicesDataVVersionUiApiRecordUiRECORDIDS)
-	})
-	r.Group(func(r chi.Router) {
-		r.Post(options.BaseURL+"/services/data/v{version}/ui-api/records", wrapper.PostServicesDataVVersionUiApiRecords)
-	})
-	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/services/data/v{version}/ui-api/records/batch/{RECORD_IDS}", wrapper.GetServicesDataVVersionUiApiRecordsBatchRECORDIDS)
+		r.Get(options.BaseURL+"/services/data/v{version}/ui-api/records/{RECORD_ID}/child-relationships/{RELATIONSHIP_NAME}", wrapper.GetServicesDataVVersionUiApiRecordsRECORDIDChildRelationshipsRELATIONSHIPNAME)
 	})
 	r.Group(func(r chi.Router) {
 		r.Delete(options.BaseURL+"/services/data/v{version}/ui-api/records/{RECORD_ID}", wrapper.DeleteServicesDataVVersionUiApiRecordsRECORDID)
@@ -994,7 +979,22 @@ func HandlerWithOptions(si ServerInterface, options ChiServerOptions) http.Handl
 		r.Patch(options.BaseURL+"/services/data/v{version}/ui-api/records/{RECORD_ID}", wrapper.PatchServicesDataVVersionUiApiRecordsRECORDID)
 	})
 	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/services/data/v{version}/ui-api/records/{RECORD_ID}/child-relationships/{RELATIONSHIP_NAME}", wrapper.GetServicesDataVVersionUiApiRecordsRECORDIDChildRelationshipsRELATIONSHIPNAME)
+		r.Get(options.BaseURL+"/services/data/v{version}/ui-api/records/batch/{RECORD_IDS}", wrapper.GetServicesDataVVersionUiApiRecordsBatchRECORDIDS)
+	})
+	r.Group(func(r chi.Router) {
+		r.Post(options.BaseURL+"/services/data/v{version}/ui-api/records", wrapper.PostServicesDataVVersionUiApiRecords)
+	})
+	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/services/data/v{version}/ui-api/record-defaults/clone/{RECORD_ID}", wrapper.GetServicesDataVVersionUiApiRecordDefaultsCloneRECORDID)
+	})
+	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/services/data/v{version}/ui-api/record-defaults/create/{SOBJECT_API_NAME}", wrapper.GetServicesDataVVersionUiApiRecordDefaultsCreateSOBJECTAPINAME)
+	})
+	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/services/data/v{version}/ui-api/lookups/{SOBJECT_API_NAME}/{FIELD_API_NAME}", wrapper.GetServicesDataVVersionUiApiLookupsSOBJECTAPINAMEFIELDAPINAME)
+	})
+	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/services/data/v{version}/ui-api/lookups/{SOBJECT_API_NAME}/{FIELD_API_NAME}/{TARGET_API_NAME}", wrapper.GetServicesDataVVersionUiApiLookupsSOBJECTAPINAMEFIELDAPINAMETARGETAPINAME)
 	})
 
 	return r
